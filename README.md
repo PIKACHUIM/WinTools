@@ -10,7 +10,7 @@ Windows 上那些零散的维护操作，装进一个窗口里做完。
 [![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com)
 [![Version](https://img.shields.io/badge/version-0.1.0-orange)](https://github.com/PIKACHUIM/WinTools/releases)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-blue)](LICENSE)<br/>
-[![Docs](https://img.shields.io/badge/docs-online-41B883?logo=vitepress&logoColor=white)](https://pikachuim.github.io/WinTools/)
+[![Docs](https://img.shields.io/badge/docs-online-41B883?logo=vitepress&logoColor=white)](https://wtools.opkg.cn/)
 [![Build](https://github.com/PIKACHUIM/WinTools/actions/workflows/build.yml/badge.svg)](https://github.com/PIKACHUIM/WinTools/actions/workflows/build.yml)
 [![Docs Build](https://github.com/PIKACHUIM/WinTools/actions/workflows/docs.yml/badge.svg)](https://github.com/PIKACHUIM/WinTools/actions/workflows/docs.yml)
 
@@ -204,7 +204,7 @@ dotnet build src/WinTools.App/WinTools.App.csproj -c Release
 powershell -ExecutionPolicy Bypass -File tools/publish.ps1 -Profile both
 ```
 
-架构说明、模块实现、规则格式、本地化与调试技巧写在文档站里：**[在线文档](https://pikachuim.github.io/WinTools/)** 或 [docs/guide/development.md](docs/guide/development.md)。
+架构说明、模块实现、规则格式、本地化与调试技巧写在文档站里：**[wtools.opkg.cn](https://wtools.opkg.cn/)** 或 [docs/guide/development.md](docs/guide/development.md)。
 
 ## 参考与致谢
 

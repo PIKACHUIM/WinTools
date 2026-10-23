@@ -244,7 +244,9 @@ npm run docs:dev     # 本地预览 http://localhost:5173
 npm run docs:build   # 产物在 docs/.vitepress/dist
 ```
 
-文档站由 GitHub Actions 自动构建并部署到 GitHub Pages：`.github/workflows/docs.yml`，推送到 `main` 且改动 `docs/**` 时触发。
+正式站点是 <https://wtools.opkg.cn/>，部署在域名根目录，因此 `base` 默认 `/`。
+
+构建由 GitHub Actions 负责：`.github/workflows/docs.yml`，推送到 `main` 且改动 `docs/**` 时触发，产物同时发布到 GitHub Pages（项目站点需要 `/WinTools/` 前缀，工作流里通过 `DOCS_BASE` 指定）。
 
 ## 提交规范
 
