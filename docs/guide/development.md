@@ -281,3 +281,47 @@ py tools/Convert-Woff2ToTtf.py 新字体.woff2 src\WinTools.App\Assets\Fonts\新
 - 逗号后面是回退链，用于字体缺字时（例如生僻符号、Emoji）；
 - 图标仍然使用 `Segoe Fluent Icons`（`App.IconFontFamily`），不要被全局字体覆盖；
 - 新增字体需同时更新 `THIRD-PARTY-NOTICES.md` 的许可声明。
+
+## CI 构建与发布
+
+`.github/workflows/build.yml` 一个文件覆盖两条发布路径：
+
+| 触发方式 | 行为 | 产物去向 |
+| --- | --- | --- |
+| 推送到 `main` | 自动构建（`docs/**`、`*.md` 变更不触发） | 覆盖更新 **beta** 预发布（滚动标签 `beta`） |
+| 手动 `workflow_dispatch`，channel=`release` | 填版本号 → 构建 → **签名** → 校验 | 新建 `v<版本>` 正式 Release |
+| 手动 `workflow_dispatch`，channel=`beta` | 同推送路径，用于演练流水线 | 覆盖更新 beta |
+
+每次构建产出三个文件：
+
+- `WinTools-<版本>-portable-win-x64.exe` —— 便携单文件（自包含）
+- `WinTools-<版本>-framework-win-x64.zip` —— 框架依赖包（内含 `BUILD_INFO.txt`）
+- `SHA256SUMS.txt` —— 校验和（在签名之后生成，所以与下载文件一致）
+
+版本号会写进程序集（`FileVersion` / `ProductVersion`），手动发布时不需要改 `Directory.Build.props`。
+
+### 代码签名
+
+正式版必须带 **Certum 云签名 + 时间戳**，缺凭据时 release 构建直接失败（beta 只警告）。
+签名实现放在 `tools/signing/`，细节见该目录的 `README.md`，需要三个 Repository Secrets：
+
+```
+CERTUM_USERNAME
+CERTUM_OTP_URI
+CERTUM_CERTIFICATE_SHA1
+```
+
+流水线里的顺序是：构建 → 装 SimplySign 并 TOTP 登录 → 签名 → `Get-AuthenticodeSignature` 逐个校验 → 打包 → 计算校验和。
+签名会改变文件哈希，所以**必须先签名再算校验和**，否则用户下载后对不上。
+
+### 手动发一版
+
+```text
+Actions → Build → Run workflow
+  channel: release
+  version: 1.2.3
+  draft:   false
+```
+
+已存在的 `v1.2.3` 会被 `prepare` 作业拒绝（`gh release view` 与 `git ls-remote --tags` 双重检查），不会覆盖历史版本。
+想先看效果再公开，把 `draft` 勾上，Release 会以草稿创建。

@@ -1,0 +1,409 @@
+name: Build
+
+# 一个文件覆盖两条发布路径：
+#   1) 推送到 main              → 自动构建，覆盖更新 beta 预发布（滚动标签 beta）
+#   2) 手动 workflow_dispatch   → 填写版本号，构建并**签名**后发布正式 Release
+#
+# 产物（Windows x64）：
+#   · 便携单文件 WinTools.exe（自包含，解压即用）
+#   · 框架依赖包 zip（需目标机已装 .NET 10 Desktop Runtime）
+#   · SHA256SUMS.txt
+#
+# 代码签名（Certum 云签名 / SimplySign），需要三个 Repository Secrets：
+#   CERTUM_USERNAME              SimplySign 登录账号
+#   CERTUM_OTP_URI               otpauth:// URI（含 TOTP 密钥），用于无人值守登录
+#   CERTUM_CERTIFICATE_SHA1      云证书指纹
+# 三个都齐才签名。正式发布（release）缺签名直接失败；beta 构建缺签名只警告，产物照常发布。
+#
+# 手动发布也可以把 channel 选成 beta，用于演练整条流水线而不占用版本号。
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.github/workflows/docs.yml'
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: '发布目标：release = 正式版（需签名）；beta = 滚动预发布版'
+        type: choice
+        options: [release, beta]
+        default: release
+      version:
+        description: '版本号，例如 1.2.3 或 v1.2.3（channel=release 时必填）'
+        required: false
+        type: string
+      draft:
+        description: 'channel=release 时先以草稿创建，稍后手动公开'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  CERTUM_OTP_URI: ${{ secrets.CERTUM_OTP_URI }}
+  CERTUM_USERNAME: ${{ secrets.CERTUM_USERNAME }}
+  CERTUM_CERTIFICATE_SHA1: ${{ secrets.CERTUM_CERTIFICATE_SHA1 }}
+
+concurrency:
+  # 推送触发的 beta 只保留最新一次；手动发布单独分组，避免被推送取消
+  group: ${{ github.event_name == 'push' && 'wintools-beta' || 'wintools-release' }}
+  cancel-in-progress: ${{ github.event_name == 'push' }}
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # 解析发布目标与版本号
+  # ---------------------------------------------------------------------------
+  prepare:
+    name: 解析版本
+    runs-on: ubuntu-latest
+    outputs:
+      channel: ${{ steps.resolve.outputs.channel }}
+      version: ${{ steps.resolve.outputs.version }}
+      tag: ${{ steps.resolve.outputs.tag }}
+      title: ${{ steps.resolve.outputs.title }}
+      draft: ${{ steps.resolve.outputs.draft }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve
+        id: resolve
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_CHANNEL: ${{ inputs.channel }}
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_DRAFT: ${{ inputs.draft }}
+        run: |
+          set -euo pipefail
+
+          channel="${INPUT_CHANNEL:-beta}"
+          draft="${INPUT_DRAFT:-false}"
+
+          if [[ "$channel" == "release" ]]; then
+            raw="$(printf '%s' "$INPUT_VERSION" | tr -d '[:space:]')"
+            version="${raw#v}"
+            version="${version#V}"
+            if [[ -z "$version" ]]; then
+              echo "::error::channel=release 时必须填写版本号"
+              exit 1
+            fi
+            if [[ ! "$version" =~ ^[0-9]+\.[0-9]+(\.[0-9]+){0,2}(-[0-9A-Za-z.]+)?$ ]]; then
+              echo "::error::版本号格式不对：$version（应形如 1.2.3）"
+              exit 1
+            fi
+            tag="v$version"
+
+            # 版本号唯一性：已存在的 tag / Release 直接拒绝，避免覆盖历史正式版本
+            if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+              echo "::error::Release $tag 已存在，请换一个版本号"
+              exit 1
+            fi
+            if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+              echo "::error::标签 $tag 已存在，请换一个版本号"
+              exit 1
+            fi
+
+            title="WinTools $tag"
+          else
+            # 滚动 beta：基础主次版本取自 Directory.Build.props，末位用构建序号
+            base="$(grep -oP '(?<=<Version>)[^<]+' Directory.Build.props | head -n1)"
+            major_minor="$(printf '%s' "$base" | cut -d. -f1,2)"
+            version="${major_minor}.${{ github.run_number }}"
+            tag="beta"
+            title="Beta Build #${{ github.run_number }}"
+            draft="false"
+          fi
+
+          {
+            echo "channel=$channel"
+            echo "version=$version"
+            echo "tag=$tag"
+            echo "title=$title"
+            echo "draft=$draft"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "发布目标：$channel / $tag / $version"
+
+  # ---------------------------------------------------------------------------
+  # 构建 + 签名
+  # ---------------------------------------------------------------------------
+  build:
+    name: 构建 Windows x64
+    needs: prepare
+    runs-on: windows-latest
+    outputs:
+      artifact: ${{ steps.pack.outputs.artifact }}
+      portable: ${{ steps.pack.outputs.portable }}
+      framework: ${{ steps.pack.outputs.framework }}
+      signed: ${{ steps.sign.outputs.signed }}
+    env:
+      CHANNEL: ${{ needs.prepare.outputs.channel }}
+      VERSION: ${{ needs.prepare.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: 缓存 NuGet
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('Directory.Packages.props', 'src/**/*.csproj') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      - name: 检测签名凭据
+        id: creds
+        shell: pwsh
+        run: |
+          $ok = $env:CERTUM_USERNAME -and $env:CERTUM_OTP_URI -and $env:CERTUM_CERTIFICATE_SHA1
+          "enabled=$($ok.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          if (-not $ok) {
+            if ($env:CHANNEL -eq 'release') {
+              throw '正式发布必须签名，但缺少 CERTUM_USERNAME / CERTUM_OTP_URI / CERTUM_CERTIFICATE_SHA1 Secrets'
+            }
+            Write-Host '::warning title=本次未签名::缺少 Certum Secrets，beta 产物将不带数字签名'
+          } else {
+            Write-Host "Certum 云签名已启用（证书指纹 $env:CERTUM_CERTIFICATE_SHA1）"
+          }
+
+      - name: 编译
+        shell: pwsh
+        run: |
+          # 不带 -r 编译一次，先暴露编译错误；RID 相关的还原交给后面的 publish
+          dotnet build src/WinTools.App/WinTools.App.csproj -c Release
+          if ($LASTEXITCODE -ne 0) { throw 'build 失败' }
+
+      - name: 发布两种形态
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -ExecutionPolicy Bypass -File tools/publish.ps1 -Profile both -Version $env:VERSION
+          if ($LASTEXITCODE -ne 0) { throw '发布失败' }
+
+      - name: 签名产物
+        id: sign
+        if: steps.creds.outputs.enabled == 'true'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $targets = @(
+            'artifacts/publish/portable/WinTools.exe',
+            'artifacts/publish/framework/WinTools.exe',
+            'artifacts/publish/framework/WinTools.dll',
+            'artifacts/publish/framework/WinTools.Core.dll',
+            'artifacts/publish/framework/WinTools.Infrastructure.dll'
+          ) | Where-Object { Test-Path $_ }
+
+          try {
+            # 1) 装 SimplySign Desktop + 注册表预配置（登录框自动弹出、断开后不注销证书）
+            pwsh -NoProfile -ExecutionPolicy Bypass -File tools/signing/Sign-SetupCertum.ps1 -Install -ConfigureRegistry
+            if ($LASTEXITCODE -ne 0) { throw 'SimplySign Desktop 安装或注册表配置失败' }
+
+            # 2) TOTP 自动登录，最多三轮（验证码过期、窗口未就绪都可能偶发失败）
+            $authed = $false
+            for ($i = 1; $i -le 3; $i++) {
+              pwsh -NoProfile -ExecutionPolicy Bypass -File tools/signing/Sign-SetupCertum.ps1 -Connect -Verify -MaxAttempts 2
+              if ($LASTEXITCODE -eq 0) { $authed = $true; break }
+              Write-Host "::warning title=Certum 认证失败::第 $i 次登录未成功，10 秒后重试"
+              Start-Sleep -Seconds 10
+            }
+            if (-not $authed) { throw 'Certum 云签名认证失败（3 次重试都未挂载云证书）' }
+
+            # 3) 签名：证书可用但签名失败时必须失败，避免发布未签名产物
+            $env:WINTOOLS_SIGN_REQUIRED = '1'
+            pwsh -NoProfile -ExecutionPolicy Bypass -File tools/signing/Sign-Windows.ps1 -Path $targets -Extensions .exe,.dll
+            if ($LASTEXITCODE -ne 0) { throw "签名失败（退出码 $LASTEXITCODE）" }
+
+            "signed=true" >> $env:GITHUB_OUTPUT
+          } catch {
+            if ($env:CHANNEL -eq 'release') { throw }
+            Write-Host "::warning title=本次未签名::$($_.Exception.Message)"
+            "signed=false" >> $env:GITHUB_OUTPUT
+          }
+
+      - name: 校验签名
+        if: steps.sign.outputs.signed == 'true'
+        shell: pwsh
+        run: |
+          $expected = ($env:CERTUM_CERTIFICATE_SHA1 -replace '[^0-9a-fA-F]', '').ToUpperInvariant()
+          $targets = @(
+            'artifacts/publish/portable/WinTools.exe',
+            'artifacts/publish/framework/WinTools.exe',
+            'artifacts/publish/framework/WinTools.dll',
+            'artifacts/publish/framework/WinTools.Core.dll',
+            'artifacts/publish/framework/WinTools.Infrastructure.dll'
+          ) | Where-Object { Test-Path $_ }
+
+          $bad = @()
+          foreach ($file in $targets) {
+            $sig = Get-AuthenticodeSignature -LiteralPath $file
+            $thumb = if ($sig.SignerCertificate) { ($sig.SignerCertificate.Thumbprint -replace '[^0-9a-fA-F]', '').ToUpperInvariant() } else { '' }
+            $ok = ($thumb -eq $expected) -and ($sig.Status -eq 'Valid')
+            Write-Host ("{0,-32} {1,-10} {2}" -f (Split-Path $file -Leaf), $sig.Status, $thumb)
+            if (-not $ok) { $bad += $file }
+          }
+          if ($bad.Count) { throw ("以下产物签名不正确（期望指纹 $expected）：`n" + ($bad -join "`n")) }
+          Write-Host "全部 $($targets.Count) 个产物签名校验通过"
+
+      - name: 打包
+        id: pack
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $version = $env:VERSION
+          $channel = $env:CHANNEL
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+
+          if ($channel -eq 'beta') {
+            $portableName = 'WinTools-beta-portable-win-x64.exe'
+            $frameworkName = 'WinTools-beta-framework-win-x64.zip'
+          } else {
+            $portableName = "WinTools-$version-portable-win-x64.exe"
+            $frameworkName = "WinTools-$version-framework-win-x64.zip"
+          }
+
+          Copy-Item 'artifacts/publish/portable/WinTools.exe' (Join-Path 'dist' $portableName) -Force
+
+          # 框架包内附构建信息，便于用户与工单核对
+          $fw = 'artifacts/publish/framework'
+          @(
+            "WinTools $version"
+            "channel : $channel"
+            "commit  : $env:GITHUB_SHA"
+            "ref     : $env:GITHUB_REF_NAME"
+            "run     : $env:GITHUB_SERVER_URL/$env:GITHUB_REPOSITORY/actions/runs/$env:GITHUB_RUN_ID"
+            "signed  : $(if ('${{ steps.sign.outputs.signed }}' -eq 'true') { 'yes' } else { 'no' })"
+          ) | Set-Content -Path (Join-Path $fw 'BUILD_INFO.txt') -Encoding UTF8
+
+          Compress-Archive -Path (Join-Path $fw '*') -DestinationPath (Join-Path 'dist' $frameworkName) -CompressionLevel Optimal
+
+          # 校验和放在所有产物生成之后
+          Get-ChildItem dist -File | Where-Object { $_.Name -ne 'SHA256SUMS.txt' } | ForEach-Object {
+            $hash = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+            "$hash  $($_.Name)"
+          } | Set-Content -Path 'dist/SHA256SUMS.txt' -Encoding UTF8
+
+          Get-ChildItem dist | ForEach-Object { "{0,-48} {1,8:N1} MB" -f $_.Name, ($_.Length / 1MB) }
+
+          "artifact=wintools-$channel" >> $env:GITHUB_OUTPUT
+          "portable=$portableName" >> $env:GITHUB_OUTPUT
+          "framework=$frameworkName" >> $env:GITHUB_OUTPUT
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.pack.outputs.artifact }}
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 14
+
+  # ---------------------------------------------------------------------------
+  # 发布
+  # ---------------------------------------------------------------------------
+  publish:
+    name: 发布
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: 下载产物
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build.outputs.artifact }}
+          path: dist
+
+      - name: 发布 beta
+        if: needs.prepare.outputs.channel == 'beta'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+          PORTABLE: ${{ needs.build.outputs.portable }}
+          FRAMEWORK: ${{ needs.build.outputs.framework }}
+          SIGNED: ${{ needs.build.outputs.signed }}
+        run: |
+          set -euo pipefail
+          REPO="$GITHUB_REPOSITORY"
+          TAG="beta"
+          TITLE="${{ needs.prepare.outputs.title }}"
+
+          cat > notes.md <<EOF
+          每次推送到 \`main\` 都会自动重建并覆盖本预发布版。版本号 \`$VERSION\`（构建 #${{ github.run_number }}）。
+
+          | 文件 | 说明 |
+          | --- | --- |
+          | \`$PORTABLE\` | 便携单文件，解压即用，无需安装 .NET |
+          | \`$FRAMEWORK\` | 框架依赖包，需已安装 .NET 10 Desktop Runtime |
+          | \`SHA256SUMS.txt\` | 校验和 |
+
+          - 数字签名：$( [[ "$SIGNED" == "true" ]] && echo '已签名（Certum 云签名）' || echo '未签名（本次缺少签名凭据）' )
+          - 提交：\`$GITHUB_SHA\`
+          - 构建流水线：[#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+          > 预览版本，可能不稳定，请勿用于生产环境。
+          EOF
+
+          if gh release view "$TAG" --repo "$REPO" >/dev/null 2>&1; then
+            # 已有 beta：把滚动标签移到本次提交并刷新说明；移动失败才退回删除重建，
+            # 这样后续步骤失败时旧的 beta 产物仍然可用
+            if gh api -X PATCH "repos/$REPO/git/refs/tags/$TAG" -f sha="$GITHUB_SHA" -F force=true >/dev/null 2>&1; then
+              gh release edit "$TAG" --repo "$REPO" --title "$TITLE" --notes-file notes.md --prerelease
+            else
+              gh release delete "$TAG" --repo "$REPO" --yes
+              gh api -X DELETE "repos/$REPO/git/refs/tags/$TAG" >/dev/null 2>&1 || true
+              gh release create "$TAG" --repo "$REPO" --prerelease --target "$GITHUB_SHA" \
+                --title "$TITLE" --notes-file notes.md
+            fi
+          else
+            gh release create "$TAG" --repo "$REPO" --prerelease --target "$GITHUB_SHA" \
+              --title "$TITLE" --notes-file notes.md
+          fi
+
+          # 资产名固定，--clobber 直接替换上一版
+          gh release upload "$TAG" dist/* --repo "$REPO" --clobber
+
+      - name: 发布正式版
+        if: needs.prepare.outputs.channel == 'release'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ needs.prepare.outputs.tag }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+          DRAFT: ${{ needs.prepare.outputs.draft }}
+          PORTABLE: ${{ needs.build.outputs.portable }}
+          FRAMEWORK: ${{ needs.build.outputs.framework }}
+        run: |
+          set -euo pipefail
+          REPO="$GITHUB_REPOSITORY"
+
+          cat > notes.md <<EOF
+          WinTools $VERSION
+
+          | 文件 | 说明 |
+          | --- | --- |
+          | \`$PORTABLE\` | 便携单文件，解压即用，无需安装 .NET |
+          | \`$FRAMEWORK\` | 框架依赖包，需已安装 .NET 10 Desktop Runtime |
+          | \`SHA256SUMS.txt\` | 校验和 |
+
+          - 数字签名：已签名（Certum 云签名，带时间戳），可用 \`Get-AuthenticodeSignature\` 校验
+          - 提交：\`$GITHUB_SHA\`
+          - 构建流水线：[#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+          **环境要求**：Windows 10 1809 及以上 / Windows 11，x64。部分功能（清理、服务、驱动、备份还原）需要管理员权限。
+
+          完整变更见提交历史：${{ github.server_url }}/${{ github.repository }}/commits/$TAG
+          EOF
+
+          args=(--repo "$REPO" --title "WinTools $TAG" --notes-file notes.md --target "$GITHUB_SHA")
+          if [[ "$DRAFT" == "true" ]]; then args+=(--draft); fi
+          gh release create "$TAG" "${args[@]}"
+
+          gh release upload "$TAG" dist/* --repo "$REPO" --clobber
+          echo "已发布：${{ github.server_url }}/${{ github.repository }}/releases/tag/$TAG"

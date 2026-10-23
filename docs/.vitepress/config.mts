@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitepress'
 
-// 仓库名 WinTools → GitHub Pages 项目站点路径为 /WinTools/
-const base = '/WinTools/'
+// 部署路径。默认站点挂在域名根目录（如 https://wtools.opkg.cn/）；
+// 若发布到 GitHub Pages 项目站点（/WinTools/），构建时设置环境变量 DOCS_BASE=/WinTools/
+const base = process.env.DOCS_BASE || '/'
 const repo = 'https://github.com/PIKACHUIM/WinTools'
 
 export default defineConfig({
