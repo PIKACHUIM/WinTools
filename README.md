@@ -38,7 +38,7 @@ Windows 上那些零散的维护操作，装进一个窗口里做完。
 
 ### 垃圾清理
 
-按磁盘扫描，19 个分类、约 480 条规则，覆盖系统临时目录、Windows 更新缓存、各类日志与转储、浏览器缓存、开发工具缓存（npm / pip / NuGet / Gradle / Docker 等）以及 150 多款常用软件的缓存目录。
+按磁盘扫描，23 个分类、1623 条规则，覆盖系统临时目录、Windows 更新缓存、各类日志与转储、浏览器缓存、开发工具缓存（npm / pip / NuGet / Gradle / Docker 等）以及 150 多款常用软件的缓存目录。
 
 - 结果按分类折叠，每项标出大小和安全等级，勾选后一次清完。
 - 有进程占用的文件会跳过并记下来，不会因为一个 dll 卡住整轮清理。
@@ -182,7 +182,7 @@ Windows 上那些零散的维护操作，装进一个窗口里做完。
 | 方面 | 做法 |
 | --- | --- |
 | UI | WPF + CommunityToolkit.Mvvm，`net10.0-windows`。控件模板全部手写，不用第三方 UI 框架 |
-| 依赖 | 4 个 NuGet 包：CommunityToolkit.Mvvm、Microsoft.Extensions.DependencyInjection、LiveChartsCore.SkiaSharpView.WPF；其余控件模板全部手写 |
+| 依赖 | 2 个 NuGet 包：CommunityToolkit.Mvvm、Microsoft.Extensions.DependencyInjection；图表与控件全部自绘 |
 | 系统调用 | 一律 P/Invoke、COM 后期绑定（WUA / 计划任务 / WMI）和注册表；不引 WinRT 投影，也不用 `System.Management` |
 | 长列表 | `ListBox` + 虚拟化回收，三百多个服务、一百多个驱动滚动不掉帧 |
 | 菜单 | 数据驱动：`Rules/modules.json` 定义一级/二级菜单和 12 种语言的标题，加模块不用改外壳代码 |

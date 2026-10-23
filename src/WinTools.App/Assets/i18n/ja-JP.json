@@ -236,5 +236,14 @@
 
   "Updates.SearchIdle": "下のボタンで、この PC に適用できる更新プログラムをオンラインで確認します",
   "Updates.SearchAction": "更新プログラムを検索",
-  "Updates.Searching": "Windows Update に接続しています…"
+  "Updates.Searching": "Windows Update に接続しています…",
+
+  "Cleanup.DoneTitle": "クリーンアップ完了",
+  "Cleanup.Continue": "残りを整理する",
+  "Cleanup.Freed": "解放済み",
+  "Cleanup.Releasable": "解放可能",
+  "Cleanup.SelectedOfTotal": "選択済み / 対象",
+  "Cleanup.ConfirmClean": "{0}（{1} 件）を削除します。使用中のファイルは再起動後に削除されます。",
+  "Cleanup.Remaining": "あと {0} 整理できます",
+  "Cleanup.DeepScan": "詳細スキャン"
 }

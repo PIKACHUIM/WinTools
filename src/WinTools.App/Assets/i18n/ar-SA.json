@@ -236,5 +236,14 @@
 
   "Updates.SearchIdle": "انقر الزر أدناه للبحث عن التحديثات المتاحة عبر الإنترنت",
   "Updates.SearchAction": "البحث عن تحديثات",
-  "Updates.Searching": "جارٍ الاتصال بـ Windows Update…"
+  "Updates.Searching": "جارٍ الاتصال بـ Windows Update…",
+
+  "Cleanup.DoneTitle": "اكتمل التنظيف",
+  "Cleanup.Continue": "تنظيف الباقي",
+  "Cleanup.Freed": "تم تحرير",
+  "Cleanup.Releasable": "قابل للتحرير",
+  "Cleanup.SelectedOfTotal": "المحدد / القابل للتحرير",
+  "Cleanup.ConfirmClean": "سيتم حذف {0} ({1} عنصر). الملفات قيد الاستخدام ستُحذف بعد إعادة التشغيل.",
+  "Cleanup.Remaining": "يمكن تحرير {0} إضافية",
+  "Cleanup.DeepScan": "فحص متعمق"
 }

@@ -296,5 +296,14 @@
 
   "Updates.SearchIdle": "點擊下方按鈕，連線檢查目前系統可安裝的更新",
   "Updates.SearchAction": "搜尋更新",
-  "Updates.Searching": "正在連線 Windows Update 服務…"
+  "Updates.Searching": "正在連線 Windows Update 服務…",
+
+  "Cleanup.DoneTitle": "清理完成",
+  "Cleanup.Continue": "繼續清理剩餘項目",
+  "Cleanup.Freed": "已釋放",
+  "Cleanup.Releasable": "可釋放",
+  "Cleanup.SelectedOfTotal": "已選 / 可清理",
+  "Cleanup.ConfirmClean": "將清理 {0}（{1} 項）。被佔用的檔案會登記為重新啟動後刪除。",
+  "Cleanup.Remaining": "還有 {0} 可以繼續清理",
+  "Cleanup.DeepScan": "深度掃描"
 }

@@ -31,9 +31,6 @@ py tools/Convert-Woff2ToTtf.py 源文件.woff2 src\WinTools.App\Assets\Fonts\Map
 | --- | --- |
 | CommunityToolkit.Mvvm | MIT |
 | Microsoft.Extensions.DependencyInjection | MIT |
-| LiveChartsCore.SkiaSharpView.WPF（2.0.5） | MIT |
-| SkiaSharp（随 LiveCharts 引入） | MIT |
-| HarfBuzzSharp（随 SkiaSharp 引入） | MIT |
 | OpenTK（随 LiveCharts 引入） | MIT |
 
 ## 文档站

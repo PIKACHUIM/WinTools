@@ -297,5 +297,14 @@
 
   "Updates.SearchIdle": "Check online for updates available to this PC",
   "Updates.SearchAction": "Search for updates",
-  "Updates.Searching": "Connecting to Windows Update…"
+  "Updates.Searching": "Connecting to Windows Update…",
+
+  "Cleanup.DoneTitle": "Cleanup complete",
+  "Cleanup.Continue": "Clean up the rest",
+  "Cleanup.Freed": "Freed",
+  "Cleanup.Releasable": "Reclaimable",
+  "Cleanup.SelectedOfTotal": "Selected / reclaimable",
+  "Cleanup.ConfirmClean": "{0} will be removed ({1} items). Files in use are scheduled for deletion after a restart.",
+  "Cleanup.Remaining": "{0} more can be reclaimed",
+  "Cleanup.DeepScan": "Deep scan"
 }

@@ -236,5 +236,14 @@
 
   "Updates.SearchIdle": "Mit der Schaltfläche online nach verfügbaren Updates suchen",
   "Updates.SearchAction": "Nach Updates suchen",
-  "Updates.Searching": "Verbindung mit Windows Update wird hergestellt …"
+  "Updates.Searching": "Verbindung mit Windows Update wird hergestellt …",
+
+  "Cleanup.DoneTitle": "Bereinigung abgeschlossen",
+  "Cleanup.Continue": "Rest bereinigen",
+  "Cleanup.Freed": "Freigegeben",
+  "Cleanup.Releasable": "Freigebbar",
+  "Cleanup.SelectedOfTotal": "Ausgewählt / verfügbar",
+  "Cleanup.ConfirmClean": "{0} wird entfernt ({1} Elemente). Belegte Dateien werden nach einem Neustart gelöscht.",
+  "Cleanup.Remaining": "Weitere {0} können bereinigt werden",
+  "Cleanup.DeepScan": "Tiefenscan"
 }

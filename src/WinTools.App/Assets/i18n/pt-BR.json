@@ -236,5 +236,14 @@
 
   "Updates.SearchIdle": "Clique abaixo para procurar atualizações disponíveis online",
   "Updates.SearchAction": "Pesquisar atualizações",
-  "Updates.Searching": "Conectando ao Windows Update…"
+  "Updates.Searching": "Conectando ao Windows Update…",
+
+  "Cleanup.DoneTitle": "Limpeza concluída",
+  "Cleanup.Continue": "Limpar o restante",
+  "Cleanup.Freed": "Liberado",
+  "Cleanup.Releasable": "Recuperável",
+  "Cleanup.SelectedOfTotal": "Selecionado / recuperável",
+  "Cleanup.ConfirmClean": "{0} será removido ({1} itens). Arquivos em uso serão excluídos após reiniciar.",
+  "Cleanup.Remaining": "Mais {0} podem ser recuperados",
+  "Cleanup.DeepScan": "Verificação profunda"
 }

@@ -36,97 +36,162 @@
             <Setter Property="Margin" Value="0,2,0,0" />
         </Style>
 
-        <!-- 多值硬件：每条一行，左侧小圆点 -->
+        <!-- 行尾复制按钮：默认半透明，悬停变实，点击复制该条 -->
+        <Style x:Key="CopyButton" TargetType="Button">
+            <Setter Property="Width" Value="22" />
+            <Setter Property="Height" Value="22" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Content" Value="&#xE8C8;" />
+            <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Opacity" Value="0.32" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Secondary}" />
+            <Setter Property="ToolTip" Value="{Binding DataContext.CopyHint,
+                                               RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="6" Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource App.Hover}" />
+                                <Setter Property="Opacity" Value="1" />
+                                <Setter Property="Foreground" Value="{DynamicResource App.Accent}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 多值硬件：每条一行，左侧小圆点，右侧复制 -->
         <DataTemplate DataType="{x:Type vm:HardwareLine}">
             <Grid Margin="0,2,0,2">
-                <Border Width="4" Height="4" CornerRadius="2" VerticalAlignment="Top"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Width="4" Height="4" CornerRadius="2" VerticalAlignment="Top"
                         Margin="2,8,0,0" HorizontalAlignment="Left"
                         Background="{DynamicResource App.Text.Tertiary}" />
-                <StackPanel Margin="16,0,0,0">
+
+                <StackPanel Grid.Column="1" Margin="16,0,6,0">
                     <TextBlock Text="{Binding Primary}" Style="{StaticResource InfoPrimary}" />
                     <TextBlock Text="{Binding Secondary}" Style="{StaticResource InfoSecondary}"
                                Visibility="{Binding Secondary, Converter={StaticResource StringToVisibility}}" />
                 </StackPanel>
+
+                <Button Grid.Column="2" Style="{StaticResource CopyButton}" VerticalAlignment="Top"
+                        Command="{Binding DataContext.CopyLineCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding}" />
             </Grid>
         </DataTemplate>
 
         <!-- 分区：固定宽度轨道 + 比例填充（不用 ProgressBar，避免 ItemsControl 里的测量死循环） -->
         <DataTemplate DataType="{x:Type vm:VolumeRow}">
-            <StackPanel Margin="0,3,0,7">
-                <Grid Width="360" HorizontalAlignment="Left">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+            <Grid Margin="0,3,0,7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Style="{StaticResource BodyText}" FontSize="12" TextTrimming="CharacterEllipsis">
-                        <Run Text="{Binding Label, Mode=OneWay}" />
-                        <Run Text="   " />
-                        <Run Text="{Binding SizeText, Mode=OneWay}" />
-                    </TextBlock>
+                <StackPanel Grid.Column="0" Width="360" HorizontalAlignment="Left">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="1" Text="{Binding PercentText}" Margin="10,0,0,0">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock" BasedOn="{StaticResource CaptionText}">
-                                <Setter Property="Foreground" Value="{DynamicResource App.Accent}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsCritical}" Value="True">
-                                        <Setter Property="Foreground" Value="{DynamicResource App.Danger}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Grid>
+                        <TextBlock Grid.Column="0" Style="{StaticResource BodyText}" FontSize="12" TextTrimming="CharacterEllipsis">
+                            <Run Text="{Binding Label, Mode=OneWay}" />
+                            <Run Text="   " />
+                            <Run Text="{Binding SizeText, Mode=OneWay}" />
+                        </TextBlock>
 
-                <Border Width="300" Height="5" CornerRadius="3" Margin="0,6,0,0" HorizontalAlignment="Left"
-                        Background="{DynamicResource App.Track}" ClipToBounds="True">
-                    <Border HorizontalAlignment="Left" CornerRadius="3" Width="{Binding BarWidth}">
-                        <Border.Style>
-                            <Style TargetType="Border">
-                                <Setter Property="Background" Value="{DynamicResource App.Accent}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsCritical}" Value="True">
-                                        <Setter Property="Background" Value="{DynamicResource App.Danger}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
+                        <TextBlock Grid.Column="1" Text="{Binding PercentText}" Margin="10,0,0,0">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource CaptionText}">
+                                    <Setter Property="Foreground" Value="{DynamicResource App.Accent}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCritical}" Value="True">
+                                            <Setter Property="Foreground" Value="{DynamicResource App.Danger}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <Border Width="300" Height="5" CornerRadius="3" Margin="0,6,0,0" HorizontalAlignment="Left"
+                            Background="{DynamicResource App.Track}" ClipToBounds="True">
+                        <Border HorizontalAlignment="Left" CornerRadius="3" Width="{Binding BarWidth}">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="{DynamicResource App.Accent}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCritical}" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource App.Danger}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
                     </Border>
-                </Border>
-            </StackPanel>
+                </StackPanel>
+
+                <Button Grid.Column="1" Style="{StaticResource CopyButton}" VerticalAlignment="Top" Margin="8,0,0,0"
+                        Command="{Binding DataContext.CopyLineCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding}" />
+            </Grid>
         </DataTemplate>
 
         <!-- 网卡：名称 + 状态点 + 速率/IP + MAC，各占一行 -->
         <DataTemplate DataType="{x:Type vm:NetworkLine}">
-            <StackPanel Margin="0,3,0,5">
-                <StackPanel Orientation="Horizontal">
-                    <Border Width="7" Height="7" CornerRadius="3.5" VerticalAlignment="Center">
-                        <Border.Style>
-                            <Style TargetType="Border">
-                                <Setter Property="Background" Value="{DynamicResource App.BorderStrong}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsConnected}" Value="True">
-                                        <Setter Property="Background" Value="{DynamicResource App.Success}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-                    </Border>
+            <Grid Margin="0,3,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-                    <!-- 水平排列里不能带 TextWrapping=Wrap：无限宽度 + 换行会触发测量死循环 -->
-                    <TextBlock Text="{Binding Name}" Style="{StaticResource InfoPrimary}"
-                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Margin="8,0,0,0" />
-                    <TextBlock Text="{Binding Status}" Style="{StaticResource CaptionText}"
-                               Margin="8,0,0,0" VerticalAlignment="Center" />
+                <StackPanel Grid.Column="0">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="7" Height="7" CornerRadius="3.5" VerticalAlignment="Center">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="{DynamicResource App.BorderStrong}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource App.Success}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
+
+                        <!-- 水平排列里不能带 TextWrapping=Wrap：无限宽度 + 换行会触发测量死循环 -->
+                        <TextBlock Text="{Binding Name}" Style="{StaticResource InfoPrimary}"
+                                   TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Margin="8,0,0,0" />
+                        <TextBlock Text="{Binding Status}" Style="{StaticResource CaptionText}"
+                                   Margin="8,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <TextBlock Text="{Binding Detail}" Style="{StaticResource InfoSecondary}" Margin="15,1,0,0"
+                               Visibility="{Binding Detail, Converter={StaticResource StringToVisibility}}" />
+                    <TextBlock Text="{Binding Mac}" Style="{StaticResource InfoSecondary}" Margin="15,0,0,0"
+                               FontSize="11" Foreground="{DynamicResource App.Text.Tertiary}"
+                               Visibility="{Binding Mac, Converter={StaticResource StringToVisibility}}" />
                 </StackPanel>
 
-                <TextBlock Text="{Binding Detail}" Style="{StaticResource InfoSecondary}" Margin="15,1,0,0"
-                           Visibility="{Binding Detail, Converter={StaticResource StringToVisibility}}" />
-                <TextBlock Text="{Binding Mac}" Style="{StaticResource InfoSecondary}" Margin="15,0,0,0"
-                           FontSize="11" Foreground="{DynamicResource App.Text.Tertiary}"
-                           Visibility="{Binding Mac, Converter={StaticResource StringToVisibility}}" />
-            </StackPanel>
+                <Button Grid.Column="1" Style="{StaticResource CopyButton}" VerticalAlignment="Top"
+                        Command="{Binding DataContext.CopyLineCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding}" />
+            </Grid>
         </DataTemplate>
     </UserControl.Resources>
 
@@ -145,9 +210,12 @@
                     </TextBlock>
                 </StackPanel>
 
-                <Button Content="{Binding RefreshLabel}" Style="{StaticResource GhostButton}"
-                        Command="{Binding RefreshCommand}" Padding="14,7"
-                        HorizontalAlignment="Right" VerticalAlignment="Top" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Button Content="{Binding CopyAllLabel}" Style="{StaticResource GhostButton}"
+                            Command="{Binding CopyAllCommand}" Padding="14,7" Margin="0,0,8,0" />
+                    <Button Content="{Binding RefreshLabel}" Style="{StaticResource GhostButton}"
+                            Command="{Binding RefreshCommand}" Padding="14,7" />
+                </StackPanel>
             </Grid>
 
             <!-- 实时占用 -->
@@ -240,22 +308,46 @@
 
                     <!-- 系统 -->
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding SystemLabel}" Style="{StaticResource InfoLabel}" />
-                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,14">
-                        <TextBlock Text="{Binding OsText}" Style="{StaticResource InfoPrimary}" />
-                        <TextBlock Text="{Binding OsDetailText}" Style="{StaticResource InfoSecondary}" />
-                    </StackPanel>
+                    <Grid Grid.Row="0" Grid.Column="1" Margin="0,0,0,14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="{Binding OsText}" Style="{StaticResource InfoPrimary}" />
+                            <TextBlock Text="{Binding OsDetailText}" Style="{StaticResource InfoSecondary}" />
+                        </StackPanel>
+                        <Button Grid.Column="1" Style="{StaticResource CopyButton}" VerticalAlignment="Top"
+                                Command="{Binding CopyLineCommand}" CommandParameter="{Binding OsText}" />
+                    </Grid>
 
                     <!-- 主板 -->
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding BoardLabel}" Style="{StaticResource InfoLabel}" />
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding BoardText}"
-                               Style="{StaticResource InfoPrimary}" Margin="0,0,0,14" />
+                    <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,0,14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding BoardText}" Style="{StaticResource InfoPrimary}" />
+                        <Button Grid.Column="1" Style="{StaticResource CopyButton}" VerticalAlignment="Top"
+                                Command="{Binding CopyLineCommand}" CommandParameter="{Binding BoardText}" />
+                    </Grid>
 
                     <!-- 处理器 -->
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CpuLabel}" Style="{StaticResource InfoLabel}" />
-                    <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,0,0,14">
-                        <TextBlock Text="{Binding CpuText}" Style="{StaticResource InfoPrimary}" />
-                        <TextBlock Text="{Binding CpuDetailText}" Style="{StaticResource InfoSecondary}" />
-                    </StackPanel>
+                    <Grid Grid.Row="2" Grid.Column="1" Margin="0,0,0,14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="{Binding CpuText}" Style="{StaticResource InfoPrimary}" />
+                            <TextBlock Text="{Binding CpuDetailText}" Style="{StaticResource InfoSecondary}" />
+                        </StackPanel>
+                        <Button Grid.Column="1" Style="{StaticResource CopyButton}" VerticalAlignment="Top"
+                                Command="{Binding CopyLineCommand}"
+                                CommandParameter="{Binding CpuText}" />
+                    </Grid>
 
                     <!-- 显卡 -->
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding GraphicsLabel}" Style="{StaticResource InfoLabel}" />

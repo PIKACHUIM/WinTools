@@ -164,3 +164,24 @@ public sealed class NullToCollapsedConverter : IValueConverter
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         => throw new NotSupportedException();
 }
+
+/// <summary>百分比 → 像素宽度（value * parameter / 100）：给固定宽度的迷你条用。</summary>
+public sealed class PercentToWidthConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        try
+        {
+            var percent = value is null ? 0d : System.Convert.ToDouble(value);
+            var max = parameter is null ? 100d : System.Convert.ToDouble(parameter);
+            return Math.Clamp(percent, 0d, 100d) * max / 100d;
+        }
+        catch
+        {
+            return 0d;
+        }
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => throw new NotSupportedException();
+}

@@ -297,5 +297,14 @@
 
   "Updates.SearchIdle": "点击下方按钮，联网检查当前系统可安装的更新",
   "Updates.SearchAction": "搜索更新",
-  "Updates.Searching": "正在连接 Windows 更新服务…"
+  "Updates.Searching": "正在连接 Windows 更新服务…",
+
+  "Cleanup.DoneTitle": "清理完成",
+  "Cleanup.Continue": "继续清理剩余项",
+  "Cleanup.Freed": "已释放",
+  "Cleanup.Releasable": "可释放",
+  "Cleanup.SelectedOfTotal": "已选 / 可清理",
+  "Cleanup.ConfirmClean": "将清理 {0}（{1} 项）。被占用的文件会登记为重启后删除。",
+  "Cleanup.Remaining": "还有 {0} 可以继续清理",
+  "Cleanup.DeepScan": "深度扫描"
 }

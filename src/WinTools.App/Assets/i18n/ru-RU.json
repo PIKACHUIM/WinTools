@@ -236,5 +236,14 @@
 
   "Updates.SearchIdle": "Нажмите кнопку, чтобы проверить доступные обновления в сети",
   "Updates.SearchAction": "Найти обновления",
-  "Updates.Searching": "Подключение к Центру обновления Windows…"
+  "Updates.Searching": "Подключение к Центру обновления Windows…",
+
+  "Cleanup.DoneTitle": "Очистка завершена",
+  "Cleanup.Continue": "Очистить остальное",
+  "Cleanup.Freed": "Освобождено",
+  "Cleanup.Releasable": "Можно освободить",
+  "Cleanup.SelectedOfTotal": "Выбрано / доступно",
+  "Cleanup.ConfirmClean": "Будет удалено {0} ({1} шт.). Занятые файлы удалятся после перезагрузки.",
+  "Cleanup.Remaining": "Можно освободить ещё {0}",
+  "Cleanup.DeepScan": "Глубокая проверка"
 }

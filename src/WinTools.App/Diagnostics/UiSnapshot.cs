@@ -17,6 +17,9 @@ namespace WinTools.App.Diagnostics;
 /// </summary>
 internal static class UiSnapshot
 {
+    /// <summary>页面名带 :scan 后缀时，截图前先触发一次扫描。</summary>
+    private static bool _scanShot;
+
     private static readonly string[] Pages =
     [
         "Dashboard",
@@ -73,6 +76,12 @@ internal static class UiSnapshot
 
         DoEvents(120);
 
+        if (only is not null && only.EndsWith(":scan", StringComparison.OrdinalIgnoreCase))
+        {
+            _scanShot = true;
+            only = only[..^5];
+        }
+
         var pages = string.IsNullOrWhiteSpace(only)
             ? Pages
             : Pages.Where(p => p.Equals(only, StringComparison.OrdinalIgnoreCase)).ToArray();
@@ -128,6 +137,20 @@ internal static class UiSnapshot
         content.Arrange(new Rect(0, 0, width, height));
         Pump(window);
         WaitForData(window, shell);
+
+        // 需要看「扫描完成」样式的页面：WINTOOLS_SHOT_SCAN=1 时自动触发一次扫描
+        if (_scanShot && shell.CurrentPage is CleanupViewModel cleanup && cleanup.IsIdlePhase)
+        {
+            cleanup.ScanCommand.Execute(null);
+            var scanDeadline = Environment.TickCount64 + 60_000;
+            while (Environment.TickCount64 < scanDeadline && !cleanup.IsReadyPhase)
+            {
+                window.Dispatcher.Invoke(() => { }, DispatcherPriority.Background);
+                Thread.Sleep(120);
+            }
+
+            Thread.Sleep(900);
+        }
 
         // 等待期间页面内容可能已切换，需重新布局一次再渲染
         content.Measure(new Size(width, height));
@@ -202,6 +225,12 @@ internal static class UiSnapshot
                 {
                     break;
                 }
+            }
+            else if (shell.CurrentPage is CleanupViewModel { IsIdlePhase: true })
+            {
+                // 环形图有入场动画，等它画完再截图，否则拍到空环
+                Thread.Sleep(3200);
+                break;
             }
             else
             {
