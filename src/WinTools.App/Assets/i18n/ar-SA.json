@@ -245,5 +245,26 @@
   "Cleanup.SelectedOfTotal": "المحدد / القابل للتحرير",
   "Cleanup.ConfirmClean": "سيتم حذف {0} ({1} عنصر). الملفات قيد الاستخدام ستُحذف بعد إعادة التشغيل.",
   "Cleanup.Remaining": "يمكن تحرير {0} إضافية",
-  "Cleanup.DeepScan": "فحص متعمق"
+  "Cleanup.DeepScan": "فحص متعمق",
+
+  "Edition.Home": "المنزلية",
+  "Edition.HomeSingleLanguage": "المنزلية أحادية اللغة",
+  "Edition.HomeChina": "المنزلية الصينية",
+  "Edition.Professional": "الاحترافية",
+  "Edition.ProfessionalWorkstation": "الاحترافية لمحطات العمل",
+  "Edition.Enterprise": "المؤسسية",
+  "Edition.Education": "التعليمية",
+
+  "Feat.Build": "البنية",
+  "Feat.PreferEdition": "الإصدار الهدف",
+  "Feat.NoActivationHint": "يبدّل التبديل الإصدار فقط ولا ينشّط النظام؛ التنشيط يحتاج ترخيصك. سيتم تشغيل معالج الإعداد وإعادة التشغيل.",
+  "Feat.ChangeConfirm": "سيتم تبديل الإصدار إلى \"{0}\"",
+  "Feat.ChangeStarted": "تم تشغيل معالج الإعداد؛ اتبع التعليمات لإكمال التبديل",
+
+  "Flag.Export": "تصدير",
+  "Flag.Import": "استيراد",
+  "Flag.Reset": "إعادة تعيين",
+  "Flag.ResetConfirm": "ستتم إزالة جميع التجاوزات ({0}) واستعادة الإعدادات الافتراضية.",
+  "Flag.Imported": "تم الاستيراد",
+  "Flag.ResetDone": "تمت إعادة التعيين"
 }

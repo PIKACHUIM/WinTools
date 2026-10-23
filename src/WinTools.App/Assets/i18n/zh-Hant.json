@@ -305,5 +305,26 @@
   "Cleanup.SelectedOfTotal": "已選 / 可清理",
   "Cleanup.ConfirmClean": "將清理 {0}（{1} 項）。被佔用的檔案會登記為重新啟動後刪除。",
   "Cleanup.Remaining": "還有 {0} 可以繼續清理",
-  "Cleanup.DeepScan": "深度掃描"
+  "Cleanup.DeepScan": "深度掃描",
+
+  "Edition.Home": "家用版",
+  "Edition.HomeSingleLanguage": "家用單語言版",
+  "Edition.HomeChina": "家用中文版",
+  "Edition.Professional": "專業版",
+  "Edition.ProfessionalWorkstation": "專業工作站版",
+  "Edition.Enterprise": "企業版",
+  "Edition.Education": "教育版",
+
+  "Feat.Build": "組建",
+  "Feat.PreferEdition": "目標通路",
+  "Feat.NoActivationHint": "切換只更換系統版本，不會啟用作業系統；啟用仍需你自己的授權。切換過程會呼叫系統自帶的安裝精靈並重新啟動。",
+  "Feat.ChangeConfirm": "將把系統通路切換為「{0}」",
+  "Feat.ChangeStarted": "已呼叫系統安裝精靈，請依提示完成切換",
+
+  "Flag.Export": "匯出",
+  "Flag.Import": "匯入",
+  "Flag.Reset": "重設",
+  "Flag.ResetConfirm": "將刪除全部 {0} 項功能覆寫，恢復系統預設行為。",
+  "Flag.Imported": "已匯入",
+  "Flag.ResetDone": "已重設"
 }

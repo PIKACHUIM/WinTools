@@ -1,4 +1,5 @@
 using System.Globalization;
+using WinTools.App.Localization;
 using System.Windows;
 using System.Windows.Data;
 
@@ -180,6 +181,25 @@ public sealed class PercentToWidthConverter : IValueConverter
         {
             return 0d;
         }
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => throw new NotSupportedException();
+}
+
+/// <summary>渠道 Id → 本地化名称（Edition.&lt;Id&gt;），缺键时退回 Id。</summary>
+public sealed class EditionNameConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        if (value is null)
+        {
+            return string.Empty;
+        }
+
+        var key = "Edition." + value;
+        var text = Loc.T(key);
+        return string.IsNullOrWhiteSpace(text) || text == key ? value.ToString()! : text;
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

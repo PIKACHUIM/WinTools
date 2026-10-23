@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
@@ -134,6 +135,9 @@ public abstract partial class SectionViewModelBase : ObservableObject, ILocaliza
 
     [ObservableProperty]
     private ResultSummary? _result;
+
+    /// <summary>工具栏上的附加动作（导出、导入、重置等），按顺序渲染在主操作左侧。</summary>
+    public ObservableCollection<ToolbarAction> ExtraActions { get; } = [];
 
     public string SearchHint => Loc.T("Common.Search");
 
@@ -348,3 +352,5 @@ public abstract partial class SectionViewModelBase : ObservableObject, ILocaliza
         OnPropertyChanged(nameof(LoadFailedText));
     }
 }
+/// <summary>工具栏附加动作：一个文字按钮 + 一条命令。</summary>
+public sealed record ToolbarAction(string Label, System.Windows.Input.ICommand Command);

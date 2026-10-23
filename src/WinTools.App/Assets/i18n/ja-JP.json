@@ -245,5 +245,26 @@
   "Cleanup.SelectedOfTotal": "選択済み / 対象",
   "Cleanup.ConfirmClean": "{0}（{1} 件）を削除します。使用中のファイルは再起動後に削除されます。",
   "Cleanup.Remaining": "あと {0} 整理できます",
-  "Cleanup.DeepScan": "詳細スキャン"
+  "Cleanup.DeepScan": "詳細スキャン",
+
+  "Edition.Home": "Home",
+  "Edition.HomeSingleLanguage": "Home Single Language",
+  "Edition.HomeChina": "Home China",
+  "Edition.Professional": "Pro",
+  "Edition.ProfessionalWorkstation": "Pro for Workstations",
+  "Edition.Enterprise": "Enterprise",
+  "Edition.Education": "Education",
+
+  "Feat.Build": "ビルド",
+  "Feat.PreferEdition": "対象エディション",
+  "Feat.NoActivationHint": "切り替えはエディションのみを変更し、ライセンス認証は行いません。認証にはご自身のライセンスが必要です。切り替え時にセットアップ ウィザードが起動し再起動します。",
+  "Feat.ChangeConfirm": "エディションを「{0}」に切り替えます",
+  "Feat.ChangeStarted": "セットアップ ウィザードを起動しました。画面の指示に従ってください",
+
+  "Flag.Export": "エクスポート",
+  "Flag.Import": "インポート",
+  "Flag.Reset": "リセット",
+  "Flag.ResetConfirm": "{0} 件の上書きを削除し、システム既定に戻します。",
+  "Flag.Imported": "インポートしました",
+  "Flag.ResetDone": "リセット完了"
 }

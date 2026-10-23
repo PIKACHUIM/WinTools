@@ -26,7 +26,12 @@ internal static class UiSnapshot
         "Cleanup",
         "Optimize",
         "Features.SystemFeatures",
+        "Features.EditionSwitch",
+        "Updates.Installed",
         "Updates.Available",
+        "Updates.FeatureFlags",
+        "Startup.StartupItems",
+        "Startup.ScheduledTasks",
         "Startup.Services",
         "Components.SecurityCenter",
         "Components.Store",
@@ -219,9 +224,10 @@ internal static class UiSnapshot
                 }
             }
             else if (shell.CurrentPage is ModuleViewModelBase module2 &&
-                     module2.SelectedSection?.Content is ListSectionViewModel list)
+                     module2.SelectedSection?.Content is SectionViewModelBase section)
             {
-                if (!list.IsBusy && list.Rows.Count > 0)
+                // 任何页签：等到不再是 Loading 再截图（空态与错误态也值得拍）
+                if (section.State != PageState.Loading)
                 {
                     break;
                 }

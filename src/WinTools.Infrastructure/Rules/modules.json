@@ -19,7 +19,7 @@
       },
       {
         "id": "EditionSwitch",
-        "title": { "zh-Hans": "版本渠道切换", "zh-Hant": "版本通道切換", "en-US": "Edition switching", "ja-JP": "エディション切り替え", "ko-KR": "에디션 전환", "de-DE": "Edition wechseln", "fr-FR": "Changement d'édition", "es-ES": "Cambio de edición", "pt-BR": "Troca de edição", "it-IT": "Cambio edizione", "ru-RU": "Смена редакции", "ar-SA": "تبديل الإصدار" },
+        "title": { "zh-Hans": "系统渠道", "zh-Hant": "版本通道切換", "en-US": "Edition switching", "ja-JP": "エディション切り替え", "ko-KR": "에디션 전환", "de-DE": "Edition wechseln", "fr-FR": "Changement d'édition", "es-ES": "Cambio de edición", "pt-BR": "Troca de edição", "it-IT": "Cambio edizione", "ru-RU": "Смена редакции", "ar-SA": "تبديل الإصدار" },
         "description": { "zh-Hans": "在专业版 / 家庭版 / 企业版等 SKU 之间切换，含激活风险提示。", "en-US": "Switch between Pro / Home / Enterprise SKUs with activation warnings." },
         "items": [
           { "zh-Hans": "读取当前 SKU 与激活状态", "en-US": "Read current SKU and activation state" },

@@ -245,5 +245,26 @@
   "Cleanup.SelectedOfTotal": "Выбрано / доступно",
   "Cleanup.ConfirmClean": "Будет удалено {0} ({1} шт.). Занятые файлы удалятся после перезагрузки.",
   "Cleanup.Remaining": "Можно освободить ещё {0}",
-  "Cleanup.DeepScan": "Глубокая проверка"
+  "Cleanup.DeepScan": "Глубокая проверка",
+
+  "Edition.Home": "Домашняя",
+  "Edition.HomeSingleLanguage": "Домашняя для одного языка",
+  "Edition.HomeChina": "Домашняя для Китая",
+  "Edition.Professional": "Профессиональная",
+  "Edition.ProfessionalWorkstation": "Профессиональная для рабочих станций",
+  "Edition.Enterprise": "Корпоративная",
+  "Edition.Education": "Образовательная",
+
+  "Feat.Build": "Сборка",
+  "Feat.PreferEdition": "Целевая редакция",
+  "Feat.NoActivationHint": "Переключение меняет только редакцию, но не активацию. Для активации нужна ваша лицензия. Запустится мастер установки и система перезагрузится.",
+  "Feat.ChangeConfirm": "Редакция будет изменена на «{0}»",
+  "Feat.ChangeStarted": "Мастер установки запущен; следуйте его указаниям",
+
+  "Flag.Export": "Экспорт",
+  "Flag.Import": "Импорт",
+  "Flag.Reset": "Сбросить",
+  "Flag.ResetConfirm": "Все {0} переопределений будут удалены, значения по умолчанию восстановятся.",
+  "Flag.Imported": "Импортировано",
+  "Flag.ResetDone": "Сброшено"
 }

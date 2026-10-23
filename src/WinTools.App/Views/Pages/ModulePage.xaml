@@ -15,6 +15,9 @@
         <DataTemplate DataType="{x:Type vm:SystemFeaturesSectionViewModel}">
             <sections:FeaturesSectionView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:EditionSectionViewModel}">
+            <sections:EditionSectionView />
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid Margin="28,22,28,24">
@@ -79,6 +82,21 @@
                     <Button Content="{Binding ToggleAllText}" Style="{StaticResource SubtleButton}"
                             Command="{Binding ToggleAllCommand}" Padding="8,6" Margin="0,0,4,0"
                             Visibility="{Binding ShowCheckboxes, Converter={StaticResource BoolToVisibility}}" />
+                    <ItemsControl ItemsSource="{Binding ExtraActions}" VerticalAlignment="Center">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Label}" Command="{Binding Command}"
+                                        Style="{StaticResource GhostButton}" Padding="12,6" Margin="0,0,6,0" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+
 
                     <Button Content="{Binding SecondaryLabel}" Style="{StaticResource GhostButton}"
                             Command="{Binding SecondaryCommand}" Padding="11,6" Margin="0,0,6,0"

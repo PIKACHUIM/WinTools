@@ -306,5 +306,26 @@
   "Cleanup.SelectedOfTotal": "已选 / 可清理",
   "Cleanup.ConfirmClean": "将清理 {0}（{1} 项）。被占用的文件会登记为重启后删除。",
   "Cleanup.Remaining": "还有 {0} 可以继续清理",
-  "Cleanup.DeepScan": "深度扫描"
+  "Cleanup.DeepScan": "深度扫描",
+
+  "Edition.Home": "家庭版",
+  "Edition.HomeSingleLanguage": "家庭单语言版",
+  "Edition.HomeChina": "家庭中文版",
+  "Edition.Professional": "专业版",
+  "Edition.ProfessionalWorkstation": "专业工作站版",
+  "Edition.Enterprise": "企业版",
+  "Edition.Education": "教育版",
+
+  "Feat.Build": "内部版本",
+  "Feat.PreferEdition": "目标渠道",
+  "Feat.NoActivationHint": "切换只更换系统版本，不会激活系统；激活仍需你自己的授权。切换过程会调用系统自带的安装向导并重启。",
+  "Feat.ChangeConfirm": "将把系统渠道切换为「{0}」",
+  "Feat.ChangeStarted": "已调用系统安装向导，请按提示完成切换",
+
+  "Flag.Export": "导出",
+  "Flag.Import": "导入",
+  "Flag.Reset": "重置",
+  "Flag.ResetConfirm": "将删除全部 {0} 项功能覆盖，恢复系统默认行为。",
+  "Flag.Imported": "已导入",
+  "Flag.ResetDone": "已重置"
 }

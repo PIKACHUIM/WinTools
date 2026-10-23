@@ -1,0 +1,8 @@
+# 功能开关：导入导出与重置
+key|zh-Hans|zh-Hant|en-US|ja-JP|ko-KR|de-DE|fr-FR|es-ES|pt-BR|it-IT|ru-RU|ar-SA
+Flag.Export|导出|匯出|Export|エクスポート|내보내기|Exportieren|Exporter|Exportar|Exportar|Esporta|Экспорт|تصدير
+Flag.Import|导入|匯入|Import|インポート|가져오기|Importieren|Importer|Importar|Importar|Importa|Импорт|استيراد
+Flag.Reset|重置|重設|Reset|リセット|초기화|Zurücksetzen|Réinitialiser|Restablecer|Redefinir|Reimposta|Сбросить|إعادة تعيين
+Flag.ResetConfirm|将删除全部 {0} 项功能覆盖，恢复系统默认行为。|將刪除全部 {0} 項功能覆寫，恢復系統預設行為。|All {0} overrides will be removed and the system defaults restored.|{0} 件の上書きを削除し、システム既定に戻します。|모든 {0}개 재정의를 삭제하고 시스템 기본값으로 되돌립니다.|Alle {0} Overrides werden entfernt und die Systemstandards wiederhergestellt.|Les {0} substitutions seront supprimées et les valeurs par défaut restaurées.|Se eliminarán las {0} sustituciones y se restaurarán los valores predeterminados.|Todas as {0} substituições serão removidas e os padrões restaurados.|Verranno rimosse tutte le {0} sostituzioni e ripristinati i valori predefiniti.|Все {0} переопределений будут удалены, значения по умолчанию восстановятся.|ستتم إزالة جميع التجاوزات ({0}) واستعادة الإعدادات الافتراضية.
+Flag.Imported|已导入|已匯入|Imported|インポートしました|가져왔습니다|Importiert|Importé|Importado|Importado|Importato|Импортировано|تم الاستيراد
+Flag.ResetDone|已重置|已重設|Reset complete|リセット完了|초기화 완료|Zurückgesetzt|Réinitialisation terminée|Restablecido|Redefinição concluída|Ripristino completato|Сброшено|تمت إعادة التعيين

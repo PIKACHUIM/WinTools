@@ -53,6 +53,8 @@ public sealed partial class FeatureRowViewModel : ObservableObject
 
     public bool HasChange => IsOn != IsInstalledState;
 
+    public bool IsEditable => !IsBusy;
+
     partial void OnIsOnChanged(bool value)
     {
         OnPropertyChanged(nameof(HasChange));
@@ -62,7 +64,55 @@ public sealed partial class FeatureRowViewModel : ObservableObject
     public event EventHandler? Changed;
 }
 
-/// <summary>功能分组（可折叠）。</summary>
+/// <summary>功能族：同一组件下的子功能（如 Hyper-V 的各个子项），父开关三态。</summary>
+public sealed partial class FeatureFamilyViewModel : ObservableObject
+{
+    public FeatureFamilyViewModel(string title, bool isExplicit)
+    {
+        Title = title;
+        IsExplicit = isExplicit;
+    }
+
+    public string Title { get; }
+
+    /// <summary>是否由「已知功能族」匹配而来（否则是单条目，不显示父行）。</summary>
+    public bool IsExplicit { get; }
+
+    public ObservableCollection<FeatureRowViewModel> Items { get; } = [];
+
+    [ObservableProperty]
+    private bool _isExpanded = true;
+
+    [ObservableProperty]
+    private string _summary = string.Empty;
+
+    public bool ShowHeader => IsExplicit || Items.Count > 1;
+
+    public bool AllOn => Items.Count > 0 && Items.All(i => i.IsOn);
+
+    public bool AnyOn => Items.Any(i => i.IsOn);
+
+    /// <summary>父开关为「半开」：子项有开有关。</summary>
+    public bool IsMixed => AnyOn && !AllOn;
+
+    public void RefreshSummary()
+    {
+        Summary = $"{Items.Count(i => i.IsOn)}/{Items.Count}";
+        OnPropertyChanged(nameof(AllOn));
+        OnPropertyChanged(nameof(AnyOn));
+        OnPropertyChanged(nameof(IsMixed));
+    }
+
+    public void SetAll(bool on)
+    {
+        foreach (var item in Items)
+        {
+            item.IsOn = on;
+        }
+    }
+}
+
+/// <summary>功能分组（用途分类，可折叠），内含若干功能族。</summary>
 public sealed partial class FeatureGroupViewModel : ObservableObject
 {
     public FeatureGroupViewModel(string id, string title)
@@ -75,7 +125,10 @@ public sealed partial class FeatureGroupViewModel : ObservableObject
 
     public string Title { get; }
 
-    public ObservableCollection<FeatureRowViewModel> Items { get; } = [];
+    public ObservableCollection<FeatureFamilyViewModel> Families { get; } = [];
+
+    /// <summary>展平后的全部条目，供筛选、批量应用与计数使用。</summary>
+    public IEnumerable<FeatureRowViewModel> Items => Families.SelectMany(f => f.Items);
 
     [ObservableProperty]
     private bool _isExpanded;
@@ -85,7 +138,7 @@ public sealed partial class FeatureGroupViewModel : ObservableObject
 
     public int EnabledCount => Items.Count(i => i.IsInstalledState);
 
-    public void RefreshSummary() => Summary = $"{EnabledCount}/{Items.Count}";
+    public void RefreshSummary() => Summary = $"{EnabledCount}/{Items.Count()}";
 
     public void SetAll(bool on)
     {
@@ -96,7 +149,7 @@ public sealed partial class FeatureGroupViewModel : ObservableObject
     }
 }
 
-/// <summary>系统功能页签：分组折叠 + 开关 + 批量应用。工具栏与页面状态由 <see cref="SectionViewModelBase"/> 统一提供。</summary>
+/// <summary>系统功能页签：用途分组 → 功能族 → 子功能，父开关三态、子项独立开关，统一应用。</summary>
 public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBase
 {
     private readonly IFeatureService _features;
@@ -106,11 +159,12 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
         _features = features;
         HasPrimary = true;
         PrimaryLabel = Loc.T("Common.Apply");
-        ShowCheckboxes = true;
         _ = ReloadAsync();
     }
 
     public ObservableCollection<FeatureGroupViewModel> Groups { get; } = [];
+
+    public string MixedLabel => Loc.T("Feat.Mixed");
 
     [ObservableProperty]
     private string _pendingText = string.Empty;
@@ -122,7 +176,7 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
 
     public bool IsEmpty => TotalCount == 0;
 
-    public int VisibleCount => Groups.Where(g => g.Items.Count > 0).Sum(g => g.Items.Count);
+    public int VisibleCount => Groups.Sum(g => g.Items.Count(i => i.IsVisible));
 
     public override bool CanPrimary => !IsBusy && HasPending;
 
@@ -133,6 +187,7 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
         var features = await _features.GetFeaturesAsync(cancellationToken).ConfigureAwait(true);
         Build(features);
     }
+
     private void Build(IReadOnlyList<OptionalFeature> features)
     {
         foreach (var group in Groups)
@@ -150,11 +205,28 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
         {
             var group = new FeatureGroupViewModel(bucket.Id, Loc.T("FeatGroup." + bucket.Id));
 
-            foreach (var feature in bucket.Items.OrderBy(f => FeatureCatalog.Describe(f.Name, out _), StringComparer.CurrentCultureIgnoreCase))
+            // 先按「功能族」聚类：Microsoft-Hyper-V-* 这类同族功能收进一个父节点
+            var families = bucket.Items
+                .GroupBy(f => FeatureFamilies.Resolve(f.Name) ?? f.Name, StringComparer.OrdinalIgnoreCase)
+                .OrderBy(g => FeatureFamilies.Resolve(g.First().Name) is null ? 1 : 0)
+                .ThenBy(g => FeatureCatalog.Describe(g.First().Name, out _), StringComparer.CurrentCultureIgnoreCase);
+
+            foreach (var familyGroup in families)
             {
-                var row = new FeatureRowViewModel(feature);
-                row.Changed += OnRowChanged;
-                group.Items.Add(row);
+                var familyTitle = FeatureFamilies.Resolve(familyGroup.First().Name);
+                var family = new FeatureFamilyViewModel(
+                    familyTitle ?? FeatureCatalog.Describe(familyGroup.First().Name, out _),
+                    familyTitle is not null);
+
+                foreach (var feature in familyGroup.OrderBy(f => FeatureCatalog.Describe(f.Name, out _), StringComparer.CurrentCultureIgnoreCase))
+                {
+                    var row = new FeatureRowViewModel(feature);
+                    row.Changed += OnRowChanged;
+                    family.Items.Add(row);
+                }
+
+                family.RefreshSummary();
+                group.Families.Add(family);
             }
 
             group.RefreshSummary();
@@ -167,19 +239,18 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
         UpdatePending();
     }
 
-
-
     private void OnRowChanged(object? sender, EventArgs e)
     {
         UpdatePending();
-        RefreshAllGroups();
-    }
 
-    private void RefreshAllGroups()
-    {
         foreach (var group in Groups)
         {
             group.RefreshSummary();
+
+            foreach (var family in group.Families)
+            {
+                family.RefreshSummary();
+            }
         }
     }
 
@@ -202,15 +273,27 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
 
         foreach (var group in Groups)
         {
-            foreach (var item in group.Items)
+            foreach (var family in group.Families)
             {
-                item.IsVisible = keyword.Length == 0 ||
-                                 item.Display.Contains(keyword, StringComparison.CurrentCultureIgnoreCase) ||
-                                 item.Name.Contains(keyword, StringComparison.CurrentCultureIgnoreCase);
+                var anyVisible = false;
 
-                if (item.IsVisible)
+                foreach (var item in family.Items)
                 {
-                    matched++;
+                    item.IsVisible = keyword.Length == 0 ||
+                                     item.Display.Contains(keyword, StringComparison.CurrentCultureIgnoreCase) ||
+                                     item.Name.Contains(keyword, StringComparison.CurrentCultureIgnoreCase) ||
+                                     family.Title.Contains(keyword, StringComparison.CurrentCultureIgnoreCase);
+
+                    if (item.IsVisible)
+                    {
+                        matched++;
+                        anyVisible = true;
+                    }
+                }
+
+                if (keyword.Length > 0 && anyVisible)
+                {
+                    family.IsExpanded = true;
                 }
             }
 
@@ -236,6 +319,29 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
         group.IsExpanded = !group.IsExpanded;
     }
 
+    /// <summary>父开关：整族开 / 关。</summary>
+    [RelayCommand]
+    private void ToggleFamily(FeatureFamilyViewModel? family)
+    {
+        if (family is null)
+        {
+            return;
+        }
+
+        family.SetAll(!family.AllOn);
+        family.RefreshSummary();
+        UpdatePending();
+    }
+
+    [RelayCommand]
+    private void ToggleFamilyExpand(FeatureFamilyViewModel? family)
+    {
+        if (family is not null)
+        {
+            family.IsExpanded = !family.IsExpanded;
+        }
+    }
+
     [RelayCommand]
     private void ToggleGroupAll(FeatureGroupViewModel? group)
     {
@@ -246,6 +352,12 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
 
         var target = group.Items.Any(i => !i.IsOn);
         group.SetAll(target);
+
+        foreach (var family in group.Families)
+        {
+            family.RefreshSummary();
+        }
+
         UpdatePending();
     }
 
@@ -441,55 +553,151 @@ internal static class FeatureCatalog
     }
 }
 
-/// <summary>版本渠道切换：读取 SKU/激活状态，输入产品密钥切换版本。</summary>
-public sealed partial class EditionSectionViewModel : ListSectionViewModel
+/// <summary>系统渠道：读取当前 SKU 与激活状态，下拉选择目标渠道并调用系统向导切换（不会激活）。</summary>
+public sealed partial class EditionSectionViewModel : SectionViewModelBase
 {
     private readonly IFeatureService _features;
 
     public EditionSectionViewModel(IFeatureService features)
     {
         _features = features;
-        HasInput = true;
-        InputLabel = Loc.T("Feat.ProductKey");
-        InputActionLabel = Loc.T("Feat.ChangeEdition");
-        HasPrimary = false;
+        Editions = [.. EditionCatalog.All];
+        HasPrimary = true;
+        PrimaryLabel = Loc.T("Feat.ChangeEdition");
         _ = ReloadAsync();
     }
+
+    public IReadOnlyList<EditionOption> Editions { get; }
+
+    [ObservableProperty]
+    private EditionOption? _selectedEdition;
+
+    [ObservableProperty]
+    private string _currentEdition = "—";
+
+    [ObservableProperty]
+    private string _currentVersion = "—";
+
+    [ObservableProperty]
+    private string _currentBuild = "—";
+
+    [ObservableProperty]
+    private string _activationText = "—";
+
+    [ObservableProperty]
+    private bool _isActivated;
+
+    [ObservableProperty]
+    private string _partialKey = string.Empty;
+
+    [ObservableProperty]
+    private string _selectedKey = string.Empty;
+
+    public string EditionLabel => Loc.T("Feat.Edition");
+
+    public string VersionLabel => Loc.T("Settings.Version");
+
+    public string BuildLabel => Loc.T("Feat.Build");
+
+    public string ActivationLabel => Loc.T("Feat.Activation");
+
+    public string ProductKeyLabel => Loc.T("Feat.ProductKey");
+
+    public string NoActivationHint => Loc.T("Feat.NoActivationHint");
+
+    public string PreferEditionLabel => Loc.T("Feat.PreferEdition");
+
+    public override bool CanPrimary => !IsBusy && SelectedEdition is not null;
+
+    partial void OnSelectedEditionChanged(EditionOption? value)
+        => SelectedKey = value?.Key ?? string.Empty;
 
     protected override async Task LoadAsync(CancellationToken cancellationToken)
     {
         var edition = await _features.GetEditionAsync(cancellationToken).ConfigureAwait(true);
 
-        Rows.Clear();
-        Rows.Add(new RowItem("product", Loc.T("Feat.Edition"), edition.ProductName, edition.EditionId));
-        Rows.Add(new RowItem("version", Loc.T("Settings.Version"), edition.DisplayVersion, edition.Build));
-        Rows.Add(new RowItem("type", Loc.T("Feat.InstallType"), edition.InstallationType));
-        Rows.Add(new RowItem(
-            "activation",
-            Loc.T("Feat.Activation"),
-            edition.IsActivated ? Loc.T("Feat.Activated") : Loc.T("Feat.NotActivated"),
-            edition.PartialProductKey,
-            edition.IsActivated ? Loc.T("Feat.Activated") : Loc.T("Feat.NotActivated"),
-            edition.IsActivated ? RowTone.Success : RowTone.Warning));
+        CurrentEdition = edition.ProductName;
+        CurrentVersion = edition.DisplayVersion;
+        CurrentBuild = edition.Build;
+        IsActivated = edition.IsActivated;
+        ActivationText = edition.IsActivated ? Loc.T("Feat.Activated") : Loc.T("Feat.NotActivated");
+        PartialKey = edition.PartialProductKey ?? string.Empty;
 
-        Status = string.Empty;
+        SelectedEdition ??= EditionCatalog.All.FirstOrDefault(e =>
+            edition.EditionId.Contains(e.Id, StringComparison.OrdinalIgnoreCase)) ?? EditionCatalog.All[3];
     }
 
-    protected override async Task InputCoreAsync(CancellationToken cancellationToken)
+    protected override async Task PrimaryCoreAsync(CancellationToken cancellationToken)
     {
-        var key = InputText.Trim();
-        if (key.Length == 0)
+        if (SelectedEdition is not { } target)
         {
-            Status = Loc.T("Feat.ProductKey");
             return;
         }
 
-        var result = await _features.ChangeEditionAsync(key, cancellationToken).ConfigureAwait(true);
+        var confirmed = await UI.Confirm.AskAsync(new ConfirmRequest(
+            Loc.T("Feat.ChangeEdition"),
+            Loc.F("Feat.ChangeConfirm", Loc.T("Edition." + target.Id)),
+            [Loc.T("Feat.NoActivationHint"), $"{Loc.T("Feat.ProductKey")}: {target.Key}"],
+            Loc.T("Feat.ChangeEdition"),
+            Danger: true,
+            RequireAcknowledge: true)).ConfigureAwait(true);
+
+        if (!confirmed)
+        {
+            return;
+        }
+
+        var result = await _features.ChangeEditionAsync(target.Key, cancellationToken).ConfigureAwait(true);
         Report(result);
 
         if (result.Success)
         {
-            InputText = string.Empty;
+            UI.Toast.Success(Loc.T("Feat.ChangeStarted"));
         }
+
+        await RefreshQuietlyAsync(cancellationToken).ConfigureAwait(false);
+    }
+}
+
+/// <summary>功能族识别：把同族功能（如 Hyper-V 的各个子项）聚到同一个父节点下。</summary>
+internal static class FeatureFamilies
+{
+    private static readonly (string Title, string[] Prefixes)[] Rules =
+    [
+        ("Hyper-V", ["Microsoft-Hyper-V", "Microsoft-Hyper-V-All"]),
+        (".NET Framework", ["NetFx", "Microsoft-NetFx"]),
+        ("IIS Web 服务器", ["IIS-", "Microsoft-Windows-IIS"]),
+        ("打印与传真", ["Printing-", "Fax", "Print-"]),
+        ("Linux 子系统", ["Microsoft-Windows-Subsystem-Linux"]),
+        ("容器", ["Containers", "Microsoft-Hyper-V-Containers"]),
+        ("媒体功能", ["Media-", "WindowsMediaPlayer", "Microsoft-Windows-Media"]),
+        ("PowerShell", ["MicrosoftWindowsPowerShell", "Microsoft-Windows-PowerShell"]),
+        ("SMB 文件共享", ["SMB1", "SMB-", "Microsoft-Windows-SMB"]),
+        ("传统网络工具", ["TelnetClient", "TFTP", "SimpleTCP", "Microsoft-Windows-Telnet"]),
+        ("工作文件夹", ["WorkFolders"]),
+        ("旧版游戏组件", ["DirectPlay"]),
+        ("备份", ["MicrosoftWindowsBackup", "WindowsBackup"]),
+        ("Defender", ["Windows-Defender", "Microsoft-Windows-Defender"]),
+        ("BitLocker", ["BitLocker"]),
+        ("Windows Hello", ["MicrosoftWindowsHello", "Hello-Face", "Hello-Pin"]),
+        ("远程协助", ["RemoteAssistance", "Remote-Desktop"]),
+        ("SNMP", ["SNMP"]),
+        ("NFS", ["NFS"]),
+        ("无线网络", ["Wireless", "WiFi", "Wlan"]),
+        ("虚拟化平台", ["HypervisorPlatform", "VirtualMachinePlatform"])
+    ];
+
+    /// <summary>返回功能所属族名；没有匹配返回 null（按单条处理）。</summary>
+    public static string? Resolve(string name)
+    {
+        foreach (var (title, prefixes) in Rules)
+        {
+            if (prefixes.Any(p => name.StartsWith(p, StringComparison.OrdinalIgnoreCase)))
+            {
+                return title;
+            }
+        }
+
+        return null;
     }
 }

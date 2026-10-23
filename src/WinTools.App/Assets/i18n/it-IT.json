@@ -245,5 +245,26 @@
   "Cleanup.SelectedOfTotal": "Selezionato / recuperabile",
   "Cleanup.ConfirmClean": "Verranno rimossi {0} ({1} elementi). I file in uso verranno eliminati al riavvio.",
   "Cleanup.Remaining": "Altri {0} recuperabili",
-  "Cleanup.DeepScan": "Scansione completa"
+  "Cleanup.DeepScan": "Scansione completa",
+
+  "Edition.Home": "Home",
+  "Edition.HomeSingleLanguage": "Home Single Language",
+  "Edition.HomeChina": "Home China",
+  "Edition.Professional": "Pro",
+  "Edition.ProfessionalWorkstation": "Pro per workstation",
+  "Edition.Enterprise": "Enterprise",
+  "Edition.Education": "Education",
+
+  "Feat.Build": "Build",
+  "Feat.PreferEdition": "Edizione di destinazione",
+  "Feat.NoActivationHint": "Il cambio modifica solo l'edizione, non l'attivazione. L'attivazione richiede la tua licenza. Verrà eseguito il programma di installazione e il riavvio.",
+  "Feat.ChangeConfirm": "L'edizione passerà a \"{0}\"",
+  "Feat.ChangeStarted": "Il programma di installazione è stato avviato; segui le istruzioni",
+
+  "Flag.Export": "Esporta",
+  "Flag.Import": "Importa",
+  "Flag.Reset": "Reimposta",
+  "Flag.ResetConfirm": "Verranno rimosse tutte le {0} sostituzioni e ripristinati i valori predefiniti.",
+  "Flag.Imported": "Importato",
+  "Flag.ResetDone": "Ripristino completato"
 }

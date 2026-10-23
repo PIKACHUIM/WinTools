@@ -245,5 +245,26 @@
   "Cleanup.SelectedOfTotal": "Ausgewählt / verfügbar",
   "Cleanup.ConfirmClean": "{0} wird entfernt ({1} Elemente). Belegte Dateien werden nach einem Neustart gelöscht.",
   "Cleanup.Remaining": "Weitere {0} können bereinigt werden",
-  "Cleanup.DeepScan": "Tiefenscan"
+  "Cleanup.DeepScan": "Tiefenscan",
+
+  "Edition.Home": "Home",
+  "Edition.HomeSingleLanguage": "Home Single Language",
+  "Edition.HomeChina": "Home China",
+  "Edition.Professional": "Pro",
+  "Edition.ProfessionalWorkstation": "Pro for Workstations",
+  "Edition.Enterprise": "Enterprise",
+  "Edition.Education": "Education",
+
+  "Feat.Build": "Build",
+  "Feat.PreferEdition": "Zieledition",
+  "Feat.NoActivationHint": "Der Wechsel ändert nur die Edition, nicht die Aktivierung. Für die Aktivierung ist Ihre eigene Lizenz nötig. Das Setup-Assistent startet und das System wird neu gestartet.",
+  "Feat.ChangeConfirm": "Die Edition wird auf „{0}\" umgestellt",
+  "Feat.ChangeStarted": "Der Setup-Assistent wurde gestartet; folgen Sie den Anweisungen",
+
+  "Flag.Export": "Exportieren",
+  "Flag.Import": "Importieren",
+  "Flag.Reset": "Zurücksetzen",
+  "Flag.ResetConfirm": "Alle {0} Overrides werden entfernt und die Systemstandards wiederhergestellt.",
+  "Flag.Imported": "Importiert",
+  "Flag.ResetDone": "Zurückgesetzt"
 }

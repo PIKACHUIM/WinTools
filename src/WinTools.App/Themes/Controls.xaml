@@ -6,6 +6,7 @@
     <conv:ProgressRatioConverter x:Key="ProgressRatio" />
     <conv:NullToCollapsedConverter x:Key="NullToCollapsed" />
     <conv:PercentToWidthConverter x:Key="PercentToWidth" />
+    <conv:EditionNameConverter x:Key="EditionName" />
     <conv:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
     <conv:StringToVisibilityConverter x:Key="StringToVisibility" />
     <conv:CountToVisibilityConverter x:Key="CountToVisibility" />

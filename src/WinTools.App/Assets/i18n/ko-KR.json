@@ -245,5 +245,26 @@
   "Cleanup.SelectedOfTotal": "선택 / 정리 가능",
   "Cleanup.ConfirmClean": "{0}({1}개)을 정리합니다. 사용 중인 파일은 다시 시작 후 삭제됩니다.",
   "Cleanup.Remaining": "{0} 더 정리할 수 있습니다",
-  "Cleanup.DeepScan": "정밀 검사"
+  "Cleanup.DeepScan": "정밀 검사",
+
+  "Edition.Home": "홈",
+  "Edition.HomeSingleLanguage": "홈 싱글 언어",
+  "Edition.HomeChina": "홈 차이나",
+  "Edition.Professional": "프로",
+  "Edition.ProfessionalWorkstation": "프로 워크스테이션",
+  "Edition.Enterprise": "엔터프라이즈",
+  "Edition.Education": "교육",
+
+  "Feat.Build": "빌드",
+  "Feat.PreferEdition": "대상 에디션",
+  "Feat.NoActivationHint": "전환은 에디션만 변경하며 정품 인증을 하지 않습니다. 인증은 사용자의 라이선스가 필요합니다. 전환 시 설치 마법사가 실행되고 다시 시작됩니다.",
+  "Feat.ChangeConfirm": "에디션을 \"{0}\"(으)로 전환합니다",
+  "Feat.ChangeStarted": "설치 마법사를 실행했습니다. 안내에 따라 완료하세요",
+
+  "Flag.Export": "내보내기",
+  "Flag.Import": "가져오기",
+  "Flag.Reset": "초기화",
+  "Flag.ResetConfirm": "모든 {0}개 재정의를 삭제하고 시스템 기본값으로 되돌립니다.",
+  "Flag.Imported": "가져왔습니다",
+  "Flag.ResetDone": "초기화 완료"
 }

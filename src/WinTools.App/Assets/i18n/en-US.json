@@ -306,5 +306,26 @@
   "Cleanup.SelectedOfTotal": "Selected / reclaimable",
   "Cleanup.ConfirmClean": "{0} will be removed ({1} items). Files in use are scheduled for deletion after a restart.",
   "Cleanup.Remaining": "{0} more can be reclaimed",
-  "Cleanup.DeepScan": "Deep scan"
+  "Cleanup.DeepScan": "Deep scan",
+
+  "Edition.Home": "Home",
+  "Edition.HomeSingleLanguage": "Home Single Language",
+  "Edition.HomeChina": "Home China",
+  "Edition.Professional": "Pro",
+  "Edition.ProfessionalWorkstation": "Pro for Workstations",
+  "Edition.Enterprise": "Enterprise",
+  "Edition.Education": "Education",
+
+  "Feat.Build": "Build",
+  "Feat.PreferEdition": "Target edition",
+  "Feat.NoActivationHint": "Switching only changes the edition; it does not activate Windows. Activation still needs your own license. The system setup wizard will run and restart.",
+  "Feat.ChangeConfirm": "The edition will switch to \"{0}\"",
+  "Feat.ChangeStarted": "The setup wizard has started; follow it to finish",
+
+  "Flag.Export": "Export",
+  "Flag.Import": "Import",
+  "Flag.Reset": "Reset",
+  "Flag.ResetConfirm": "All {0} overrides will be removed and the system defaults restored.",
+  "Flag.Imported": "Imported",
+  "Flag.ResetDone": "Reset complete"
 }
