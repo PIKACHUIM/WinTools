@@ -1,0 +1,393 @@
+[
+  {
+    "id": "telemetry-off",
+    "recommended": true,
+    "group": "Privacy",
+    "name": { "zh-Hans": "关闭诊断遥测", "en-US": "Disable diagnostic telemetry" },
+    "description": { "zh-Hans": "遥测级别设为「安全」，并禁用 DiagTrack 服务，减少后台数据上传。", "en-US": "Set telemetry to Security level and disable the DiagTrack service." },
+    "risk": "Low",
+    "requiresRestart": false,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", "name": "AllowTelemetry", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", "name": "AllowTelemetry", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", "name": "AllowTelemetry" } ]
+  },
+  {
+    "id": "diagtrack-disable",
+    "group": "Privacy",
+    "name": { "zh-Hans": "禁用「连接用户体验和遥测」服务", "en-US": "Disable Connected User Experiences service" },
+    "description": { "zh-Hans": "将 DiagTrack 服务设为禁用。部分企业环境会依赖它上报数据。", "en-US": "Set the DiagTrack service to disabled." },
+    "risk": "Medium",
+    "requiresRestart": true,
+    "detect": [ { "type": "ServiceStart", "service": "DiagTrack", "startMode": "disabled" } ],
+    "apply": [ { "type": "ServiceStart", "service": "DiagTrack", "startMode": "disabled" } ],
+    "revert": [ { "type": "ServiceStart", "service": "DiagTrack", "startMode": "auto" } ]
+  },
+  {
+    "id": "dmwappush-disable",
+    "group": "Privacy",
+    "name": { "zh-Hans": "禁用 WAP 推送消息服务", "en-US": "Disable WAP push message service" },
+    "description": { "zh-Hans": "dmwappushservice 主要用于诊断数据收集。", "en-US": "dmwappushservice is mainly used for diagnostic data collection." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "ServiceStart", "service": "dmwappushservice", "startMode": "disabled" } ],
+    "apply": [ { "type": "ServiceStart", "service": "dmwappushservice", "startMode": "disabled" } ],
+    "revert": [ { "type": "ServiceStart", "service": "dmwappushservice", "startMode": "manual" } ]
+  },
+  {
+    "id": "advertising-id-off",
+    "recommended": true,
+    "group": "Privacy",
+    "name": { "zh-Hans": "关闭广告 ID", "en-US": "Disable advertising ID" },
+    "description": { "zh-Hans": "阻止应用使用广告标识符向你推送个性化广告。", "en-US": "Stop apps from using your advertising ID." },
+    "risk": "Low",
+    "requiresRestart": false,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo", "name": "Enabled", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo", "name": "Enabled", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo", "name": "Enabled" } ]
+  },
+  {
+    "id": "feedback-off",
+    "recommended": true,
+    "group": "Privacy",
+    "name": { "zh-Hans": "关闭反馈请求", "en-US": "Disable feedback requests" },
+    "description": { "zh-Hans": "不再定期弹出 Windows 反馈提示。", "en-US": "Stop Windows from asking for feedback." },
+    "risk": "Low",
+    "requiresRestart": false,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Siuf\\Rules", "name": "NumberOfSIUFInPeriod", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Siuf\\Rules", "name": "NumberOfSIUFInPeriod", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Siuf\\Rules", "name": "NumberOfSIUFInPeriod" } ]
+  },
+  {
+    "id": "activity-history-off",
+    "recommended": true,
+    "group": "Privacy",
+    "name": { "zh-Hans": "关闭活动历史记录", "en-US": "Disable activity history" },
+    "description": { "zh-Hans": "不记录、不上传本机操作时间线。", "en-US": "Stop collecting and uploading your activity timeline." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "EnableActivityFeed", "kind": "DWord", "value": "0" } ],
+    "apply": [
+      { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "EnableActivityFeed", "kind": "DWord", "value": "0" },
+      { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "PublishUserActivities", "kind": "DWord", "value": "0" },
+      { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "UploadUserActivities", "kind": "DWord", "value": "0" }
+    ],
+    "revert": [
+      { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "EnableActivityFeed" },
+      { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "PublishUserActivities" },
+      { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "UploadUserActivities" }
+    ]
+  },
+  {
+    "id": "location-off",
+    "group": "Privacy",
+    "name": { "zh-Hans": "关闭系统定位", "en-US": "Disable location services" },
+    "description": { "zh-Hans": "禁止应用获取设备位置。", "en-US": "Block apps from using device location." },
+    "risk": "Low",
+    "requiresRestart": false,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors", "name": "DisableLocation", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors", "name": "DisableLocation", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors", "name": "DisableLocation" } ]
+  },
+  {
+    "id": "tailored-experiences-off",
+    "recommended": true,
+    "group": "Privacy",
+    "name": { "zh-Hans": "关闭定制体验", "en-US": "Disable tailored experiences" },
+    "description": { "zh-Hans": "Windows 不再用诊断数据为你定制提示与建议。", "en-US": "Windows will not use diagnostic data to tailor tips and ads." },
+    "risk": "Low",
+    "requiresRestart": false,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent", "name": "DisableTailoredExperiencesWithDiagnosticData", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent", "name": "DisableTailoredExperiencesWithDiagnosticData", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent", "name": "DisableTailoredExperiencesWithDiagnosticData" } ]
+  },
+  {
+    "id": "consumer-features-off",
+    "recommended": true,
+    "group": "Privacy",
+    "name": { "zh-Hans": "关闭系统推荐内容", "en-US": "Disable suggested content" },
+    "description": { "zh-Hans": "关闭开始菜单与设置中的微软推广内容。", "en-US": "Remove Microsoft promotional content from Start and Settings." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent", "name": "DisableWindowsConsumerFeatures", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent", "name": "DisableWindowsConsumerFeatures", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent", "name": "DisableWindowsConsumerFeatures" } ]
+  },
+  {
+    "id": "power-plan-high",
+    "recommended": true,
+    "group": "Performance",
+    "name": { "zh-Hans": "切换到高性能电源计划", "en-US": "Switch to High performance power plan" },
+    "description": { "zh-Hans": "笔记本会明显更耗电、更热。", "en-US": "Laptops will use more power and run hotter." },
+    "risk": "Medium",
+    "requiresRestart": false,
+    "detect": [],
+    "apply": [ { "type": "Command", "fileName": "powercfg.exe", "arguments": "/setactive SCHEME_MIN" } ],
+    "revert": [ { "type": "Command", "fileName": "powercfg.exe", "arguments": "/setactive SCHEME_BALANCED" } ]
+  },
+  {
+    "id": "hibernate-off",
+    "group": "Performance",
+    "name": { "zh-Hans": "关闭休眠（释放 hiberfil.sys）", "en-US": "Disable hibernation" },
+    "description": { "zh-Hans": "同时会关闭快速启动，可释放与内存等大的磁盘空间。", "en-US": "Also disables Fast Startup and frees disk space equal to RAM size." },
+    "risk": "Medium",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Power", "name": "HibernateEnabled", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "Command", "fileName": "powercfg.exe", "arguments": "/hibernate off" } ],
+    "revert": [ { "type": "Command", "fileName": "powercfg.exe", "arguments": "/hibernate on" } ]
+  },
+  {
+    "id": "fast-startup-off",
+    "group": "Performance",
+    "name": { "zh-Hans": "关闭快速启动", "en-US": "Disable Fast Startup" },
+    "description": { "zh-Hans": "双系统用户建议关闭，避免 NTFS 分区被锁定。", "en-US": "Recommended for dual-boot users to avoid locked NTFS volumes." },
+    "risk": "Medium",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power", "name": "HiberbootEnabled", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power", "name": "HiberbootEnabled", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power", "name": "HiberbootEnabled", "kind": "DWord", "value": "1" } ]
+  },
+  {
+    "id": "game-dvr-off",
+    "group": "Performance",
+    "name": { "zh-Hans": "关闭游戏录制 (Game DVR)", "en-US": "Disable Game DVR" },
+    "description": { "zh-Hans": "关闭后台录制，减少游戏时的性能损耗。", "en-US": "Disable background recording to reduce gaming overhead." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "System\\GameConfigStore", "name": "GameDVR_Enabled", "kind": "DWord", "value": "0" } ],
+    "apply": [
+      { "type": "RegSet", "hive": "HKCU", "path": "System\\GameConfigStore", "name": "GameDVR_Enabled", "kind": "DWord", "value": "0" },
+      { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR", "name": "AllowGameDVR", "kind": "DWord", "value": "0" }
+    ],
+    "revert": [
+      { "type": "RegSet", "hive": "HKCU", "path": "System\\GameConfigStore", "name": "GameDVR_Enabled", "kind": "DWord", "value": "1" },
+      { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR", "name": "AllowGameDVR" }
+    ]
+  },
+  {
+    "id": "menu-delay-fast",
+    "recommended": true,
+    "group": "Performance",
+    "name": { "zh-Hans": "加快菜单弹出速度", "en-US": "Speed up menu delay" },
+    "description": { "zh-Hans": "把菜单展开延迟从 400ms 降到 100ms。", "en-US": "Reduce menu expand delay from 400ms to 100ms." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "Control Panel\\Desktop", "name": "MenuShowDelay", "kind": "String", "value": "100" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "Control Panel\\Desktop", "name": "MenuShowDelay", "kind": "String", "value": "100" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "Control Panel\\Desktop", "name": "MenuShowDelay", "kind": "String", "value": "400" } ]
+  },
+  {
+    "id": "startup-delay-off",
+    "group": "Performance",
+    "name": { "zh-Hans": "取消启动项延迟", "en-US": "Remove startup app delay" },
+    "description": { "zh-Hans": "登录后启动项不再被刻意延迟 10 秒。", "en-US": "Startup apps are no longer artificially delayed after logon." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize", "name": "StartupDelayInMSec", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize", "name": "StartupDelayInMSec", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize", "name": "StartupDelayInMSec" } ]
+  },
+  {
+    "id": "sysmain-disable",
+    "group": "Performance",
+    "name": { "zh-Hans": "禁用 SysMain（超级预读）", "en-US": "Disable SysMain (Superfetch)" },
+    "description": { "zh-Hans": "SSD 机器收益有限，机械盘建议保留。", "en-US": "Little benefit on SSDs; keep it on HDD systems." },
+    "risk": "Medium",
+    "requiresRestart": true,
+    "detect": [ { "type": "ServiceStart", "service": "SysMain", "startMode": "disabled" } ],
+    "apply": [ { "type": "ServiceStart", "service": "SysMain", "startMode": "disabled" } ],
+    "revert": [ { "type": "ServiceStart", "service": "SysMain", "startMode": "auto" } ]
+  },
+  {
+    "id": "explorer-show-ext",
+    "recommended": true,
+    "group": "Explorer",
+    "name": { "zh-Hans": "显示文件扩展名", "en-US": "Show file extensions" },
+    "description": { "zh-Hans": "避免被伪装成图片的可执行文件欺骗。", "en-US": "Avoid being fooled by disguised executables." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "HideFileExt", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "HideFileExt", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "HideFileExt", "kind": "DWord", "value": "1" } ]
+  },
+  {
+    "id": "explorer-show-hidden",
+    "group": "Explorer",
+    "name": { "zh-Hans": "显示隐藏文件", "en-US": "Show hidden files" },
+    "description": { "zh-Hans": "让 AppData 等隐藏目录可见。", "en-US": "Make hidden folders such as AppData visible." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Hidden", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Hidden", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Hidden", "kind": "DWord", "value": "2" } ]
+  },
+  {
+    "id": "explorer-open-this-pc",
+    "group": "Explorer",
+    "name": { "zh-Hans": "资源管理器打开「此电脑」", "en-US": "Open File Explorer to This PC" },
+    "description": { "zh-Hans": "替代默认的「快速访问」首页。", "en-US": "Use This PC instead of Quick Access as the default page." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "LaunchTo", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "LaunchTo", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "LaunchTo", "kind": "DWord", "value": "2" } ]
+  },
+  {
+    "id": "explorer-classic-menu",
+    "group": "Explorer",
+    "name": { "zh-Hans": "恢复经典右键菜单", "en-US": "Restore classic context menu" },
+    "description": { "zh-Hans": "Win11 上恢复完整的 Win10 右键菜单，需重启资源管理器。", "en-US": "Bring back the full Windows 10 context menu on Windows 11." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32", "name": "", "kind": "String", "value": "" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32", "name": "", "kind": "String", "value": "" } ],
+    "revert": [ { "type": "RegDeleteKey", "hive": "HKCU", "path": "SOFTWARE\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}" } ]
+  },
+  {
+    "id": "taskbar-widgets-off",
+    "group": "Explorer",
+    "name": { "zh-Hans": "关闭任务栏小组件", "en-US": "Disable taskbar widgets" },
+    "description": { "zh-Hans": "移除任务栏左侧天气/资讯按钮。", "en-US": "Remove the weather/news button from the taskbar." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Dsh", "name": "AllowNewsAndInterests", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Dsh", "name": "AllowNewsAndInterests", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Dsh", "name": "AllowNewsAndInterests" } ]
+  },
+  {
+    "id": "taskbar-search-icon",
+    "group": "Explorer",
+    "name": { "zh-Hans": "任务栏搜索仅显示图标", "en-US": "Taskbar search icon only" },
+    "description": { "zh-Hans": "把搜索框压缩为图标，节省任务栏空间。", "en-US": "Shrink the search box to an icon." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "SearchboxTaskbarMode", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "SearchboxTaskbarMode", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "SearchboxTaskbarMode", "kind": "DWord", "value": "2" } ]
+  },
+  {
+    "id": "search-web-off",
+    "group": "Explorer",
+    "name": { "zh-Hans": "关闭搜索栏网络结果", "en-US": "Disable web results in search" },
+    "description": { "zh-Hans": "开始菜单搜索只查本地内容，不再请求 Bing。", "en-US": "Search local content only, no Bing requests." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer", "name": "DisableSearchBoxSuggestions", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer", "name": "DisableSearchBoxSuggestions", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer", "name": "DisableSearchBoxSuggestions" } ]
+  },
+  {
+    "id": "copilot-off",
+    "group": "Explorer",
+    "name": { "zh-Hans": "关闭 Windows Copilot", "en-US": "Disable Windows Copilot" },
+    "description": { "zh-Hans": "隐藏任务栏 Copilot 入口。", "en-US": "Hide the Copilot entry point." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot", "name": "TurnOffWindowsCopilot", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot", "name": "TurnOffWindowsCopilot", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot", "name": "TurnOffWindowsCopilot" } ]
+  },
+  {
+    "id": "long-paths-on",
+    "recommended": true,
+    "group": "System",
+    "name": { "zh-Hans": "启用 Win32 长路径", "en-US": "Enable Win32 long paths" },
+    "description": { "zh-Hans": "解除 260 字符路径限制，对开发环境友好。", "en-US": "Remove the 260-character path limit." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\FileSystem", "name": "LongPathsEnabled", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\FileSystem", "name": "LongPathsEnabled", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\FileSystem", "name": "LongPathsEnabled", "kind": "DWord", "value": "0" } ]
+  },
+  {
+    "id": "bsod-no-reboot",
+    "group": "System",
+    "name": { "zh-Hans": "蓝屏后不自动重启", "en-US": "Do not auto-restart after BSOD" },
+    "description": { "zh-Hans": "便于看清错误代码再手动重启。", "en-US": "Read the stop code before rebooting manually." },
+    "risk": "Low",
+    "requiresRestart": false,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\CrashControl", "name": "AutoReboot", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\CrashControl", "name": "AutoReboot", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\CrashControl", "name": "AutoReboot", "kind": "DWord", "value": "1" } ]
+  },
+  {
+    "id": "numlock-on-boot",
+    "group": "System",
+    "name": { "zh-Hans": "开机自动开启小键盘", "en-US": "Enable NumLock at boot" },
+    "description": { "zh-Hans": "登录界面即可直接输入数字。", "en-US": "NumLock is on at the logon screen." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "Control Panel\\Keyboard", "name": "InitialKeyboardIndicators", "kind": "String", "value": "2" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "Control Panel\\Keyboard", "name": "InitialKeyboardIndicators", "kind": "String", "value": "2" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "Control Panel\\Keyboard", "name": "InitialKeyboardIndicators", "kind": "String", "value": "0" } ]
+  },
+  {
+    "id": "wer-off",
+    "recommended": true,
+    "group": "System",
+    "name": { "zh-Hans": "关闭 Windows 错误报告", "en-US": "Disable Windows Error Reporting" },
+    "description": { "zh-Hans": "程序崩溃时不再收集并上传报告。", "en-US": "Stop collecting and uploading crash reports." },
+    "risk": "Low",
+    "requiresRestart": false,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting", "name": "Disabled", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting", "name": "Disabled", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting", "name": "Disabled", "kind": "DWord", "value": "0" } ]
+  },
+  {
+    "id": "driver-auto-update-off",
+    "recommended": true,
+    "group": "Update",
+    "name": { "zh-Hans": "禁止自动推送驱动更新", "en-US": "Block automatic driver updates" },
+    "description": { "zh-Hans": "Windows 更新不再自动替换设备驱动。", "en-US": "Windows Update will not replace device drivers automatically." },
+    "risk": "Medium",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceInstall\\Settings", "name": "SearchOrderConfig", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceInstall\\Settings", "name": "SearchOrderConfig", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DeviceInstall\\Settings", "name": "SearchOrderConfig" } ]
+  },
+  {
+    "id": "delivery-optimization-lan",
+    "group": "Update",
+    "name": { "zh-Hans": "传递优化仅限局域网", "en-US": "Delivery Optimization: LAN only" },
+    "description": { "zh-Hans": "不再向互联网上的其他设备上传更新分片。", "en-US": "Do not upload update chunks to the internet." },
+    "risk": "Low",
+    "requiresRestart": false,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization", "name": "DODownloadMode", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization", "name": "DODownloadMode", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization", "name": "DODownloadMode" } ]
+  },
+  {
+    "id": "network-throttling-off",
+    "recommended": true,
+    "group": "Network",
+    "name": { "zh-Hans": "解除多媒体网络限速", "en-US": "Disable multimedia network throttling" },
+    "description": { "zh-Hans": "避免播放音视频时后台网络被限制到 10Mbps。", "en-US": "Prevent background network from being limited to 10 Mbps during media playback." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile", "name": "NetworkThrottlingIndex", "kind": "DWord", "value": "4294967295" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile", "name": "NetworkThrottlingIndex", "kind": "DWord", "value": "4294967295" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile", "name": "NetworkThrottlingIndex", "kind": "DWord", "value": "10" } ]
+  },
+  {
+    "id": "smb1-off",
+    "group": "Network",
+    "name": { "zh-Hans": "禁用 SMBv1 协议", "en-US": "Disable SMBv1" },
+    "description": { "zh-Hans": "SMBv1 存在严重漏洞（WannaCry），除非有老旧 NAS 否则应关闭。", "en-US": "SMBv1 is vulnerable; disable unless an old NAS requires it." },
+    "risk": "Medium",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters", "name": "SMB1", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters", "name": "SMB1", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters", "name": "SMB1", "kind": "DWord", "value": "1" } ]
+  },
+  {
+    "id": "game-mode-on",
+    "recommended": true,
+    "group": "Gaming",
+    "name": { "zh-Hans": "启用游戏模式", "en-US": "Enable Game Mode" },
+    "description": { "zh-Hans": "游戏运行时优先分配 CPU/GPU 资源。", "en-US": "Prioritize CPU/GPU resources for games." },
+    "risk": "Low",
+    "requiresRestart": false,
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\GameBar", "name": "AllowAutoGameMode", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\GameBar", "name": "AllowAutoGameMode", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\GameBar", "name": "AllowAutoGameMode", "kind": "DWord", "value": "0" } ]
+  }
+]

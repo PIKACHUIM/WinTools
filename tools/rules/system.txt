@@ -1,0 +1,49 @@
+# WinTools 清理规则源：系统垃圾
+# 格式：id|名称|分类|安全等级|匹配方式|清理策略|路径(分号分隔)|说明
+# 安全等级：S1 安全 / S2 谨慎 / S3 影响数据 / S4 禁止
+# 匹配方式：DirectoryRecursive 递归目录 / SingleFile 单文件 / GlobFile 通配文件
+# 清理策略：DeleteContents 清空内容 / DeleteDirectory 删除目录 / DeleteFile 删除文件
+
+SYS-001|Windows 系统临时目录|SystemTemp|S1|DirectoryRecursive|DeleteContents|%SystemRoot%\Temp|系统级临时文件，被占用的会自动跳过
+SYS-002|Windows 更新临时目录|SystemTemp|S1|DirectoryRecursive|DeleteContents|%SystemRoot%\SoftwareDistribution\Temp|
+SYS-004|Windows 日志临时目录|SystemTemp|S1|DirectoryRecursive|DeleteContents|%SystemRoot%\Logs\CBS;%SystemRoot%\Logs\DISM;%SystemRoot%\Logs\WindowsUpdate|
+SYS-005|用户临时文件|SystemTemp|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Temp|
+SYS-006|用户临时文件（漫游）|SystemTemp|S1|DirectoryRecursive|DeleteContents|%AppData%\..\LocalLow\Temp|
+SYS-007|Windows 错误报告队列|SystemLog|S1|DirectoryRecursive|DeleteContents|%ProgramData%\Microsoft\Windows\WER\ReportQueue;%ProgramData%\Microsoft\Windows\WER\ReportArchive;%LocalAppData%\Microsoft\Windows\WER|
+SYS-008|Windows 错误报告（用户）|SystemLog|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Windows\WER\ReportQueue;%LocalAppData%\Microsoft\Windows\WER\ReportArchive|
+SYS-009|Windows 自动更新缓存|SystemUpdate|S1|DirectoryRecursive|DeleteContents|%SystemRoot%\SoftwareDistribution\Download|
+SYS-010|Windows 更新日志|SystemUpdate|S1|DirectoryRecursive|DeleteContents|%SystemRoot%\Logs\WindowsUpdate;%SystemRoot%\SoftwareDistribution\DataStore\Logs|
+SYS-011|Windows 预读文件|SystemCache|S2|GlobFile|DeleteFile|%SystemRoot%\Prefetch\*.pf|
+SYS-012|Windows 系统日志文件|SystemLog|S1|GlobFile|DeleteFile|%SystemRoot%\Logs\*.log;%SystemRoot%\Logs\*.etl;%SystemRoot%\Panther\*.log|
+SYS-013|Windows 内存转储文件|CrashDump|S1|GlobFile|DeleteFile|%SystemRoot%\MEMORY.DMP;%SystemRoot%\Minidump\*.dmp;%LocalAppData%\CrashDumps\*.dmp|
+SYS-014|Windows 缩略图缓存|SystemCache|S1|GlobFile|DeleteFile|%LocalAppData%\Microsoft\Windows\Explorer\thumbcache_*.db;%LocalAppData%\Microsoft\Windows\Explorer\iconcache_*.db|
+SYS-015|Windows 已下载程序文件|SystemComponent|S1|DirectoryRecursive|DeleteContents|%SystemRoot%\Downloaded Program Files;%SystemRoot%\System32\config\systemprofile\AppData\Local\Microsoft\Windows\INetCache|
+SYS-016|Windows 字体缓存|SystemCache|S1|DirectoryRecursive|DeleteContents|%SystemRoot%\ServiceProfiles\LocalService\AppData\Local\FontCache;%LocalAppData%\Microsoft\Windows\FontCache|
+SYS-017|Windows Search 索引缓存|SystemCache|S2|DirectoryRecursive|DeleteContents|%ProgramData%\Microsoft\Search\Data\Temp|
+SYS-018|Windows 远程桌面缓存|SystemCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Terminal Server Client\Cache;%LocalAppData%\Microsoft\Remote Desktop Connection Manager|
+SYS-019|Windows Live Mail 缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Windows Live Mail|
+SYS-020|Windows 商店应用缓存|SystemCache|S2|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Windows Store\Cache;%LocalAppData%\Packages\Microsoft.WindowsStore_8wekyb3d8bbwe\LocalCache|
+SYS-021|Windows 商店安装临时文件|SystemUpdate|S1|DirectoryRecursive|DeleteContents|%ProgramData%\Microsoft\Windows\AppxProvisioning;%LocalAppData%\Packages\Microsoft.WindowsStore_8wekyb3d8bbwe\TempState|
+SYS-022|Windows Defender 扫描记录|SystemLog|S1|DirectoryRecursive|DeleteContents|%ProgramData%\Microsoft\Windows Defender\Scans\History\Results;%ProgramData%\Microsoft\Windows Defender\Scans\History\Store|
+SYS-023|Windows Defender 病毒库备份|SystemUpdate|S2|DirectoryRecursive|DeleteContents|%ProgramData%\Microsoft\Windows Defender\Definition Updates\Backup|
+SYS-024|Windows 传递优化缓存|SystemUpdate|S1|DirectoryRecursive|DeleteContents|%SystemRoot%\SoftwareDistribution\DeliveryOptimization;%ProgramData%\Microsoft\Network\Downloader|
+SYS-025|Windows 事件日志备份|SystemLog|S2|GlobFile|DeleteFile|%SystemRoot%\System32\winevt\Logs\Archive-*.evtx|
+SYS-026|Windows 安装日志|SystemLog|S1|GlobFile|DeleteFile|%SystemRoot%\Panther\*.log;%SystemRoot%\Panther\*.xml;%SystemRoot%\Setup\Logs\*.log|
+SYS-027|Windows 休眠文件|SystemComponent|S4|SingleFile|DeleteFile|%SystemDrive%\hiberfil.sys|系统休眠文件，请用「系统优化-关闭休眠」处理
+SYS-028|Windows 页面文件|PageFile|S4|SingleFile|DeleteFile|%SystemDrive%\pagefile.sys|虚拟内存文件，禁止直接删除
+SYS-029|回收站（系统盘）|RecycleBin|S2|DirectoryRecursive|DeleteContents|%SystemDrive%\$Recycle.Bin|
+SYS-030|崩溃转储（用户）|CrashDump|S1|GlobFile|DeleteFile|%LocalAppData%\CrashDumps\*.dmp;%LocalAppData%\Temp\*.dmp|
+SYS-031|Windows 兼容性遥测缓存|SystemLog|S1|DirectoryRecursive|DeleteContents|%ProgramData%\Microsoft\Windows\Caches;%LocalAppData%\Microsoft\Windows\Caches|
+SYS-032|Windows 通知与磁贴缓存|SystemCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Windows\Notifications;%LocalAppData%\Microsoft\Windows\ActionCenterCache|
+SYS-033|Windows 剪贴板历史缓存|SystemCache|S2|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Windows\Clipboard|
+SYS-034|Windows 输入法缓存|SystemCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\InputMethod\Chs;%AppData%\Microsoft\InputMethod\Chs|
+SYS-035|Windows 语音与手写缓存|SystemCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Speech;%LocalAppData%\Microsoft\InputPersonalization|
+SYS-036|Windows 帮助与提示缓存|SystemLog|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Windows\Explorer\*.db;%LocalAppData%\Microsoft\Windows\SettingSync|
+SYS-037|Windows 照片应用缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Packages\Microsoft.Windows.Photos_8wekyb3d8bbwe\LocalCache;%LocalAppData%\Packages\Microsoft.Windows.Photos_8wekyb3d8bbwe\TempState|
+SYS-038|Windows 地图缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Packages\Microsoft.WindowsMaps_8wekyb3d8bbwe\LocalCache|
+SYS-039|Windows 天气与资讯缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Packages\Microsoft.BingWeather_8wekyb3d8bbwe\LocalCache;%LocalAppData%\Packages\Microsoft.BingNews_8wekyb3d8bbwe\LocalCache|
+SYS-040|Windows 小组件缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Packages\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy\LocalCache|
+SYS-041|Windows 反馈中心缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Packages\Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe\LocalCache|
+SYS-043|Windows 调试与符号缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Dbg;%LocalAppData%\Microsoft\SymbolCache|
+SYS-044|Windows 快速启动缓存|SystemCache|S2|DirectoryRecursive|DeleteContents|%SystemRoot%\Prefetch\ReadyBoot|
+SYS-045|Windows 设备安装日志|SystemLog|S1|GlobFile|DeleteFile|%SystemRoot%\INF\setupapi.*.log;%SystemRoot%\Logs\SIH\*.log|

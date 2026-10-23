@@ -1,0 +1,40 @@
+# WinTools 清理规则源：厂商通配规则
+# 用通配符覆盖同一厂商下多款产品的缓存目录，避免为每个产品单独写一条。
+# 格式同 system.txt
+
+VEN-001|腾讯系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Tencent\*\Cache;%AppData%\Tencent\*\Cache;%LocalAppData%\Tencent\*\Temp;%AppData%\Tencent\*\Temp|
+VEN-002|腾讯系产品升级包|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Tencent\*\Update;%AppData%\Tencent\*\Update;%ProgramData%\Tencent\*\Download|
+VEN-003|腾讯系产品日志|AppLog|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Tencent\*\Log;%AppData%\Tencent\*\Log;%AppData%\Tencent\*\Logs|
+VEN-004|360 系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\360*\Cache;%LocalAppData%\360*\Cache;%ProgramData%\360*\Cache|
+VEN-005|360 系产品升级包|SecuritySuite|S2|DirectoryRecursive|DeleteContents|%ProgramData%\360*\Update;%ProgramData%\360*\Download;%AppData%\360*\Update|
+VEN-006|金山 / WPS 系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Kingsoft\*\Cache;%LocalAppData%\Kingsoft\*\Cache;%AppData%\kingsoft\*\Cache|
+VEN-007|金山系产品日志|AppLog|S1|DirectoryRecursive|DeleteContents|%AppData%\Kingsoft\*\Log;%LocalAppData%\Kingsoft\*\Log|
+VEN-008|百度系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Baidu\*\Cache;%LocalAppData%\Baidu\*\Cache;%AppData%\baidu\*\Cache|
+VEN-009|百度系产品升级包|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Baidu\*\Update;%ProgramData%\Baidu\*\Download|
+VEN-010|阿里系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Alibaba\*\Cache;%LocalAppData%\Alibaba\*\Cache;%AppData%\Taobao\*\Cache|
+VEN-011|网易系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Netease\*\Cache;%LocalAppData%\Netease\*\Cache;%AppData%\NetEase\*\Cache|
+VEN-012|字节系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\ByteDance\*\Cache;%LocalAppData%\ByteDance\*\Cache;%AppData%\Bytedance\*\Cache|
+VEN-013|迅雷系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Thunder Network\*\Cache;%LocalAppData%\Thunder Network\*\Temp|
+VEN-014|搜狐系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Sohu\*\Cache;%LocalAppData%\Sohu\*\Cache;%AppData%\SohuVideo\*\Cache|
+VEN-015|奇虎 / 猎豹系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\LieBao\*\Cache;%LocalAppData%\LieBao\*\Cache;%AppData%\Cheetah\*\Cache|
+VEN-016|搜狗系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Sogou*\Cache;%LocalAppData%\Sogou*\Cache;%AppData%\Sogou\*\Cache|
+VEN-017|小米系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Xiaomi\*\Cache;%LocalAppData%\Xiaomi\*\Cache|
+VEN-018|华为系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Huawei\*\Cache;%LocalAppData%\Huawei\*\Cache|
+VEN-019|联想系产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Lenovo\*\Cache;%LocalAppData%\Lenovo\*\Cache;%ProgramData%\Lenovo\*\Download|
+VEN-020|华为 / 荣耀电脑管家日志|AppLog|S1|DirectoryRecursive|DeleteContents|%ProgramData%\Huawei\*\Log;%ProgramData%\Honor\*\Log;%LocalAppData%\Huawei\*\Log|
+VEN-021|OEM 预装工具缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%ProgramData%\Dell\*\Cache;%ProgramData%\HP\*\Cache;%ProgramData%\ASUS\*\Cache;%ProgramData%\Acer\*\Cache;%ProgramData%\MSI\*\Cache|
+VEN-022|国际厂商产品缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\*\Cache;%LocalAppData%\Google\*\Cache;%LocalAppData%\Adobe\*\Cache;%LocalAppData%\Apple Computer\*\Cache|
+VEN-023|国际厂商升级包|AppCache|S1|DirectoryRecursive|DeleteContents|%ProgramData%\Microsoft\*\Download;%ProgramData%\Google\*\Update;%ProgramData%\Adobe\*\Update|
+VEN-024|Electron 应用通用缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\*\Cache;%AppData%\*\GPUCache;%AppData%\*\Code Cache;%AppData%\*\Crashpad|
+VEN-025|Electron 应用日志|AppLog|S1|DirectoryRecursive|DeleteContents|%AppData%\*\logs;%AppData%\*\Logs;%LocalAppData%\*\logs|
+VEN-026|绿色软件与便携应用缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%UserProfile%\AppData\Local\Temp\*Cache;%ProgramData%\PortableApps\*\Data\cache|
+VEN-027|网盘客户端缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\*\Cloud\Cache;%LocalAppData%\*\Cloud\Cache;%AppData%\*\Netdisk\Cache|
+VEN-028|会议与直播客户端缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\*\Meeting\Cache;%LocalAppData%\*\Meeting\Cache;%AppData%\ZOOM\data;%AppData%\Zoom\logs|
+VEN-029|邮件客户端缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Outlook\RoamCache;%AppData%\Thunderbird\Profiles\*\cache2;%AppData%\Foxmail7\Storage\*\Cache|
+VEN-030|远程连接工具日志|AppLog|S1|DirectoryRecursive|DeleteContents|%AppData%\ToDesk\Log;%AppData%\SunloginClient\logs;%LocalAppData%\AnyDesk\logs|
+VEN-031|设计类软件缓存|AppCache|S2|DirectoryRecursive|DeleteContents|%AppData%\Adobe\Common\Media Cache Files;%AppData%\Adobe\Common\Media Cache;%LocalAppData%\Autodesk\*\Cache|
+VEN-032|CAD 与三维软件缓存|AppCache|S2|DirectoryRecursive|DeleteContents|%LocalAppData%\Autodesk\*\Cache;%AppData%\Blender Foundation\Blender\*\config\cache;%LocalAppData%\SketchUp\*\Cache|
+VEN-033|虚拟机与模拟器缓存|AppCache|S2|DirectoryRecursive|DeleteContents|%AppData%\VMware\logs;%AppData%\VirtualBox\*.log;%LocalAppData%\BlueStacks\Logs;%LocalAppData%\Nox\logs|
+VEN-034|模拟器镜像下载残留|AppCache|S2|DirectoryRecursive|DeleteContents|%LocalAppData%\BlueStacks\Engine\*tmp;%LocalAppData%\Nox\download|
+VEN-035|游戏平台下载缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%ProgramData%\Epic\UnrealEngineLauncher\LauncherInstalled.dat.bak;%LocalAppData%\Ubisoft Game Launcher\cache;%AppData%\Battle.net\Cache|
+VEN-036|游戏录像与截图缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\NVIDIA Corporation\NvNode\Cache;%AppData%\Medal\cache;%LocalAppData%\Plays\cache|

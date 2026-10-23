@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!-- 带平台版本的 TFM：启用 WinRT 投影，Appx/包管理走 Windows.Management.Deployment.PackageManager -->
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>WinTools.App</RootNamespace>
+    <AssemblyName>WinTools</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+    <PublishSingleFile Condition="'$(PublishSingleFile)' == ''">false</PublishSingleFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WinTools.Core\WinTools.Core.csproj" />
+    <ProjectReference Include="..\WinTools.Infrastructure\WinTools.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 内置字体：WPF 只支持 ttf/otf，源文件为 woff2，先经 tools/Convert-Woff2ToTtf.py 转换 -->
+    <Resource Include="Assets\Fonts\*.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\i18n\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

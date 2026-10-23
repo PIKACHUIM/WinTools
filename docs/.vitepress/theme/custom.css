@@ -1,0 +1,57 @@
+/* WinTools 文档站微调：截图统一圆角与阴影，表格更紧凑 */
+
+.vp-doc img {
+  border-radius: 12px;
+}
+
+/* 截图容器：用于 <img class="shot"> */
+.vp-doc img.shot {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+  margin: 16px 0;
+}
+
+.vp-doc table {
+  display: table;
+  width: 100%;
+}
+
+.vp-doc th,
+.vp-doc td {
+  white-space: normal;
+}
+
+/* 首页 hero 图片加一点光晕 */
+.VPHero .image-bg {
+  background: radial-gradient(circle at 50% 40%, rgba(63, 169, 245, 0.35), transparent 62%);
+}
+
+/* 首页功能区卡片：hover 轻微上浮 */
+.VPFeature {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.VPFeature:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* 截图网格 */
+.shot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.shot-grid figure {
+  margin: 0;
+}
+
+.shot-grid figcaption {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--vp-c-text-3);
+  text-align: center;
+}

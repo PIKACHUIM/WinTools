@@ -1,0 +1,40 @@
+# WinTools 清理规则源：影音播放缓存
+# 格式同 system.txt
+
+VID-001|Windows Media Player 缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Media Player\Cache;%LocalAppData%\Microsoft\Windows Media\Cache|
+VID-002|腾讯视频缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Tencent\QQLive\Cache;%AppData%\Tencent\QQLive\Cache;%LocalAppData%\Tencent\QQLive\Download|
+VID-003|爱奇艺影音缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\IQIYI Video\Cache;%AppData%\IQIYI Video\Cache;%LocalAppData%\IQIYI Video\Download|
+VID-004|优酷缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Youku\Cache;%AppData%\Youku\Cache;%LocalAppData%\Youku\Download|
+VID-005|PPTV 聚力缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\PPTV\Cache;%AppData%\PPTV\Cache;%LocalAppData%\PPTV\Download|
+VID-006|迅雷看看缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Xunlei\Xmp\Cache;%AppData%\Xunlei\Xmp\Cache|
+VID-007|风行网络电视缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Funshion\Cache;%AppData%\Funshion\Cache|
+VID-008|飞速土豆缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Tudou\Cache;%AppData%\Tudou\Cache|
+VID-009|极速酷6缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Ku6\Cache;%AppData%\Ku6\Cache|
+VID-010|PPS 影音缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\PPStream\Cache;%AppData%\PPStream\Cache|
+VID-011|搜狐影音缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\SohuVideo\Cache;%AppData%\SohuVideo\Cache|
+VID-012|快播 Qvod 缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%AppData%\QvodPlayer\Cache;%LocalAppData%\QvodPlayer\Media|
+VID-013|暴风影音缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Baofeng\Cache;%AppData%\Baofeng\Cache|
+VID-014|百度影音缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\BaiduYingyin\Cache;%AppData%\BaiduYingyin\Cache|
+VID-015|QuickTime 缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Apple Computer\QuickTime;%LocalAppData%\Apple Computer\QuickTime|
+VID-016|芒果 TV 缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\MangoTV\Cache;%AppData%\MangoTV\Cache|
+VID-017|乐视视频缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Letv\Cache;%AppData%\Letv\Cache|
+VID-018|哔哩哔哩客户端缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\bilibili\Cache;%AppData%\bilibili\Cache;%LocalAppData%\bilibili\Download|
+VID-019|抖音直播伴侣缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%AppData%\douyin\Cache;%LocalAppData%\douyin\Cache|
+VID-020|PotPlayer 缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%AppData%\PotPlayerMini64\Cache;%AppData%\PotPlayerMini\Cache|
+VID-021|VLC 最近播放缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%AppData%\vlc\art;%AppData%\vlc\cache|
+VID-022|KMPlayer 缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%AppData%\KMPlayer\Cache|
+VID-023|腾讯会议录制缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Tencent\WeMeet\Cache;%LocalAppData%\Tencent\WeMeet\Temp|
+VID-024|录屏与直播缓存|VideoCache|S1|DirectoryRecursive|DeleteContents|%AppData%\OBS\Cache;%LocalAppData%\OBS\logs;%AppData%\Bandicam\Cache|
+
+MUS-001|酷狗音乐缓存|MusicCache|S1|DirectoryRecursive|DeleteContents|%AppData%\KuGou\Cache;%LocalAppData%\KuGou\Cache;%AppData%\KuGou8\Cache|
+MUS-002|酷我音乐缓存|MusicCache|S1|DirectoryRecursive|DeleteContents|%AppData%\KWMUSIC\Cache;%LocalAppData%\KWMUSIC\Cache|
+MUS-003|QQ 音乐缓存|MusicCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Tencent\QQMusic\Cache;%AppData%\Tencent\QQMusic\Cache|
+MUS-004|网易云音乐缓存|MusicCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Netease\CloudMusic\Cache;%AppData%\Netease\CloudMusic\Cache|
+MUS-005|千千静听缓存|MusicCache|S1|DirectoryRecursive|DeleteContents|%AppData%\TTPlayer\Cache;%AppData%\TTPlayer\Temp|
+MUS-006|百度音乐缓存|MusicCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Baidu\MusicBox\Cache;%LocalAppData%\Baidu\MusicBox\Cache|
+MUS-007|多米音乐缓存|MusicCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Duomi\Cache;%LocalAppData%\Duomi\Cache|
+MUS-008|虾米音乐缓存|MusicCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Xiami\Cache;%LocalAppData%\Xiami\Cache|
+MUS-009|Spotify 缓存|MusicCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Spotify\Storage;%LocalAppData%\Spotify\Data|
+MUS-010|QQ 音乐广告缓存|MusicCache|S2|DirectoryRecursive|DeleteContents|%LocalAppData%\Tencent\QQMusic\AdCache;%AppData%\Tencent\QQMusic\AdCache|
+MUS-011|酷狗广告与日志|MusicCache|S2|DirectoryRecursive|DeleteContents|%AppData%\KuGou\AdCache;%AppData%\KuGou\Log|
+MUS-012|网易云音乐日志|MusicCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Netease\CloudMusic\Log;%LocalAppData%\Netease\CloudMusic\Temp|

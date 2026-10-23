@@ -1,0 +1,147 @@
+# WinTools 产品缓存清单：产品名|缓存根目录
+# 生成器会为每个产品自动展开 Cache / Temp / Log / Update / Download 等子目录规则
+# 路径不存在时扫描会直接跳过，因此可以放心覆盖大量候选
+
+QQ|%AppData%\Tencent\QQ
+QQ 国际版|%AppData%\Tencent\QQIntl
+TIM|%AppData%\Tencent\TIM
+微信|%AppData%\Tencent\WeChat
+企业微信|%AppData%\Tencent\WXWork
+腾讯会议|%AppData%\Tencent\WeMeet
+腾讯文档|%AppData%\Tencent\WeDocs
+腾讯视频|%LocalAppData%\Tencent\QQLive
+QQ 音乐|%LocalAppData%\Tencent\QQMusic
+QQ 浏览器|%LocalAppData%\Tencent\QQBrowser
+QQ 拼音|%AppData%\Tencent\QQPinyin
+QQ 游戏大厅|%ProgramData%\Tencent\QQGAME
+WeGame|%ProgramData%\Tencent\WeGame
+QQ 电脑管家|%ProgramData%\Tencent\QQPCMgr
+腾讯手游助手|%LocalAppData%\Tencent\GameLoop
+腾讯加速器|%AppData%\Tencent\GameAccelerator
+Foxmail|%AppData%\Foxmail7
+QQ 影音|%LocalAppData%\Tencent\QQLive
+QQ 空间|%AppData%\Tencent\Qzone
+微信开发者工具|%AppData%\Tencent\微信开发者工具
+360 安全卫士|%ProgramData%\360safe
+360 杀毒|%ProgramData%\360sd
+360 极速浏览器|%LocalAppData%\360Chrome\Chrome
+360 安全浏览器|%AppData%\360se6
+360 压缩|%AppData%\360zip
+360 驱动大师|%ProgramData%\360DrvMgr
+360 软件管家|%ProgramData%\360SoftMgr
+360 桌面|%AppData%\360Desktop
+金山毒霸|%ProgramData%\Kingsoft\Antivirus
+金山卫士|%ProgramData%\Kingsoft\KSafe
+WPS Office|%AppData%\kingsoft\office6
+WPS 图片|%AppData%\kingsoft\photo
+金山文档|%AppData%\kingsoft\Kdocs
+猎豹浏览器|%LocalAppData%\LieBao
+驱动精灵|%ProgramData%\DrvMgr
+驱动人生|%ProgramData%\DriveTheLife
+鲁大师|%ProgramData%\Ludashi
+火绒安全|%ProgramData%\Huorong
+百度网盘|%AppData%\baidu\BaiduYunGuanjia
+百度输入法|%AppData%\Baidu\BaiduPinyin
+百度浏览器|%AppData%\Baidu\BaiduBrowser
+百度音乐|%AppData%\Baidu\MusicBox
+百度卫士|%ProgramData%\Baidu\BaiduSafe
+百度影音|%AppData%\BaiduYingyin
+阿里旺旺|%AppData%\AliWangWang
+千牛|%AppData%\AliWorkbench
+阿里云盘|%AppData%\aDrive
+钉钉|%AppData%\DingTalk
+飞书|%AppData%\Feishu
+夸克浏览器|%LocalAppData%\Quark
+UC 浏览器|%LocalAppData%\UCBrowser
+搜狗输入法|%AppData%\SogouInput
+搜狗浏览器|%LocalAppData%\Sogou\SogouExplorer
+搜狗高速下载|%AppData%\SogouDownloader
+迅雷|%AppData%\Thunder Network\Thunder
+迅雷影音|%AppData%\Xunlei\Xmp
+网易云音乐|%LocalAppData%\Netease\CloudMusic
+网易 UU 加速器|%ProgramData%\NetEase\UU
+网易邮箱大师|%AppData%\NetEase\MailMaster
+网易 CC 直播|%AppData%\Netease\CC
+哔哩哔哩|%LocalAppData%\bilibili
+抖音|%AppData%\douyin
+剪映|%LocalAppData%\JianyingPro
+今日头条|%AppData%\Bytedance\NewsArticle
+西瓜视频|%AppData%\Bytedance\Xigua
+优酷|%LocalAppData%\Youku
+爱奇艺|%LocalAppData%\IQIYI Video
+腾讯视频 PC|%LocalAppData%\Tencent\QQLive
+芒果 TV|%LocalAppData%\MangoTV
+乐视视频|%LocalAppData%\Letv
+搜狐影音|%LocalAppData%\SohuVideo
+PPTV|%LocalAppData%\PPTV
+PPS 影音|%LocalAppData%\PPStream
+风行视频|%LocalAppData%\Funshion
+暴风影音|%LocalAppData%\Baofeng
+快播|%AppData%\QvodPlayer
+酷狗音乐|%AppData%\KuGou
+酷我音乐|%AppData%\KWMUSIC
+千千静听|%AppData%\TTPlayer
+多米音乐|%AppData%\Duomi
+虾米音乐|%AppData%\Xiami
+Spotify|%LocalAppData%\Spotify
+PotPlayer|%AppData%\PotPlayerMini64
+VLC|%AppData%\vlc
+OBS Studio|%AppData%\obs-studio
+Adobe Reader|%LocalAppData%\Adobe\Acrobat
+Adobe Creative Cloud|%LocalAppData%\Adobe\Creative Cloud
+Adobe Air|%AppData%\Adobe\AIR
+Photoshop|%AppData%\Adobe\Adobe Photoshop
+Premiere|%AppData%\Adobe\Premiere Pro
+After Effects|%AppData%\Adobe\After Effects
+Illustrator|%AppData%\Adobe\Adobe Illustrator
+Office|%LocalAppData%\Microsoft\Office
+Outlook|%LocalAppData%\Microsoft\Outlook
+OneDrive|%LocalAppData%\Microsoft\OneDrive
+Teams|%AppData%\Microsoft\Teams
+Visual Studio|%LocalAppData%\Microsoft\VisualStudio
+VS Code|%AppData%\Code
+Windows Terminal|%LocalAppData%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe
+PowerToys|%LocalAppData%\Microsoft\PowerToys
+GitHub Desktop|%AppData%\GitHub Desktop
+Postman|%AppData%\Postman
+ApiFox|%AppData%\ApiFox
+JetBrains|%LocalAppData%\JetBrains
+IntelliJ IDEA|%AppData%\JetBrains\IntelliJ*
+PyCharm|%AppData%\JetBrains\PyCharm*
+WebStorm|%AppData%\JetBrains\WebStorm*
+Unity|%LocalAppData%\Unity
+Unreal Engine|%LocalAppData%\UnrealEngine
+Docker Desktop|%AppData%\Docker
+Android Studio|%LocalAppData%\Google\AndroidStudio*
+Eclipse|%UserProfile%\.eclipse
+NVIDIA|%LocalAppData%\NVIDIA
+AMD|%LocalAppData%\AMD
+Intel|%LocalAppData%\Intel
+Steam|%LocalAppData%\Steam
+Epic Games|%LocalAppData%\EpicGamesLauncher
+Battle.net|%ProgramData%\Battle.net
+EA App|%LocalAppData%\Electronic Arts
+Ubisoft Connect|%LocalAppData%\Ubisoft Game Launcher
+Xbox|%LocalAppData%\Packages\Microsoft.GamingApp_8wekyb3d8bbwe
+ToDesk|%AppData%\ToDesk
+向日葵|%AppData%\SunloginClient
+AnyDesk|%LocalAppData%\AnyDesk
+TeamViewer|%AppData%\TeamViewer
+Zoom|%AppData%\Zoom
+钉钉直播|%AppData%\DingTalk\media_cache
+Evernote|%LocalAppData%\Evernote
+Notion|%AppData%\Notion
+Obsidian|%AppData%\obsidian
+Typora|%AppData%\Typora
+XMind|%AppData%\XMind
+Everything|%AppData%\Everything
+Bandizip|%AppData%\Bandizip
+7-Zip|%AppData%\7-Zip
+WinRAR|%AppData%\WinRAR
+Daemon Tools|%ProgramData%\DAEMON Tools Lite
+VMware|%AppData%\VMware
+VirtualBox|%AppData%\VirtualBox
+BlueStacks|%LocalAppData%\BlueStacks
+雷电模拟器|%LocalAppData%\leidian
+夜神模拟器|%LocalAppData%\Nox
+MuMu 模拟器|%LocalAppData%\MuMu

@@ -1,0 +1,39 @@
+# WinTools 清理规则源：浏览器缓存
+# 格式同 system.txt：id|名称|分类|安全|匹配|策略|路径|说明
+
+BRW-001|Google Chrome 缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Google\Chrome\User Data\*\Cache;%LocalAppData%\Google\Chrome\User Data\*\Code Cache;%LocalAppData%\Google\Chrome\User Data\*\GPUCache;%LocalAppData%\Google\Chrome\User Data\*\Service Worker\CacheStorage|
+BRW-002|Google Chrome 升级包|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Google\Chrome\User Data\*\..\..\..\Google\Update\Download;%ProgramFiles%\Google\Chrome\Application\*\Installer|
+BRW-003|Google Chrome Canary 缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Google\Chrome SxS\User Data\*\Cache;%LocalAppData%\Google\Chrome SxS\User Data\*\Code Cache;%LocalAppData%\Google\Chrome SxS\User Data\*\GPUCache|
+BRW-004|Chromium 缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Chromium\User Data\*\Cache;%LocalAppData%\Chromium\User Data\*\Code Cache;%LocalAppData%\Chromium\User Data\*\GPUCache|
+BRW-005|Microsoft Edge 缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Edge\User Data\*\Cache;%LocalAppData%\Microsoft\Edge\User Data\*\Code Cache;%LocalAppData%\Microsoft\Edge\User Data\*\GPUCache;%LocalAppData%\Microsoft\Edge\User Data\*\Service Worker\CacheStorage|
+BRW-006|Microsoft Edge 升级包|Browser|S1|DirectoryRecursive|DeleteContents|%ProgramFiles(x86)%\Microsoft\Edge\Application\*\Installer;%ProgramData%\Microsoft\EdgeUpdate\Download|
+BRW-007|Mozilla Firefox 缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Mozilla\Firefox\Profiles\*\cache2;%LocalAppData%\Mozilla\Firefox\Profiles\*\startupCache;%LocalAppData%\Mozilla\Firefox\Profiles\*\shader-cache|
+BRW-008|Mozilla Firefox 崩溃与更新缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Mozilla\Firefox\Crash Reports;%LocalAppData%\Mozilla\updates;%ProgramData%\Mozilla\updates|
+BRW-009|Internet Explorer 缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Windows\INetCache;%LocalAppData%\Microsoft\Windows\WebCache|
+BRW-010|Internet Explorer Cookies|Browser|S3|DirectoryRecursive|DeleteContents|%AppData%\Microsoft\Windows\Cookies;%LocalAppData%\Microsoft\Windows\INetCookies|清理后所有网站需重新登录
+BRW-011|Internet Explorer 历史记录|Browser|S3|GlobFile|DeleteFile|%LocalAppData%\Microsoft\Windows\History\*|清空浏览历史
+BRW-012|IE 索引文件 Index.dat|Browser|S3|GlobFile|DeleteFile|%LocalAppData%\Microsoft\Windows\Temporary Internet Files\*;%AppData%\Microsoft\Windows\IETldCache|老系统遗留索引，需重启后清理
+BRW-013|Flash 缓存与 Cookies|Browser|S2|DirectoryRecursive|DeleteContents|%AppData%\Adobe\Flash Player\AssetCache;%AppData%\Macromedia\Flash Player\#SharedObjects;%SystemRoot%\System32\Macromed\Flash\AssetCache|
+BRW-014|Opera 缓存|Browser|S1|DirectoryRecursive|DeleteContents|%AppData%\Opera Software\Opera Stable\Cache;%AppData%\Opera Software\Opera Stable\Code Cache;%AppData%\Opera Software\Opera Stable\GPUCache;%LocalAppData%\Opera Software\Opera Stable\Cache|
+BRW-015|Opera GX 缓存|Browser|S1|DirectoryRecursive|DeleteContents|%AppData%\Opera Software\Opera GX Stable\Cache;%AppData%\Opera Software\Opera GX Stable\Code Cache|
+BRW-016|Brave 浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\BraveSoftware\Brave-Browser\User Data\*\Cache;%LocalAppData%\BraveSoftware\Brave-Browser\User Data\*\Code Cache;%LocalAppData%\BraveSoftware\Brave-Browser\User Data\*\GPUCache|
+BRW-017|Vivaldi 浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Vivaldi\User Data\*\Cache;%LocalAppData%\Vivaldi\User Data\*\Code Cache|
+BRW-018|360 安全浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%AppData%\360se6\User Data\*\Cache;%AppData%\360se6\User Data\*\Code Cache;%LocalAppData%\360Chrome\Chrome\User Data\*\Cache|
+BRW-019|360 极速浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%AppData%\360Chrome\User Data\*\Cache;%LocalAppData%\360Chrome\Chrome\User Data\*\Code Cache;%LocalAppData%\360Chrome\Chrome\User Data\*\GPUCache|
+BRW-020|360 极速浏览器升级包|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\360Chrome\Chrome\Application\*\Installer;%ProgramData%\360Chrome\Update|
+BRW-021|QQ 浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Tencent\QQBrowser\User Data\*\Cache;%LocalAppData%\Tencent\QQBrowser\User Data\*\Code Cache;%AppData%\Tencent\QQBrowser\User Data\*\Cache|
+BRW-022|搜狗浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Sogou\SogouExplorer\User Data\*\Cache;%AppData%\Sogou\SogouExplorer\User Data\*\Cache;%LocalAppData%\SogouExplorer\Temp|
+BRW-023|猎豹浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\LieBao\LieBao\LieBao\User Data\*\Cache;%AppData%\LieBao\LieBao\User Data\*\Cache|
+BRW-024|2345 加速浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%AppData%\2345Explorer\User Data\*\Cache;%LocalAppData%\2345Explorer\User Data\*\Cache|
+BRW-025|傲游浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%AppData%\Maxthon5\Users\*\Cache;%LocalAppData%\Maxthon\Users\*\Cache;%AppData%\Maxthon3\Users\*\Cache|
+BRW-026|世界之窗浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%AppData%\TheWorld\*\Cache;%LocalAppData%\TheWorld6\User Data\*\Cache|
+BRW-027|世界之窗极速版升级包|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\TheWorld6\Application\*\Installer;%ProgramData%\TheWorld6\Update|
+BRW-028|旗鱼浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%AppData%\QiyuBrowser\User Data\*\Cache;%LocalAppData%\QiyuBrowser\User Data\*\Cache|
+BRW-029|枫树浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%AppData%\CoolNovo\User Data\*\Cache;%LocalAppData%\CoolNovo\User Data\*\Cache|
+BRW-030|太阳花浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%AppData%\SunflowerBrowser\User Data\*\Cache;%LocalAppData%\SunflowerBrowser\User Data\*\Cache|
+BRW-031|Comodo 龙浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Comodo\Dragon\User Data\*\Cache;%AppData%\Comodo\Dragon\User Data\*\Cache|
+BRW-032|Safari 浏览器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Apple Computer\Safari\Cache;%AppData%\Apple Computer\Safari\Cache|
+BRW-033|Silverlight 缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Silverlight\OutOfBrowser;%AppData%\Microsoft\Silverlight|
+BRW-034|Chrome 类浏览器着色器缓存|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Google\Chrome\User Data\ShaderCache;%LocalAppData%\Microsoft\Edge\User Data\ShaderCache;%LocalAppData%\D3DSCache|
+BRW-035|浏览器下载临时文件|Browser|S1|GlobFile|DeleteFile|%LocalAppData%\Temp\*.crdownload;%LocalAppData%\Temp\*.part;%LocalAppData%\Temp\*.partial|
+BRW-036|浏览器崩溃转储|Browser|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Google\Chrome\User Data\Crashpad;%LocalAppData%\Microsoft\Edge\User Data\Crashpad;%AppData%\Opera Software\Opera Stable\Crashpad|

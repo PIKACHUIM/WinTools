@@ -1,0 +1,105 @@
+SYS-01,Windows system temp
+SYS-02,Windows SystemTemp
+SYS-03,Per-user Local temp
+SYS-04,Service account temp
+SYS-05,Windows Update download cache
+SYS-06,Delivery Optimization cache
+SYS-07,Update Orchestrator data
+SYS-08,Windows setup logs (Panther)
+SYS-09,Windows Logs (CBS/DISM/DPX)
+SYS-10,System32 LogFiles
+SYS-11,Event logs (winevt)
+SYS-12,WinSxS temp
+SYS-13,WinSxS backup
+SYS-14,Installer PatchCache
+SYS-15,System minidumps
+SYS-16,Live kernel reports
+SYS-17,Application crash dumps
+SYS-18,WER report queue
+SYS-19,User WER reports
+SYS-20,Prefetch
+SYS-21,Downloaded Program Files
+SYS-22,Recycle Bin
+SYS-23,Thumbnail and icon cache
+SYS-24,INetCache
+SYS-25,inetpub default site
+SYS-26,PerfLogs
+SYS-27,Pagefile and hiberfil
+SYS-28,WDF crash dumps
+SYS-29,Windows Search index
+BRW-01,Chrome cache
+BRW-02,Chrome code cache
+BRW-03,Chrome GPU cache
+BRW-04,Chrome Service Worker
+BRW-05,Edge cache
+BRW-06,Edge code cache
+BRW-07,Edge GPU cache
+BRW-08,Firefox cache2
+BRW-09,Chromium app cache (Quark/QQEX/bilibili)
+BRW-10,Chromium app cache (generic)
+BRW-11,Chrome on-device model weights
+DEV-01,npm cache
+DEV-02,npm cache (legacy Roaming)
+DEV-03,pnpm store
+DEV-04,pnpm-cache
+DEV-05,Yarn cache
+DEV-06,Bun install cache
+DEV-07,Go build cache
+DEV-08,Go module cache
+DEV-09,Cargo registry cache
+DEV-10,Cargo git index cache
+DEV-11,pip cache
+DEV-12,NuGet HTTP cache
+DEV-13,NuGet global packages
+DEV-14,Maven local repository
+DEV-15,JetBrains index caches
+DEV-16,JetBrains logs
+DEV-17,JetBrains Roaming data
+DEV-18,VS Code cache
+DEV-19,VS Code CachedData
+DEV-20,VS Code logs
+DEV-21,VS Code extension VSIX cache
+DEV-22,msys64 pacman package cache
+DEV-23,msys64 var/log
+DEV-24,msys64 tmp
+DEV-25,Flutter SDK cache
+DEV-26,Playwright browsers
+DEV-27,Electron download cache
+DEV-28,Electron Builder cache
+DEV-29,Pub (Dart) cache
+DEV-30,Nuitka compile cache
+DEV-31,node_modules folders
+DEV-32,Rust target folders
+DEV-33,Python __pycache__
+DEV-34,iTFS client cache
+DEV-35,UGit client cache
+DEV-36,iOA installer leftovers
+APP-01,NVIDIA shader cache
+APP-02,NVIDIA GL cache
+APP-03,NVIDIA driver leftovers
+APP-04,NVIDIA ProgramData cache
+APP-05,D3D shader cache
+APP-06,WeCom Mail cache
+APP-07,WeCom logs
+APP-08,WeChat 4.0 logs
+APP-09,NetEase CloudMusic cache
+APP-10,Telegram media cache
+APP-11,bilibili client cache
+APP-12,iOA client logs
+APP-13,CodeBuddy extension logs
+APP-14,WorkBuddy session logs
+APP-15,Unity global cache
+APP-16,Postman cache
+APP-17,NeatDM download cache
+APP-18,Chrome/Edge Crashpad dumps
+APP-19,RDP bitmap cache
+APP-20,Package Cache
+APP-21,Everything index database
+MSC-01,User-created tmp
+MSC-02,USB-key control log
+MSC-03,Banking control update flag
+MSC-04,DumpStack.log.tmp
+MSC-05,Recovery partition data
+MSC-06,System Volume Information
+MSC-07,Defender scan temp
+MSC-08,Defender definition backups

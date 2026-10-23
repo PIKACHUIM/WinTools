@@ -1,0 +1,202 @@
+[
+  {
+    "id": "sync-settings-off",
+    "group": "Privacy",
+    "recommended": true,
+    "name": { "zh-Hans": "关闭设置同步", "en-US": "Disable settings sync" },
+    "description": { "zh-Hans": "不同步主题、密码与语言偏好到微软账户。", "en-US": "Stop syncing theme, passwords and language preferences." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync", "name": "DisableSettingSync", "kind": "DWord", "value": "2" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync", "name": "DisableSettingSync", "kind": "DWord", "value": "2" }, { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync", "name": "DisableSettingSyncUserOverride", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync", "name": "DisableSettingSync" }, { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync", "name": "DisableSettingSyncUserOverride" } ]
+  },
+  {
+    "id": "cloud-clipboard-off",
+    "group": "Privacy",
+    "recommended": true,
+    "name": { "zh-Hans": "关闭云剪贴板同步", "en-US": "Disable cloud clipboard" },
+    "description": { "zh-Hans": "剪贴板内容不再跨设备同步上传。", "en-US": "Stop clipboard history from syncing across devices." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "AllowCrossDeviceClipboard", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "AllowCrossDeviceClipboard", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "AllowCrossDeviceClipboard" } ]
+  },
+  {
+    "id": "app-launch-tracking-off",
+    "group": "Privacy",
+    "recommended": true,
+    "name": { "zh-Hans": "关闭应用启动跟踪", "en-US": "Disable app launch tracking" },
+    "description": { "zh-Hans": "不再记录你启动了哪些应用来改进开始菜单。", "en-US": "Stop tracking app launches used to tune Start." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_TrackProgs", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_TrackProgs", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_TrackProgs", "kind": "DWord", "value": "1" } ]
+  },
+  {
+    "id": "speech-online-off",
+    "group": "Privacy",
+    "recommended": false,
+    "name": { "zh-Hans": "关闭在线语音识别", "en-US": "Disable online speech recognition" },
+    "description": { "zh-Hans": "语音输入改由本机处理，部分语种识别率会下降。", "en-US": "Speech input is processed locally only." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy", "name": "HasAccepted", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy", "name": "HasAccepted", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy", "name": "HasAccepted" } ]
+  },
+  {
+    "id": "visual-effects-performance",
+    "group": "Performance",
+    "recommended": false,
+    "name": { "zh-Hans": "视觉效果优先性能", "en-US": "Visual effects: best performance" },
+    "description": { "zh-Hans": "关闭窗口动画与阴影，界面响应更快，观感更朴素。", "en-US": "Disable animations and shadows for snappier UI." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects", "name": "VisualFXSetting", "kind": "DWord", "value": "2" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects", "name": "VisualFXSetting", "kind": "DWord", "value": "2" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects", "name": "VisualFXSetting", "kind": "DWord", "value": "0" } ]
+  },
+  {
+    "id": "power-throttling-off",
+    "group": "Performance",
+    "recommended": false,
+    "name": { "zh-Hans": "关闭电源节流", "en-US": "Disable power throttling" },
+    "description": { "zh-Hans": "阻止后台程序被系统降压降频，可能增加耗电与发热。", "en-US": "Stop the OS from throttling background work; may raise power draw." },
+    "risk": "Medium",
+    "requiresRestart": true,
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling", "name": "PowerThrottlingOff", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling", "name": "PowerThrottlingOff", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling", "name": "PowerThrottlingOff" } ]
+  },
+  {
+    "id": "boot-menu-timeout-3",
+    "group": "Boot",
+    "recommended": false,
+    "name": { "zh-Hans": "启动菜单等待时间改为 3 秒", "en-US": "Boot menu timeout to 3 seconds" },
+    "description": { "zh-Hans": "多系统时缩短选择等待时间，单系统无影响。", "en-US": "Shorten the boot menu wait when dual-booting." },
+    "risk": "Low",
+    "requiresRestart": true,
+    "detect": [ { "type": "Command", "fileName": "bcdedit", "arguments": "/timeout 3" } ],
+    "apply": [ { "type": "Command", "fileName": "bcdedit", "arguments": "/timeout 3" } ],
+    "revert": [ { "type": "Command", "fileName": "bcdedit", "arguments": "/timeout 30" } ]
+  },
+  {
+    "id": "explorer-quick-access-off",
+    "group": "Explorer",
+    "recommended": false,
+    "name": { "zh-Hans": "关闭「最近使用」记录", "en-US": "Disable recent items" },
+    "description": { "zh-Hans": "资源管理器不再显示最近使用与常用文件夹。", "en-US": "Hide recent and frequent folders in Explorer." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer", "name": "ShowRecent", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer", "name": "ShowRecent", "kind": "DWord", "value": "0" }, { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer", "name": "ShowFrequent", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer", "name": "ShowRecent" }, { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer", "name": "ShowFrequent" } ]
+  },
+  {
+    "id": "explorer-title-full-path",
+    "group": "Explorer",
+    "recommended": false,
+    "name": { "zh-Hans": "标题栏显示完整路径", "en-US": "Show full path in title bar" },
+    "description": { "zh-Hans": "窗口标题显示完整目录，而不是只显示文件夹名。", "en-US": "Window titles show the full directory path." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState", "name": "FullPath", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState", "name": "FullPath", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState", "name": "FullPath", "kind": "DWord", "value": "0" } ]
+  },
+  {
+    "id": "autoplay-off",
+    "group": "Explorer",
+    "recommended": true,
+    "name": { "zh-Hans": "关闭自动播放", "en-US": "Disable AutoPlay" },
+    "description": { "zh-Hans": "插入 U 盘或光盘时不再自动弹窗运行。", "en-US": "No autorun prompt when media is inserted." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\AutoplayHandlers", "name": "DisableAutoplay", "kind": "DWord", "value": "1" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\AutoplayHandlers", "name": "DisableAutoplay", "kind": "DWord", "value": "1" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\AutoplayHandlers", "name": "DisableAutoplay" } ]
+  },
+  {
+    "id": "taskbar-align-left",
+    "group": "Taskbar",
+    "recommended": false,
+    "name": { "zh-Hans": "任务栏图标左对齐", "en-US": "Left-align taskbar icons" },
+    "description": { "zh-Hans": "回到 Windows 10 风格的左侧排列。", "en-US": "Classic left-aligned taskbar layout." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarAl", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarAl", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarAl", "kind": "DWord", "value": "1" } ]
+  },
+  {
+    "id": "start-recommendations-off",
+    "group": "Taskbar",
+    "recommended": true,
+    "name": { "zh-Hans": "关闭开始菜单推荐项", "en-US": "Hide Start recommendations" },
+    "description": { "zh-Hans": "开始菜单不再显示推广与推荐内容。", "en-US": "Remove promoted and recommended items from Start." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_IrisRecommendations", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_IrisRecommendations", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_IrisRecommendations" } ]
+  },
+  {
+    "id": "taskbar-search-off",
+    "group": "Taskbar",
+    "recommended": false,
+    "name": { "zh-Hans": "隐藏任务栏搜索框", "en-US": "Hide taskbar search box" },
+    "description": { "zh-Hans": "只保留图标或完全隐藏，腾出任务栏空间。", "en-US": "Free up taskbar space by hiding the search box." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "SearchboxTaskbarMode", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "SearchboxTaskbarMode", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "SearchboxTaskbarMode", "kind": "DWord", "value": "1" } ]
+  },
+  {
+    "id": "autorun-off",
+    "group": "Security",
+    "recommended": true,
+    "name": { "zh-Hans": "禁用所有驱动器自动运行", "en-US": "Disable autorun on all drives" },
+    "description": { "zh-Hans": "阻止 U 盘中的 autorun 程序自动执行，降低感染风险。", "en-US": "Block autorun programs on removable drives." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer", "name": "NoDriveTypeAutoRun", "kind": "DWord", "value": "255" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer", "name": "NoDriveTypeAutoRun", "kind": "DWord", "value": "255" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer", "name": "NoDriveTypeAutoRun" } ]
+  },
+  {
+    "id": "remote-assistance-off",
+    "group": "Security",
+    "recommended": true,
+    "name": { "zh-Hans": "关闭远程协助邀请", "en-US": "Disable Remote Assistance" },
+    "description": { "zh-Hans": "不再接受远程协助邀请；远程桌面不受影响。", "en-US": "Reject Remote Assistance invitations (RDP unaffected)." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Remote Assistance", "name": "fAllowToGetHelp", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Remote Assistance", "name": "fAllowToGetHelp", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Remote Assistance", "name": "fAllowToGetHelp", "kind": "DWord", "value": "1" } ]
+  },
+  {
+    "id": "llmnr-off",
+    "group": "Security",
+    "recommended": false,
+    "name": { "zh-Hans": "关闭 LLMNR 名称解析", "en-US": "Disable LLMNR" },
+    "description": { "zh-Hans": "避免局域网名称解析被利用；个别老设备按名字访问可能失效。", "en-US": "Harden name resolution; old LAN devices may stop resolving by name." },
+    "risk": "Medium",
+    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient", "name": "EnableMulticast", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient", "name": "EnableMulticast", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient", "name": "EnableMulticast" } ]
+  },
+  {
+    "id": "fullscreen-optimizations-off",
+    "group": "Gaming",
+    "recommended": false,
+    "name": { "zh-Hans": "关闭全屏优化", "en-US": "Disable fullscreen optimizations" },
+    "description": { "zh-Hans": "部分游戏可减少输入延迟，部分游戏反而更卡。", "en-US": "May reduce input lag in some games." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "System\\GameConfigStore", "name": "GameDVR_FSEBehaviorMode", "kind": "DWord", "value": "2" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "System\\GameConfigStore", "name": "GameDVR_FSEBehaviorMode", "kind": "DWord", "value": "2" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "System\\GameConfigStore", "name": "GameDVR_FSEBehaviorMode" } ]
+  },
+  {
+    "id": "game-bar-shortcut-off",
+    "group": "Gaming",
+    "recommended": false,
+    "name": { "zh-Hans": "关闭 Xbox Game Bar 快捷键", "en-US": "Disable Game Bar hotkey" },
+    "description": { "zh-Hans": "避免游戏中误触 Win+G 弹出录制面板。", "en-US": "Prevent Win+G from opening the overlay mid-game." },
+    "risk": "Low",
+    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\GameBar", "name": "UseNexusForGameBarEnabled", "kind": "DWord", "value": "0" } ],
+    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\GameBar", "name": "UseNexusForGameBarEnabled", "kind": "DWord", "value": "0" }, { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR", "name": "AppCaptureEnabled", "kind": "DWord", "value": "0" } ],
+    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\GameBar", "name": "UseNexusForGameBarEnabled" }, { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR", "name": "AppCaptureEnabled", "kind": "DWord", "value": "1" } ]
+  }
+]

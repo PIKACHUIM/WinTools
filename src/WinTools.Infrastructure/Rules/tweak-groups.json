@@ -1,0 +1,9 @@
+[
+  { "id": "Privacy",     "glyph": "\uE72E", "order": 10 },
+  { "id": "Performance", "glyph": "\uE945", "order": 20 },
+  { "id": "Explorer",    "glyph": "\uE8B7", "order": 30 },
+  { "id": "System",      "glyph": "\uE713", "order": 40 },
+  { "id": "Network",     "glyph": "\uE774", "order": 50 },
+  { "id": "Update",      "glyph": "\uE895", "order": 60 },
+  { "id": "Gaming",      "glyph": "\uE768", "order": 70 }
+]

@@ -1,0 +1,19 @@
+# 通用控件文案：状态页、复制、确认对话框、权限提示
+key|zh-Hans|zh-Hant|en-US|ja-JP|ko-KR|de-DE|fr-FR|es-ES|pt-BR|it-IT|ru-RU|ar-SA
+Common.Retry|重试|重試|Retry|再試行|다시 시도|Wiederholen|Réessayer|Reintentar|Tentar novamente|Riprova|Повторить|إعادة المحاولة
+Common.LoadFailed|加载失败|載入失敗|Failed to load|読み込みに失敗しました|불러오지 못했습니다|Laden fehlgeschlagen|Échec du chargement|Error al cargar|Falha ao carregar|Caricamento non riuscito|Не удалось загрузить|فشل التحميل
+Common.NoMatch|没有匹配的结果|沒有符合的結果|No matching results|一致する結果がありません|일치하는 결과가 없습니다|Keine passenden Ergebnisse|Aucun résultat correspondant|Sin resultados coincidentes|Nenhum resultado correspondente|Nessun risultato corrispondente|Нет совпадений|لا توجد نتائج مطابقة
+Common.Copy|复制|複製|Copy|コピー|복사|Kopieren|Copier|Copiar|Copiar|Copia|Копировать|نسخ
+Common.CopyAll|复制全部|複製全部|Copy all|すべてコピー|모두 복사|Alles kopieren|Tout copier|Copiar todo|Copiar tudo|Copia tutto|Копировать всё|نسخ الكل
+Common.Copied|已复制|已複製|Copied|コピーしました|복사됨|Kopiert|Copié|Copiado|Copiado|Copiato|Скопировано|تم النسخ
+Common.Confirm|确认|確認|Confirm|確認|확인|Bestätigen|Confirmer|Confirmar|Confirmar|Conferma|Подтвердить|تأكيد
+Common.Acknowledge|我已了解风险并继续|我已瞭解風險並繼續|I understand the risk and want to continue|リスクを理解したうえで続行します|위험을 이해했으며 계속합니다|Ich verstehe das Risiko und möchte fortfahren|Je comprends le risque et souhaite continuer|Entiendo el riesgo y quiero continuar|Entendo o risco e quero continuar|Ho compreso il rischio e voglio continuare|Я понимаю риск и хочу продолжить|أدرك المخاطر وأرغب في المتابعة
+Common.Close|关闭|關閉|Close|閉じる|닫기|Schließen|Fermer|Cerrar|Fechar|Chiudi|Закрыть|إغلاق
+Common.AffectedItems|影响的对象（{0}）|影響的物件（{0}）|Affected items ({0})|対象（{0}）|영향받는 항목({0})|Betroffene Elemente ({0})|Éléments concernés ({0})|Elementos afectados ({0})|Itens afetados ({0})|Elementi interessati ({0})|Затрагиваемые объекты ({0})|العناصر المتأثرة ({0})
+Common.NeedAdmin|此操作需要管理员权限|此操作需要系統管理員權限|This action requires administrator rights|この操作には管理者権限が必要です|이 작업에는 관리자 권한이 필요합니다|Diese Aktion erfordert Administratorrechte|Cette action nécessite des droits d'administrateur|Esta acción requiere permisos de administrador|Esta ação requer direitos de administrador|Questa azione richiede privilegi di amministratore|Для этого действия нужны права администратора|يتطلب هذا الإجراء صلاحيات المسؤول
+Common.RunAsAdmin|以管理员身份重启|以系統管理員身分重新啟動|Restart as administrator|管理者として再起動|관리자 권한으로 다시 시작|Als Administrator neu starten|Redémarrer en administrateur|Reiniciar como administrador|Reiniciar como administrador|Riavvia come amministratore|Перезапустить от имени администратора|إعادة التشغيل كمسؤول
+Common.Elapsed|耗时 {0}|耗時 {0}|Took {0}|所要時間 {0}|소요 시간 {0}|Dauer {0}|Durée {0}|Duración {0}|Duração {0}|Durata {0}|Заняло {0}|المدة {0}
+Common.Skipped|已跳过|已略過|Skipped|スキップ|건너뜀|Übersprungen|Ignoré|Omitido|Ignorado|Saltato|Пропущено|تم التخطي
+Common.Succeeded|成功|成功|Succeeded|成功|성공|Erfolgreich|Réussi|Correcto|Bem-sucedido|Riuscito|Успешно|نجح
+Common.Completed|已完成|已完成|Completed|完了|완료됨|Abgeschlossen|Terminé|Completado|Concluído|Completato|Завершено|اكتمل
+Common.ResultSummary|操作结果|操作結果|Result|操作結果|작업 결과|Ergebnis|Résultat|Resultado|Resultado|Risultato|Результат|النتيجة

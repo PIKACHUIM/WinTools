@@ -1,0 +1,22 @@
+[
+  { "id": "SystemTemp",      "glyph": "\uE74D", "order": 10 },
+  { "id": "SystemUpdate",    "glyph": "\uE896", "order": 20 },
+  { "id": "SystemLog",       "glyph": "\uE7C3", "order": 30 },
+  { "id": "SystemComponent", "glyph": "\uE8F1", "order": 40 },
+  { "id": "SystemCache",     "glyph": "\uE81C", "order": 50 },
+  { "id": "CrashDump",       "glyph": "\uE7BA", "order": 60 },
+  { "id": "PageFile",        "glyph": "\uE8A5", "order": 70 },
+  { "id": "RecycleBin",      "glyph": "\uE74D", "order": 80 },
+  { "id": "Browser",         "glyph": "\uE774", "order": 90 },
+  { "id": "DevCache",        "glyph": "\uE943", "order": 100 },
+  { "id": "DevLog",          "glyph": "\uE7C3", "order": 110 },
+  { "id": "DevBuild",        "glyph": "\uE943", "order": 120 },
+  { "id": "AppCache",        "glyph": "\uE8B7", "order": 130 },
+  { "id": "AppLog",          "glyph": "\uE7C3", "order": 140 },
+  { "id": "RootMisc",        "glyph": "\uE8B7", "order": 150 },
+
+  { "id": "VideoCache",     "glyph": "\uE8B2", "order": 160 },
+  { "id": "MusicCache",     "glyph": "\uE8D6", "order": 170 },
+  { "id": "SecuritySuite",  "glyph": "\uE72E", "order": 180 },
+  { "id": "DriverLeftover", "glyph": "\uE90F", "order": 190 }
+]

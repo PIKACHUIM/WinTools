@@ -1,0 +1,39 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <LinearGradientBrush x:Key="App.Background" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#FF15181D" Offset="0" />
+        <GradientStop Color="#FF101216" Offset="0.55" />
+        <GradientStop Color="#FF0C0E11" Offset="1" />
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="App.Sidebar" Color="#22FFFFFF" />
+    <SolidColorBrush x:Key="App.Surface" Color="#12FFFFFF" />
+    <SolidColorBrush x:Key="App.SurfaceAlt" Color="#09FFFFFF" />
+    <SolidColorBrush x:Key="App.SurfaceHover" Color="#18FFFFFF" />
+    <SolidColorBrush x:Key="App.Border" Color="#1AFFFFFF" />
+    <SolidColorBrush x:Key="App.BorderStrong" Color="#33FFFFFF" />
+    <SolidColorBrush x:Key="App.Hover" Color="#14FFFFFF" />
+    <SolidColorBrush x:Key="App.Selection" Color="#1FFFFFFF" />
+
+    <SolidColorBrush x:Key="App.Text.Primary" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="App.Text.Secondary" Color="#B8FFFFFF" />
+    <SolidColorBrush x:Key="App.Text.Tertiary" Color="#7AFFFFFF" />
+
+    <SolidColorBrush x:Key="App.Accent" Color="#FF5CC8FF" />
+    <SolidColorBrush x:Key="App.Accent.Hover" Color="#FF7FD6FF" />
+    <SolidColorBrush x:Key="App.Accent.Text" Color="#FF00212E" />
+    <SolidColorBrush x:Key="App.Accent.Soft" Color="#265CC8FF" />
+
+    <SolidColorBrush x:Key="App.Success" Color="#FF52D69B" />
+    <SolidColorBrush x:Key="App.Warning" Color="#FFE9B44C" />
+    <SolidColorBrush x:Key="App.Danger" Color="#FFFF7B7B" />
+
+    <SolidColorBrush x:Key="App.Safety1" Color="#FF52D69B" />
+    <SolidColorBrush x:Key="App.Safety2" Color="#FFE9B44C" />
+    <SolidColorBrush x:Key="App.Safety3" Color="#FFFF9F5A" />
+    <SolidColorBrush x:Key="App.Safety4" Color="#FFFF7B7B" />
+
+    <SolidColorBrush x:Key="App.Track" Color="#22FFFFFF" />
+    <SolidColorBrush x:Key="App.OnSafety" Color="#FF0E1116" />
+</ResourceDictionary>

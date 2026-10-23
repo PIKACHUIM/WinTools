@@ -1,0 +1,2471 @@
+[
+    {
+        "id":  "SYS-01",
+        "category":  "SystemTemp",
+        "name":  {
+                     "zh-Hans":  "Windows 系统临时目录",
+                     "en-US":  "Windows system temp"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\Temp"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "系统级临时文件，部分被进程占用需跳过",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-02",
+        "category":  "SystemTemp",
+        "name":  {
+                     "zh-Hans":  "Windows SystemTemp",
+                     "en-US":  "Windows SystemTemp"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\SystemTemp"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "Win10+ 新增的系统临时目录",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-03",
+        "category":  "SystemTemp",
+        "name":  {
+                     "zh-Hans":  "各用户 Local\\Temp",
+                     "en-US":  "Per-user Local temp"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Temp",
+                      "{AllUsers}\\AppData\\Local\\Temp"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "需按用户 SID 定位，不能硬编码用户名",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-04",
+        "category":  "SystemTemp",
+        "name":  {
+                     "zh-Hans":  "服务账户临时目录",
+                     "en-US":  "Service account temp"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\ServiceProfiles\\*\\AppData\\Local\\Temp"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "LocalService/NetworkService 的 Temp",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-05",
+        "category":  "SystemUpdate",
+        "name":  {
+                     "zh-Hans":  "Windows Update 下载缓存",
+                     "en-US":  "Windows Update download cache"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\SoftwareDistribution\\Download"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "需先停止 wuauserv，否则文件被锁",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-06",
+        "category":  "SystemUpdate",
+        "name":  {
+                     "zh-Hans":  "传递优化 P2P 缓存",
+                     "en-US":  "Delivery Optimization cache"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\ServiceProfiles\\NetworkService\\AppData\\Local\\Microsoft\\Windows\\DeliveryOptimization"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "DoSvc 缓存，删除后自动重建",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-07",
+        "category":  "SystemUpdate",
+        "name":  {
+                     "zh-Hans":  "更新协调数据",
+                     "en-US":  "Update Orchestrator data"
+                 },
+        "paths":  [
+                      "%ProgramData%\\USOShared"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S2",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "USO 日志，小体积",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-08",
+        "category":  "SystemUpdate",
+        "name":  {
+                     "zh-Hans":  "Windows 安装日志 Panther",
+                     "en-US":  "Windows setup logs (Panther)"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\Panther"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "系统安装/升级日志，排障时可保留最近一次",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-09",
+        "category":  "SystemLog",
+        "name":  {
+                     "zh-Hans":  "Windows\\\\Logs (CBS/DISM/DPX)",
+                     "en-US":  "Windows Logs (CBS/DISM/DPX)"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\Logs"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "建议保留 7 天内，CBS.log 常被 TiWorker 占用",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-10",
+        "category":  "SystemLog",
+        "name":  {
+                     "zh-Hans":  "System32\\\\LogFiles",
+                     "en-US":  "System32 LogFiles"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\System32\\LogFiles"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "IIS/WMI/RAS 等组件日志",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-11",
+        "category":  "SystemLog",
+        "name":  {
+                     "zh-Hans":  "事件日志 winevt (不建议)",
+                     "en-US":  "Event logs (winevt)"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\System32\\winevt\\Logs"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "Disabled",
+        "safety":  "S4",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "安全审计依据，清理会破坏溯源",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-12",
+        "category":  "SystemComponent",
+        "name":  {
+                     "zh-Hans":  "WinSxS 临时目录",
+                     "en-US":  "WinSxS temp"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\WinSxS\\Temp"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "组件安装临时区",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-13",
+        "category":  "SystemComponent",
+        "name":  {
+                     "zh-Hans":  "WinSxS Backup",
+                     "en-US":  "WinSxS backup"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\WinSxS\\Backup"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "Disabled",
+        "safety":  "S4",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "组件备份，只能用 DISM /StartComponentCleanup 处理",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-14",
+        "category":  "SystemComponent",
+        "name":  {
+                     "zh-Hans":  "Installer $PatchCache$",
+                     "en-US":  "Installer PatchCache"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\Installer\\$PatchCache$"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S2",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "MSI 补丁缓存，删除后修复安装需重新下载",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-15",
+        "category":  "CrashDump",
+        "name":  {
+                     "zh-Hans":  "系统内存转储 Minidump",
+                     "en-US":  "System minidumps"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\Minidump"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "蓝屏小转储，排障后即可删",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-16",
+        "category":  "CrashDump",
+        "name":  {
+                     "zh-Hans":  "内核实时报告 LiveKernelReports",
+                     "en-US":  "Live kernel reports"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\LiveKernelReports"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "Kernel-Power/显卡 TDR 报告",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-17",
+        "category":  "CrashDump",
+        "name":  {
+                     "zh-Hans":  "应用程序崩溃转储",
+                     "en-US":  "Application crash dumps"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\CrashDumps",
+                      "{AllUsers}\\AppData\\Local\\CrashDumps"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "WER LocalDumps 目录",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-18",
+        "category":  "CrashDump",
+        "name":  {
+                     "zh-Hans":  "WER 错误报告队列",
+                     "en-US":  "WER report queue"
+                 },
+        "paths":  [
+                      "%ProgramData%\\Microsoft\\Windows\\WER"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "ReportArchive/ReportQueue/Temp",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-19",
+        "category":  "CrashDump",
+        "name":  {
+                     "zh-Hans":  "用户 WER 报告",
+                     "en-US":  "User WER reports"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Microsoft\\Windows\\WER",
+                      "{AllUsers}\\AppData\\Local\\Microsoft\\Windows\\WER"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-20",
+        "category":  "SystemTemp",
+        "name":  {
+                     "zh-Hans":  "Prefetch 预读取",
+                     "en-US":  "Prefetch"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\Prefetch"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S2",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "利于启动加速，清理后短期内启动变慢，建议保留",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-21",
+        "category":  "SystemTemp",
+        "name":  {
+                     "zh-Hans":  "Downloaded Program Files",
+                     "en-US":  "Downloaded Program Files"
+                 },
+        "paths":  [
+                      "%SystemRoot%\\Downloaded Program Files"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "旧 ActiveX 控件残留",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-22",
+        "category":  "RecycleBin",
+        "name":  {
+                     "zh-Hans":  "回收站 (F盘)",
+                     "en-US":  "Recycle Bin"
+                 },
+        "paths":  [
+                      "{Drive}\\$RECYCLE.BIN"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "建议调用 SHEmptyRecycleBin 而非直接删卷目录",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-23",
+        "category":  "SystemCache",
+        "name":  {
+                     "zh-Hans":  "缩略图/图标缓存",
+                     "en-US":  "Thumbnail and icon cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Microsoft\\Windows\\Explorer\\thumbcache_*.db",
+                      "{AllUsers}\\AppData\\Local\\Microsoft\\Windows\\Explorer\\thumbcache_*.db"
+                  ],
+        "match":  "GlobFile",
+        "strategy":  "DeleteFile",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "需先结束 explorer.exe，否则被锁",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-24",
+        "category":  "SystemCache",
+        "name":  {
+                     "zh-Hans":  "IE/系统 INetCache",
+                     "en-US":  "INetCache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Microsoft\\Windows\\INetCache",
+                      "{AllUsers}\\AppData\\Local\\Microsoft\\Windows\\INetCache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "WinINet 缓存，影响 IE/部分桌面程序",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-25",
+        "category":  "SystemTemp",
+        "name":  {
+                     "zh-Hans":  "inetpub 默认站点",
+                     "en-US":  "inetpub default site"
+                 },
+        "paths":  [
+                      "{Drive}\\inetpub"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S3",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  true,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "IIS 默认目录，若启用了 IIS 可能含站点文件",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-26",
+        "category":  "SystemTemp",
+        "name":  {
+                     "zh-Hans":  "PerfLogs 性能日志",
+                     "en-US":  "PerfLogs"
+                 },
+        "paths":  [
+                      "{Drive}\\PerfLogs"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "Windows 性能监视器默认输出",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-27",
+        "category":  "PageFile",
+        "name":  {
+                     "zh-Hans":  "pagefile.sys / swapfile.sys / hiberfil.sys",
+                     "en-US":  "Pagefile and hiberfil"
+                 },
+        "paths":  [
+                      "{Drive}\\pagefile.sys"
+                  ],
+        "match":  "SystemFile",
+        "strategy":  "Disabled",
+        "safety":  "S4",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "虚拟内存/休眠文件，只能通过系统设置调整",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "BRW-01",
+        "category":  "Browser",
+        "name":  {
+                     "zh-Hans":  "Chrome 缓存",
+                     "en-US":  "Chrome cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\*\\Cache",
+                      "{AllUsers}\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "含 Default 及 Profile N，需遍历",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "BRW-02",
+        "category":  "Browser",
+        "name":  {
+                     "zh-Hans":  "Chrome Code Cache",
+                     "en-US":  "Chrome code cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\*\\Code Cache",
+                      "{AllUsers}\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Code Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "JS 字节码缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "BRW-03",
+        "category":  "Browser",
+        "name":  {
+                     "zh-Hans":  "Chrome GPUCache",
+                     "en-US":  "Chrome GPU cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\*\\GPUCache",
+                      "{AllUsers}\\AppData\\Local\\Google\\Chrome\\User Data\\*\\GPUCache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "着色器缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "BRW-04",
+        "category":  "Browser",
+        "name":  {
+                     "zh-Hans":  "Chrome Service Worker",
+                     "en-US":  "Chrome Service Worker"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\*\\Service Worker",
+                      "{AllUsers}\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Service Worker"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "会清掉 PWA 离线数据，需提示",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "BRW-05",
+        "category":  "Browser",
+        "name":  {
+                     "zh-Hans":  "Edge 缓存",
+                     "en-US":  "Edge cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\*\\Cache",
+                      "{AllUsers}\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "BRW-06",
+        "category":  "Browser",
+        "name":  {
+                     "zh-Hans":  "Edge Code Cache",
+                     "en-US":  "Edge code cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\*\\Code Cache",
+                      "{AllUsers}\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Code Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "BRW-07",
+        "category":  "Browser",
+        "name":  {
+                     "zh-Hans":  "Edge GPUCache",
+                     "en-US":  "Edge GPU cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Microsoft\\Edge\\User Data\\*\\GPUCache",
+                      "{AllUsers}\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\GPUCache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "BRW-08",
+        "category":  "Browser",
+        "name":  {
+                     "zh-Hans":  "Firefox cache2",
+                     "en-US":  "Firefox cache2"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Mozilla\\Firefox\\Profiles\\*\\cache2",
+                      "{AllUsers}\\AppData\\Local\\Mozilla\\Firefox\\Profiles\\*\\cache2"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "BRW-09",
+        "category":  "Browser",
+        "name":  {
+                     "zh-Hans":  "Chromium 内核应用缓存 (Quark/QQEX/bilibili 等)",
+                     "en-US":  "Chromium app cache (Quark/QQEX/bilibili)"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Quark\\User Data\\*\\Cache",
+                      "{AllUsers}\\AppData\\Local\\Quark\\User Data\\*\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "夸克浏览器",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "BRW-10",
+        "category":  "Browser",
+        "name":  {
+                     "zh-Hans":  "Chromium 内核应用缓存 (Local, 通用)",
+                     "en-US":  "Chromium app cache (generic)"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\*\\User Data\\*\\Cache",
+                      "{AllUsers}\\AppData\\Local\\*\\User Data\\*\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S2",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "通用规则，注意排除沙箱目录",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-01",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "npm cache",
+                     "en-US":  "npm cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\npm-cache",
+                      "{AllUsers}\\AppData\\Local\\npm-cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "npm cache clean --force 等效",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-02",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "npm cache (Roaming 旧版)",
+                     "en-US":  "npm cache (legacy Roaming)"
+                 },
+        "paths":  [
+                      "%APPDATA%\\npm-cache",
+                      "{AllUsers}\\AppData\\Roaming\\npm-cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "npm v6 及更早",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-03",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "pnpm store / pnpm-cache",
+                     "en-US":  "pnpm store"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\pnpm",
+                      "{AllUsers}\\AppData\\Local\\pnpm"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S2",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "删除后所有项目需重新 link，建议用 pnpm store prune",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-04",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "pnpm-cache",
+                     "en-US":  "pnpm-cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\pnpm-cache",
+                      "{AllUsers}\\AppData\\Local\\pnpm-cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S2",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-05",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Yarn cache",
+                     "en-US":  "Yarn cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Yarn",
+                      "{AllUsers}\\AppData\\Local\\Yarn"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "yarn cache dir 返回的目录",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-06",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Bun install cache",
+                     "en-US":  "Bun install cache"
+                 },
+        "paths":  [
+                      "{AllUsers}\\.bun\\install\\cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "bun pm cache rm",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-07",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Go build cache",
+                     "en-US":  "Go build cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\go-build",
+                      "{AllUsers}\\AppData\\Local\\go-build"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "go clean -cache 等效，重建只是慢一点",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-08",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Go module 下载缓存",
+                     "en-US":  "Go module cache"
+                 },
+        "paths":  [
+                      "{AllUsers}\\go\\pkg\\mod\\cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S2",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "go clean -modcache；删后需重新下载依赖",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-09",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Cargo registry 缓存",
+                     "en-US":  "Cargo registry cache"
+                 },
+        "paths":  [
+                      "{AllUsers}\\.cargo\\registry\\cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "crate 归档缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-10",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Cargo git 索引缓存",
+                     "en-US":  "Cargo git index cache"
+                 },
+        "paths":  [
+                      "{AllUsers}\\.cargo\\git"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S2",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "git 依赖，删后需重新 fetch",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-11",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "pip cache",
+                     "en-US":  "pip cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\pip\\Cache",
+                      "{AllUsers}\\AppData\\Local\\pip\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "pip cache purge",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-12",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "NuGet HTTP 缓存",
+                     "en-US":  "NuGet HTTP cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\NuGet\\Cache",
+                      "{AllUsers}\\AppData\\Local\\NuGet\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "dotnet nuget locals http-cache --clear",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-13",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "NuGet 全局包目录",
+                     "en-US":  "NuGet global packages"
+                 },
+        "paths":  [
+                      "{AllUsers}\\.nuget\\packages"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "Disabled",
+        "safety":  "S4",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "是依赖本体不是缓存，删除会破坏离线构建",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-14",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Maven 本地仓库",
+                     "en-US":  "Maven local repository"
+                 },
+        "paths":  [
+                      "{AllUsers}\\.m2\\repository"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "Disabled",
+        "safety":  "S4",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "依赖本体，非缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-15",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "JetBrains 索引缓存",
+                     "en-US":  "JetBrains index caches"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\JetBrains\\*",
+                      "{AllUsers}\\AppData\\Local\\JetBrains\\*"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S2",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "含 caches/index/log/tmp，索引重建耗时长",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-16",
+        "category":  "DevLog",
+        "name":  {
+                     "zh-Hans":  "JetBrains 日志",
+                     "en-US":  "JetBrains logs"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\JetBrains\\*\\log",
+                      "{AllUsers}\\AppData\\Local\\JetBrains\\*\\log"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "单个 IDE 日志可达数 GB",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-17",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "JetBrains Roaming 缓存",
+                     "en-US":  "JetBrains Roaming data"
+                 },
+        "paths":  [
+                      "%APPDATA%\\JetBrains",
+                      "{AllUsers}\\AppData\\Roaming\\JetBrains"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S3",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  true,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "含配置/插件，不只是缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-18",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "VSCode Cache",
+                     "en-US":  "VS Code cache"
+                 },
+        "paths":  [
+                      "%APPDATA%\\Code\\Cache",
+                      "{AllUsers}\\AppData\\Roaming\\Code\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-19",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "VSCode CachedData",
+                     "en-US":  "VS Code CachedData"
+                 },
+        "paths":  [
+                      "%APPDATA%\\Code\\CachedData",
+                      "{AllUsers}\\AppData\\Roaming\\Code\\CachedData"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "按 Electron 版本分目录",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-20",
+        "category":  "DevLog",
+        "name":  {
+                     "zh-Hans":  "VSCode logs",
+                     "en-US":  "VS Code logs"
+                 },
+        "paths":  [
+                      "%APPDATA%\\Code\\logs",
+                      "{AllUsers}\\AppData\\Roaming\\Code\\logs"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "按窗口会话分目录",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-21",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "VSCode 扩展 VSIX 缓存",
+                     "en-US":  "VS Code extension VSIX cache"
+                 },
+        "paths":  [
+                      "%APPDATA%\\Code\\CachedExtensionVSIXs",
+                      "{AllUsers}\\AppData\\Roaming\\Code\\CachedExtensionVSIXs"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "已安装扩展的安装包残留",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-22",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "msys64 pacman 包缓存",
+                     "en-US":  "msys64 pacman package cache"
+                 },
+        "paths":  [
+                      "{Drive}\\msys64\\var\\cache\\pacman\\pkg"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "pacman -Sc",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-23",
+        "category":  "DevLog",
+        "name":  {
+                     "zh-Hans":  "msys64 var/log",
+                     "en-US":  "msys64 var/log"
+                 },
+        "paths":  [
+                      "{Drive}\\msys64\\var\\log"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "pacman.log 等",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-24",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "msys64 tmp",
+                     "en-US":  "msys64 tmp"
+                 },
+        "paths":  [
+                      "{Drive}\\msys64\\tmp"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-25",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Flutter SDK 缓存",
+                     "en-US":  "Flutter SDK cache"
+                 },
+        "paths":  [
+                      "{AllUsers}\\flutter\\bin\\cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S3",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  true,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "含 Dart SDK 与引擎产物，删除后 flutter 需重新下载",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-26",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Playwright 浏览器",
+                     "en-US":  "Playwright browsers"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\ms-playwright",
+                      "{AllUsers}\\AppData\\Local\\ms-playwright"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S3",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  true,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "浏览器二进制，非垃圾",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-27",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Electron 下载缓存",
+                     "en-US":  "Electron download cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\electron\\Cache",
+                      "{AllUsers}\\AppData\\Local\\electron\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "electron 安装包缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-28",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Electron Builder 缓存",
+                     "en-US":  "Electron Builder cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\electron-builder\\Cache",
+                      "{AllUsers}\\AppData\\Local\\electron-builder\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "打包工具链缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-29",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Pub (Dart) 缓存",
+                     "en-US":  "Pub (Dart) cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Pub\\Cache",
+                      "{AllUsers}\\AppData\\Local\\Pub\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "dart pub cache clean",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-30",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "Nuitka 编译缓存",
+                     "en-US":  "Nuitka compile cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Nuitka\\Nuitka\\Cache",
+                      "{AllUsers}\\AppData\\Local\\Nuitka\\Nuitka\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteDirectory",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-31",
+        "category":  "DevBuild",
+        "name":  {
+                     "zh-Hans":  "node_modules 依赖目录",
+                     "en-US":  "node_modules folders"
+                 },
+        "paths":  [
+                      "{Drive}\\*\\node_modules"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "Disabled",
+        "safety":  "S4",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  false,
+        "note":  {
+                     "zh-Hans":  "需项目级识别 + 用户显式选择，不能全局横扫",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-32",
+        "category":  "DevBuild",
+        "name":  {
+                     "zh-Hans":  "Rust target 构建产物",
+                     "en-US":  "Rust target folders"
+                 },
+        "paths":  [
+                      "{Drive}\\*\\target"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "Disabled",
+        "safety":  "S4",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  false,
+        "note":  {
+                     "zh-Hans":  "名称过于通用，必须结合 Cargo.toml 判定",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-33",
+        "category":  "DevBuild",
+        "name":  {
+                     "zh-Hans":  "Python __pycache__",
+                     "en-US":  "Python __pycache__"
+                 },
+        "paths":  [
+                      "{Drive}\\*"
+                  ],
+        "match":  "ExtensionScan",
+        "strategy":  "DeleteFile",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  false,
+        "note":  {
+                     "zh-Hans":  "按目录名 __pycache__ 递归匹配，见扩展名规则",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-34",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "iTFS 客户端缓存",
+                     "en-US":  "iTFS client cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\iTFS",
+                      "{AllUsers}\\AppData\\Local\\iTFS"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S3",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  true,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "腾讯 iTFS 工作副本缓存，删除后需重新检出",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-35",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "UGit 客户端缓存",
+                     "en-US":  "UGit client cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\UGit",
+                      "{AllUsers}\\AppData\\Local\\UGit"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S3",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  true,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "UGit 仓库缓存，同上",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-01",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "NVIDIA 着色器缓存 (Local)",
+                     "en-US":  "NVIDIA shader cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\NVIDIA\\DXCache",
+                      "{AllUsers}\\AppData\\Local\\NVIDIA\\DXCache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "D3D 着色器编译缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-02",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "NVIDIA GLCache",
+                     "en-US":  "NVIDIA GL cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\NVIDIA\\GLCache",
+                      "{AllUsers}\\AppData\\Local\\NVIDIA\\GLCache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "OpenGL 着色器缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-03",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "NVIDIA 驱动残留目录",
+                     "en-US":  "NVIDIA driver leftovers"
+                 },
+        "paths":  [
+                      "{Drive}\\NVIDIA Corporation"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S2",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "驱动安装/日志残留，路径位于盘根",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-04",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "NVIDIA ProgramData 缓存",
+                     "en-US":  "NVIDIA ProgramData cache"
+                 },
+        "paths":  [
+                      "%ProgramData%\\NVIDIA Corporation"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S2",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "含 Downloader 下载的驱动包",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-05",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "D3D 着色器缓存",
+                     "en-US":  "D3D shader cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\D3DSCache",
+                      "{AllUsers}\\AppData\\Local\\D3DSCache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "DirectX Shader Cache",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-06",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "微信企业邮箱缓存",
+                     "en-US":  "WeCom Mail cache"
+                 },
+        "paths":  [
+                      "%APPDATA%\\Tencent\\WeMail\\cache",
+                      "{AllUsers}\\AppData\\Roaming\\Tencent\\WeMail\\cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-07",
+        "category":  "AppLog",
+        "name":  {
+                     "zh-Hans":  "企业微信日志",
+                     "en-US":  "WeCom logs"
+                 },
+        "paths":  [
+                      "%APPDATA%\\Tencent\\WXWork\\Log",
+                      "{AllUsers}\\AppData\\Roaming\\Tencent\\WXWork\\Log"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-08",
+        "category":  "AppLog",
+        "name":  {
+                     "zh-Hans":  "微信 4.0 日志",
+                     "en-US":  "WeChat 4.0 logs"
+                 },
+        "paths":  [
+                      "%APPDATA%\\Tencent\\xwechat\\log",
+                      "{AllUsers}\\AppData\\Roaming\\Tencent\\xwechat\\log"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "注意不要触碰 msg 数据库目录",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-09",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "网易云音乐缓存",
+                     "en-US":  "NetEase CloudMusic cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\NetEase\\CloudMusic\\Cache",
+                      "{AllUsers}\\AppData\\Local\\NetEase\\CloudMusic\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "含试听缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-10",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "Telegram 媒体缓存",
+                     "en-US":  "Telegram media cache"
+                 },
+        "paths":  [
+                      "%APPDATA%\\Telegram Desktop\\tdata\\user_data\\cache",
+                      "{AllUsers}\\AppData\\Roaming\\Telegram Desktop\\tdata\\user_data\\cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S3",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  true,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "删后聊天媒体需重新下载",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-11",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "bilibili 客户端缓存",
+                     "en-US":  "bilibili client cache"
+                 },
+        "paths":  [
+                      "%APPDATA%\\bilibili\\Cache",
+                      "{AllUsers}\\AppData\\Roaming\\bilibili\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-12",
+        "category":  "AppLog",
+        "name":  {
+                     "zh-Hans":  "iOA 客户端日志",
+                     "en-US":  "iOA client logs"
+                 },
+        "paths":  [
+                      "%ProgramFiles(x86)%\\iOA\\log"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S2",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "企业安全客户端，删除可能影响审计，建议仅清理旧日志",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-13",
+        "category":  "AppLog",
+        "name":  {
+                     "zh-Hans":  "CodeBuddy 扩展日志",
+                     "en-US":  "CodeBuddy extension logs"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\CodeBuddyExtension\\Logs",
+                      "{AllUsers}\\AppData\\Local\\CodeBuddyExtension\\Logs"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-14",
+        "category":  "AppLog",
+        "name":  {
+                     "zh-Hans":  "WorkBuddy 会话日志",
+                     "en-US":  "WorkBuddy session logs"
+                 },
+        "paths":  [
+                      "{AllUsers}\\.workbuddy\\logs"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S2",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "务必排除 .workbuddy 其它子目录（项目数据）",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-15",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "Unity 全局缓存",
+                     "en-US":  "Unity global cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Unity\\cache",
+                      "{AllUsers}\\AppData\\Local\\Unity\\cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S2",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "PackageManager / AssetStore 缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-16",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "Postman 缓存",
+                     "en-US":  "Postman cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Postman",
+                      "{AllUsers}\\AppData\\Local\\Postman"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S3",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  true,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "含本地集合数据风险",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-17",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "NeatDM 下载缓存",
+                     "en-US":  "NeatDM download cache"
+                 },
+        "paths":  [
+                      "%APPDATA%\\NeatDM",
+                      "{AllUsers}\\AppData\\Roaming\\NeatDM"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S2",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "下载器分片临时文件",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-18",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "Chrome/Edge 崩溃转储 (Crashpad)",
+                     "en-US":  "Chrome/Edge Crashpad dumps"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\Crashpad",
+                      "{AllUsers}\\AppData\\Local\\Google\\Chrome\\User Data\\Crashpad"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-19",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "Windows Terminal Server Client 缓存",
+                     "en-US":  "RDP bitmap cache"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Microsoft\\Terminal Server Client\\Cache",
+                      "{AllUsers}\\AppData\\Local\\Microsoft\\Terminal Server Client\\Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "RDP 位图缓存",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-20",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "应用安装包缓存 Package Cache",
+                     "en-US":  "Package Cache"
+                 },
+        "paths":  [
+                      "%ProgramData%\\Package Cache"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S3",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  true,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "VS/VC 运行库修复依赖，删除会导致修复失败",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "MSC-01",
+        "category":  "RootMisc",
+        "name":  {
+                     "zh-Hans":  "用户自建 tmp",
+                     "en-US":  "User-created tmp"
+                 },
+        "paths":  [
+                      "{Drive}\\tmp"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S2",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "非系统目录，但实测几乎全是 .tmp/.log",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "MSC-02",
+        "category":  "RootMisc",
+        "name":  {
+                     "zh-Hans":  "U盾/银行控件日志",
+                     "en-US":  "USB-key control log"
+                 },
+        "paths":  [
+                      "{Drive}\\hsic_csp.log"
+                  ],
+        "match":  "SingleFile",
+        "strategy":  "DeleteFile",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "CFCA/BJCA 智能卡驱动写盘日志",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "MSC-03",
+        "category":  "RootMisc",
+        "name":  {
+                     "zh-Hans":  "银行控件升级标记",
+                     "en-US":  "Banking control update flag"
+                 },
+        "paths":  [
+                      "{Drive}\\bjcaupdate.ini"
+                  ],
+        "match":  "SingleFile",
+        "strategy":  "DeleteFile",
+        "safety":  "S2",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "删除可能触发控件重复升级提示",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "MSC-04",
+        "category":  "RootMisc",
+        "name":  {
+                     "zh-Hans":  "DumpStack.log.tmp",
+                     "en-US":  "DumpStack.log.tmp"
+                 },
+        "paths":  [
+                      "{Drive}\\DumpStack.log.tmp"
+                  ],
+        "match":  "SingleFile",
+        "strategy":  "Disabled",
+        "safety":  "S4",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "系统崩溃堆栈日志，常驻占用",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "MSC-05",
+        "category":  "RootMisc",
+        "name":  {
+                     "zh-Hans":  "Recovery 恢复分区数据",
+                     "en-US":  "Recovery partition data"
+                 },
+        "paths":  [
+                      "{Drive}\\Recovery"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "Disabled",
+        "safety":  "S4",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "WinRE 组件",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "MSC-06",
+        "category":  "SystemComponent",
+        "name":  {
+                     "zh-Hans":  "System Volume Information",
+                     "en-US":  "System Volume Information"
+                 },
+        "paths":  [
+                      "{Drive}\\System Volume Information"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "Disabled",
+        "safety":  "S4",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "卷影副本/索引，需通过 vssadmin 管理",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "MSC-07",
+        "category":  "SystemComponent",
+        "name":  {
+                     "zh-Hans":  "Windows Defender 扫描临时",
+                     "en-US":  "Defender scan temp"
+                 },
+        "paths":  [
+                      "%ProgramData%\\Microsoft\\Windows Defender\\Scans"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S2",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "History/Store 含隔离区，谨慎",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "MSC-08",
+        "category":  "SystemComponent",
+        "name":  {
+                     "zh-Hans":  "Windows Defender 病毒库备份",
+                     "en-US":  "Defender definition backups"
+                 },
+        "paths":  [
+                      "%ProgramData%\\Microsoft\\Windows Defender\\Definition Updates"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteByAge",
+        "safety":  "S3",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "仅删旧版本子目录",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-28",
+        "category":  "CrashDump",
+        "name":  {
+                     "zh-Hans":  "WDF 框架崩溃转储",
+                     "en-US":  "WDF crash dumps"
+                 },
+        "paths":  [
+                      "%ProgramData%\\Microsoft\\WDF"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "驱动框架 WDF 的 .mdmp 转储，单机实测 0.88GB，常规工具易漏",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "SYS-29",
+        "category":  "SystemComponent",
+        "name":  {
+                     "zh-Hans":  "Windows 搜索索引",
+                     "en-US":  "Windows Search index"
+                 },
+        "paths":  [
+                      "%ProgramData%\\Microsoft\\Search\\Data"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S3",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  true,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "需停 WSearch 服务，删除后索引全量重建（耗时数小时）",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "BRW-11",
+        "category":  "Browser",
+        "name":  {
+                     "zh-Hans":  "Chrome 端侧模型权重",
+                     "en-US":  "Chrome on-device model weights"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Google\\Chrome\\User Data\\OptGuideOnDeviceModel",
+                      "{AllUsers}\\AppData\\Local\\Google\\Chrome\\User Data\\OptGuideOnDeviceModel"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "Chrome 本地优化指南模型 weights.bin，删除后按需重新下载，单文件 3.98GB",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "APP-21",
+        "category":  "AppCache",
+        "name":  {
+                     "zh-Hans":  "Everything 索引数据库",
+                     "en-US":  "Everything index database"
+                 },
+        "paths":  [
+                      "%LOCALAPPDATA%\\Everything",
+                      "{AllUsers}\\AppData\\Local\\Everything"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S3",
+        "requiresAdmin":  false,
+        "requiresProcessStop":  true,
+        "requiresConfirm":  true,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "是索引本体不是缓存，删除后需全盘重扫，目录内 .tmp 分片才是真垃圾",
+                     "en-US":  ""
+                 }
+    },
+    {
+        "id":  "DEV-36",
+        "category":  "DevCache",
+        "name":  {
+                     "zh-Hans":  "iOA 安装包下载残留",
+                     "en-US":  "iOA installer leftovers"
+                 },
+        "paths":  [
+                      "%ProgramFiles(x86)%\\iOA\\download"
+                  ],
+        "match":  "DirectoryRecursive",
+        "strategy":  "DeleteContents",
+        "safety":  "S1",
+        "requiresAdmin":  true,
+        "requiresProcessStop":  false,
+        "requiresConfirm":  false,
+        "ageDays":  7,
+        "enabled":  true,
+        "note":  {
+                     "zh-Hans":  "旧版本升级包 ioav5_setup*.exe，安装完成后无用途",
+                     "en-US":  ""
+                 }
+    }
+]

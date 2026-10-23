@@ -1,0 +1,28 @@
+# WinTools 清理规则源：开发工具缓存
+# 格式同 system.txt
+
+DEV-001|npm 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%AppData%\npm-cache;%LocalAppData%\npm-cache|
+DEV-002|yarn 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Yarn\Cache;%LocalAppData%\Yarn\Berry\cache|
+DEV-003|pnpm 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\pnpm-cache;%LocalAppData%\pnpm\store|
+DEV-004|pip 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\pip\Cache|
+DEV-005|NuGet 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\NuGet\v3-cache;%LocalAppData%\NuGet\plugins-cache|
+DEV-006|Gradle 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%UserProfile%\.gradle\caches\*\tmp;%UserProfile%\.gradle\wrapper\dists\*\*.part|
+DEV-007|Maven 下载临时文件|DevCache|S1|GlobFile|DeleteFile|%UserProfile%\.m2\repository\*.lastUpdated;%UserProfile%\.m2\repository\*.part|
+DEV-008|Cargo 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%UserProfile%\.cargo\registry\cache|
+DEV-009|Go 构建缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\go-build;%UserProfile%\AppData\Local\go-build|
+DEV-010|Chocolatey 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%ProgramData%\chocolatey\http-cache;%LocalAppData%\Temp\chocolatey|
+DEV-011|Scoop 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%UserProfile%\scoop\cache|
+DEV-012|Visual Studio 组件缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\VisualStudio\*\ComponentModelCache;%LocalAppData%\Microsoft\VisualStudio\*\Designer\Cache|
+DEV-013|Visual Studio 临时文件|DevCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Temp\VSFeedbackVSRTCLogs;%LocalAppData%\Microsoft\VSCommon\*\SQM|
+DEV-014|Visual Studio Code 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Code\Cache;%AppData%\Code\CachedData;%AppData%\Code\GPUCache;%AppData%\Code\logs|
+DEV-015|JetBrains IDE 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\JetBrains\*\caches;%LocalAppData%\JetBrains\*\log|
+DEV-016|Unity 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Unity\cache;%AppData%\Unity\Asset Store-5.x|
+DEV-017|Unreal 派生数据缓存|DevCache|S2|DirectoryRecursive|DeleteContents|%LocalAppData%\UnrealEngine\Common\DerivedDataCache|删除后首次打开工程会重建
+DEV-018|Android SDK 临时与日志|DevCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Android\Sdk\.temp;%LocalAppData%\Android\Sdk\platform-tools\*.log|
+DEV-019|Docker 桌面缓存|DevCache|S2|DirectoryRecursive|DeleteContents|%AppData%\Docker\log;%LocalAppData%\Docker\wsl\data\ext4.vhdx.dist|镜像数据不在清理范围
+DEV-020|WSL 临时文件|DevCache|S2|DirectoryRecursive|DeleteContents|%LocalAppData%\Packages\*\LocalState\*.tmp|
+DEV-021|Postman / ApiFox 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Postman\Cache;%AppData%\Postman\logs;%AppData%\ApiFox\Cache|
+DEV-022|Python 字节码缓存|DevCache|S3|DirectoryRecursive|DeleteContents|%LocalAppData%\pip\Cache\http;%LocalAppData%\pip\Cache\wheels|仅清理下载缓存，不动项目内 __pycache__
+DEV-023|Terraform / Helm 缓存|DevCache|S1|DirectoryRecursive|DeleteContents|%AppData%\terraform.d\plugin-cache;%LocalAppData%\helm\cache|
+DEV-024|Git 凭证与日志缓存|DevCache|S2|DirectoryRecursive|DeleteContents|%LocalAppData%\GitHubDesktop\logs;%AppData%\GitHub Desktop\Cache|
+DEV-025|终端与包管理器日志|DevLog|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\WindowsApps\*.log;%LocalAppData%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\*.log|

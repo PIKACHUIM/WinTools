@@ -1,0 +1,50 @@
+# WinTools 清理规则源：常用软件缓存 / 驱动与安全软件残留
+# 格式同 system.txt
+
+APP-001|QQ 接收文件与缓存|AppCache|S2|DirectoryRecursive|DeleteContents|%UserProfile%\Documents\Tencent Files\*\FileRecv\Cache;%AppData%\Tencent\QQ\Temp;%LocalAppData%\Tencent\QQ\Temp|接收的文件本体不在清理范围
+APP-002|QQ 国际版 / TM 缓存|AppCache|S2|DirectoryRecursive|DeleteContents|%UserProfile%\Documents\Tencent Files\*\FileRecv\Image;%AppData%\Tencent\QQIntl\Temp;%AppData%\Tencent\TM\Temp|
+APP-003|微信电脑版缓存|AppCache|S2|DirectoryRecursive|DeleteContents|%AppData%\Tencent\WeChat\Temp;%LocalAppData%\Tencent\WeChat\Cache;%UserProfile%\Documents\WeChat Files\*\FileStorage\Cache|聊天记录本体不在清理范围
+APP-004|微信小程序缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Tencent\WeChat\XPlugin\Plugins\*Cache;%LocalAppData%\Tencent\WeChat\XPlugin\Temp|
+APP-005|企业微信缓存|AppCache|S2|DirectoryRecursive|DeleteContents|%AppData%\Tencent\WXWork\Cache;%LocalAppData%\Tencent\WXWork\Temp;%UserProfile%\Documents\WXWork\*\Cache|
+APP-006|TIM 缓存|AppCache|S2|DirectoryRecursive|DeleteContents|%AppData%\Tencent\TIM\Temp;%LocalAppData%\Tencent\TIM\Cache|
+APP-007|钉钉缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\DingTalk\Cache;%LocalAppData%\DingTalk\media_cache;%LocalAppData%\DingTalk\Cache|
+APP-008|飞书缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Feishu\Cache;%LocalAppData%\Feishu\Cache;%LocalAppData%\Feishu\sdk_storage|
+APP-009|阿里旺旺缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\AliWangWang\Temp;%LocalAppData%\AliWangWang\Cache|
+APP-010|YY 语音缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\YY\Cache;%LocalAppData%\YY\Cache|
+APP-011|WPS Office 缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\kingsoft\office6\cache;%LocalAppData%\Kingsoft\office6\cache;%AppData%\kingsoft\wps\cache|
+APP-012|Microsoft Office 缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Microsoft\Office\16.0\OfficeFileCache;%LocalAppData%\Microsoft\Office\15.0\OfficeFileCache;%AppData%\Microsoft\Office\Recent|
+APP-013|Adobe Reader 缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Adobe\Acrobat\*\Cache;%LocalAppData%\Adobe\AcroCef\*\Cache;%AppData%\Adobe\Acrobat\*\Crash|
+APP-014|Adobe Air 日志|AppLog|S1|DirectoryRecursive|DeleteContents|%AppData%\Adobe\AIR\logs;%LocalAppData%\Adobe\AIR\crashes|
+APP-015|Evernote 日志与缓存|AppLog|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Evernote\Evernote\Logs;%LocalAppData%\Evernote\Evernote\Cache|
+APP-016|百度网盘缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\baidu\BaiduYunGuanjia\Cache;%LocalAppData%\baidu\BaiduNetdisk\Cache|
+APP-017|阿里云盘缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\aDrive\Cache;%LocalAppData%\aDrive\Cache|
+APP-018|迅雷下载缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Thunder Network\Thunder\Cache;%LocalAppData%\Thunder Network\Thunder\Temp;%AppData%\Thunder Network\XLLiveUD\Cache|
+APP-019|IDM 临时文件|AppCache|S1|GlobFile|DeleteFile|%AppData%\IDM\DwnlData\*\*.tmp;%LocalAppData%\Temp\*.idm|
+APP-020|字节跳动系应用缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Bytedance\Cache;%LocalAppData%\Bytedance\Cache;%LocalAppData%\JianyingPro\Cache|
+APP-021|剪映草稿缓存|AppCache|S2|DirectoryRecursive|DeleteContents|%LocalAppData%\JianyingPro\User Data\Cache;%AppData%\JianyingPro\Cache|草稿工程本体不在清理范围
+APP-022|搜狗输入法缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\SogouInput\Cache;%LocalAppData%\SogouInput\Temp|
+APP-023|QQ 拼音缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Tencent\QQPinyin\Cache;%LocalAppData%\Tencent\QQPinyin\Temp|
+APP-024|百度输入法缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Baidu\BaiduPinyin\Cache;%LocalAppData%\Baidu\BaiduPinyin\Temp|
+APP-025|Microsoft 输入法缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%AppData%\Microsoft\InputMethod\Cache;%LocalAppData%\Microsoft\InputMethod\Cache|
+APP-026|Steam 下载缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%ProgramFiles(x86)%\Steam\steamapps\temp;%LocalAppData%\Steam\htmlcache|
+APP-027|WeGame 缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%ProgramData%\Tencent\WeGame\Cache;%AppData%\Tencent\WeGame\Cache|
+APP-028|Epic / 战网 / EA 缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\EpicGamesLauncher\Saved\webcache;%ProgramData%\Battle.net\Cache;%LocalAppData%\Electronic Arts\EA Services\Cache|
+APP-029|网易 UU / 腾讯加速器缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%ProgramData%\NetEase\UU\Cache;%AppData%\Tencent\GameAccelerator\Cache|
+APP-030|微软商店游戏缓存|AppCache|S2|DirectoryRecursive|DeleteContents|%LocalAppData%\Packages\Microsoft.GamingApp_8wekyb3d8bbwe\LocalCache;%LocalAppData%\Packages\Microsoft.XboxGamingOverlay_8wekyb3d8bbwe\LocalCache|
+APP-031|NVIDIA 显卡驱动安装残留|DriverLeftover|S2|DirectoryRecursive|DeleteContents|%ProgramData%\NVIDIA Corporation\Installer2;%ProgramFiles%\NVIDIA Corporation\Installer2;%LocalAppData%\NVIDIA\DXCache;%LocalAppData%\NVIDIA\GLCache|
+APP-032|AMD 显卡驱动安装残留|DriverLeftover|S2|DirectoryRecursive|DeleteContents|%ProgramData%\AMD\Chipset_Software;%LocalAppData%\AMD\DxCache;%LocalAppData%\AMD\GLCache;%ProgramData%\AMD\CN|
+APP-033|Intel 显卡着色器缓存|DriverLeftover|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Intel\ShaderCache;%LocalAppData%\Intel\DisplayCache|
+APP-034|DirectX 着色器缓存|DriverLeftover|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\D3DSCache;%LocalAppData%\NVIDIA\DXCache;%LocalAppData%\AMD\DxCache|
+APP-035|驱动解压残留（通用）|DriverLeftover|S2|DirectoryRecursive|DeleteContents|%SystemDrive%\Drivers;%SystemDrive%\NVIDIA;%SystemDrive%\AMD;%SystemDrive%\Intel;%ProgramData%\Package Cache|安装包解压目录，确认无驱动安装需求后可清
+APP-036|360 安全卫士更新缓存|SecuritySuite|S2|DirectoryRecursive|DeleteContents|%ProgramData%\360safe\Update;%ProgramData%\360safe\Softmgr\Cache;%AppData%\360safe\Cache|
+APP-037|360 安全卫士漏洞补丁|SecuritySuite|S2|DirectoryRecursive|DeleteContents|%ProgramData%\360safe\hotfix;%ProgramData%\360safe\Whitelist|
+APP-038|QQ 电脑管家安装与缓存|SecuritySuite|S2|DirectoryRecursive|DeleteContents|%ProgramData%\Tencent\QQPCMgr\Cache;%ProgramData%\Tencent\QQPCMgr\Download;%AppData%\Tencent\QQPCMgr\Cache|
+APP-039|QQ 电脑管家漏洞补丁|SecuritySuite|S2|DirectoryRecursive|DeleteContents|%ProgramData%\Tencent\QQPCMgr\Patch;%ProgramData%\Tencent\QQPCMgr\Hotfix|
+APP-040|鲁大师漏洞补丁与缓存|SecuritySuite|S2|DirectoryRecursive|DeleteContents|%ProgramData%\Ludashi\Cache;%ProgramData%\Ludashi\Patch;%AppData%\Ludashi\Cache|
+APP-041|金山卫士 / 毒霸升级包|SecuritySuite|S2|DirectoryRecursive|DeleteContents|%ProgramData%\Kingsoft\Antivirus\Update;%ProgramData%\Kingsoft\KSafe\Cache;%AppData%\Kingsoft\KSafe\Cache|
+APP-042|火绒升级缓存|SecuritySuite|S1|DirectoryRecursive|DeleteContents|%ProgramData%\Huorong\Sysdiag\Update;%ProgramData%\Huorong\Sysdiag\Cache|
+APP-043|Daemon Tools 图标缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%ProgramData%\DAEMON Tools Lite\Cache;%AppData%\DAEMON Tools Lite\Cache|
+APP-044|Apple 软件更新包|AppCache|S1|DirectoryRecursive|DeleteContents|%ProgramData%\Apple Computer\Installer Cache;%LocalAppData%\Apple Computer\Installer Cache;%ProgramFiles%\Common Files\Apple\Installer Cache|
+APP-045|Google 地球缓存|AppCache|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\Google\GoogleEarth\Cache;%LocalAppData%\Google\GoogleEarth\unified_cache_leveldb_*|
+APP-046|通用安装包下载残留|AppCache|S1|GlobFile|DeleteFile|%LocalAppData%\Temp\*.msi;%LocalAppData%\Temp\*.exe;%LocalAppData%\Temp\*.zip|仅删除临时目录里的下载残留
+APP-047|通用软件崩溃日志|AppLog|S1|DirectoryRecursive|DeleteContents|%LocalAppData%\CrashDumps;%LocalAppData%\Temp\*.log;%AppData%\Temp\*.log|

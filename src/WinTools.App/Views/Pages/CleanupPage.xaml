@@ -1,0 +1,230 @@
+<UserControl x:Class="WinTools.App.Views.Pages.CleanupPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:WinTools.App.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="800" d:DesignWidth="1000"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <!-- 分组标题行 -->
+        <Style x:Key="GroupHeaderButton" TargetType="Button" BasedOn="{StaticResource SubtleButton}">
+            <Setter Property="Padding" Value="8,3" />
+            <Setter Property="FontSize" Value="11.5" />
+        </Style>
+
+        <Style x:Key="CleanupRow" TargetType="Grid">
+            <Setter Property="Margin" Value="0,0,0,2" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="28,20,28,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- 标题 -->
+        <Grid Grid.Row="0">
+            <TextBlock Text="{Binding Title}" Style="{StaticResource PageTitle}" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Visibility="{Binding HasResult, Converter={StaticResource BoolToVisibility}}">
+                <TextBlock Text="{Binding TotalLabel}" Style="{StaticResource CaptionText}" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding TotalText}" Style="{StaticResource ValueText}" Margin="6,0,18,0"
+                           VerticalAlignment="Center" />
+                <TextBlock Text="{Binding SelectedLabel}" Style="{StaticResource CaptionText}" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding SelectedText}" Style="{StaticResource ValueText}" Margin="6,0,0,0"
+                           VerticalAlignment="Center" Foreground="{DynamicResource App.Accent}" />
+            </StackPanel>
+        </Grid>
+
+        <!-- 磁盘占用：扫描前后都显示 -->
+        <Border Grid.Row="1" Style="{StaticResource Card}" Margin="0,16,0,0" Padding="18,14">
+            <StackPanel>
+                <TextBlock Text="{Binding DiskUsageLabel}" Style="{StaticResource CaptionText}" Margin="0,0,0,10" />
+
+                <ItemsControl ItemsSource="{Binding Volumes}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="3" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,18,8">
+                                <Grid>
+                                    <TextBlock Style="{StaticResource BodyText}" FontSize="12.5">
+                                        <Run Text="{Binding Label, Mode=OneWay}" />
+                                        <Run Text="  " />
+                                        <Run Text="{Binding UsedBytes, Mode=OneWay, Converter={StaticResource BytesToSize}}" />
+                                        <Run Text=" / " />
+                                        <Run Text="{Binding TotalBytes, Mode=OneWay, Converter={StaticResource BytesToSize}}" />
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding UsedPercent, Converter={StaticResource PercentText}}"
+                                               Style="{StaticResource CaptionText}" HorizontalAlignment="Right"
+                                               Foreground="{DynamicResource App.Accent}" />
+                                </Grid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+
+        <!-- 操作区 -->
+        <Grid Grid.Row="2" Margin="0,14,0,0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Button Content="{Binding RescanLabel}" Style="{StaticResource GhostButton}"
+                        Command="{Binding ScanCommand}" Padding="16,8"
+                        Visibility="{Binding HasScanned, Converter={StaticResource BoolToVisibility}}" />
+
+                <Button Content="{Binding SelectAllLabel}" Style="{StaticResource GhostButton}"
+                        Command="{Binding SelectAllCommand}" Padding="14,8" Margin="8,0,0,0"
+                        Visibility="{Binding HasResult, Converter={StaticResource BoolToVisibility}}" />
+
+                <Button Content="{Binding CleanLabel}" Style="{StaticResource PrimaryButton}"
+                        Command="{Binding CleanCommand}" Padding="20,8" Margin="8,0,0,0"
+                        Visibility="{Binding HasResult, Converter={StaticResource BoolToVisibility}}" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <ProgressBar Style="{StaticResource AppProgress}" Width="160" Height="4" Maximum="100"
+                             Value="{Binding ProgressPercent}" VerticalAlignment="Center" Margin="0,0,10,0"
+                             Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}" />
+                <TextBlock Text="{Binding StatusText}" Style="{StaticResource CaptionText}"
+                           VerticalAlignment="Center" MaxWidth="320" TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+        </Grid>
+
+        <!-- 扫描前：只给一个大按钮 -->
+        <Border Grid.Row="3" Style="{StaticResource Card}" Margin="0,14,0,0"
+                Visibility="{Binding HasScanned, Converter={StaticResource InverseBoolToVisibility}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="&#xE74D;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                           FontSize="40" HorizontalAlignment="Center"
+                           Foreground="{DynamicResource App.Text.Tertiary}" />
+                <Button Content="{Binding ScanLabel}" Style="{StaticResource PrimaryButton}"
+                        Command="{Binding ScanCommand}" Padding="46,12" FontSize="14"
+                        HorizontalAlignment="Center" Margin="0,20,0,0" />
+                <TextBlock Text="{Binding ScanIdleHint}" Style="{StaticResource CaptionText}"
+                           HorizontalAlignment="Center" Margin="0,12,0,0" />
+            </StackPanel>
+        </Border>
+
+        <!-- 扫描结果：分类分组 -->
+        <Border Grid.Row="3" Style="{StaticResource Card}" Margin="0,14,0,0" Padding="10,8"
+                Visibility="{Binding HasScanned, Converter={StaticResource BoolToVisibility}}">
+            <Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding Groups}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,6">
+                                    <!-- 分组头 -->
+                                    <Button Command="{Binding DataContext.ToggleExpandedCommand,
+                                                      RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}"
+                                            Background="Transparent" BorderThickness="0" Cursor="Hand"
+                                            HorizontalContentAlignment="Stretch" Padding="6,6">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" Text="{Binding Glyph}"
+                                                       FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                                       FontSize="13" VerticalAlignment="Center"
+                                                       Foreground="{DynamicResource App.Text.Secondary}"
+                                                       Margin="0,0,8,0" />
+
+                                            <TextBlock Grid.Column="1" Text="{Binding Title}" FontSize="13"
+                                                       FontWeight="SemiBold" VerticalAlignment="Center"
+                                                       Foreground="{DynamicResource App.Text.Primary}" />
+
+                                            <TextBlock Grid.Column="2" Text="{Binding Summary}"
+                                                       Style="{StaticResource CaptionText}"
+                                                       Margin="10,0,0,0" VerticalAlignment="Center" />
+
+                                            <Button Grid.Column="3" Content="{Binding DataContext.SelectAllLabel,
+                                                              RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    Style="{StaticResource GroupHeaderButton}"
+                                                    Command="{Binding DataContext.ToggleGroupCommand,
+                                                              RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}" />
+                                        </Grid>
+                                    </Button>
+
+                                    <!-- 条目 -->
+                                    <ItemsControl ItemsSource="{Binding Items}"
+                                                  Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVisibility}}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="30,0,8,0" Height="34">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <CheckBox Grid.Column="0" Style="{StaticResource AppCheckBox}"
+                                                              VerticalAlignment="Center" Margin="0,0,10,0"
+                                                              IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                                                              IsEnabled="{Binding IsCleanable}" />
+
+                                                    <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                                VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding Name}" FontSize="12.5"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   Foreground="{DynamicResource App.Text.Primary}" />
+                                                        <TextBlock Text="{Binding FileText}"
+                                                                   Style="{StaticResource CaptionText}"
+                                                                   Margin="8,0,0,0" VerticalAlignment="Center" />
+                                                    </StackPanel>
+
+                                                    <Border Grid.Column="2" Style="{StaticResource SafetyBadge}"
+                                                            Margin="8,0,0,0" VerticalAlignment="Center"
+                                                            Tag="{Binding SafetyKey}" />
+
+                                                    <TextBlock Grid.Column="3" Text="{Binding SizeText}"
+                                                               Style="{StaticResource CaptionText}"
+                                                               VerticalAlignment="Center" Width="76"
+                                                               TextAlignment="Right" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding EmptyText}" Style="{StaticResource BodyText}"
+                               Foreground="{DynamicResource App.Text.Tertiary}"
+                               HorizontalAlignment="Center"
+                               Visibility="{Binding HasResult, Converter={StaticResource InverseBoolToVisibility}}" />
+                </StackPanel>
+
+                <!-- 扫描中遮罩 -->
+                <Border Background="{DynamicResource App.Background}" Opacity="0.85"
+                        Visibility="{Binding IsScanning, Converter={StaticResource BoolToVisibility}}">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="320">
+                        <ProgressBar Style="{StaticResource AppProgress}" Maximum="100" Height="5"
+                                     Value="{Binding ProgressPercent}" />
+                        <TextBlock Text="{Binding ProgressText}" Style="{StaticResource CaptionText}"
+                                   Margin="0,10,0,0" TextTrimming="CharacterEllipsis" TextAlignment="Center" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

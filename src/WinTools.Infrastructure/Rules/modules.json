@@ -1,0 +1,268 @@
+[
+  { "id": "Dashboard", "glyph": "\uE80F", "order": 0, "page": "Dashboard", "sections": [] },
+  { "id": "Cleanup", "glyph": "\uE74D", "order": 1, "page": "Cleanup", "sections": [] },
+  { "id": "Optimize", "glyph": "\uE945", "order": 2, "page": "Optimize", "sections": [] },
+  {
+    "id": "Features",
+    "glyph": "\uE71D",
+    "order": 3,
+    "page": "FeatureManagement",
+    "sections": [
+      {
+        "id": "SystemFeatures",
+        "title": { "zh-Hans": "系统功能", "zh-Hant": "系統功能", "en-US": "System features", "ja-JP": "システム機能", "ko-KR": "시스템 기능", "de-DE": "Systemfunktionen", "fr-FR": "Fonctionnalités système", "es-ES": "Funciones del sistema", "pt-BR": "Recursos do sistema", "it-IT": "Funzionalità di sistema", "ru-RU": "Компоненты системы", "ar-SA": "ميزات النظام" },
+        "description": { "zh-Hans": "通过 DISM API 枚举并启用/禁用 Windows 可选功能。", "en-US": "Enumerate and toggle Windows optional features through the DISM API." },
+        "items": [
+          { "zh-Hans": "按分类列出全部可选功能及当前状态", "en-US": "List all optional features with current state" },
+          { "zh-Hans": "批量启用 / 禁用，可指定离线源", "en-US": "Batch enable/disable with optional offline source" }
+        ]
+      },
+      {
+        "id": "EditionSwitch",
+        "title": { "zh-Hans": "版本渠道切换", "zh-Hant": "版本通道切換", "en-US": "Edition switching", "ja-JP": "エディション切り替え", "ko-KR": "에디션 전환", "de-DE": "Edition wechseln", "fr-FR": "Changement d'édition", "es-ES": "Cambio de edición", "pt-BR": "Troca de edição", "it-IT": "Cambio edizione", "ru-RU": "Смена редакции", "ar-SA": "تبديل الإصدار" },
+        "description": { "zh-Hans": "在专业版 / 家庭版 / 企业版等 SKU 之间切换，含激活风险提示。", "en-US": "Switch between Pro / Home / Enterprise SKUs with activation warnings." },
+        "items": [
+          { "zh-Hans": "读取当前 SKU 与激活状态", "en-US": "Read current SKU and activation state" },
+          { "zh-Hans": "调用 changepk 切换版本并备份密钥", "en-US": "Invoke changepk and back up the product key" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Updates",
+    "glyph": "\uE895",
+    "order": 4,
+    "page": "UpdateManagement",
+    "sections": [
+      {
+        "id": "Installed",
+        "title": { "zh-Hans": "已安装更新", "zh-Hant": "已安裝更新", "en-US": "Installed updates", "ja-JP": "インストール済み更新", "ko-KR": "설치된 업데이트", "de-DE": "Installierte Updates", "fr-FR": "Mises à jour installées", "es-ES": "Actualizaciones instaladas", "pt-BR": "Atualizações instaladas", "it-IT": "Aggiornamenti installati", "ru-RU": "Установленные обновления", "ar-SA": "التحديثات المثبتة" },
+        "description": { "zh-Hans": "列出历史更新（KB 号、标题、安装时间），支持卸载。", "en-US": "List update history (KB, title, install date) with uninstall support." },
+        "items": [
+          { "zh-Hans": "WUA 会话查询已安装更新", "en-US": "Query installed updates via WUA session" },
+          { "zh-Hans": "按 KB 号搜索并卸载", "en-US": "Search by KB number and uninstall" }
+        ]
+      },
+      {
+        "id": "Available",
+        "title": { "zh-Hans": "可安装补丁", "zh-Hant": "可安裝修補程式", "en-US": "Available updates", "ja-JP": "利用可能な更新", "ko-KR": "사용 가능한 업데이트", "de-DE": "Verfügbare Updates", "fr-FR": "Mises à jour disponibles", "es-ES": "Actualizaciones disponibles", "pt-BR": "Atualizações disponíveis", "it-IT": "Aggiornamenti disponibili", "ru-RU": "Доступные обновления", "ar-SA": "التحديثات المتاحة" },
+        "description": { "zh-Hans": "扫描可用补丁并选择性安装，可隐藏不需要的补丁。", "en-US": "Scan available updates, install selectively and hide unwanted ones." },
+        "items": [
+          { "zh-Hans": "在线搜索可用更新（含驱动更新）", "en-US": "Online search for available updates" },
+          { "zh-Hans": "勾选后下载并安装 / 隐藏补丁", "en-US": "Select, download, install or hide" }
+        ]
+      },
+      {
+        "id": "FeatureFlags",
+        "title": { "zh-Hans": "功能开关", "zh-Hant": "功能開關", "en-US": "Feature flags", "ja-JP": "機能フラグ", "ko-KR": "기능 플래그", "de-DE": "Feature-Flags", "fr-FR": "Indicateurs de fonctionnalité", "es-ES": "Indicadores de funciones", "pt-BR": "Sinalizadores de recursos", "it-IT": "Flag delle funzionalità", "ru-RU": "Флаги функций", "ar-SA": "أعلام الميزات" },
+        "description": { "zh-Hans": "ViVe 式特性开关：读写 FeatureManagement\\Overrides，需重启生效。", "en-US": "ViVe-style toggles backed by FeatureManagement\\Overrides; requires reboot." },
+        "items": [
+          { "zh-Hans": "特性 ID 哈希计算", "en-US": "Feature ID hashing" },
+          { "zh-Hans": "启用 / 禁用 / 默认 三态与预设清单", "en-US": "Enabled / Disabled / Default states with presets" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Startup",
+    "glyph": "\uE768",
+    "order": 5,
+    "page": "RuntimeManagement",
+    "sections": [
+      {
+        "id": "StartupItems",
+        "title": { "zh-Hans": "启动项", "zh-Hant": "啟動項", "en-US": "Startup items", "ja-JP": "スタートアップ項目", "ko-KR": "시작 프로그램", "de-DE": "Autostart", "fr-FR": "Éléments de démarrage", "es-ES": "Elementos de inicio", "pt-BR": "Itens de inicialização", "it-IT": "Elementi di avvio", "ru-RU": "Автозагрузка", "ar-SA": "عناصر بدء التشغيل" },
+        "description": { "zh-Hans": "管理 Run / RunOnce / 启动文件夹，并同步 StartupApproved 状态。", "en-US": "Manage Run / RunOnce / Startup folder entries and StartupApproved state." },
+        "items": [
+          { "zh-Hans": "枚举 HKCU/HKLM 与启动文件夹", "en-US": "Enumerate HKCU/HKLM and startup folders" },
+          { "zh-Hans": "启用 / 禁用（写 StartupApproved）", "en-US": "Enable/disable via StartupApproved" }
+        ]
+      },
+      {
+        "id": "ScheduledTasks",
+        "title": { "zh-Hans": "计划任务", "zh-Hant": "排程工作", "en-US": "Scheduled tasks", "ja-JP": "タスク スケジューラ", "ko-KR": "예약된 작업", "de-DE": "Geplante Tasks", "fr-FR": "Tâches planifiées", "es-ES": "Tareas programadas", "pt-BR": "Tarefas agendadas", "it-IT": "Attività pianificate", "ru-RU": "Планировщик заданий", "ar-SA": "المهام المجدولة" },
+        "description": { "zh-Hans": "通过 Task Scheduler COM 枚举、启停与删除计划任务。", "en-US": "Enumerate, toggle and delete scheduled tasks via Task Scheduler COM." },
+        "items": [
+          { "zh-Hans": "按路径树展示任务与触发器", "en-US": "Tree view of tasks and triggers" },
+          { "zh-Hans": "禁用 / 删除 / 立即运行", "en-US": "Disable, delete or run now" }
+        ]
+      },
+      {
+        "id": "Services",
+        "title": { "zh-Hans": "服务管理", "zh-Hant": "服務管理", "en-US": "Services", "ja-JP": "サービス", "ko-KR": "서비스", "de-DE": "Dienste", "fr-FR": "Services", "es-ES": "Servicios", "pt-BR": "Serviços", "it-IT": "Servizi", "ru-RU": "Службы", "ar-SA": "الخدمات" },
+        "description": { "zh-Hans": "查看服务状态并调整启动类型（仅改启动类型，不盲目停用系统服务）。", "en-US": "Inspect services and change start type without blindly disabling system services." },
+        "items": [
+          { "zh-Hans": "服务列表、依赖关系与描述", "en-US": "Service list with dependencies" },
+          { "zh-Hans": "启动类型切换（自动/手动/禁用）", "en-US": "Change start type (auto/manual/disabled)" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Components",
+    "glyph": "\uE772",
+    "order": 6,
+    "page": "ComponentManagement",
+    "sections": [
+      {
+        "id": "SecurityCenter",
+        "title": { "zh-Hans": "安全中心", "zh-Hant": "安全中心", "en-US": "Security Center", "ja-JP": "セキュリティ センター", "ko-KR": "보안 센터", "de-DE": "Sicherheitscenter", "fr-FR": "Centre de sécurité", "es-ES": "Centro de seguridad", "pt-BR": "Central de segurança", "it-IT": "Centro sicurezza", "ru-RU": "Центр безопасности", "ar-SA": "مركز الأمان" },
+        "description": { "zh-Hans": "读取 Defender 与安全中心状态，可切换实时保护等关键开关。", "en-US": "Read Defender and Security Center status, toggle real-time protection." },
+        "items": [
+          { "zh-Hans": "实时保护 / 云保护状态", "en-US": "Real-time and cloud protection status" },
+          { "zh-Hans": "篡改保护与排除项管理", "en-US": "Tamper protection and exclusions" }
+        ]
+      },
+      {
+        "id": "Store",
+        "title": { "zh-Hans": "应用商店", "zh-Hant": "應用商店", "en-US": "Microsoft Store", "ja-JP": "Microsoft Store", "ko-KR": "Microsoft Store", "de-DE": "Microsoft Store", "fr-FR": "Microsoft Store", "es-ES": "Microsoft Store", "pt-BR": "Microsoft Store", "it-IT": "Microsoft Store", "ru-RU": "Microsoft Store", "ar-SA": "متجر Microsoft" },
+        "description": { "zh-Hans": "检测应用商店与相关组件状态，支持重置缓存与重装。", "en-US": "Detect Store health, reset cache and reinstall packages." },
+        "items": [
+          { "zh-Hans": "商店组件健康检查", "en-US": "Store package health check" },
+          { "zh-Hans": "重置 wsreset / 重新注册 Appx", "en-US": "Reset cache and re-register Appx" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Runtimes",
+    "glyph": "\uE943",
+    "order": 7,
+    "page": "RuntimeEnvironment",
+    "sections": [
+      {
+        "id": "DotNet",
+        "title": { "zh-Hans": ".NET 环境", "zh-Hant": ".NET 環境", "en-US": ".NET runtime", "ja-JP": ".NET ランタイム", "ko-KR": ".NET 런타임", "de-DE": ".NET-Runtime", "fr-FR": "Runtime .NET", "es-ES": "Runtime de .NET", "pt-BR": "Runtime .NET", "it-IT": "Runtime .NET", "ru-RU": "Среда .NET", "ar-SA": "بيئة .NET" },
+        "description": { "zh-Hans": "检测已安装的 .NET Desktop / ASP.NET Core 运行时，支持安装与卸载。", "en-US": "Detect installed .NET Desktop / ASP.NET Core runtimes, install or remove." },
+        "items": [
+          { "zh-Hans": "按主版本列出运行时与 SDK", "en-US": "List runtimes and SDKs by major version" },
+          { "zh-Hans": "静默安装 / 卸载指定版本", "en-US": "Silent install or uninstall a version" }
+        ]
+      },
+      {
+        "id": "VcRuntime",
+        "title": { "zh-Hans": "VC++ 环境", "zh-Hant": "VC++ 環境", "en-US": "Visual C++ runtime", "ja-JP": "Visual C++ ランタイム", "ko-KR": "Visual C++ 런타임", "de-DE": "Visual C++-Runtime", "fr-FR": "Runtime Visual C++", "es-ES": "Runtime de Visual C++", "pt-BR": "Runtime do Visual C++", "it-IT": "Runtime Visual C++", "ru-RU": "Среда Visual C++", "ar-SA": "بيئة Visual C++" },
+        "description": { "zh-Hans": "检测 2005~2022 各版本 VC++ 运行库，一键补齐或清理。", "en-US": "Detect VC++ redistributables 2005-2022, install or clean up." },
+        "items": [
+          { "zh-Hans": "x86 / x64 版本矩阵", "en-US": "x86 / x64 version matrix" },
+          { "zh-Hans": "一键安装缺失运行库", "en-US": "One-click install of missing runtimes" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Apps",
+    "glyph": "\uE8F1",
+    "order": 8,
+    "page": "AppManagement",
+    "sections": [
+      {
+        "id": "Programs",
+        "title": { "zh-Hans": "已安装程序", "zh-Hant": "已安裝程式", "en-US": "Installed programs", "ja-JP": "インストール済みプログラム", "ko-KR": "설치된 프로그램", "de-DE": "Installierte Programme", "fr-FR": "Programmes installés", "es-ES": "Programas instalados", "pt-BR": "Programas instalados", "it-IT": "Programmi installati", "ru-RU": "Установленные программы", "ar-SA": "البرامج المثبتة" },
+        "description": { "zh-Hans": "读取注册表 Uninstall 键（含 WOW6432Node），支持静默卸载与残留扫描。", "en-US": "Read Uninstall registry keys, support silent uninstall and leftover scan." },
+        "items": [
+          { "zh-Hans": "程序列表：大小、发布者、安装日期", "en-US": "List with size, publisher, install date" },
+          { "zh-Hans": "调用卸载器并扫描残留", "en-US": "Run uninstaller and scan leftovers" }
+        ]
+      },
+      {
+        "id": "Appx",
+        "title": { "zh-Hans": "应用（Appx）", "zh-Hant": "應用（Appx）", "en-US": "Appx packages", "ja-JP": "Appx パッケージ", "ko-KR": "Appx 패키지", "de-DE": "Appx-Pakete", "fr-FR": "Packages Appx", "es-ES": "Paquetes Appx", "pt-BR": "Pacotes Appx", "it-IT": "Pacchetti Appx", "ru-RU": "Пакеты Appx", "ar-SA": "حزم Appx" },
+        "description": { "zh-Hans": "基于 PackageManager 管理 UWP/MSIX 应用，可移除预装应用。", "en-US": "Manage UWP/MSIX apps via PackageManager, remove preinstalled ones." },
+        "items": [
+          { "zh-Hans": "按用户列出已安装包", "en-US": "List installed packages per user" },
+          { "zh-Hans": "移除 / 重新注册 / 配置预装", "en-US": "Remove, re-register or provision" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Drivers",
+    "glyph": "\uE90F",
+    "order": 9,
+    "page": "DriverManagement",
+    "sections": [
+      {
+        "id": "SystemDrivers",
+        "title": { "zh-Hans": "系统驱动", "zh-Hant": "系統驅動", "en-US": "System drivers", "ja-JP": "システム ドライバー", "ko-KR": "시스템 드라이버", "de-DE": "Systemtreiber", "fr-FR": "Pilotes système", "es-ES": "Controladores del sistema", "pt-BR": "Drivers do sistema", "it-IT": "Driver di sistema", "ru-RU": "Системные драйверы", "ar-SA": "برامج تشغيل النظام" },
+        "description": { "zh-Hans": "枚举 DriverStore 与已加载驱动，展示版本、日期与签名。", "en-US": "Enumerate DriverStore and loaded drivers with version and signature." },
+        "items": [
+          { "zh-Hans": "DriverStore 包列表", "en-US": "DriverStore package list" },
+          { "zh-Hans": "已加载驱动与设备映射", "en-US": "Loaded drivers mapped to devices" }
+        ]
+      },
+      {
+        "id": "DriverBackup",
+        "title": { "zh-Hans": "备份驱动", "zh-Hant": "備份驅動", "en-US": "Back up drivers", "ja-JP": "ドライバーのバックアップ", "ko-KR": "드라이버 백업", "de-DE": "Treiber sichern", "fr-FR": "Sauvegarder les pilotes", "es-ES": "Copia de controladores", "pt-BR": "Backup de drivers", "it-IT": "Backup dei driver", "ru-RU": "Резервная копия драйверов", "ar-SA": "نسخ برامج التشغيل" },
+        "description": { "zh-Hans": "导出第三方驱动到指定目录，便于重装后恢复。", "en-US": "Export third-party drivers to a folder for later restore." },
+        "items": [
+          { "zh-Hans": "pnputil /export-driver 批量导出", "en-US": "Batch export via pnputil" },
+          { "zh-Hans": "导出清单与校验", "en-US": "Export manifest and verification" }
+        ]
+      },
+      {
+        "id": "DriverInstall",
+        "title": { "zh-Hans": "安装驱动", "zh-Hant": "安裝驅動", "en-US": "Install drivers", "ja-JP": "ドライバーのインストール", "ko-KR": "드라이버 설치", "de-DE": "Treiber installieren", "fr-FR": "Installer des pilotes", "es-ES": "Instalar controladores", "pt-BR": "Instalar drivers", "it-IT": "Installa driver", "ru-RU": "Установка драйверов", "ar-SA": "تثبيت برامج التشغيل" },
+        "description": { "zh-Hans": "从目录或 inf 文件安装驱动，支持递归添加。", "en-US": "Install drivers from a folder or inf file, recursively." },
+        "items": [
+          { "zh-Hans": "pnputil /add-driver /install", "en-US": "pnputil /add-driver /install" },
+          { "zh-Hans": "安装结果与失败原因", "en-US": "Result and failure reasons" }
+        ]
+      },
+      {
+        "id": "DriverRemove",
+        "title": { "zh-Hans": "删除驱动", "zh-Hant": "刪除驅動", "en-US": "Remove drivers", "ja-JP": "ドライバーの削除", "ko-KR": "드라이버 제거", "de-DE": "Treiber entfernen", "fr-FR": "Supprimer des pilotes", "es-ES": "Eliminar controladores", "pt-BR": "Remover drivers", "it-IT": "Rimuovi driver", "ru-RU": "Удаление драйверов", "ar-SA": "إزالة برامج التشغيل" },
+        "description": { "zh-Hans": "删除指定 DriverStore 包，操作前强制备份并二次确认。", "en-US": "Delete DriverStore packages with mandatory backup and confirmation." },
+        "items": [
+          { "zh-Hans": "pnputil /delete-driver /uninstall", "en-US": "pnputil /delete-driver /uninstall" },
+          { "zh-Hans": "占用检测与回滚", "en-US": "In-use detection and rollback" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "Backup",
+    "glyph": "\uE896",
+    "order": 10,
+    "page": "BackupRestore",
+    "sections": [
+      {
+        "id": "Capture",
+        "title": { "zh-Hans": "系统备份", "zh-Hant": "系統備份", "en-US": "System backup", "ja-JP": "システム バックアップ", "ko-KR": "시스템 백업", "de-DE": "Systemsicherung", "fr-FR": "Sauvegarde système", "es-ES": "Copia del sistema", "pt-BR": "Backup do sistema", "it-IT": "Backup di sistema", "ru-RU": "Резервная копия системы", "ar-SA": "نسخ احتياطي للنظام" },
+        "description": { "zh-Hans": "基于 WIMGAPI 将分区捕获为 wim / esd / swm 镜像。", "en-US": "Capture a volume to wim / esd / swm via WIMGAPI." },
+        "items": [
+          { "zh-Hans": "选择源分区与压缩级别", "en-US": "Choose source volume and compression" },
+          { "zh-Hans": "排除规则与校验", "en-US": "Exclusion rules and verification" }
+        ]
+      },
+      {
+        "id": "Incremental",
+        "title": { "zh-Hans": "增量备份", "zh-Hant": "增量備份", "en-US": "Incremental backup", "ja-JP": "増分バックアップ", "ko-KR": "증분 백업", "de-DE": "Inkrementelle Sicherung", "fr-FR": "Sauvegarde incrémentale", "es-ES": "Copia incremental", "pt-BR": "Backup incremental", "it-IT": "Backup incrementale", "ru-RU": "Добавочная копия", "ar-SA": "نسخ احتياطي تزايدي" },
+        "description": { "zh-Hans": "向已有镜像追加新卷映像，节省空间与时间。", "en-US": "Append a new image to an existing file to save space and time." },
+        "items": [
+          { "zh-Hans": "WIMAppendImage / 导出合并", "en-US": "WIMAppendImage / export merge" },
+          { "zh-Hans": "镜像索引与命名", "en-US": "Image index and naming" }
+        ]
+      },
+      {
+        "id": "WimInfo",
+        "title": { "zh-Hans": "WIM 信息", "zh-Hant": "WIM 資訊", "en-US": "WIM information", "ja-JP": "WIM 情報", "ko-KR": "WIM 정보", "de-DE": "WIM-Informationen", "fr-FR": "Informations WIM", "es-ES": "Información WIM", "pt-BR": "Informações do WIM", "it-IT": "Informazioni WIM", "ru-RU": "Сведения WIM", "ar-SA": "معلومات WIM" },
+        "description": { "zh-Hans": "查看并修改镜像元信息（名称、描述、标志位）。", "en-US": "View and edit image metadata (name, description, flags)." },
+        "items": [
+          { "zh-Hans": "读取全部索引与属性", "en-US": "Read all indexes and attributes" },
+          { "zh-Hans": "WIMSetImageInformation 修改", "en-US": "Edit via WIMSetImageInformation" }
+        ]
+      },
+      {
+        "id": "Apply",
+        "title": { "zh-Hans": "释放镜像", "zh-Hant": "釋放映像", "en-US": "Apply image", "ja-JP": "イメージの適用", "ko-KR": "이미지 적용", "de-DE": "Image anwenden", "fr-FR": "Appliquer une image", "es-ES": "Aplicar imagen", "pt-BR": "Aplicar imagem", "it-IT": "Applica immagine", "ru-RU": "Применение образа", "ar-SA": "تطبيق الصورة" },
+        "description": { "zh-Hans": "将 wim/esd/swm 释放到指定分区，含引导修复。", "en-US": "Apply wim/esd/swm to a target volume with boot repair." },
+        "items": [
+          { "zh-Hans": "选择镜像索引与目标分区", "en-US": "Choose image index and target volume" },
+          { "zh-Hans": "WIMApplyImage + bcdboot", "en-US": "WIMApplyImage + bcdboot" }
+        ]
+      }
+    ]
+  },
+  { "id": "Settings", "glyph": "\uE713", "order": 99, "page": "Settings", "isFooter": true, "sections": [] }
+]

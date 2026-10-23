@@ -1,0 +1,394 @@
+<Window x:Class="WinTools.App.Views.ShellWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        xmlns:vm="clr-namespace:WinTools.App.ViewModels"
+        xmlns:pages="clr-namespace:WinTools.App.Views.Pages"
+        xmlns:mod="clr-namespace:WinTools.App.ViewModels.Modules"
+        xmlns:svc="clr-namespace:WinTools.App.Services"
+        Title="WinTools"
+        Width="1200" Height="800"
+        MinWidth="1100" MinHeight="660"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource App.Background}"
+        FontFamily="{DynamicResource App.FontFamily}"
+        FlowDirection="{Binding IsRightToLeft, Converter={StaticResource BoolToFlowDirection}}">
+
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="36" ResizeBorderThickness="6" CornerRadius="0"
+                            GlassFrameThickness="0" UseAeroCaptionButtons="False" />
+    </shell:WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <!-- 自绘窗口标题栏按钮 -->
+        <Style x:Key="CaptionButton" TargetType="Button">
+            <Setter Property="Width" Value="46" />
+            <Setter Property="Height" Value="36" />
+            <Setter Property="FontFamily" Value="Segoe Fluent Icons, Segoe MDL2 Assets" />
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Secondary}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="shell:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource App.Hover}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CloseCaptionButton" TargetType="Button" BasedOn="{StaticResource CaptionButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#E81123" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 二级菜单（模块内页签）：叶子节点，无递归 -->
+        <DataTemplate x:Key="NavSectionRowTemplate" DataType="{x:Type vm:NavItemViewModel}">
+            <Button Style="{StaticResource NavRowButton}"
+                    Padding="{Binding RowPadding}"
+                    Command="{Binding DataContext.NavigateCommand,
+                                      RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                    CommandParameter="{Binding Key}">
+                <StackPanel Orientation="Horizontal">
+                    <Border Width="4" Height="4" CornerRadius="2" VerticalAlignment="Center"
+                            Background="{DynamicResource App.Text.Tertiary}" />
+                    <TextBlock Text="{Binding Title}" FontSize="{Binding TitleFontSize}"
+                               Margin="8,0,4,0" VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"
+                               Foreground="{DynamicResource App.Text.Secondary}" />
+                </StackPanel>
+            </Button>
+        </DataTemplate>
+
+        <!-- 一级菜单：可展开/折叠，二级由 NavSectionRowTemplate 渲染 -->
+        <DataTemplate x:Key="NavRowTemplate" DataType="{x:Type vm:NavItemViewModel}">
+            <StackPanel>
+                <Button Style="{StaticResource NavRowButton}"
+                        Padding="{Binding RowPadding}"
+                        Command="{Binding DataContext.NavigateCommand,
+                                          RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                        CommandParameter="{Binding Key}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding Glyph}"
+                                   FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                   FontSize="15" Width="20" VerticalAlignment="Center"
+                                   Foreground="{DynamicResource App.Text.Secondary}" />
+
+                        <TextBlock Grid.Column="1" Text="{Binding Title}"
+                                   FontSize="{Binding TitleFontSize}"
+                                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                   Foreground="{DynamicResource App.Text.Primary}" />
+
+                        <Path Grid.Column="2" Data="M 0,0 L 4,4 L 0,8"
+                              Stroke="{DynamicResource App.Text.Tertiary}" StrokeThickness="1.4"
+                              StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                              Margin="8,0,2,0" VerticalAlignment="Center"
+                              RenderTransformOrigin="0.5,0.5"
+                              Visibility="{Binding ShowChevron, Converter={StaticResource BoolToVisibility}}">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Setter Property="RenderTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="0" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                            To="90" Duration="0:0:0.16" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                                            To="0" Duration="0:0:0.16" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Grid>
+                </Button>
+
+                <ItemsControl ItemsSource="{Binding Children}"
+                              ItemTemplate="{StaticResource NavSectionRowTemplate}"
+                              Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVisibility}}" />
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
+    <!-- 自定义背景铺在内容根：Window.Chrome 下窗口自身不绘制客户区背景 -->
+    <Border x:Name="RootBorder" Background="{DynamicResource App.Background}">
+        <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- ================= 自绘标题栏 ================= -->
+            <Grid Grid.Row="0" Height="36">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="14,0,0,0">
+                    <TextBlock Text="&#xE90F;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                               FontSize="12" VerticalAlignment="Center"
+                               Foreground="{DynamicResource App.Accent}" />
+                    <TextBlock Text="{Binding AppTitle}" FontSize="12" Margin="8,0,0,0"
+                               VerticalAlignment="Center" Foreground="{DynamicResource App.Text.Secondary}" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource CaptionButton}" Content="&#xE921;"
+                            Click="OnMinimizeClick" ToolTip="最小化" />
+                    <Button x:Name="MaximizeButton" Style="{StaticResource CaptionButton}" Content="&#xE922;"
+                            Click="OnMaximizeClick" ToolTip="最大化" />
+                    <Button Style="{StaticResource CloseCaptionButton}" Content="&#xE8BB;"
+                            Click="OnCloseClick" ToolTip="关闭" />
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="242" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- ================= 侧边栏 ================= -->
+                <Border Grid.Column="0" Background="{DynamicResource App.Sidebar}"
+                        BorderBrush="{DynamicResource App.Border}" BorderThickness="0,1,1,0">
+                    <Grid Margin="12,4,12,12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="8,10,0,14">
+                            <Border Width="32" Height="32" CornerRadius="9" Background="{DynamicResource App.Accent}">
+                                <TextBlock Text="&#xE90F;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                           FontSize="16" Foreground="{DynamicResource App.Accent.Text}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding AppTitle}" FontSize="14" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource App.Text.Primary}" />
+                                <TextBlock Text="{Binding AppSubtitle}" FontSize="11"
+                                           Foreground="{DynamicResource App.Text.Tertiary}" Margin="0,1,0,0" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Disabled">
+                            <ItemsControl ItemsSource="{Binding NavItems}"
+                                          ItemTemplate="{StaticResource NavRowTemplate}" />
+                        </ScrollViewer>
+
+                        <StackPanel Grid.Row="2">
+                            <Border Height="1" Background="{DynamicResource App.Border}" Margin="6,8,6,8" />
+                            <ItemsControl ItemsSource="{Binding FooterNavItems}"
+                                          ItemTemplate="{StaticResource NavRowTemplate}" />
+                            <TextBlock Text="v0.1.0 · .NET 10" FontSize="11" Margin="10,8,0,0"
+                                       Foreground="{DynamicResource App.Text.Tertiary}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- ================= 内容区 ================= -->
+                <ContentControl Grid.Column="1" Content="{Binding CurrentPage}">
+                    <ContentControl.Resources>
+                        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+                            <pages:DashboardPage />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:CleanupViewModel}">
+                            <pages:CleanupPage />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:OptimizeViewModel}">
+                            <pages:OptimizePage />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+                            <pages:SettingsPage />
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type mod:ModuleViewModelBase}">
+                            <pages:ModulePage />
+                        </DataTemplate>
+                    </ContentControl.Resources>
+                </ContentControl>
+            </Grid>
+        </Grid>
+        <!-- ================= 全局浮层：确认对话框 + 轻提示 ================= -->
+        <Grid DataContext="{x:Static svc:UI.Confirm}">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsOpen}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
+            <Border Background="#99000000" MouseLeftButtonDown="OnScrimClick" />
+
+            <ContentControl Content="{Binding Current}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ContentControl.ContentTemplate>
+                    <DataTemplate DataType="{x:Type svc:ConfirmDialogViewModel}">
+                        <Border Style="{StaticResource Card}" Width="460" Padding="24,22" CornerRadius="14"
+                                Background="{DynamicResource App.Surface}">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="36" ShadowDepth="8" Opacity="0.35" Color="Black" />
+                            </Border.Effect>
+
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource App.Text.Primary}" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Message}" Style="{StaticResource BodyText}"
+                                           Margin="0,10,0,0" TextWrapping="Wrap"
+                                           Foreground="{DynamicResource App.Text.Secondary}" />
+
+                                <StackPanel Margin="0,14,0,0"
+                                            Visibility="{Binding HasItems, Converter={StaticResource BoolToVisibility}}">
+                                    <TextBlock Text="{Binding ItemsHeader}" Style="{StaticResource CaptionText}" />
+                                    <Border Margin="0,6,0,0" CornerRadius="8" Padding="10,8" MaxHeight="150"
+                                            Background="{DynamicResource App.SurfaceAlt}">
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                            <ItemsControl ItemsSource="{Binding Items}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding}" FontSize="12" Margin="0,2"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   Foreground="{DynamicResource App.Text.Primary}" />
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Border>
+                                </StackPanel>
+
+                                <CheckBox Style="{StaticResource AppCheckBox}" Margin="0,16,0,0"
+                                          IsChecked="{Binding IsAcknowledged, Mode=TwoWay}"
+                                          Visibility="{Binding RequireAcknowledge, Converter={StaticResource BoolToVisibility}}">
+                                    <TextBlock Text="{Binding AcknowledgeText}" FontSize="12" TextWrapping="Wrap"
+                                               Margin="4,0,0,0" Foreground="{DynamicResource App.Warning}" />
+                                </CheckBox>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                                    <Button Content="{Binding CancelLabel}" Style="{StaticResource GhostButton}"
+                                            Command="{Binding CancelCommand}" Padding="18,8" />
+                                    <Button Content="{Binding ConfirmLabel}" Command="{Binding ConfirmCommand}"
+                                            Margin="10,0,0,0" Padding="20,8">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Danger}" Value="True">
+                                                        <Setter Property="Background" Value="{DynamicResource App.Danger}" />
+                                                        <Setter Property="Foreground" Value="White" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ContentControl.ContentTemplate>
+            </ContentControl>
+        </Grid>
+
+        <ItemsControl ItemsSource="{Binding Items, Source={x:Static svc:UI.Toast}}"
+                      HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,24">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type svc:ToastItem}">
+                    <Border Margin="0,8,0,0" Padding="14,10" CornerRadius="10" MaxWidth="420" MinWidth="200"
+                            Background="{DynamicResource App.Surface}"
+                            BorderBrush="{DynamicResource App.BorderStrong}" BorderThickness="1">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="22" ShadowDepth="4" Opacity="0.3" Color="Black" />
+                        </Border.Effect>
+                        <Border.RenderTransform>
+                            <TranslateTransform X="0" />
+                        </Border.RenderTransform>
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.18" />
+                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                         From="36" To="0" Duration="0:0:0.22">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Glyph}" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                       FontSize="15" VerticalAlignment="Top" Margin="0,1,10,0">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{DynamicResource App.Accent}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Kind}" Value="Success">
+                                                <Setter Property="Foreground" Value="{DynamicResource App.Success}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Kind}" Value="Warning">
+                                                <Setter Property="Foreground" Value="{DynamicResource App.Warning}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Kind}" Value="Error">
+                                                <Setter Property="Foreground" Value="{DynamicResource App.Danger}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock Text="{Binding Message}" FontSize="12.5" TextWrapping="Wrap" MaxWidth="360"
+                                       Foreground="{DynamicResource App.Text.Primary}" />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        </Grid>
+    </Border>
+</Window>
