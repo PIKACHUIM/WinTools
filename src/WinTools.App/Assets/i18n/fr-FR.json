@@ -270,5 +270,22 @@
 
   "Svc.DelayedAuto": "Automatique (différé)",
 
-  "Startup.ConfirmDelete": "L'entrée de démarrage « {0} » va être supprimée."
+  "Startup.ConfirmDelete": "L'entrée de démarrage « {0} » va être supprimée.",
+
+  "Sec.Group.Virus": "Protection antivirus",
+  "Sec.Group.Attack": "Surface d'attaque",
+  "Sec.Group.System": "Sécurité système",
+  "Sec.Group.Firewall": "Pare-feu",
+  "Sec.Cloud": "Protection cloud",
+  "Sec.ScriptScan": "Analyse des scripts",
+  "Sec.Pua": "Applications indésirables",
+  "Sec.NetworkProtection": "Protection réseau",
+  "Sec.FolderAccess": "Accès contrôlé aux dossiers",
+  "Sec.Hvci": "Isolation du noyau (intégrité mémoire)",
+  "Sec.Uac": "Contrôle de compte d'utilisateur",
+  "Sec.SmartScreen": "SmartScreen pour les applications",
+  "Sec.FirewallDomain": "Pare-feu réseau de domaine",
+  "Sec.FirewallPrivate": "Pare-feu réseau privé",
+  "Sec.FirewallPublic": "Pare-feu réseau public",
+  "Sec.NotSupported": "Non pris en charge sur ce système"
 }

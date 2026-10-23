@@ -270,5 +270,22 @@
 
   "Svc.DelayedAuto": "Автоматически (отложенно)",
 
-  "Startup.ConfirmDelete": "Элемент автозапуска «{0}» будет удалён."
+  "Startup.ConfirmDelete": "Элемент автозапуска «{0}» будет удалён.",
+
+  "Sec.Group.Virus": "Защита от вирусов",
+  "Sec.Group.Attack": "Поверхность атаки",
+  "Sec.Group.System": "Безопасность системы",
+  "Sec.Group.Firewall": "Брандмауэр",
+  "Sec.Cloud": "Облачная защита",
+  "Sec.ScriptScan": "Проверка скриптов",
+  "Sec.Pua": "Нежелательные приложения",
+  "Sec.NetworkProtection": "Сетевая защита",
+  "Sec.FolderAccess": "Контролируемый доступ к папкам",
+  "Sec.Hvci": "Изоляция ядра (целостность памяти)",
+  "Sec.Uac": "Контроль учётных записей",
+  "Sec.SmartScreen": "SmartScreen для приложений",
+  "Sec.FirewallDomain": "Брандмауэр домена",
+  "Sec.FirewallPrivate": "Брандмауэр частной сети",
+  "Sec.FirewallPublic": "Брандмауэр общедоступной сети",
+  "Sec.NotSupported": "Не поддерживается в этой системе"
 }

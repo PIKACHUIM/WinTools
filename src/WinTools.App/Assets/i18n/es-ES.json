@@ -270,5 +270,22 @@
 
   "Svc.DelayedAuto": "Automático (retrasado)",
 
-  "Startup.ConfirmDelete": "Se eliminará la entrada de inicio «{0}»."
+  "Startup.ConfirmDelete": "Se eliminará la entrada de inicio «{0}».",
+
+  "Sec.Group.Virus": "Protección antivirus",
+  "Sec.Group.Attack": "Superficie de ataque",
+  "Sec.Group.System": "Seguridad del sistema",
+  "Sec.Group.Firewall": "Firewall",
+  "Sec.Cloud": "Protección en la nube",
+  "Sec.ScriptScan": "Análisis de scripts",
+  "Sec.Pua": "Aplicaciones no deseadas",
+  "Sec.NetworkProtection": "Protección de red",
+  "Sec.FolderAccess": "Acceso controlado a carpetas",
+  "Sec.Hvci": "Aislamiento del núcleo (integridad de memoria)",
+  "Sec.Uac": "Control de cuentas de usuario",
+  "Sec.SmartScreen": "SmartScreen para aplicaciones",
+  "Sec.FirewallDomain": "Firewall de red de dominio",
+  "Sec.FirewallPrivate": "Firewall de red privada",
+  "Sec.FirewallPublic": "Firewall de red pública",
+  "Sec.NotSupported": "No compatible con este sistema"
 }

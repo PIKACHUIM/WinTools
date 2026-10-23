@@ -270,5 +270,22 @@
 
   "Svc.DelayedAuto": "Automático (atrasado)",
 
-  "Startup.ConfirmDelete": "A entrada de inicialização \"{0}\" será removida."
+  "Startup.ConfirmDelete": "A entrada de inicialização \"{0}\" será removida.",
+
+  "Sec.Group.Virus": "Proteção contra vírus",
+  "Sec.Group.Attack": "Superfície de ataque",
+  "Sec.Group.System": "Segurança do sistema",
+  "Sec.Group.Firewall": "Firewall",
+  "Sec.Cloud": "Proteção na nuvem",
+  "Sec.ScriptScan": "Verificação de scripts",
+  "Sec.Pua": "Aplicativos indesejados",
+  "Sec.NetworkProtection": "Proteção de rede",
+  "Sec.FolderAccess": "Acesso controlado a pastas",
+  "Sec.Hvci": "Isolamento do núcleo (integridade de memória)",
+  "Sec.Uac": "Controle de Conta de Usuário",
+  "Sec.SmartScreen": "SmartScreen para aplicativos",
+  "Sec.FirewallDomain": "Firewall da rede de domínio",
+  "Sec.FirewallPrivate": "Firewall da rede privada",
+  "Sec.FirewallPublic": "Firewall da rede pública",
+  "Sec.NotSupported": "Não suportado neste sistema"
 }

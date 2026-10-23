@@ -60,6 +60,11 @@ public interface ISecurityService
 {
     Task<SecurityStatus> GetAsync(CancellationToken cancellationToken);
     Task<OperationResult> SetRealTimeAsync(bool enabled, CancellationToken cancellationToken);
+    /// <summary>全部可开关的安全设置（实时保护、攻击面、防火墙、UAC、内核隔离…）。</summary>
+    Task<IReadOnlyList<SecuritySetting>> GetSettingsAsync(CancellationToken cancellationToken);
+
+    Task<OperationResult> SetSettingAsync(string id, bool enabled, CancellationToken cancellationToken);
+
     Task<OperationResult> AddExclusionAsync(string path, CancellationToken cancellationToken);
     Task<OperationResult> RemoveExclusionAsync(string path, CancellationToken cancellationToken);
 }

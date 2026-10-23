@@ -270,5 +270,22 @@
 
   "Svc.DelayedAuto": "Automatisch (verzögert)",
 
-  "Startup.ConfirmDelete": "Der Autostart-Eintrag „{0}\" wird entfernt."
+  "Startup.ConfirmDelete": "Der Autostart-Eintrag „{0}\" wird entfernt.",
+
+  "Sec.Group.Virus": "Virenschutz",
+  "Sec.Group.Attack": "Angriffsfläche",
+  "Sec.Group.System": "Systemsicherheit",
+  "Sec.Group.Firewall": "Firewall",
+  "Sec.Cloud": "Cloudschutz",
+  "Sec.ScriptScan": "Skriptüberprüfung",
+  "Sec.Pua": "Unverwünschte Apps",
+  "Sec.NetworkProtection": "Netzwerkschutz",
+  "Sec.FolderAccess": "Überwachter Ordnerzugriff",
+  "Sec.Hvci": "Kernisolierung (Speicherintegrität)",
+  "Sec.Uac": "Benutzerkontensteuerung",
+  "Sec.SmartScreen": "SmartScreen für Apps",
+  "Sec.FirewallDomain": "Firewall für Domänennetzwerk",
+  "Sec.FirewallPrivate": "Firewall für privates Netzwerk",
+  "Sec.FirewallPublic": "Firewall für öffentliches Netzwerk",
+  "Sec.NotSupported": "Auf diesem System nicht unterstützt"
 }

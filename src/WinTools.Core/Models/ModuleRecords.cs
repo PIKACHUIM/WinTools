@@ -79,6 +79,9 @@ public sealed record SecurityStatus(
     string? EngineVersion,
     IReadOnlyList<string> Exclusions);
 
+/// <summary>安全中心的一个可开关项。</summary>
+public sealed record SecuritySetting(string Id, bool Enabled, bool Supported);
+
 /// <summary>应用商店状态（组件管理）。</summary>
 public sealed record StoreStatus(
     bool Installed,

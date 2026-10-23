@@ -331,5 +331,22 @@
 
   "Svc.DelayedAuto": "延迟自动",
 
-  "Startup.ConfirmDelete": "将删除启动项「{0}」，删除后程序不再随系统启动。"
+  "Startup.ConfirmDelete": "将删除启动项「{0}」，删除后程序不再随系统启动。",
+
+  "Sec.Group.Virus": "病毒防护",
+  "Sec.Group.Attack": "攻击面防护",
+  "Sec.Group.System": "系统安全",
+  "Sec.Group.Firewall": "防火墙",
+  "Sec.Cloud": "云保护",
+  "Sec.ScriptScan": "脚本扫描",
+  "Sec.Pua": "潜在不受欢迎应用",
+  "Sec.NetworkProtection": "网络保护",
+  "Sec.FolderAccess": "受控文件夹访问",
+  "Sec.Hvci": "内核隔离（内存完整性）",
+  "Sec.Uac": "用户账户控制",
+  "Sec.SmartScreen": "SmartScreen 应用筛选",
+  "Sec.FirewallDomain": "域网络防火墙",
+  "Sec.FirewallPrivate": "专用网络防火墙",
+  "Sec.FirewallPublic": "公用网络防火墙",
+  "Sec.NotSupported": "当前系统不支持该项"
 }

@@ -331,5 +331,22 @@
 
   "Svc.DelayedAuto": "Automatic (delayed)",
 
-  "Startup.ConfirmDelete": "The startup entry \"{0}\" will be removed."
+  "Startup.ConfirmDelete": "The startup entry \"{0}\" will be removed.",
+
+  "Sec.Group.Virus": "Virus protection",
+  "Sec.Group.Attack": "Attack surface",
+  "Sec.Group.System": "System security",
+  "Sec.Group.Firewall": "Firewall",
+  "Sec.Cloud": "Cloud protection",
+  "Sec.ScriptScan": "Script scanning",
+  "Sec.Pua": "Potentially unwanted apps",
+  "Sec.NetworkProtection": "Network protection",
+  "Sec.FolderAccess": "Controlled folder access",
+  "Sec.Hvci": "Core isolation (memory integrity)",
+  "Sec.Uac": "User Account Control",
+  "Sec.SmartScreen": "SmartScreen for apps",
+  "Sec.FirewallDomain": "Domain network firewall",
+  "Sec.FirewallPrivate": "Private network firewall",
+  "Sec.FirewallPublic": "Public network firewall",
+  "Sec.NotSupported": "Not supported on this system"
 }

@@ -270,5 +270,22 @@
 
   "Svc.DelayedAuto": "自動（遅延）",
 
-  "Startup.ConfirmDelete": "スタートアップ項目「{0}」を削除します。"
+  "Startup.ConfirmDelete": "スタートアップ項目「{0}」を削除します。",
+
+  "Sec.Group.Virus": "ウイルス対策",
+  "Sec.Group.Attack": "攻撃面の保護",
+  "Sec.Group.System": "システム セキュリティ",
+  "Sec.Group.Firewall": "ファイアウォール",
+  "Sec.Cloud": "クラウド保護",
+  "Sec.ScriptScan": "スクリプト スキャン",
+  "Sec.Pua": "望ましくない可能性のあるアプリ",
+  "Sec.NetworkProtection": "ネットワーク保護",
+  "Sec.FolderAccess": "フォルダー アクセスの制御",
+  "Sec.Hvci": "コア分離（メモリ整合性）",
+  "Sec.Uac": "ユーザー アカウント制御",
+  "Sec.SmartScreen": "アプリの SmartScreen",
+  "Sec.FirewallDomain": "ドメイン ネットワークのファイアウォール",
+  "Sec.FirewallPrivate": "プライベート ネットワークのファイアウォール",
+  "Sec.FirewallPublic": "パブリック ネットワークのファイアウォール",
+  "Sec.NotSupported": "このシステムでは未対応"
 }

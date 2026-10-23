@@ -270,5 +270,22 @@
 
   "Svc.DelayedAuto": "자동(지연)",
 
-  "Startup.ConfirmDelete": "시작 항목 \"{0}\"을(를) 삭제합니다."
+  "Startup.ConfirmDelete": "시작 항목 \"{0}\"을(를) 삭제합니다.",
+
+  "Sec.Group.Virus": "바이러스 보호",
+  "Sec.Group.Attack": "공격 표면",
+  "Sec.Group.System": "시스템 보안",
+  "Sec.Group.Firewall": "방화벽",
+  "Sec.Cloud": "클라우드 보호",
+  "Sec.ScriptScan": "스크립트 검사",
+  "Sec.Pua": "원치 않는 앱",
+  "Sec.NetworkProtection": "네트워크 보호",
+  "Sec.FolderAccess": "제어된 폴더 액세스",
+  "Sec.Hvci": "코어 격리(메모리 무결성)",
+  "Sec.Uac": "사용자 계정 컨트롤",
+  "Sec.SmartScreen": "앱 SmartScreen",
+  "Sec.FirewallDomain": "도메인 네트워크 방화벽",
+  "Sec.FirewallPrivate": "개인 네트워크 방화벽",
+  "Sec.FirewallPublic": "공용 네트워크 방화벽",
+  "Sec.NotSupported": "이 시스템에서는 지원되지 않음"
 }

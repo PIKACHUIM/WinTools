@@ -270,5 +270,22 @@
 
   "Svc.DelayedAuto": "تلقائي (مؤجل)",
 
-  "Startup.ConfirmDelete": "ستتم إزالة عنصر بدء التشغيل \"{0}\"."
+  "Startup.ConfirmDelete": "ستتم إزالة عنصر بدء التشغيل \"{0}\".",
+
+  "Sec.Group.Virus": "الحماية من الفيروسات",
+  "Sec.Group.Attack": "سطح الهجوم",
+  "Sec.Group.System": "أمان النظام",
+  "Sec.Group.Firewall": "جدار الحماية",
+  "Sec.Cloud": "الحماية السحابية",
+  "Sec.ScriptScan": "فحص النصوص البرمجية",
+  "Sec.Pua": "التطبيقات غير المرغوبة",
+  "Sec.NetworkProtection": "حماية الشبكة",
+  "Sec.FolderAccess": "الوصول المتحكم به إلى المجلدات",
+  "Sec.Hvci": "عزل النواة (سلامة الذاكرة)",
+  "Sec.Uac": "التحكم في حساب المستخدم",
+  "Sec.SmartScreen": "SmartScreen للتطبيقات",
+  "Sec.FirewallDomain": "جدار حماية شبكة النطاق",
+  "Sec.FirewallPrivate": "جدار حماية الشبكة الخاصة",
+  "Sec.FirewallPublic": "جدار حماية الشبكة العامة",
+  "Sec.NotSupported": "غير مدعوم في هذا النظام"
 }

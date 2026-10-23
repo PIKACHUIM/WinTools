@@ -6,7 +6,7 @@ using WinTools.Infrastructure.Common;
 namespace WinTools.Infrastructure.Components;
 
 /// <summary>安全中心：Defender 状态、实时保护开关与排除项。</summary>
-public sealed class SecurityService : ISecurityService
+public sealed partial class SecurityService : ISecurityService
 {
     private const string DefenderPath = @"SOFTWARE\Microsoft\Windows Defender";
     private const string RealtimePath = @"SOFTWARE\Microsoft\Windows Defender\Real-Time Protection";

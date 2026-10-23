@@ -330,5 +330,22 @@
 
   "Svc.DelayedAuto": "延遲自動",
 
-  "Startup.ConfirmDelete": "將刪除啟動項目「{0}」，刪除後程式不再隨系統啟動。"
+  "Startup.ConfirmDelete": "將刪除啟動項目「{0}」，刪除後程式不再隨系統啟動。",
+
+  "Sec.Group.Virus": "病毒防護",
+  "Sec.Group.Attack": "攻擊面防護",
+  "Sec.Group.System": "系統安全",
+  "Sec.Group.Firewall": "防火牆",
+  "Sec.Cloud": "雲端保護",
+  "Sec.ScriptScan": "指令碼掃描",
+  "Sec.Pua": "潛在不受歡迎應用程式",
+  "Sec.NetworkProtection": "網路保護",
+  "Sec.FolderAccess": "受控資料夾存取",
+  "Sec.Hvci": "核心隔離（記憶體完整性）",
+  "Sec.Uac": "使用者帳戶控制",
+  "Sec.SmartScreen": "SmartScreen 應用程式篩選",
+  "Sec.FirewallDomain": "網域網路防火牆",
+  "Sec.FirewallPrivate": "私人網路防火牆",
+  "Sec.FirewallPublic": "公用網路防火牆",
+  "Sec.NotSupported": "目前系統不支援此項目"
 }

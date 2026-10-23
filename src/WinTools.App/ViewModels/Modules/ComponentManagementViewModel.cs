@@ -27,10 +27,9 @@ public sealed partial class SecurityCenterSectionViewModel : ListSectionViewMode
     public SecurityCenterSectionViewModel(ISecurityService security)
     {
         _security = security;
-        HasPrimary = true;
-        PrimaryLabel = Loc.T("Sec.EnableRealtime");
-        HasSecondary = true;
-        SecondaryLabel = Loc.T("Sec.DisableRealtime");
+        HasSearch = true;
+
+        // 排除项仍在行内输入；开关型设置集中在列表里
         HasInput = true;
         InputLabel = Loc.T("Sec.ExclusionPath");
         _ = ReloadAsync();
@@ -39,33 +38,30 @@ public sealed partial class SecurityCenterSectionViewModel : ListSectionViewMode
     protected override async Task LoadAsync(CancellationToken cancellationToken)
     {
         var status = await _security.GetAsync(cancellationToken).ConfigureAwait(true);
+        var settings = await _security.GetSettingsAsync(cancellationToken).ConfigureAwait(true);
 
         Rows.Clear();
-        Rows.Add(StateRow("realtime", Loc.T("Sec.RealTime"), status.RealTimeEnabled));
-        Rows.Add(StateRow("behavior", Loc.T("Sec.Behavior"), status.BehaviorMonitorEnabled));
-        Rows.Add(StateRow("tamper", Loc.T("Sec.Tamper"), status.TamperProtection));
-        Rows.Add(new RowItem("av", Loc.T("Sec.Antivirus"), status.AntivirusProduct ?? Loc.T("Common.None")));
-        Rows.Add(new RowItem("engine", Loc.T("Sec.Engine"), status.EngineVersion ?? Loc.T("Common.None")));
+
+        await LoadSettingsAsync(settings, cancellationToken).ConfigureAwait(true);
+
+        // 只读信息：杀毒产品与引擎版本
+        Rows.Add(new RowItem("av", Loc.T("Sec.Antivirus"), Loc.T("Sec.Group.Virus"),
+            status.AntivirusProduct ?? Loc.T("Common.None")));
+        Rows.Add(new RowItem("engine", Loc.T("Sec.Engine"), Loc.T("Sec.Group.Virus"),
+            status.EngineVersion ?? Loc.T("Common.None")));
 
         foreach (var exclusion in status.Exclusions)
         {
-            var row = new RowItem("ex:" + exclusion, exclusion, Loc.T("Sec.Exclusions"), null, null, RowTone.Neutral);
+            var row = new RowItem("ex:" + exclusion, exclusion, Loc.T("Sec.Exclusions"),
+                null, null, RowTone.Neutral);
             row.ShowAction = true;
             row.ActionLabel = Loc.T("Common.Remove");
             row.ActionCommand = new AsyncRelayCommand(() => RemoveAsync(exclusion));
             Rows.Add(row);
         }
 
-        Status = Loc.F("Common.TotalCount", status.Exclusions.Count);
+        Status = string.Empty;
     }
-
-    private static RowItem StateRow(string key, string title, bool on) => new(
-        key,
-        title,
-        on ? Loc.T("Common.Enabled") : Loc.T("Common.Disabled"),
-        null,
-        on ? Loc.T("Common.Enabled") : Loc.T("Common.Disabled"),
-        on ? RowTone.Success : RowTone.Warning);
 
     private async Task RemoveAsync(string path)
     {
@@ -73,21 +69,8 @@ public sealed partial class SecurityCenterSectionViewModel : ListSectionViewMode
         {
             var result = await _security.RemoveExclusionAsync(path, ct).ConfigureAwait(true);
             Report(result);
-            await LoadAsync(ct).ConfigureAwait(true);
+            await RefreshQuietlyAsync(ct).ConfigureAwait(true);
         }).ConfigureAwait(true);
-    }
-
-    protected override async Task PrimaryCoreAsync(CancellationToken cancellationToken)
-        => await SetRealTimeAsync(true, cancellationToken).ConfigureAwait(true);
-
-    protected override async Task SecondaryCoreAsync(CancellationToken cancellationToken)
-        => await SetRealTimeAsync(false, cancellationToken).ConfigureAwait(true);
-
-    private async Task SetRealTimeAsync(bool enabled, CancellationToken cancellationToken)
-    {
-        var result = await _security.SetRealTimeAsync(enabled, cancellationToken).ConfigureAwait(true);
-        Report(result);
-        await LoadAsync(cancellationToken).ConfigureAwait(true);
     }
 
     protected override async Task InputCoreAsync(CancellationToken cancellationToken)
@@ -104,7 +87,7 @@ public sealed partial class SecurityCenterSectionViewModel : ListSectionViewMode
         if (result.Success)
         {
             InputText = string.Empty;
-            await LoadAsync(cancellationToken).ConfigureAwait(true);
+            await RefreshQuietlyAsync(cancellationToken).ConfigureAwait(true);
         }
     }
 }

@@ -270,5 +270,22 @@
 
   "Svc.DelayedAuto": "Automatico (ritardato)",
 
-  "Startup.ConfirmDelete": "La voce di avvio \"{0}\" verrà rimossa."
+  "Startup.ConfirmDelete": "La voce di avvio \"{0}\" verrà rimossa.",
+
+  "Sec.Group.Virus": "Protezione antivirus",
+  "Sec.Group.Attack": "Superficie di attacco",
+  "Sec.Group.System": "Sicurezza di sistema",
+  "Sec.Group.Firewall": "Firewall",
+  "Sec.Cloud": "Protezione cloud",
+  "Sec.ScriptScan": "Analisi script",
+  "Sec.Pua": "App indesiderate",
+  "Sec.NetworkProtection": "Protezione di rete",
+  "Sec.FolderAccess": "Accesso controllato alle cartelle",
+  "Sec.Hvci": "Isolamento del kernel (integrità memoria)",
+  "Sec.Uac": "Controllo account utente",
+  "Sec.SmartScreen": "SmartScreen per le app",
+  "Sec.FirewallDomain": "Firewall rete di dominio",
+  "Sec.FirewallPrivate": "Firewall rete privata",
+  "Sec.FirewallPublic": "Firewall rete pubblica",
+  "Sec.NotSupported": "Non supportato su questo sistema"
 }
