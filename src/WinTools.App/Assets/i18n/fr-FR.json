@@ -266,5 +266,9 @@
   "Flag.Reset": "Réinitialiser",
   "Flag.ResetConfirm": "Les {0} substitutions seront supprimées et les valeurs par défaut restaurées.",
   "Flag.Imported": "Importé",
-  "Flag.ResetDone": "Réinitialisation terminée"
+  "Flag.ResetDone": "Réinitialisation terminée",
+
+  "Svc.DelayedAuto": "Automatique (différé)",
+
+  "Startup.ConfirmDelete": "L'entrée de démarrage « {0} » va être supprimée."
 }

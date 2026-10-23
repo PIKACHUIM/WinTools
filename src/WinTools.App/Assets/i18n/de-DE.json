@@ -266,5 +266,9 @@
   "Flag.Reset": "Zurücksetzen",
   "Flag.ResetConfirm": "Alle {0} Overrides werden entfernt und die Systemstandards wiederhergestellt.",
   "Flag.Imported": "Importiert",
-  "Flag.ResetDone": "Zurückgesetzt"
+  "Flag.ResetDone": "Zurückgesetzt",
+
+  "Svc.DelayedAuto": "Automatisch (verzögert)",
+
+  "Startup.ConfirmDelete": "Der Autostart-Eintrag „{0}\" wird entfernt."
 }

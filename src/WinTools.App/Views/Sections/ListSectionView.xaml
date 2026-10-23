@@ -76,13 +76,22 @@
                            VerticalAlignment="Center" MaxWidth="240" TextTrimming="CharacterEllipsis"
                            Foreground="{DynamicResource App.Text.Secondary}" ToolTip="{Binding Detail}" />
 
-                <Button Grid.Column="5" Content="{Binding ActionLabel}" Style="{StaticResource GhostButton}"
+                <ComboBox Grid.Column="5" Width="104" Height="26" Margin="8,0,0,0" Padding="8,0"
+                          VerticalContentAlignment="Center" FontSize="11.5"
+                          ItemsSource="{Binding PickerItems}"
+                          SelectedItem="{Binding SelectedPicker, Mode=TwoWay}"
+                          Visibility="{Binding ShowPicker, Converter={StaticResource BoolToVisibility}}"
+                          Background="{DynamicResource App.SurfaceAlt}"
+                          Foreground="{DynamicResource App.Text.Primary}"
+                          BorderBrush="{DynamicResource App.Border}" />
+
+                <Button Grid.Column="6" Content="{Binding ActionLabel}" Style="{StaticResource GhostButton}"
                         Padding="12,5" Margin="8,0,0,0" VerticalAlignment="Center"
                         IsEnabled="{Binding IsActionEnabled}"
                         Command="{Binding ActionCommand}"
                         Visibility="{Binding ShowAction, Converter={StaticResource BoolToVisibility}}" />
 
-                <CheckBox Grid.Column="6" Style="{StaticResource AppSwitch}" Margin="14,0,2,0"
+                <CheckBox Grid.Column="7" Style="{StaticResource AppSwitch}" Margin="14,0,2,0"
                           VerticalAlignment="Center" IsChecked="{Binding IsOn, Mode=TwoWay}"
                           IsEnabled="{Binding IsToggleEnabled}"
                           Visibility="{Binding ShowToggle, Converter={StaticResource BoolToVisibility}}" />

@@ -266,5 +266,9 @@
   "Flag.Reset": "Reimposta",
   "Flag.ResetConfirm": "Verranno rimosse tutte le {0} sostituzioni e ripristinati i valori predefiniti.",
   "Flag.Imported": "Importato",
-  "Flag.ResetDone": "Ripristino completato"
+  "Flag.ResetDone": "Ripristino completato",
+
+  "Svc.DelayedAuto": "Automatico (ritardato)",
+
+  "Startup.ConfirmDelete": "La voce di avvio \"{0}\" verrà rimossa."
 }

@@ -266,5 +266,9 @@
   "Flag.Reset": "Restablecer",
   "Flag.ResetConfirm": "Se eliminarán las {0} sustituciones y se restaurarán los valores predeterminados.",
   "Flag.Imported": "Importado",
-  "Flag.ResetDone": "Restablecido"
+  "Flag.ResetDone": "Restablecido",
+
+  "Svc.DelayedAuto": "Automático (retrasado)",
+
+  "Startup.ConfirmDelete": "Se eliminará la entrada de inicio «{0}»."
 }

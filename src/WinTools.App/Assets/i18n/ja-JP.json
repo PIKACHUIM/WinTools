@@ -266,5 +266,9 @@
   "Flag.Reset": "リセット",
   "Flag.ResetConfirm": "{0} 件の上書きを削除し、システム既定に戻します。",
   "Flag.Imported": "インポートしました",
-  "Flag.ResetDone": "リセット完了"
+  "Flag.ResetDone": "リセット完了",
+
+  "Svc.DelayedAuto": "自動（遅延）",
+
+  "Startup.ConfirmDelete": "スタートアップ項目「{0}」を削除します。"
 }

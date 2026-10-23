@@ -266,5 +266,9 @@
   "Flag.Reset": "Redefinir",
   "Flag.ResetConfirm": "Todas as {0} substituições serão removidas e os padrões restaurados.",
   "Flag.Imported": "Importado",
-  "Flag.ResetDone": "Redefinição concluída"
+  "Flag.ResetDone": "Redefinição concluída",
+
+  "Svc.DelayedAuto": "Automático (atrasado)",
+
+  "Startup.ConfirmDelete": "A entrada de inicialização \"{0}\" será removida."
 }

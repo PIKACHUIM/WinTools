@@ -327,5 +327,9 @@
   "Flag.Reset": "Reset",
   "Flag.ResetConfirm": "All {0} overrides will be removed and the system defaults restored.",
   "Flag.Imported": "Imported",
-  "Flag.ResetDone": "Reset complete"
+  "Flag.ResetDone": "Reset complete",
+
+  "Svc.DelayedAuto": "Automatic (delayed)",
+
+  "Startup.ConfirmDelete": "The startup entry \"{0}\" will be removed."
 }

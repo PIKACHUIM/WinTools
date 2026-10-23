@@ -1,11 +1,12 @@
 using CommunityToolkit.Mvvm.Input;
 using WinTools.App.Localization;
+using WinTools.App.Services;
 using WinTools.Core.Abstractions;
 using WinTools.Core.Models;
 
 namespace WinTools.App.ViewModels.Modules;
 
-/// <summary>运行管理：启动项 / 计划任务 / 服务管理。</summary>
+/// <summary>运行管理：启动项 / 计划任务 / 服务。</summary>
 public sealed partial class RuntimeManagementViewModel : ModuleViewModelBase
 {
     public RuntimeManagementViewModel(
@@ -22,18 +23,15 @@ public sealed partial class RuntimeManagementViewModel : ModuleViewModelBase
     }
 }
 
-/// <summary>启动项：勾选态即启用态，应用后写入 StartupApproved。</summary>
+/// <summary>启动项：显示程序图标，开关直接启用/禁用（写 StartupApproved）。</summary>
 public sealed partial class StartupItemsSectionViewModel : ListSectionViewModel
 {
     private readonly IStartupItemService _startup;
-    private readonly Dictionary<string, bool> _original = new(StringComparer.OrdinalIgnoreCase);
 
     public StartupItemsSectionViewModel(IStartupItemService startup)
     {
         _startup = startup;
-        ShowCheckboxes = true;
-        HasPrimary = true;
-        PrimaryLabel = Loc.T("Common.Apply");
+        HasPrimary = false;
         _ = ReloadAsync();
     }
 
@@ -42,7 +40,6 @@ public sealed partial class StartupItemsSectionViewModel : ListSectionViewModel
         var items = await _startup.GetAsync(cancellationToken).ConfigureAwait(true);
 
         Rows.Clear();
-        _original.Clear();
 
         foreach (var item in items)
         {
@@ -56,52 +53,57 @@ public sealed partial class StartupItemsSectionViewModel : ListSectionViewModel
                 item.IsEnabled ? RowTone.Success : RowTone.Neutral)
             {
                 Tag = item,
+                IconSource = item.Command,
+                ShowIcon = true,
                 SearchBlob = $"{item.Name} {item.Command} {location}"
             };
 
-            row.ShowCheckbox = true;
-            row.IsChecked = item.IsEnabled;
+            // 启用/禁用一律用开关；删除仍留在行尾
+            row.ShowToggle = item.CanToggle;
+            row.SetOnSilently(item.IsEnabled);
+            row.ToggleHandler = (_, on) => SetEnabledAsync(item, on);
+
             row.ShowAction = true;
             row.ActionLabel = Loc.T("Common.Delete");
             row.ActionCommand = new AsyncRelayCommand(() => DeleteAsync(row, item));
 
-            _original[item.Id] = item.IsEnabled;
             Rows.Add(row);
         }
-
     }
 
-    protected override async Task PrimaryCoreAsync(CancellationToken cancellationToken)
+    private async Task<bool> SetEnabledAsync(StartupEntry entry, bool enabled)
     {
-        var changed = 0;
+        var ok = false;
 
-        foreach (var row in Rows)
+        await ExecuteAsync(async ct =>
         {
-            if (row.Tag is not StartupEntry entry)
+            var result = await _startup.SetEnabledAsync(entry, enabled, ct).ConfigureAwait(true);
+            Report(result);
+            ok = result.Success;
+
+            if (ok)
             {
-                continue;
+                await RefreshQuietlyAsync(ct).ConfigureAwait(true);
             }
+        }).ConfigureAwait(true);
 
-            if (_original.TryGetValue(entry.Id, out var was) && was == row.IsChecked)
-            {
-                continue;
-            }
-
-            var result = await _startup.SetEnabledAsync(entry, row.IsChecked, cancellationToken)
-                .ConfigureAwait(true);
-
-            if (result.Success)
-            {
-                changed++;
-            }
-        }
-
-        Status = changed == 0 ? Loc.T("Common.NothingSelected") : Loc.F("Common.TotalCount", changed);
-        await LoadAsync(cancellationToken).ConfigureAwait(true);
+        return ok;
     }
 
     private async Task DeleteAsync(RowItem row, StartupEntry entry)
     {
+        var confirmed = await UI.Confirm.AskAsync(new ConfirmRequest(
+            Loc.T("Common.Delete"),
+            Loc.F("Startup.ConfirmDelete", entry.Name),
+            [entry.Command],
+            Loc.T("Common.Delete"),
+            Danger: true)).ConfigureAwait(true);
+
+        if (!confirmed)
+        {
+            return;
+        }
+
         row.IsActionEnabled = false;
         await ExecuteAsync(async ct =>
         {
@@ -110,15 +112,14 @@ public sealed partial class StartupItemsSectionViewModel : ListSectionViewModel
 
             if (result.Success)
             {
-                await LoadAsync(ct).ConfigureAwait(true);
+                await RefreshQuietlyAsync(ct).ConfigureAwait(true);
             }
         }).ConfigureAwait(true);
-
         row.IsActionEnabled = true;
     }
 }
 
-/// <summary>计划任务：启用/禁用、立即运行、删除。</summary>
+/// <summary>计划任务：开关控制启用状态，行尾提供运行与删除。</summary>
 public sealed partial class ScheduledTasksSectionViewModel : ListSectionViewModel
 {
     private readonly IScheduledTaskService _tasks;
@@ -126,11 +127,8 @@ public sealed partial class ScheduledTasksSectionViewModel : ListSectionViewMode
     public ScheduledTasksSectionViewModel(IScheduledTaskService tasks)
     {
         _tasks = tasks;
-        ShowCheckboxes = true;
-        HasPrimary = true;
-        PrimaryLabel = Loc.T("Common.Run");
-        HasSecondary = true;
-        SecondaryLabel = Loc.T("Common.Delete");
+        HasPrimary = false;
+        HasSecondary = false;
         _ = ReloadAsync();
     }
 
@@ -139,6 +137,7 @@ public sealed partial class ScheduledTasksSectionViewModel : ListSectionViewMode
         var tasks = await _tasks.GetAsync(cancellationToken).ConfigureAwait(true);
 
         Rows.Clear();
+
         foreach (var task in tasks)
         {
             var row = new RowItem(
@@ -153,62 +152,50 @@ public sealed partial class ScheduledTasksSectionViewModel : ListSectionViewMode
                 SearchBlob = $"{task.Name} {task.Path} {task.Author}"
             };
 
-            row.ShowCheckbox = true;
+            row.ShowToggle = true;
+            row.SetOnSilently(task.IsEnabled);
+            row.ToggleHandler = (_, on) => SetEnabledAsync(task, on);
+
             row.ShowAction = true;
-            row.ActionLabel = task.IsEnabled ? Loc.T("Common.Disable") : Loc.T("Common.Enable");
-            row.ActionCommand = new AsyncRelayCommand(() => ToggleAsync(row, task));
+            row.ActionLabel = Loc.T("Common.Run");
+            row.ActionCommand = new AsyncRelayCommand(() => RunAsync(row, task));
+
             Rows.Add(row);
         }
-
     }
 
-    private async Task ToggleAsync(RowItem row, ScheduledTaskEntry entry)
+    private async Task<bool> SetEnabledAsync(ScheduledTaskEntry entry, bool enabled)
+    {
+        var ok = false;
+
+        await ExecuteAsync(async ct =>
+        {
+            var result = await _tasks.SetEnabledAsync(entry, enabled, ct).ConfigureAwait(true);
+            Report(result);
+            ok = result.Success;
+
+            if (ok)
+            {
+                await RefreshQuietlyAsync(ct).ConfigureAwait(true);
+            }
+        }).ConfigureAwait(true);
+
+        return ok;
+    }
+
+    private async Task RunAsync(RowItem row, ScheduledTaskEntry entry)
     {
         row.IsActionEnabled = false;
         await ExecuteAsync(async ct =>
         {
-            var result = await _tasks.SetEnabledAsync(entry, !entry.IsEnabled, ct).ConfigureAwait(true);
+            var result = await _tasks.RunAsync(entry, ct).ConfigureAwait(true);
             Report(result);
-
-            if (result.Success)
-            {
-                await LoadAsync(ct).ConfigureAwait(true);
-            }
         }).ConfigureAwait(true);
-
         row.IsActionEnabled = true;
-    }
-
-    protected override async Task PrimaryCoreAsync(CancellationToken cancellationToken)
-    {
-        var selected = CheckedRows;
-        foreach (var row in selected)
-        {
-            if (row.Tag is ScheduledTaskEntry entry)
-            {
-                await _tasks.RunAsync(entry, cancellationToken).ConfigureAwait(true);
-            }
-        }
-
-        Status = Loc.F("Common.TotalCount", selected.Count);
-    }
-
-    protected override async Task SecondaryCoreAsync(CancellationToken cancellationToken)
-    {
-        var selected = CheckedRows;
-        foreach (var row in selected)
-        {
-            if (row.Tag is ScheduledTaskEntry entry)
-            {
-                await _tasks.DeleteAsync(entry, cancellationToken).ConfigureAwait(true);
-            }
-        }
-
-        await LoadAsync(cancellationToken).ConfigureAwait(true);
     }
 }
 
-/// <summary>服务：状态、启停与启动类型调整。</summary>
+/// <summary>服务：开关控制运行/停止，行内下拉选择启动类型。</summary>
 public sealed partial class ServicesSectionViewModel : ListSectionViewModel
 {
     private readonly IWindowsServiceManager _services;
@@ -216,92 +203,118 @@ public sealed partial class ServicesSectionViewModel : ListSectionViewModel
     public ServicesSectionViewModel(IWindowsServiceManager services)
     {
         _services = services;
-        ShowCheckboxes = true;
-        HasPrimary = true;
-        PrimaryLabel = Loc.T("Svc.SetAuto");
-        HasSecondary = true;
-        SecondaryLabel = Loc.T("Svc.SetManual");
+        HasPrimary = false;
         _ = ReloadAsync();
     }
+
+    private static IReadOnlyList<string> StartTypeLabels =>
+    [
+        Loc.T("Svc.Auto"),
+        Loc.T("Svc.DelayedAuto"),
+        Loc.T("Svc.Manual"),
+        Loc.T("Svc.Disabled")
+    ];
 
     protected override async Task LoadAsync(CancellationToken cancellationToken)
     {
         var services = await _services.GetAsync(cancellationToken).ConfigureAwait(true);
 
         Rows.Clear();
+
         foreach (var service in services)
         {
-            var startType = service.StartType switch
-            {
-                "Auto" => Loc.T("Svc.Auto"),
-                "Manual" => Loc.T("Svc.Manual"),
-                "Disabled" => Loc.T("Svc.Disabled"),
-                _ => service.StartType
-            };
-
-            var running = service.Status.Equals("Running", StringComparison.OrdinalIgnoreCase);
-            var stateText = running ? Loc.T("Svc.Running") : Loc.T("Svc.Stopped");
+            var running = string.Equals(service.Status, "Running", StringComparison.OrdinalIgnoreCase);
 
             var row = new RowItem(
                 service.Name,
                 service.DisplayName,
-                service.Name + " · " + startType,
-                null,
-                stateText,
+                service.Name,
+                service.Description,
+                service.Status,
                 running ? RowTone.Success : RowTone.Neutral)
             {
                 Tag = service,
-                SearchBlob = $"{service.Name} {service.DisplayName} {service.Description}"
+                SearchBlob = $"{service.DisplayName} {service.Name} {service.Description}"
             };
 
-            row.ShowCheckbox = true;
-            row.ShowAction = service.CanStop || !running;
-            row.ActionLabel = running ? Loc.T("Common.Stop") : Loc.T("Common.Start");
-            row.ActionCommand = new AsyncRelayCommand(() => ToggleAsync(row, service, running));
+            // 开关 = 运行 / 停止
+            row.ShowToggle = true;
+            row.SetOnSilently(running);
+            row.ToggleHandler = (_, on) => ToggleRunningAsync(service, on);
+
+            // 启动类型：行内下拉
+            row.ShowPicker = true;
+            row.SetPickerItems(StartTypeLabels);
+            row.SetPickerSilently(LabelOf(service.StartType));
+            row.PickerHandler = (_, label) => SetStartTypeAsync(service, label);
+
             Rows.Add(row);
         }
-
     }
 
-    private async Task ToggleAsync(RowItem row, WindowsServiceEntry entry, bool running)
+    private static string LabelOf(string startType) => startType switch
     {
-        row.IsActionEnabled = false;
+        "Auto" => Loc.T("Svc.Auto"),
+        "DelayedAuto" => Loc.T("Svc.DelayedAuto"),
+        "Manual" => Loc.T("Svc.Manual"),
+        "Disabled" => Loc.T("Svc.Disabled"),
+        _ => startType
+    };
+
+    private static string ValueOf(string label)
+    {
+        if (label == Loc.T("Svc.Auto"))
+        {
+            return "Auto";
+        }
+
+        if (label == Loc.T("Svc.DelayedAuto"))
+        {
+            return "DelayedAuto";
+        }
+
+        return label == Loc.T("Svc.Disabled") ? "Disabled" : "Manual";
+    }
+
+    private async Task<bool> ToggleRunningAsync(WindowsServiceEntry entry, bool start)
+    {
+        var ok = false;
+
         await ExecuteAsync(async ct =>
         {
-            var result = running
-                ? await _services.StopAsync(entry, ct).ConfigureAwait(true)
-                : await _services.StartAsync(entry, ct).ConfigureAwait(true);
+            var result = start
+                ? await _services.StartAsync(entry, ct).ConfigureAwait(true)
+                : await _services.StopAsync(entry, ct).ConfigureAwait(true);
 
             Report(result);
-            await LoadAsync(ct).ConfigureAwait(true);
+            ok = result.Success;
+
+            if (ok)
+            {
+                await RefreshQuietlyAsync(ct).ConfigureAwait(true);
+            }
         }).ConfigureAwait(true);
 
-        row.IsActionEnabled = true;
+        return ok;
     }
 
-    protected override async Task PrimaryCoreAsync(CancellationToken cancellationToken)
-        => await SetStartTypeAsync("Auto", cancellationToken).ConfigureAwait(true);
-
-    protected override async Task SecondaryCoreAsync(CancellationToken cancellationToken)
-        => await SetStartTypeAsync("Manual", cancellationToken).ConfigureAwait(true);
-
-    private async Task SetStartTypeAsync(string startType, CancellationToken cancellationToken)
+    private async Task<bool> SetStartTypeAsync(WindowsServiceEntry entry, string label)
     {
-        var selected = CheckedRows;
-        if (selected.Count == 0)
-        {
-            Status = Loc.T("Common.NothingSelected");
-            return;
-        }
+        var ok = false;
+        var value = ValueOf(label);
 
-        foreach (var row in selected)
+        await ExecuteAsync(async ct =>
         {
-            if (row.Tag is WindowsServiceEntry entry)
+            var result = await _services.SetStartTypeAsync(entry, value, ct).ConfigureAwait(true);
+            Report(result);
+            ok = result.Success;
+
+            if (ok)
             {
-                await _services.SetStartTypeAsync(entry, startType, cancellationToken).ConfigureAwait(true);
+                await RefreshQuietlyAsync(ct).ConfigureAwait(true);
             }
-        }
+        }).ConfigureAwait(true);
 
-        await LoadAsync(cancellationToken).ConfigureAwait(true);
+        return ok;
     }
 }

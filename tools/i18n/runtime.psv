@@ -1,0 +1,4 @@
+# 运行管理补充
+key|zh-Hans|zh-Hant|en-US|ja-JP|ko-KR|de-DE|fr-FR|es-ES|pt-BR|it-IT|ru-RU|ar-SA
+Svc.DelayedAuto|延迟自动|延遲自動|Automatic (delayed)|自動（遅延）|자동(지연)|Automatisch (verzögert)|Automatique (différé)|Automático (retrasado)|Automático (atrasado)|Automatico (ritardato)|Автоматически (отложенно)|تلقائي (مؤجل)
+Startup.ConfirmDelete|将删除启动项「{0}」，删除后程序不再随系统启动。|將刪除啟動項目「{0}」，刪除後程式不再隨系統啟動。|The startup entry "{0}" will be removed.|スタートアップ項目「{0}」を削除します。|시작 항목 "{0}"을(를) 삭제합니다.|Der Autostart-Eintrag „{0}" wird entfernt.|L'entrée de démarrage « {0} » va être supprimée.|Se eliminará la entrada de inicio «{0}».|A entrada de inicialização "{0}" será removida.|La voce di avvio "{0}" verrà rimossa.|Элемент автозапуска «{0}» будет удалён.|ستتم إزالة عنصر بدء التشغيل "{0}".

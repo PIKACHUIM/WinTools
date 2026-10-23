@@ -327,5 +327,9 @@
   "Flag.Reset": "重置",
   "Flag.ResetConfirm": "将删除全部 {0} 项功能覆盖，恢复系统默认行为。",
   "Flag.Imported": "已导入",
-  "Flag.ResetDone": "已重置"
+  "Flag.ResetDone": "已重置",
+
+  "Svc.DelayedAuto": "延迟自动",
+
+  "Startup.ConfirmDelete": "将删除启动项「{0}」，删除后程序不再随系统启动。"
 }

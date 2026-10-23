@@ -266,5 +266,9 @@
   "Flag.Reset": "초기화",
   "Flag.ResetConfirm": "모든 {0}개 재정의를 삭제하고 시스템 기본값으로 되돌립니다.",
   "Flag.Imported": "가져왔습니다",
-  "Flag.ResetDone": "초기화 완료"
+  "Flag.ResetDone": "초기화 완료",
+
+  "Svc.DelayedAuto": "자동(지연)",
+
+  "Startup.ConfirmDelete": "시작 항목 \"{0}\"을(를) 삭제합니다."
 }

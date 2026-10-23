@@ -238,4 +238,72 @@ public sealed partial class RowItem : ObservableObject
 
         return "·";
     }
-}
+
+    // ---- 行内下拉（服务的启动类型）----
+
+    [ObservableProperty]
+    private bool _showPicker;
+
+    public IReadOnlyList<string> PickerItems { get; private set; } = [];
+
+    /// <summary>填充下拉候选（需要在行创建之后设置）。</summary>
+    public void SetPickerItems(IReadOnlyList<string> items) => PickerItems = items;
+
+    [ObservableProperty]
+    private string? _selectedPicker;
+
+    private bool _pickerSilent;
+    private string? _committedPicker;
+
+    /// <summary>用户改下拉时调用；返回 false 表示失败并回退到原值。</summary>
+    public Func<RowItem, string, Task<bool>>? PickerHandler { get; set; }
+
+    /// <summary>程序同步状态时使用，不触发 <see cref="PickerHandler"/>。</summary>
+    public void SetPickerSilently(string? value)
+    {
+        _pickerSilent = true;
+        try
+        {
+            SelectedPicker = value;
+            _committedPicker = value;
+        }
+        finally
+        {
+            _pickerSilent = false;
+        }
+    }
+
+    partial void OnSelectedPickerChanged(string? value)
+    {
+        if (_pickerSilent || PickerHandler is null || string.IsNullOrWhiteSpace(value))
+        {
+            return;
+        }
+
+        _ = RunPickerAsync(value);
+    }
+
+    private async Task RunPickerAsync(string value)
+    {
+        var ok = false;
+
+        try
+        {
+            ok = await PickerHandler!(this, value).ConfigureAwait(true);
+        }
+        catch
+        {
+            ok = false;
+        }
+        finally
+        {
+            if (ok)
+            {
+                _committedPicker = value;
+            }
+            else
+            {
+                SetPickerSilently(_committedPicker);
+            }
+        }
+    }}

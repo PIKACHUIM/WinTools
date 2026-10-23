@@ -326,5 +326,9 @@
   "Flag.Reset": "重設",
   "Flag.ResetConfirm": "將刪除全部 {0} 項功能覆寫，恢復系統預設行為。",
   "Flag.Imported": "已匯入",
-  "Flag.ResetDone": "已重設"
+  "Flag.ResetDone": "已重設",
+
+  "Svc.DelayedAuto": "延遲自動",
+
+  "Startup.ConfirmDelete": "將刪除啟動項目「{0}」，刪除後程式不再隨系統啟動。"
 }
