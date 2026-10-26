@@ -1,202 +1,3279 @@
 [
-  {
-    "id": "sync-settings-off",
-    "group": "Privacy",
-    "recommended": true,
-    "name": { "zh-Hans": "关闭设置同步", "en-US": "Disable settings sync" },
-    "description": { "zh-Hans": "不同步主题、密码与语言偏好到微软账户。", "en-US": "Stop syncing theme, passwords and language preferences." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync", "name": "DisableSettingSync", "kind": "DWord", "value": "2" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync", "name": "DisableSettingSync", "kind": "DWord", "value": "2" }, { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync", "name": "DisableSettingSyncUserOverride", "kind": "DWord", "value": "1" } ],
-    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync", "name": "DisableSettingSync" }, { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync", "name": "DisableSettingSyncUserOverride" } ]
-  },
-  {
-    "id": "cloud-clipboard-off",
-    "group": "Privacy",
-    "recommended": true,
-    "name": { "zh-Hans": "关闭云剪贴板同步", "en-US": "Disable cloud clipboard" },
-    "description": { "zh-Hans": "剪贴板内容不再跨设备同步上传。", "en-US": "Stop clipboard history from syncing across devices." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "AllowCrossDeviceClipboard", "kind": "DWord", "value": "0" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "AllowCrossDeviceClipboard", "kind": "DWord", "value": "0" } ],
-    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "AllowCrossDeviceClipboard" } ]
-  },
-  {
-    "id": "app-launch-tracking-off",
-    "group": "Privacy",
-    "recommended": true,
-    "name": { "zh-Hans": "关闭应用启动跟踪", "en-US": "Disable app launch tracking" },
-    "description": { "zh-Hans": "不再记录你启动了哪些应用来改进开始菜单。", "en-US": "Stop tracking app launches used to tune Start." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_TrackProgs", "kind": "DWord", "value": "0" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_TrackProgs", "kind": "DWord", "value": "0" } ],
-    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_TrackProgs", "kind": "DWord", "value": "1" } ]
-  },
-  {
-    "id": "speech-online-off",
-    "group": "Privacy",
-    "recommended": false,
-    "name": { "zh-Hans": "关闭在线语音识别", "en-US": "Disable online speech recognition" },
-    "description": { "zh-Hans": "语音输入改由本机处理，部分语种识别率会下降。", "en-US": "Speech input is processed locally only." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy", "name": "HasAccepted", "kind": "DWord", "value": "0" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy", "name": "HasAccepted", "kind": "DWord", "value": "0" } ],
-    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy", "name": "HasAccepted" } ]
-  },
-  {
-    "id": "visual-effects-performance",
-    "group": "Performance",
-    "recommended": false,
-    "name": { "zh-Hans": "视觉效果优先性能", "en-US": "Visual effects: best performance" },
-    "description": { "zh-Hans": "关闭窗口动画与阴影，界面响应更快，观感更朴素。", "en-US": "Disable animations and shadows for snappier UI." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects", "name": "VisualFXSetting", "kind": "DWord", "value": "2" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects", "name": "VisualFXSetting", "kind": "DWord", "value": "2" } ],
-    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects", "name": "VisualFXSetting", "kind": "DWord", "value": "0" } ]
-  },
-  {
-    "id": "power-throttling-off",
-    "group": "Performance",
-    "recommended": false,
-    "name": { "zh-Hans": "关闭电源节流", "en-US": "Disable power throttling" },
-    "description": { "zh-Hans": "阻止后台程序被系统降压降频，可能增加耗电与发热。", "en-US": "Stop the OS from throttling background work; may raise power draw." },
-    "risk": "Medium",
-    "requiresRestart": true,
-    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling", "name": "PowerThrottlingOff", "kind": "DWord", "value": "1" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling", "name": "PowerThrottlingOff", "kind": "DWord", "value": "1" } ],
-    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling", "name": "PowerThrottlingOff" } ]
-  },
-  {
-    "id": "boot-menu-timeout-3",
-    "group": "Boot",
-    "recommended": false,
-    "name": { "zh-Hans": "启动菜单等待时间改为 3 秒", "en-US": "Boot menu timeout to 3 seconds" },
-    "description": { "zh-Hans": "多系统时缩短选择等待时间，单系统无影响。", "en-US": "Shorten the boot menu wait when dual-booting." },
-    "risk": "Low",
-    "requiresRestart": true,
-    "detect": [ { "type": "Command", "fileName": "bcdedit", "arguments": "/timeout 3" } ],
-    "apply": [ { "type": "Command", "fileName": "bcdedit", "arguments": "/timeout 3" } ],
-    "revert": [ { "type": "Command", "fileName": "bcdedit", "arguments": "/timeout 30" } ]
-  },
-  {
-    "id": "explorer-quick-access-off",
-    "group": "Explorer",
-    "recommended": false,
-    "name": { "zh-Hans": "关闭「最近使用」记录", "en-US": "Disable recent items" },
-    "description": { "zh-Hans": "资源管理器不再显示最近使用与常用文件夹。", "en-US": "Hide recent and frequent folders in Explorer." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer", "name": "ShowRecent", "kind": "DWord", "value": "0" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer", "name": "ShowRecent", "kind": "DWord", "value": "0" }, { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer", "name": "ShowFrequent", "kind": "DWord", "value": "0" } ],
-    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer", "name": "ShowRecent" }, { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer", "name": "ShowFrequent" } ]
-  },
-  {
-    "id": "explorer-title-full-path",
-    "group": "Explorer",
-    "recommended": false,
-    "name": { "zh-Hans": "标题栏显示完整路径", "en-US": "Show full path in title bar" },
-    "description": { "zh-Hans": "窗口标题显示完整目录，而不是只显示文件夹名。", "en-US": "Window titles show the full directory path." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState", "name": "FullPath", "kind": "DWord", "value": "1" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState", "name": "FullPath", "kind": "DWord", "value": "1" } ],
-    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState", "name": "FullPath", "kind": "DWord", "value": "0" } ]
-  },
-  {
-    "id": "autoplay-off",
-    "group": "Explorer",
-    "recommended": true,
-    "name": { "zh-Hans": "关闭自动播放", "en-US": "Disable AutoPlay" },
-    "description": { "zh-Hans": "插入 U 盘或光盘时不再自动弹窗运行。", "en-US": "No autorun prompt when media is inserted." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\AutoplayHandlers", "name": "DisableAutoplay", "kind": "DWord", "value": "1" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\AutoplayHandlers", "name": "DisableAutoplay", "kind": "DWord", "value": "1" } ],
-    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\AutoplayHandlers", "name": "DisableAutoplay" } ]
-  },
-  {
-    "id": "taskbar-align-left",
-    "group": "Taskbar",
-    "recommended": false,
-    "name": { "zh-Hans": "任务栏图标左对齐", "en-US": "Left-align taskbar icons" },
-    "description": { "zh-Hans": "回到 Windows 10 风格的左侧排列。", "en-US": "Classic left-aligned taskbar layout." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarAl", "kind": "DWord", "value": "0" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarAl", "kind": "DWord", "value": "0" } ],
-    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "TaskbarAl", "kind": "DWord", "value": "1" } ]
-  },
-  {
-    "id": "start-recommendations-off",
-    "group": "Taskbar",
-    "recommended": true,
-    "name": { "zh-Hans": "关闭开始菜单推荐项", "en-US": "Hide Start recommendations" },
-    "description": { "zh-Hans": "开始菜单不再显示推广与推荐内容。", "en-US": "Remove promoted and recommended items from Start." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_IrisRecommendations", "kind": "DWord", "value": "0" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_IrisRecommendations", "kind": "DWord", "value": "0" } ],
-    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_IrisRecommendations" } ]
-  },
-  {
-    "id": "taskbar-search-off",
-    "group": "Taskbar",
-    "recommended": false,
-    "name": { "zh-Hans": "隐藏任务栏搜索框", "en-US": "Hide taskbar search box" },
-    "description": { "zh-Hans": "只保留图标或完全隐藏，腾出任务栏空间。", "en-US": "Free up taskbar space by hiding the search box." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "SearchboxTaskbarMode", "kind": "DWord", "value": "0" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "SearchboxTaskbarMode", "kind": "DWord", "value": "0" } ],
-    "revert": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "SearchboxTaskbarMode", "kind": "DWord", "value": "1" } ]
-  },
-  {
-    "id": "autorun-off",
-    "group": "Security",
-    "recommended": true,
-    "name": { "zh-Hans": "禁用所有驱动器自动运行", "en-US": "Disable autorun on all drives" },
-    "description": { "zh-Hans": "阻止 U 盘中的 autorun 程序自动执行，降低感染风险。", "en-US": "Block autorun programs on removable drives." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer", "name": "NoDriveTypeAutoRun", "kind": "DWord", "value": "255" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer", "name": "NoDriveTypeAutoRun", "kind": "DWord", "value": "255" } ],
-    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer", "name": "NoDriveTypeAutoRun" } ]
-  },
-  {
-    "id": "remote-assistance-off",
-    "group": "Security",
-    "recommended": true,
-    "name": { "zh-Hans": "关闭远程协助邀请", "en-US": "Disable Remote Assistance" },
-    "description": { "zh-Hans": "不再接受远程协助邀请；远程桌面不受影响。", "en-US": "Reject Remote Assistance invitations (RDP unaffected)." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Remote Assistance", "name": "fAllowToGetHelp", "kind": "DWord", "value": "0" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Remote Assistance", "name": "fAllowToGetHelp", "kind": "DWord", "value": "0" } ],
-    "revert": [ { "type": "RegSet", "hive": "HKLM", "path": "SYSTEM\\CurrentControlSet\\Control\\Remote Assistance", "name": "fAllowToGetHelp", "kind": "DWord", "value": "1" } ]
-  },
-  {
-    "id": "llmnr-off",
-    "group": "Security",
-    "recommended": false,
-    "name": { "zh-Hans": "关闭 LLMNR 名称解析", "en-US": "Disable LLMNR" },
-    "description": { "zh-Hans": "避免局域网名称解析被利用；个别老设备按名字访问可能失效。", "en-US": "Harden name resolution; old LAN devices may stop resolving by name." },
-    "risk": "Medium",
-    "detect": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient", "name": "EnableMulticast", "kind": "DWord", "value": "0" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient", "name": "EnableMulticast", "kind": "DWord", "value": "0" } ],
-    "revert": [ { "type": "RegDeleteValue", "hive": "HKLM", "path": "SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient", "name": "EnableMulticast" } ]
-  },
-  {
-    "id": "fullscreen-optimizations-off",
-    "group": "Gaming",
-    "recommended": false,
-    "name": { "zh-Hans": "关闭全屏优化", "en-US": "Disable fullscreen optimizations" },
-    "description": { "zh-Hans": "部分游戏可减少输入延迟，部分游戏反而更卡。", "en-US": "May reduce input lag in some games." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "System\\GameConfigStore", "name": "GameDVR_FSEBehaviorMode", "kind": "DWord", "value": "2" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "System\\GameConfigStore", "name": "GameDVR_FSEBehaviorMode", "kind": "DWord", "value": "2" } ],
-    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "System\\GameConfigStore", "name": "GameDVR_FSEBehaviorMode" } ]
-  },
-  {
-    "id": "game-bar-shortcut-off",
-    "group": "Gaming",
-    "recommended": false,
-    "name": { "zh-Hans": "关闭 Xbox Game Bar 快捷键", "en-US": "Disable Game Bar hotkey" },
-    "description": { "zh-Hans": "避免游戏中误触 Win+G 弹出录制面板。", "en-US": "Prevent Win+G from opening the overlay mid-game." },
-    "risk": "Low",
-    "detect": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\GameBar", "name": "UseNexusForGameBarEnabled", "kind": "DWord", "value": "0" } ],
-    "apply": [ { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\GameBar", "name": "UseNexusForGameBarEnabled", "kind": "DWord", "value": "0" }, { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR", "name": "AppCaptureEnabled", "kind": "DWord", "value": "0" } ],
-    "revert": [ { "type": "RegDeleteValue", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\GameBar", "name": "UseNexusForGameBarEnabled" }, { "type": "RegSet", "hive": "HKCU", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR", "name": "AppCaptureEnabled", "kind": "DWord", "value": "1" } ]
-  }
+    {
+        "id":  "sync-settings-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭设置同步",
+                     "en-US":  "Disable settings sync"
+                 },
+        "description":  {
+                            "zh-Hans":  "不同步主题、密码与语言偏好到微软账户。",
+                            "en-US":  "Stop syncing theme, passwords and language preferences."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync",
+                           "name":  "DisableSettingSync",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync",
+                          "name":  "DisableSettingSync",
+                          "kind":  "DWord",
+                          "value":  "2"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync",
+                          "name":  "DisableSettingSyncUserOverride",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync",
+                           "name":  "DisableSettingSync"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync",
+                           "name":  "DisableSettingSyncUserOverride"
+                       }
+                   ]
+    },
+    {
+        "id":  "cloud-clipboard-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭云剪贴板同步",
+                     "en-US":  "Disable cloud clipboard"
+                 },
+        "description":  {
+                            "zh-Hans":  "剪贴板内容不再跨设备同步上传。",
+                            "en-US":  "Stop clipboard history from syncing across devices."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+                           "name":  "AllowCrossDeviceClipboard",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+                          "name":  "AllowCrossDeviceClipboard",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+                           "name":  "AllowCrossDeviceClipboard"
+                       }
+                   ]
+    },
+    {
+        "id":  "app-launch-tracking-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭应用启动跟踪",
+                     "en-US":  "Disable app launch tracking"
+                 },
+        "description":  {
+                            "zh-Hans":  "不再记录你启动了哪些应用来改进开始菜单。",
+                            "en-US":  "Stop tracking app launches used to tune Start."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "Start_TrackProgs",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "Start_TrackProgs",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "Start_TrackProgs",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ]
+    },
+    {
+        "id":  "speech-online-off",
+        "group":  "Privacy",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭在线语音识别",
+                     "en-US":  "Disable online speech recognition"
+                 },
+        "description":  {
+                            "zh-Hans":  "语音输入改由本机处理，部分语种识别率会下降。",
+                            "en-US":  "Speech input is processed locally only."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy",
+                           "name":  "HasAccepted",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy",
+                          "name":  "HasAccepted",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy",
+                           "name":  "HasAccepted"
+                       }
+                   ]
+    },
+    {
+        "id":  "visual-effects-performance",
+        "group":  "Performance",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "视觉效果优先性能",
+                     "en-US":  "Visual effects: best performance"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭窗口动画与阴影，界面响应更快，观感更朴素。",
+                            "en-US":  "Disable animations and shadows for snappier UI."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects",
+                           "name":  "VisualFXSetting",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects",
+                          "name":  "VisualFXSetting",
+                          "kind":  "DWord",
+                          "value":  "2"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects",
+                           "name":  "VisualFXSetting",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ]
+    },
+    {
+        "id":  "power-throttling-off",
+        "group":  "Performance",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭电源节流",
+                     "en-US":  "Disable power throttling"
+                 },
+        "description":  {
+                            "zh-Hans":  "阻止后台程序被系统降压降频，可能增加耗电与发热。",
+                            "en-US":  "Stop the OS from throttling background work; may raise power draw."
+                        },
+        "risk":  "Medium",
+        "requiresRestart":  true,
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
+                           "name":  "PowerThrottlingOff",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
+                          "name":  "PowerThrottlingOff",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
+                           "name":  "PowerThrottlingOff"
+                       }
+                   ]
+    },
+    {
+        "id":  "explorer-quick-access-off",
+        "group":  "Explorer",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭「最近使用」记录",
+                     "en-US":  "Disable recent items"
+                 },
+        "description":  {
+                            "zh-Hans":  "资源管理器不再显示最近使用与常用文件夹。",
+                            "en-US":  "Hide recent and frequent folders in Explorer."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+                           "name":  "ShowRecent",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+                          "name":  "ShowRecent",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+                          "name":  "ShowFrequent",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+                           "name":  "ShowRecent"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+                           "name":  "ShowFrequent"
+                       }
+                   ]
+    },
+    {
+        "id":  "explorer-title-full-path",
+        "group":  "Explorer",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "标题栏显示完整路径",
+                     "en-US":  "Show full path in title bar"
+                 },
+        "description":  {
+                            "zh-Hans":  "窗口标题显示完整目录，而不是只显示文件夹名。",
+                            "en-US":  "Window titles show the full directory path."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState",
+                           "name":  "FullPath",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState",
+                          "name":  "FullPath",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\CabinetState",
+                           "name":  "FullPath",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ]
+    },
+    {
+        "id":  "autoplay-off",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭自动播放",
+                     "en-US":  "Disable AutoPlay"
+                 },
+        "description":  {
+                            "zh-Hans":  "插入 U 盘或光盘时不再自动弹窗运行。",
+                            "en-US":  "No autorun prompt when media is inserted."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\AutoplayHandlers",
+                           "name":  "DisableAutoplay",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\AutoplayHandlers",
+                          "name":  "DisableAutoplay",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\AutoplayHandlers",
+                           "name":  "DisableAutoplay"
+                       }
+                   ]
+    },
+    {
+        "id":  "taskbar-align-left",
+        "group":  "Taskbar",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "任务栏图标左对齐",
+                     "en-US":  "Left-align taskbar icons"
+                 },
+        "description":  {
+                            "zh-Hans":  "回到 Windows 10 风格的左侧排列。",
+                            "en-US":  "Classic left-aligned taskbar layout."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "TaskbarAl",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "TaskbarAl",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "TaskbarAl",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ]
+    },
+    {
+        "id":  "start-recommendations-off",
+        "group":  "Taskbar",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭开始菜单推荐项",
+                     "en-US":  "Hide Start recommendations"
+                 },
+        "description":  {
+                            "zh-Hans":  "开始菜单不再显示推广与推荐内容。",
+                            "en-US":  "Remove promoted and recommended items from Start."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "Start_IrisRecommendations",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "Start_IrisRecommendations",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "Start_IrisRecommendations"
+                       }
+                   ]
+    },
+    {
+        "id":  "autorun-off",
+        "group":  "Security",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "禁用所有驱动器自动运行",
+                     "en-US":  "Disable autorun on all drives"
+                 },
+        "description":  {
+                            "zh-Hans":  "阻止 U 盘中的 autorun 程序自动执行，降低感染风险。",
+                            "en-US":  "Block autorun programs on removable drives."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                           "name":  "NoDriveTypeAutoRun",
+                           "kind":  "DWord",
+                           "value":  "255"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                          "name":  "NoDriveTypeAutoRun",
+                          "kind":  "DWord",
+                          "value":  "255"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                           "name":  "NoDriveTypeAutoRun"
+                       }
+                   ]
+    },
+    {
+        "id":  "remote-assistance-off",
+        "group":  "Security",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭远程协助邀请",
+                     "en-US":  "Disable Remote Assistance"
+                 },
+        "description":  {
+                            "zh-Hans":  "不再接受远程协助邀请；远程桌面不受影响。",
+                            "en-US":  "Reject Remote Assistance invitations (RDP unaffected)."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\Remote Assistance",
+                           "name":  "fAllowToGetHelp",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Control\\Remote Assistance",
+                          "name":  "fAllowToGetHelp",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\Remote Assistance",
+                           "name":  "fAllowToGetHelp",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ]
+    },
+    {
+        "id":  "llmnr-off",
+        "group":  "Security",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭 LLMNR 名称解析",
+                     "en-US":  "Disable LLMNR"
+                 },
+        "description":  {
+                            "zh-Hans":  "避免局域网名称解析被利用；个别老设备按名字访问可能失效。",
+                            "en-US":  "Harden name resolution; old LAN devices may stop resolving by name."
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient",
+                           "name":  "EnableMulticast",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient",
+                          "name":  "EnableMulticast",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows NT\\DNSClient",
+                           "name":  "EnableMulticast"
+                       }
+                   ]
+    },
+    {
+        "id":  "fullscreen-optimizations-off",
+        "group":  "Gaming",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭全屏优化",
+                     "en-US":  "Disable fullscreen optimizations"
+                 },
+        "description":  {
+                            "zh-Hans":  "部分游戏可减少输入延迟，部分游戏反而更卡。",
+                            "en-US":  "May reduce input lag in some games."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "System\\GameConfigStore",
+                           "name":  "GameDVR_FSEBehaviorMode",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "System\\GameConfigStore",
+                          "name":  "GameDVR_FSEBehaviorMode",
+                          "kind":  "DWord",
+                          "value":  "2"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "System\\GameConfigStore",
+                           "name":  "GameDVR_FSEBehaviorMode"
+                       }
+                   ]
+    },
+    {
+        "id":  "game-bar-shortcut-off",
+        "group":  "Gaming",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭 Xbox Game Bar 快捷键",
+                     "en-US":  "Disable Game Bar hotkey"
+                 },
+        "description":  {
+                            "zh-Hans":  "避免游戏中误触 Win+G 弹出录制面板。",
+                            "en-US":  "Prevent Win+G from opening the overlay mid-game."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\GameBar",
+                           "name":  "UseNexusForGameBarEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\GameBar",
+                          "name":  "UseNexusForGameBarEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                          "name":  "AppCaptureEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\GameBar",
+                           "name":  "UseNexusForGameBarEnabled"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                           "name":  "AppCaptureEnabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ]
+    },
+    {
+        "id":  "activity-feed-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭活动历史",
+                     "en-US":  "Disable activity history"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭活动历史",
+                            "en-US":  "Disable activity history"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+                           "name":  "PublishUserActivities",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+                          "name":  "PublishUserActivities",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "activity-upload-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "停止上传活动记录",
+                     "en-US":  "Stop uploading activities"
+                 },
+        "description":  {
+                            "zh-Hans":  "停止上传活动记录",
+                            "en-US":  "Stop uploading activities"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+                           "name":  "UploadUserActivities",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+                          "name":  "UploadUserActivities",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "tailored-experiences-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭定制体验",
+                     "en-US":  "Disable tailored experiences"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭定制体验",
+                            "en-US":  "Disable tailored experiences"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+                           "name":  "TailoredExperiencesWithDiagnosticDataEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+                          "name":  "TailoredExperiencesWithDiagnosticDataEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "inking-personalization-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭手写数据收集",
+                     "en-US":  "Disable inking data collection"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭手写数据收集",
+                            "en-US":  "Disable inking data collection"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\InputPersonalization",
+                           "name":  "RestrictImplicitTextCollection",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\InputPersonalization",
+                          "name":  "RestrictImplicitTextCollection",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "ink-collection-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭墨迹收集",
+                     "en-US":  "Disable ink collection"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭墨迹收集",
+                            "en-US":  "Disable ink collection"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\InputPersonalization",
+                           "name":  "RestrictImplicitInkCollection",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\InputPersonalization",
+                          "name":  "RestrictImplicitInkCollection",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "camera-off",
+        "group":  "Privacy",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭相机",
+                     "en-US":  "Disable camera"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭相机",
+                            "en-US":  "Disable camera"
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors",
+                           "name":  "DisableCamera",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors",
+                          "name":  "DisableCamera",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "microphone-off",
+        "group":  "Privacy",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭麦克风",
+                     "en-US":  "Disable microphone"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭麦克风",
+                            "en-US":  "Disable microphone"
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors",
+                           "name":  "DisableMicrophone",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\LocationAndSensors",
+                          "name":  "DisableMicrophone",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "cloud-search-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭云端搜索",
+                     "en-US":  "Disable cloud search"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭云端搜索",
+                            "en-US":  "Disable cloud search"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+                           "name":  "AllowCloudSearch",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+                          "name":  "AllowCloudSearch",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "recall-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭召回快照",
+                     "en-US":  "Disable Recall snapshots"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭召回快照",
+                            "en-US":  "Disable Recall snapshots"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+                           "name":  "DisableAIDataAnalysis",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+                          "name":  "DisableAIDataAnalysis",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "suggested-apps-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭开始菜单推荐应用",
+                     "en-US":  "Disable suggested apps"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭开始菜单推荐应用",
+                            "en-US":  "Disable suggested apps"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                           "name":  "SubscribedContent-338388Enabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                          "name":  "SubscribedContent-338388Enabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "tips-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭使用提示",
+                     "en-US":  "Disable tips and suggestions"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭使用提示",
+                            "en-US":  "Disable tips and suggestions"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                           "name":  "SoftLandingEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                          "name":  "SoftLandingEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "lock-spotlight-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭锁屏聚焦",
+                     "en-US":  "Disable lock screen spotlight"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭锁屏聚焦",
+                            "en-US":  "Disable lock screen spotlight"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                           "name":  "RotatingLockScreenEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+                          "name":  "RotatingLockScreenEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "recent-docs-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "不记录最近文档",
+                     "en-US":  "Stop tracking recent documents"
+                 },
+        "description":  {
+                            "zh-Hans":  "不记录最近文档",
+                            "en-US":  "Stop tracking recent documents"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "Start_TrackDocs",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "Start_TrackDocs",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "wifi-sense-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 WiFi 感知",
+                     "en-US":  "Disable Wi-Fi Sense"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 WiFi 感知",
+                            "en-US":  "Disable Wi-Fi Sense"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\WcmSvc\\WiFiSense",
+                           "name":  "AutoConnectAllowedOEM",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Microsoft\\WcmSvc\\WiFiSense",
+                          "name":  "AutoConnectAllowedOEM",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "compact-mode-on",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "紧凑视图",
+                     "en-US":  "Compact view"
+                 },
+        "description":  {
+                            "zh-Hans":  "紧凑视图",
+                            "en-US":  "Compact view"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "UseCompactMode",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "UseCompactMode",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "taskview-off",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "隐藏任务视图",
+                     "en-US":  "Hide Task View button"
+                 },
+        "description":  {
+                            "zh-Hans":  "隐藏任务视图",
+                            "en-US":  "Hide Task View button"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "ShowTaskViewButton",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "ShowTaskViewButton",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "widgets-off",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "隐藏小组件",
+                     "en-US":  "Hide Widgets"
+                 },
+        "description":  {
+                            "zh-Hans":  "隐藏小组件",
+                            "en-US":  "Hide Widgets"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "TaskbarDa",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "TaskbarDa",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "chat-off",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "隐藏聊天",
+                     "en-US":  "Hide Chat"
+                 },
+        "description":  {
+                            "zh-Hans":  "隐藏聊天",
+                            "en-US":  "Hide Chat"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "TaskbarMn",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "TaskbarMn",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "people-off",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "隐藏人脉",
+                     "en-US":  "Hide People"
+                 },
+        "description":  {
+                            "zh-Hans":  "隐藏人脉",
+                            "en-US":  "Hide People"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "PeopleBand",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "PeopleBand",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "seconds-clock",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "任务栏显示秒",
+                     "en-US":  "Show seconds in clock"
+                 },
+        "description":  {
+                            "zh-Hans":  "任务栏显示秒",
+                            "en-US":  "Show seconds in clock"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "ShowSecondsInSystemClock",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "ShowSecondsInSystemClock",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "end-task-on",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "任务栏结束任务",
+                     "en-US":  "Enable End task"
+                 },
+        "description":  {
+                            "zh-Hans":  "任务栏结束任务",
+                            "en-US":  "Enable End task"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "TaskbarEndTask",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "TaskbarEndTask",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "battery-percent",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "显示电池百分比",
+                     "en-US":  "Show battery percentage"
+                 },
+        "description":  {
+                            "zh-Hans":  "显示电池百分比",
+                            "en-US":  "Show battery percentage"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "TaskbarBatteryPercent",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "TaskbarBatteryPercent",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "low-disk-warning-off",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭磁盘空间警告",
+                     "en-US":  "Disable low disk warnings"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭磁盘空间警告",
+                            "en-US":  "Disable low disk warnings"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                           "name":  "NoLowDiskSpaceChecks",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                          "name":  "NoLowDiskSpaceChecks",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "drive-letters-first",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "盘符显示在前",
+                     "en-US":  "Show drive letters first"
+                 },
+        "description":  {
+                            "zh-Hans":  "盘符显示在前",
+                            "en-US":  "Show drive letters first"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+                           "name":  "ShowDriveLettersFirst",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+                          "name":  "ShowDriveLettersFirst",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ]
+    },
+    {
+        "id":  "separate-process",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "资源管理器独立进程",
+                     "en-US":  "Run Explorer in its own process"
+                 },
+        "description":  {
+                            "zh-Hans":  "资源管理器独立进程",
+                            "en-US":  "Run Explorer in its own process"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "SeparateProcess",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "SeparateProcess",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "kill-timeout",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "加快服务关闭",
+                     "en-US":  "Faster service shutdown"
+                 },
+        "description":  {
+                            "zh-Hans":  "加快服务关闭",
+                            "en-US":  "Faster service shutdown"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Desktop",
+                           "name":  "WaitToKillServiceTimeout",
+                           "kind":  "String",
+                           "value":  "2000"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Desktop",
+                          "name":  "WaitToKillServiceTimeout",
+                          "kind":  "String",
+                          "value":  "2000"
+                      }
+                  ]
+    },
+    {
+        "id":  "transparency-off",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭透明效果",
+                     "en-US":  "Disable transparency"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭透明效果",
+                            "en-US":  "Disable transparency"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+                           "name":  "EnableTransparency",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+                          "name":  "EnableTransparency",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "animations-off",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭窗口动画",
+                     "en-US":  "Disable window animations"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭窗口动画",
+                            "en-US":  "Disable window animations"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Desktop\\WindowMetrics",
+                           "name":  "MinAnimate",
+                           "kind":  "String",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Desktop\\WindowMetrics",
+                          "name":  "MinAnimate",
+                          "kind":  "String",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "taskbar-animations-off",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭任务栏动画",
+                     "en-US":  "Disable taskbar animations"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭任务栏动画",
+                            "en-US":  "Disable taskbar animations"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "TaskbarAnimations",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "TaskbarAnimations",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "aero-shake-off",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭窗口抖动最小化",
+                     "en-US":  "Disable Aero Shake"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭窗口抖动最小化",
+                            "en-US":  "Disable Aero Shake"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "NoWindowMinimizingShortcuts",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "NoWindowMinimizingShortcuts",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "snap-assist-off",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭贴靠建议",
+                     "en-US":  "Disable Snap Assist suggestions"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭贴靠建议",
+                            "en-US":  "Disable Snap Assist suggestions"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "SnapAssist",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "SnapAssist",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "mouse-accel-off",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭鼠标加速",
+                     "en-US":  "Disable mouse acceleration"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭鼠标加速",
+                            "en-US":  "Disable mouse acceleration"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Mouse",
+                           "name":  "MouseSpeed",
+                           "kind":  "String",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Mouse",
+                          "name":  "MouseSpeed",
+                          "kind":  "String",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "scroll-lines",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "滚轮每次 3 行",
+                     "en-US":  "Scroll 3 lines per notch"
+                 },
+        "description":  {
+                            "zh-Hans":  "滚轮每次 3 行",
+                            "en-US":  "Scroll 3 lines per notch"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Desktop",
+                           "name":  "WheelScrollLines",
+                           "kind":  "String",
+                           "value":  "3"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Desktop",
+                          "name":  "WheelScrollLines",
+                          "kind":  "String",
+                          "value":  "3"
+                      }
+                  ]
+    },
+    {
+        "id":  "bsod-details",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "蓝屏显示详细信息",
+                     "en-US":  "Verbose blue screens"
+                 },
+        "description":  {
+                            "zh-Hans":  "蓝屏显示详细信息",
+                            "en-US":  "Verbose blue screens"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\CrashControl",
+                           "name":  "DisplayParameters",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Control\\CrashControl",
+                          "name":  "DisplayParameters",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "rdp-off",
+        "group":  "System",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭远程桌面",
+                     "en-US":  "Disable Remote Desktop"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭远程桌面",
+                            "en-US":  "Disable Remote Desktop"
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\Terminal Server",
+                           "name":  "fDenyTSConnections",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Control\\Terminal Server",
+                          "name":  "fDenyTSConnections",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "modern-standby-off",
+        "group":  "System",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭新式待机",
+                     "en-US":  "Disable modern standby"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭新式待机",
+                            "en-US":  "Disable modern standby"
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\Power",
+                           "name":  "PlatformAoAcOverride",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Control\\Power",
+                          "name":  "PlatformAoAcOverride",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "netbios-off",
+        "group":  "Network",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "禁用 NetBIOS",
+                     "en-US":  "Disable NetBIOS"
+                 },
+        "description":  {
+                            "zh-Hans":  "禁用 NetBIOS",
+                            "en-US":  "Disable NetBIOS"
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\NetBT\\Parameters\\Interfaces",
+                           "name":  "NetbiosOptions",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\NetBT\\Parameters\\Interfaces",
+                          "name":  "NetbiosOptions",
+                          "kind":  "DWord",
+                          "value":  "2"
+                      }
+                  ]
+    },
+    {
+        "id":  "wifi-sense-net-off",
+        "group":  "Network",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭热点共享",
+                     "en-US":  "Disable hosted network"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭热点共享",
+                            "en-US":  "Disable hosted network"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\WlanSvc\\AnqpCache",
+                           "name":  "OsuRegistrationEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Microsoft\\WlanSvc\\AnqpCache",
+                          "name":  "OsuRegistrationEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "driver-updates-off",
+        "group":  "Update",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "不随更新装驱动",
+                     "en-US":  "Exclude drivers from updates"
+                 },
+        "description":  {
+                            "zh-Hans":  "不随更新装驱动",
+                            "en-US":  "Exclude drivers from updates"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
+                           "name":  "ExcludeWUDriversInQualityUpdate",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
+                          "name":  "ExcludeWUDriversInQualityUpdate",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "defer-feature-updates",
+        "group":  "Update",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "推迟功能更新",
+                     "en-US":  "Defer feature updates"
+                 },
+        "description":  {
+                            "zh-Hans":  "推迟功能更新",
+                            "en-US":  "Defer feature updates"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
+                           "name":  "DeferFeatureUpdates",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
+                          "name":  "DeferFeatureUpdates",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "defer-quality-updates",
+        "group":  "Update",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "推迟质量更新",
+                     "en-US":  "Defer quality updates"
+                 },
+        "description":  {
+                            "zh-Hans":  "推迟质量更新",
+                            "en-US":  "Defer quality updates"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
+                           "name":  "DeferQualityUpdates",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
+                          "name":  "DeferQualityUpdates",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "no-auto-restart",
+        "group":  "Update",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "更新后不自动重启",
+                     "en-US":  "Do not auto-restart after updates"
+                 },
+        "description":  {
+                            "zh-Hans":  "更新后不自动重启",
+                            "en-US":  "Do not auto-restart after updates"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU",
+                           "name":  "NoAutoRebootWithLoggedOnUsers",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU",
+                          "name":  "NoAutoRebootWithLoggedOnUsers",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "update-notifications-off",
+        "group":  "Update",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭更新提示",
+                     "en-US":  "Disable update notifications"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭更新提示",
+                            "en-US":  "Disable update notifications"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU",
+                           "name":  "NoAutoUpdate",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU",
+                          "name":  "NoAutoUpdate",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "gamebar-off",
+        "group":  "Gaming",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭游戏栏",
+                     "en-US":  "Disable Game Bar"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭游戏栏",
+                            "en-US":  "Disable Game Bar"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\GameBar",
+                           "name":  "ShowStartupPanel",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\GameBar",
+                          "name":  "ShowStartupPanel",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "game-capture-off",
+        "group":  "Gaming",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭后台录制",
+                     "en-US":  "Disable background recording"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭后台录制",
+                            "en-US":  "Disable background recording"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                           "name":  "AppCaptureEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                          "name":  "AppCaptureEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "game-dvr-off",
+        "group":  "Gaming",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭游戏 DVR",
+                     "en-US":  "Disable Game DVR"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭游戏 DVR",
+                            "en-US":  "Disable Game DVR"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR",
+                           "name":  "AllowGameDVR",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR",
+                          "name":  "AllowGameDVR",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "game-mode-on",
+        "group":  "Gaming",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "启用游戏模式",
+                     "en-US":  "Enable Game Mode"
+                 },
+        "description":  {
+                            "zh-Hans":  "启用游戏模式",
+                            "en-US":  "Enable Game Mode"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\GameBar",
+                           "name":  "AutoGameModeEnabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\GameBar",
+                          "name":  "AutoGameModeEnabled",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "mouse-trails-off",
+        "group":  "Gaming",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭鼠标轨迹",
+                     "en-US":  "Disable mouse trails"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭鼠标轨迹",
+                            "en-US":  "Disable mouse trails"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Mouse",
+                           "name":  "MouseTrails",
+                           "kind":  "String",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Mouse",
+                          "name":  "MouseTrails",
+                          "kind":  "String",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "sticky-keys-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭粘滞键提示",
+                     "en-US":  "Disable Sticky Keys prompts"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭粘滞键提示",
+                            "en-US":  "Disable Sticky Keys prompts"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Accessibility\\StickyKeys",
+                           "name":  "Flags",
+                           "kind":  "String",
+                           "value":  "506"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Accessibility\\StickyKeys",
+                          "name":  "Flags",
+                          "kind":  "String",
+                          "value":  "506"
+                      }
+                  ]
+    },
+    {
+        "id":  "filter-keys-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭筛选键提示",
+                     "en-US":  "Disable Filter Keys prompts"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭筛选键提示",
+                            "en-US":  "Disable Filter Keys prompts"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Accessibility\\Keyboard Response",
+                           "name":  "Flags",
+                           "kind":  "String",
+                           "value":  "122"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Accessibility\\Keyboard Response",
+                          "name":  "Flags",
+                          "kind":  "String",
+                          "value":  "122"
+                      }
+                  ]
+    },
+    {
+        "id":  "toggle-keys-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭切换键提示",
+                     "en-US":  "Disable Toggle Keys prompts"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭切换键提示",
+                            "en-US":  "Disable Toggle Keys prompts"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Accessibility\\ToggleKeys",
+                           "name":  "Flags",
+                           "kind":  "String",
+                           "value":  "58"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Accessibility\\ToggleKeys",
+                          "name":  "Flags",
+                          "kind":  "String",
+                          "value":  "58"
+                      }
+                  ]
+    },
+    {
+        "id":  "screensaver-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "禁用屏保",
+                     "en-US":  "Disable screen saver"
+                 },
+        "description":  {
+                            "zh-Hans":  "禁用屏保",
+                            "en-US":  "Disable screen saver"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Desktop",
+                           "name":  "ScreenSaveActive",
+                           "kind":  "String",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Desktop",
+                          "name":  "ScreenSaveActive",
+                          "kind":  "String",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "auto-maintenance-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭自动维护",
+                     "en-US":  "Disable automatic maintenance"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭自动维护",
+                            "en-US":  "Disable automatic maintenance"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\Maintenance",
+                           "name":  "MaintenanceDisabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Schedule\\Maintenance",
+                          "name":  "MaintenanceDisabled",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "old-context-menu",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "经典右键菜单",
+                     "en-US":  "Classic context menu"
+                 },
+        "description":  {
+                            "zh-Hans":  "经典右键菜单",
+                            "en-US":  "Classic context menu"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32",
+                           "name":  "(Default)",
+                           "kind":  "String",
+                           "value":  ""
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32",
+                          "name":  "(Default)",
+                          "kind":  "String",
+                          "value":  ""
+                      }
+                  ]
+    },
+    {
+        "id":  "thumbnail-cache-off",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭缩略图缓存",
+                     "en-US":  "Disable thumbnail cache"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭缩略图缓存",
+                            "en-US":  "Disable thumbnail cache"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "DisableThumbnailCache",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "DisableThumbnailCache",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "edge-first-run-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "跳过 Edge 首次运行",
+                     "en-US":  "Skip Edge first run"
+                 },
+        "description":  {
+                            "zh-Hans":  "跳过 Edge 首次运行",
+                            "en-US":  "Skip Edge first run"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "HideFirstRunExperience",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "HideFirstRunExperience",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "edge-sidebar-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 Edge 侧边栏",
+                     "en-US":  "Disable Edge sidebar"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Edge 侧边栏",
+                            "en-US":  "Disable Edge sidebar"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "HubsSidebarEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "HubsSidebarEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "office-telemetry-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 Office 遥测",
+                     "en-US":  "Disable Office telemetry"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Office 遥测",
+                            "en-US":  "Disable Office telemetry"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Office\\Common\\ClientTelemetry",
+                           "name":  "DisableTelemetry",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Office\\Common\\ClientTelemetry",
+                          "name":  "DisableTelemetry",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "vs-telemetry-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 VS 遥测",
+                     "en-US":  "Disable Visual Studio telemetry"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 VS 遥测",
+                            "en-US":  "Disable Visual Studio telemetry"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\VisualStudio\\Telemetry",
+                           "name":  "DisableTelemetry",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\VisualStudio\\Telemetry",
+                          "name":  "DisableTelemetry",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "crash-dump-off",
+        "group":  "System",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭崩溃转储",
+                     "en-US":  "Disable crash dumps"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭崩溃转储",
+                            "en-US":  "Disable crash dumps"
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\CrashControl",
+                           "name":  "CrashDumpEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Control\\CrashControl",
+                          "name":  "CrashDumpEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "magnifier-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭放大镜启动",
+                     "en-US":  "Disable Magnifier at sign-in"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭放大镜启动",
+                            "en-US":  "Disable Magnifier at sign-in"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\ScreenMagnifier",
+                           "name":  "RunningState",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\ScreenMagnifier",
+                          "name":  "RunningState",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "narrator-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭讲述人启动",
+                     "en-US":  "Disable Narrator at sign-in"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭讲述人启动",
+                            "en-US":  "Disable Narrator at sign-in"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Narrator\\NoRoam",
+                           "name":  "RunningState",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Narrator\\NoRoam",
+                          "name":  "RunningState",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "store-auto-update-off",
+        "group":  "Update",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭商店自动更新",
+                     "en-US":  "Disable Store auto updates"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭商店自动更新",
+                            "en-US":  "Disable Store auto updates"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\WindowsStore",
+                           "name":  "AutoDownload",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\WindowsStore",
+                          "name":  "AutoDownload",
+                          "kind":  "DWord",
+                          "value":  "2"
+                      }
+                  ]
+    },
+    {
+        "id":  "onedrive-sync-off",
+        "group":  "Privacy",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭 OneDrive 文件同步",
+                     "en-US":  "Disable OneDrive file sync"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 OneDrive 文件同步",
+                            "en-US":  "Disable OneDrive file sync"
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\OneDrive",
+                           "name":  "DisableFileSyncNGSC",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\OneDrive",
+                          "name":  "DisableFileSyncNGSC",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "cortana-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 Cortana",
+                     "en-US":  "Disable Cortana"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Cortana",
+                            "en-US":  "Disable Cortana"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+                           "name":  "AllowCortana",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+                          "name":  "AllowCortana",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "pca-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭程序兼容助手",
+                     "en-US":  "Disable Program Compatibility Assistant"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭程序兼容助手",
+                            "en-US":  "Disable Program Compatibility Assistant"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\AppCompat",
+                           "name":  "DisablePCA",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\AppCompat",
+                          "name":  "DisablePCA",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "touch-feedback-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭触摸反馈音",
+                     "en-US":  "Disable touch feedback sounds"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭触摸反馈音",
+                            "en-US":  "Disable touch feedback sounds"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Cursors",
+                           "name":  "ContactVisualization",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Cursors",
+                          "name":  "ContactVisualization",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "defrag-notify-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭碎片整理通知",
+                     "en-US":  "Disable defrag notifications"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭碎片整理通知",
+                            "en-US":  "Disable defrag notifications"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\\Microsoft.Windows.Defrag",
+                           "name":  "Enabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\\Microsoft.Windows.Defrag",
+                          "name":  "Enabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "lock-camera-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "锁屏禁用相机",
+                     "en-US":  "Disable camera on lock screen"
+                 },
+        "description":  {
+                            "zh-Hans":  "锁屏禁用相机",
+                            "en-US":  "Disable camera on lock screen"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Lock Screen",
+                           "name":  "SlideshowEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Lock Screen",
+                          "name":  "SlideshowEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "wifi-hotspot-off",
+        "group":  "Network",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭移动热点",
+                     "en-US":  "Disable mobile hotspot"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭移动热点",
+                            "en-US":  "Disable mobile hotspot"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\WlanSvc\\AnqpCache",
+                           "name":  "EnableHostedNetwork",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Microsoft\\WlanSvc\\AnqpCache",
+                          "name":  "EnableHostedNetwork",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "fax-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭传真服务",
+                     "en-US":  "Disable Fax service"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭传真服务",
+                            "en-US":  "Disable Fax service"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Fax\\Devices",
+                           "name":  "ArchiveFolder",
+                           "kind":  "String",
+                           "value":  ""
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Microsoft\\Fax\\Devices",
+                          "name":  "ArchiveFolder",
+                          "kind":  "String",
+                          "value":  ""
+                      }
+                  ]
+    },
+    {
+        "id":  "smartscreen-on",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "开启 SmartScreen",
+                     "en-US":  "Enable SmartScreen"
+                 },
+        "description":  {
+                            "zh-Hans":  "开启 SmartScreen",
+                            "en-US":  "Enable SmartScreen"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+                           "name":  "SmartScreenEnabled",
+                           "kind":  "String",
+                           "value":  "Warn"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+                          "name":  "SmartScreenEnabled",
+                          "kind":  "String",
+                          "value":  "Warn"
+                      }
+                  ]
+    },
+    {
+        "id":  "lock-slideshow-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭锁屏幻灯片",
+                     "en-US":  "Disable lock screen slideshow"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭锁屏幻灯片",
+                            "en-US":  "Disable lock screen slideshow"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+                           "name":  "NoLockScreenSlideshow",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+                          "name":  "NoLockScreenSlideshow",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "taskbar-thumbnails-off",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭任务栏缩略图预览",
+                     "en-US":  "Disable taskbar thumbnail previews"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭任务栏缩略图预览",
+                            "en-US":  "Disable taskbar thumbnail previews"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                           "name":  "TaskbarNoThumbnail",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                          "name":  "TaskbarNoThumbnail",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "notifications-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭通知中心",
+                     "en-US":  "Disable notification center"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭通知中心",
+                            "en-US":  "Disable notification center"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
+                           "name":  "ToastEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
+                          "name":  "ToastEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    }
 ]
