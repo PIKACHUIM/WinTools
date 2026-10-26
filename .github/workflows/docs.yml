@@ -36,9 +36,6 @@ jobs:
 
       - name: 构建 VitePress
         run: npm run docs:build
-        env:
-          # GitHub Pages 项目站点地址为 https://<user>.github.io/WinTools/
-          DOCS_BASE: /WinTools/
 
       - uses: actions/configure-pages@v5
 

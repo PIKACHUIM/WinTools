@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitepress'
 
-// 部署路径。正式站点 https://wtools.opkg.cn/ 挂在域名根目录，所以默认 '/'
-// 若发布到 GitHub Pages 项目站点（/WinTools/），构建时设置环境变量 DOCS_BASE=/WinTools/
-const base = process.env.DOCS_BASE || '/'
+// 站点挂在自定义域名根目录：GitHub Pages 绑定 wtools.opkg.cn 后，
+// pikachuim.github.io/WinTools/ 会被 301 到根，所以 base 固定为 '/'，不要加 /WinTools/ 前缀
+const base = '/'
 const repo = 'https://github.com/PIKACHUIM/WinTools'
 
 export default defineConfig({

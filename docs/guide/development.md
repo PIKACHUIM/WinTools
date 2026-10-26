@@ -244,9 +244,9 @@ npm run docs:dev     # 本地预览 http://localhost:5173
 npm run docs:build   # 产物在 docs/.vitepress/dist
 ```
 
-正式站点是 <https://wtools.opkg.cn/>，部署在域名根目录，因此 `base` 默认 `/`。
+正式站点是 <https://wtools.opkg.cn/>，由 GitHub Actions 构建并发布到 GitHub Pages：`.github/workflows/docs.yml`，推送到 `main` 且改动 `docs/**` 时触发。
 
-构建由 GitHub Actions 负责：`.github/workflows/docs.yml`，推送到 `main` 且改动 `docs/**` 时触发，产物同时发布到 GitHub Pages（项目站点需要 `/WinTools/` 前缀，工作流里通过 `DOCS_BASE` 指定）。
+仓库的 Pages 绑定了自定义域名，站点直接挂在域名根目录（`pikachuim.github.io/WinTools/` 会被 301 到根），因此 `base` 固定为 `/`。改成 `/WinTools/` 会导致所有 `assets/` 请求 404。
 
 ## 提交规范
 
