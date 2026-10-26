@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
 using WinTools.App.Localization;
+using WinTools.App.Services;
 using WinTools.Core.Abstractions;
 using WinTools.Core.Models;
 using WinTools.Core.Utils;
@@ -202,12 +203,13 @@ public sealed partial class FeatureFlagsSectionViewModel : ListSectionViewModel
                 _ => Loc.T("Flag.StateDefault")
             };
 
+            // 状态交给开关、优先级交给下拉，行里不再重复显示，避免右侧挤在一起
             var row = new RowItem(
                 entry.FeatureId,
                 entry.FeatureId,
                 Loc.F("Flag.Variant", entry.Variant),
-                stateText,
-                stateText,
+                null,
+                null,
                 entry.EnabledState switch
                 {
                     1 => RowTone.Success,
@@ -216,17 +218,121 @@ public sealed partial class FeatureFlagsSectionViewModel : ListSectionViewModel
                 })
             {
                 Tag = entry,
-                SearchBlob = entry.FeatureId
+                SearchBlob = $"{entry.FeatureId} {stateText}"
             };
 
+            // 状态用开关（ViVe 的 EnabledState），优先级用行内下拉
             row.ShowCheckbox = true;
-            row.ShowAction = true;
-            row.ActionLabel = entry.EnabledState == 1 ? Loc.T("Common.Disable") : Loc.T("Common.Enable");
-            row.ActionCommand = new AsyncRelayCommand(() => ToggleAsync(row, entry));
+            row.ShowToggle = true;
+            row.SetOnSilently(entry.EnabledState == 1);
+            row.ToggleHandler = (_, on) => SetStateAsync(entry, on);
+
+            row.ShowPicker = true;
+            row.SetPickerItems(PriorityLabels);
+            row.SetPickerSilently(PriorityLabel(entry.Priority));
+            row.PickerHandler = (_, label) => SetPriorityAsync(entry, PriorityValue(label));
+
+            // 删除走「勾选 + 工具栏删除」，行内只留优先级与状态开关
             Rows.Add(row);
         }
+    }
 
-        Status = Rows.Count == 0 ? Loc.T("Flag.Empty") : Loc.F("Common.TotalCount", Rows.Count);
+    // VIVE 的优先级：1 = User，2 = Device，3 = Fallback，4 = Service
+    private static IReadOnlyList<string> PriorityLabels =>
+    [
+        Loc.T("Flag.Priority.User"),
+        Loc.T("Flag.Priority.Device"),
+        Loc.T("Flag.Priority.Fallback"),
+        Loc.T("Flag.Priority.Service")
+    ];
+
+    private static string PriorityLabel(int priority) => priority switch
+    {
+        2 => Loc.T("Flag.Priority.Device"),
+        3 => Loc.T("Flag.Priority.Fallback"),
+        4 => Loc.T("Flag.Priority.Service"),
+        _ => Loc.T("Flag.Priority.User")
+    };
+
+    private static int PriorityValue(string label)
+    {
+        if (label == Loc.T("Flag.Priority.Device"))
+        {
+            return 2;
+        }
+
+        if (label == Loc.T("Flag.Priority.Fallback"))
+        {
+            return 3;
+        }
+
+        return label == Loc.T("Flag.Priority.Service") ? 4 : 1;
+    }
+
+    private async Task<bool> SetStateAsync(FeatureFlagEntry entry, bool enabled)
+    {
+        var ok = false;
+
+        await ExecuteAsync(async ct =>
+        {
+            var result = await _flags.SetEnabledStateAsync(entry, enabled ? 1 : 0, ct).ConfigureAwait(true);
+            Report(result);
+            ok = result.Success;
+
+            if (ok)
+            {
+                await LoadAsync(ct).ConfigureAwait(true);
+            }
+        }).ConfigureAwait(true);
+
+        return ok;
+    }
+
+    private async Task<bool> SetPriorityAsync(FeatureFlagEntry entry, int priority)
+    {
+        var ok = false;
+
+        await ExecuteAsync(async ct =>
+        {
+            var result = await _flags.SetPriorityAsync(entry, priority, ct).ConfigureAwait(true);
+            Report(result);
+            ok = result.Success;
+
+            if (ok)
+            {
+                await LoadAsync(ct).ConfigureAwait(true);
+            }
+        }).ConfigureAwait(true);
+
+        return ok;
+    }
+
+    private async Task DeleteOneAsync(RowItem row, FeatureFlagEntry entry)
+    {
+        var confirmed = await UI.Confirm.AskAsync(new ConfirmRequest(
+            Loc.T("Common.Delete"),
+            Loc.F("Flag.ConfirmDelete", entry.FeatureId),
+            [entry.FeatureId],
+            Loc.T("Common.Delete"),
+            Danger: true)).ConfigureAwait(true);
+
+        if (!confirmed)
+        {
+            return;
+        }
+
+        row.IsActionEnabled = false;
+        await ExecuteAsync(async ct =>
+        {
+            var result = await _flags.RemoveAsync(entry, ct).ConfigureAwait(true);
+            Report(result);
+
+            if (result.Success)
+            {
+                await LoadAsync(ct).ConfigureAwait(true);
+            }
+        }).ConfigureAwait(true);
+        row.IsActionEnabled = true;
     }
 
     private async Task ToggleAsync(RowItem row, FeatureFlagEntry entry)

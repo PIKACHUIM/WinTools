@@ -1,8 +1,7 @@
-# 功能开关：导入导出与重置
+# 功能开关：优先级与删除确认
 key|zh-Hans|zh-Hant|en-US|ja-JP|ko-KR|de-DE|fr-FR|es-ES|pt-BR|it-IT|ru-RU|ar-SA
-Flag.Export|导出|匯出|Export|エクスポート|내보내기|Exportieren|Exporter|Exportar|Exportar|Esporta|Экспорт|تصدير
-Flag.Import|导入|匯入|Import|インポート|가져오기|Importieren|Importer|Importar|Importar|Importa|Импорт|استيراد
-Flag.Reset|重置|重設|Reset|リセット|초기화|Zurücksetzen|Réinitialiser|Restablecer|Redefinir|Reimposta|Сбросить|إعادة تعيين
-Flag.ResetConfirm|将删除全部 {0} 项功能覆盖，恢复系统默认行为。|將刪除全部 {0} 項功能覆寫，恢復系統預設行為。|All {0} overrides will be removed and the system defaults restored.|{0} 件の上書きを削除し、システム既定に戻します。|모든 {0}개 재정의를 삭제하고 시스템 기본값으로 되돌립니다.|Alle {0} Overrides werden entfernt und die Systemstandards wiederhergestellt.|Les {0} substitutions seront supprimées et les valeurs par défaut restaurées.|Se eliminarán las {0} sustituciones y se restaurarán los valores predeterminados.|Todas as {0} substituições serão removidas e os padrões restaurados.|Verranno rimosse tutte le {0} sostituzioni e ripristinati i valori predefiniti.|Все {0} переопределений будут удалены, значения по умолчанию восстановятся.|ستتم إزالة جميع التجاوزات ({0}) واستعادة الإعدادات الافتراضية.
-Flag.Imported|已导入|已匯入|Imported|インポートしました|가져왔습니다|Importiert|Importé|Importado|Importado|Importato|Импортировано|تم الاستيراد
-Flag.ResetDone|已重置|已重設|Reset complete|リセット完了|초기화 완료|Zurückgesetzt|Réinitialisation terminée|Restablecido|Redefinição concluída|Ripristino completato|Сброшено|تمت إعادة التعيين
+Flag.Priority.User|用户|使用者|User|ユーザー|사용자|Benutzer|Utilisateur|Usuario|Usuário|Utente|Пользователь|المستخدم
+Flag.Priority.Device|设备|裝置|Device|デバイス|디바이스|Gerät|Appareil|Dispositivo|Dispositivo|Dispositivo|Устройство|الجهاز
+Flag.Priority.Fallback|回退|回退|Fallback|フォールバック|대체|Fallback|Repli|Reserva|Reserva|Fallback|Резервный|احتياطي
+Flag.Priority.Service|服务|服務|Service|サービス|서비스|Dienst|Service|Servicio|Serviço|Servizio|Служба|خدمة
+Flag.ConfirmDelete|将删除特性 {0} 的覆盖项，重启后恢复系统默认。|將刪除特性 {0} 的覆寫，重新啟動後恢復系統預設。|The override for feature {0} will be removed; the system default returns after restart.|機能 {0} の上書きを削除します。再起動後に既定に戻ります。|기능 {0}의 재정의를 삭제합니다. 다시 시작하면 기본값으로 돌아갑니다.|Die Überschreibung für Feature {0} wird entfernt; nach einem Neustart gilt der Systemstandard.|La substitution de la fonctionnalité {0} sera supprimée ; le système revient au défaut après redémarrage.|Se eliminará la sustitución de la característica {0}; tras reiniciar vuelve el valor predeterminado.|A substituição do recurso {0} será removida; após reiniciar, o padrão do sistema volta.|La sostituzione della funzionalità {0} verrà rimossa; dopo il riavvio torna il valore predefinito.|Переопределение функции {0} будет удалено; после перезагрузки вернётся системное значение.|ستتم إزالة تجاوز الميزة {0}؛ يعود النظام إلى الافتراضي بعد إعادة التشغيل.

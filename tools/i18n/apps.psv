@@ -1,0 +1,4 @@
+# 应用管理：最后使用时间
+key|zh-Hans|zh-Hant|en-US|ja-JP|ko-KR|de-DE|fr-FR|es-ES|pt-BR|it-IT|ru-RU|ar-SA
+App.LastUsed|使用 {0}|使用 {0}|Used {0}|使用 {0}|사용 {0}|Verwendet {0}|Utilisé {0}|Uso {0}|Uso {0}|Usato {0}|Использован {0}|استُخدم {0}
+App.InstalledOn|安装 {0}|安裝 {0}|Installed {0}|インストール {0}|설치 {0}|Installiert {0}|Installé {0}|Instalado {0}|Instalado {0}|Installato {0}|Установлено {0}|مثبّت {0}

@@ -47,7 +47,8 @@ public sealed class FeatureFlagService : IFeatureFlagService
                     ReadInt(key, "EnabledState", 2),
                     ReadInt(key, "EnabledStateOptions", 0),
                     ReadInt(key, "Variant", 0),
-                    ReadInt(key, "VariantPayloadKind", 0)));
+                    ReadInt(key, "VariantPayloadKind", 0),
+                    ReadInt(key, "Priority", 0)));
             }
         }
         catch (Exception ex)
@@ -87,6 +88,33 @@ public sealed class FeatureFlagService : IFeatureFlagService
         }
     }, cancellationToken);
 
+    public Task<OperationResult> SetPriorityAsync(
+        FeatureFlagEntry entry,
+        int priority,
+        CancellationToken cancellationToken) => Task.Run(() =>
+    {
+        try
+        {
+            using var key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
+                .OpenSubKey(OverridesPath, writable: true)
+                ?.OpenSubKey(entry.FeatureId, writable: true);
+
+            if (key is null)
+            {
+                return OperationResult.Fail("找不到该特性的覆盖项");
+            }
+
+            key.SetValue("Priority", priority, RegistryValueKind.DWord);
+            _logger.Audit("FeatureFlag.Priority", entry.FeatureId, $"Priority={priority}");
+            return OperationResult.Ok("已保存，重启后生效", restartRequired: true);
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("FeatureFlags", "写入优先级失败", ex);
+            return OperationResult.Fail(ex.Message);
+        }
+    }, cancellationToken);
+
     public Task<OperationResult> AddAsync(string featureId, int enabledState, CancellationToken cancellationToken) => Task.Run(() =>
     {
         var id = featureId.Trim();
@@ -110,6 +138,7 @@ public sealed class FeatureFlagService : IFeatureFlagService
             key.SetValue("EnabledStateOptions", enabledState == 2 ? 0 : 1, RegistryValueKind.DWord);
             key.SetValue("Variant", 0, RegistryValueKind.DWord);
             key.SetValue("VariantPayloadKind", 0, RegistryValueKind.DWord);
+            key.SetValue("Priority", 1, RegistryValueKind.DWord);
 
             _logger.Audit("FeatureFlag.Add", id, $"EnabledState={enabledState}");
             return OperationResult.Ok("已添加，重启后生效", 1, restartRequired: true);

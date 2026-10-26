@@ -24,6 +24,9 @@ public interface IUpdateService
 public interface IFeatureFlagService
 {
     Task<IReadOnlyList<FeatureFlagEntry>> GetOverridesAsync(CancellationToken cancellationToken);
+    /// <summary>修改优先级（1=User 2=Device 3=Fallback 4=Service），ViVe 里对应 Priority。</summary>
+    Task<OperationResult> SetPriorityAsync(FeatureFlagEntry entry, int priority, CancellationToken cancellationToken);
+
     Task<OperationResult> SetEnabledStateAsync(FeatureFlagEntry entry, int enabledState, CancellationToken cancellationToken);
     Task<OperationResult> AddAsync(string featureId, int enabledState, CancellationToken cancellationToken);
     Task<OperationResult> RemoveAsync(FeatureFlagEntry entry, CancellationToken cancellationToken);

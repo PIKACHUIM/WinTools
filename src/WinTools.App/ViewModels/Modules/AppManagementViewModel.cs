@@ -40,7 +40,8 @@ public sealed partial class ProgramsSectionViewModel : ListSectionViewModel
             {
                 program.Version,
                 program.SizeBytes is null ? null : SizeFormatter.Format(program.SizeBytes.Value),
-                program.InstallDate
+                program.InstallDate,
+                program.LastUsed is null ? null : Loc.F("App.LastUsed", ShortDate(program.LastUsed))
             }.Where(s => !string.IsNullOrWhiteSpace(s)));
 
             var row = new RowItem(
@@ -52,6 +53,8 @@ public sealed partial class ProgramsSectionViewModel : ListSectionViewModel
                 RowTone.Neutral)
             {
                 Tag = program,
+                ShowIcon = true,
+                IconSource = program.IconPath,
                 SearchBlob = $"{program.Name} {program.Publisher} {program.Version}"
             };
 
@@ -63,6 +66,9 @@ public sealed partial class ProgramsSectionViewModel : ListSectionViewModel
         }
 
     }
+
+    /// <summary>2026-10-23 → 10-23：详情列宽度有限，年份基本没有信息量。</summary>
+    private static string ShortDate(string value) => value.Length >= 10 ? value[5..] : value;
 
     private async Task UninstallAsync(RowItem row, InstalledProgram program)
     {
@@ -100,15 +106,29 @@ public sealed partial class AppxSectionViewModel : ListSectionViewModel
         Rows.Clear();
         foreach (var package in packages)
         {
+            // 版本挪到副标题，详情只留「大小 · 安装 · 使用」，避免右侧被截断
+            var subtitle = string.IsNullOrWhiteSpace(package.Publisher)
+                ? package.Version
+                : $"{package.Publisher}  ·  {package.Version}";
+
+            var detail = string.Join(" · ", new[]
+            {
+                package.SizeBytes is null ? null : SizeFormatter.Format(package.SizeBytes.Value),
+                package.InstallDate is null ? null : Loc.F("App.InstalledOn", ShortDate(package.InstallDate)),
+                package.LastUsed is null ? null : Loc.F("App.LastUsed", ShortDate(package.LastUsed))
+            }.Where(s => !string.IsNullOrWhiteSpace(s)));
+
             var row = new RowItem(
                 package.PackageFullName ?? package.Name,
                 package.Name,
-                package.Publisher,
-                package.Version,
+                subtitle,
+                detail,
                 null,
                 RowTone.Neutral)
             {
                 Tag = package,
+                ShowIcon = true,
+                IconSource = package.IconPath,
                 SearchBlob = $"{package.Name} {package.Publisher} {package.Version}"
             };
 
@@ -119,6 +139,9 @@ public sealed partial class AppxSectionViewModel : ListSectionViewModel
         }
 
     }
+
+    /// <summary>2026-10-23 → 10-23：详情列宽度有限，年份基本没有信息量。</summary>
+    private static string ShortDate(string value) => value.Length >= 10 ? value[5..] : value;
 
     private async Task RemoveAsync(RowItem row, AppxPackageEntry package)
     {

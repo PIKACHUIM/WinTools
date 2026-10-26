@@ -127,6 +127,28 @@ public sealed class ProgramService : IProgramService
 
                     long? size = key.GetValue("EstimatedSize") is int kb ? kb * 1024L : null;
 
+                    // 图标：DisplayIcon 通常是「路径,索引」，直接交给 IconService 解析
+                    var icon = key.GetValue("DisplayIcon")?.ToString();
+
+                    // 最后使用：安装目录的最后写入时间（没有 UserAssist 依赖，读一次即可）
+                    string? lastUsed = null;
+                    var location = key.GetValue("InstallLocation")?.ToString();
+                    if (!string.IsNullOrWhiteSpace(location))
+                    {
+                        try
+                        {
+                            var trimmed = location.Trim('"');
+                            if (Directory.Exists(trimmed))
+                            {
+                                lastUsed = Directory.GetLastWriteTime(trimmed).ToString("yyyy-MM-dd");
+                            }
+                        }
+                        catch
+                        {
+                            // 目录不可读就留空
+                        }
+                    }
+
                     list.Add(new InstalledProgram(
                         keyName,
                         name,
@@ -136,7 +158,9 @@ public sealed class ProgramService : IProgramService
                         size,
                         key.GetValue("UninstallString")?.ToString(),
                         key.GetValue("QuietUninstallString")?.ToString(),
-                        scope));
+                        scope,
+                        icon,
+                        lastUsed));
                 }
                 catch
                 {

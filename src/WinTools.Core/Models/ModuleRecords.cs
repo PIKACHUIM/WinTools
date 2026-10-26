@@ -39,7 +39,8 @@ public sealed record FeatureFlagEntry(
     int EnabledState,
     int EnabledStateOptions,
     int Variant,
-    int VariantPayloadKind);
+    int VariantPayloadKind,
+    int Priority = 0);
 
 /// <summary>启动项（运行管理）。</summary>
 public sealed record StartupEntry(
@@ -131,7 +132,9 @@ public sealed record InstalledProgram(
     long? SizeBytes,
     string? UninstallString,
     string? QuietUninstallString,
-    string Scope);
+    string Scope,
+    string? IconPath = null,
+    string? LastUsed = null);
 
 /// <summary>Appx / MSIX 包（应用管理）。</summary>
 public sealed record AppxPackageEntry(
@@ -140,7 +143,11 @@ public sealed record AppxPackageEntry(
     string? Publisher,
     string? PackageFullName,
     bool IsFramework,
-    string? InstallLocation);
+    string? InstallLocation,
+    long? SizeBytes = null,
+    string? InstallDate = null,
+    string? LastUsed = null,
+    string? IconPath = null);
 
 /// <summary>驱动包（驱动管理）。</summary>
 public sealed record DriverPackage(
