@@ -26,12 +26,17 @@ public partial class App : Application
         BootTrace.Reset();
         BootTrace.Log("OnStartup");
 
-        // 单实例：已有实例在跑就直接退出
-        _singleInstanceMutex = new Mutex(initiallyOwned: true, "WinTools.SingleInstance", out var isNew);
-        if (!isNew)
+        // 单实例：已有实例在跑就直接退出。
+        // 诊断模式（截图/扫描探针）不参与单实例：否则残留实例会让自动截图全部静默失败。
+        var isDiagnostic = e.Args.Contains("--shots") || e.Args.Contains("--scan") || e.Args.Contains("--components");
+        if (!isDiagnostic)
         {
-            Shutdown();
-            return;
+            _singleInstanceMutex = new Mutex(initiallyOwned: true, "WinTools.SingleInstance", out var isNew);
+            if (!isNew)
+            {
+                Shutdown();
+                return;
+            }
         }
 
         base.OnStartup(e);
@@ -80,6 +85,44 @@ public partial class App : Application
 
         try
         {
+        // ---- 诊断入口（无界面）：--components 输出组件服务耗时 ----
+        if (e.Args.Contains("--components"))
+        {
+            var store = _services.GetRequiredService<IStoreService>();
+            var log = new List<string>();
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+
+            try
+            {
+                var apps = Task.Run(() => store.GetAppsAsync(CancellationToken.None)).GetAwaiter().GetResult();
+                log.Add($"apps={apps.Count} installed={apps.Count(a => a.IsInstalled)} elapsed={sw.ElapsedMilliseconds}ms");
+            }
+            catch (Exception ex)
+            {
+                log.Add("apps FAILED: " + ex.Message);
+            }
+
+            sw.Restart();
+            try
+            {
+                var task = Task.Run(() => store.GetWslAsync(false, CancellationToken.None));
+                log.Add(task.Wait(TimeSpan.FromSeconds(20))
+                    ? $"wsl={task.Result.Count} elapsed={sw.ElapsedMilliseconds}ms"
+                    : "wsl TIMEOUT>20s");
+            }
+            catch (Exception ex)
+            {
+                log.Add("wsl FAILED: " + ex.Message);
+            }
+
+            File.WriteAllText(
+                Path.Combine(Path.GetTempPath(), "wintools-components.txt"),
+                string.Join(Environment.NewLine, log));
+
+            Shutdown(0);
+            return;
+        }
+
         // ---- 诊断入口（无界面）：--scan 输出全盘扫描耗时 ----
         if (e.Args.Contains("--scan"))
         {

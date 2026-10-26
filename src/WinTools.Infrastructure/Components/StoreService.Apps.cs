@@ -1,4 +1,4 @@
-using System.Text.Json;
+using Microsoft.Win32;
 using System.Text.RegularExpressions;
 using WinTools.Core.Abstractions;
 using WinTools.Core.Models;
@@ -24,20 +24,21 @@ public sealed partial class StoreService
         ("Store", "Microsoft.WindowsStore", "Microsoft.WindowsStore")
     ];
 
-    public Task<IReadOnlyList<StoreApp>> GetAppsAsync(CancellationToken cancellationToken) => Task.Run(async () =>
+    public Task<IReadOnlyList<StoreApp>> GetAppsAsync(CancellationToken cancellationToken)
     {
-        var installed = await GetInstalledPackagesAsync(cancellationToken).ConfigureAwait(false);
+        // 读注册表是毫秒级操作：同步完成，避免 Task.Run 与 UI 线程的调度开销
+        var installed = GetInstalledPackagesAsync(cancellationToken).GetAwaiter().GetResult();
         var list = new List<StoreApp>();
 
         foreach (var (id, package, winget) in BuiltinApps)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             installed.TryGetValue(package, out var version);
             list.Add(new StoreApp(id, string.Empty, package, winget, version is not null, version, "App"));
         }
 
-        return (IReadOnlyList<StoreApp>)list;
-    }, cancellationToken);
-
+        return Task.FromResult((IReadOnlyList<StoreApp>)list);
+    }
     public async Task<OperationResult> InstallAppAsync(StoreApp app, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(app.WingetId))
@@ -100,7 +101,7 @@ public sealed partial class StoreService
             : OperationResult.Fail(Summarize(result.Combined, "修复失败"));
     }
 
-    public Task<IReadOnlyList<WslDistro>> GetWslAsync(CancellationToken cancellationToken) => Task.Run(async () =>
+    public Task<IReadOnlyList<WslDistro>> GetWslAsync(bool includeOnline, CancellationToken cancellationToken) => Task.Run(async () =>
     {
         var installed = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var defaultName = string.Empty;
@@ -120,20 +121,24 @@ public sealed partial class StoreService
             }
         }
 
-        var online = await ProcessRunner.RunAsync(
-            "wsl.exe", ["--list", "--online"], timeoutMs: 60_000, cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
-
         var names = new List<string>();
 
-        if (online.Success)
+        // 联机清单要访问网络（且部分环境会卡住），只在用户主动要求时拉取
+        if (includeOnline)
         {
-            foreach (var line in CleanWslOutput(online.StdOut).Skip(1))
+            var online = await ProcessRunner.RunAsync(
+                "wsl.exe", ["--list", "--online"], timeoutMs: 30_000, cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+            if (online.Success)
             {
-                var name = line.Split(' ', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
-                if (!string.IsNullOrWhiteSpace(name) && !name.StartsWith('*'))
+                foreach (var line in CleanWslOutput(online.StdOut).Skip(1))
                 {
-                    names.Add(name);
+                    var name = line.Split(' ', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+                    if (!string.IsNullOrWhiteSpace(name) && !name.StartsWith('*'))
+                    {
+                        names.Add(name);
+                    }
                 }
             }
         }
@@ -177,50 +182,45 @@ public sealed partial class StoreService
 
     // ------------------------------------------------------------------
 
-    private static async Task<Dictionary<string, string>> GetInstalledPackagesAsync(CancellationToken cancellationToken)
-    {
-        var names = string.Join(",", BuiltinApps.Select(a => $"'{a.Package}'"));
-
-        // 这里用普通字符串拼接：脚本里大量 @{...} 与插值花括号混在一起，原始字符串反而更难读
-        var script =
-            "$names = @(" + names + ")\r\n" +
-            "Get-AppxPackage | Where-Object { $names -contains $_.Name } | \r\n" +
-            "  Select-Object @{n='Name';e={$_.Name}}, @{n='Version';e={$_.Version.ToString()}} | \r\n" +
-            "  ConvertTo-Json -Compress";
-
-        var result = await ProcessRunner.RunPowerShellAsync(
-            script, timeoutMs: 60_000, cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        if (!result.Success || string.IsNullOrWhiteSpace(result.StdOut))
+    /// <summary>
+    /// 从 AppModel 注册表读取已安装包：比 PowerShell Get-AppxPackage 快两个数量级，
+    /// 且不依赖外部进程（键名形如 Microsoft.WindowsTerminal_1.24.12741.0_x64__8wekyb3d8bbwe）。
+    /// </summary>
+    private Task<Dictionary<string, string>> GetInstalledPackagesAsync(CancellationToken cancellationToken)
+        => Task.Run(() =>
         {
-            return map;
-        }
+            var map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            const string path = @"Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppModel\Repository\Packages";
 
-        try
-        {
-            var json = result.StdOut.Trim();
-            if (!json.StartsWith('['))
+            foreach (var hive in new[] { RegistryHive.CurrentUser })
             {
-                json = "[" + json + "]";
-            }
-
-            foreach (var item in JsonSerializer.Deserialize<List<PackageJson>>(json) ?? [])
-            {
-                if (!string.IsNullOrWhiteSpace(item.Name))
+                try
                 {
-                    map[item.Name] = item.Version ?? string.Empty;
+                    using var root = RegistryKey.OpenBaseKey(hive, RegistryView.Default).OpenSubKey(path);
+                    if (root is null)
+                    {
+                        continue;
+                    }
+
+                    foreach (var name in root.GetSubKeyNames())
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+
+                        var parts = name.Split('_');
+                        if (parts.Length >= 2)
+                        {
+                            map[parts[0]] = parts[1];
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.Warn("Component", $"读取已安装包失败：{ex.Message}");
                 }
             }
-        }
-        catch
-        {
-            // 解析失败按未安装处理
-        }
 
-        return map;
-    }
-
+            return map;
+        }, cancellationToken);
     /// <summary>wsl.exe 的输出是 UTF-16，按行切分后去掉 BOM 与零宽字符。</summary>
     private static IEnumerable<string> CleanWslOutput(string text)
         => text

@@ -28,3 +28,5 @@ App.StickyNotes|便笺|便箋|Sticky Notes|付箋|스티커 메모|Notizen|Pense
 App.Store|应用商店|Microsoft Store|Store|ストア|스토어|Store|Store|Store|Store|Store|Магазин|المتجر
 Comp.Repair|修复|修復|Repair|修復|복구|Reparieren|Réparer|Reparar|Reparar|Ripara|Восстановить|إصلاح
 Comp.StoreRow|应用商店组件|Microsoft Store 元件|Microsoft Store packages|ストア パッケージ|스토어 패키지|Store-Pakete|Composants du Store|Componentes de Store|Componentes da Store|Componenti Store|Компоненты Store|حزم المتجر
+Comp.LoadWsl|Linux 发行版|Linux 發行版|Linux distros|Linux ディストリビューション|Linux 배포판|Linux-Distributionen|Distributions Linux|Distribuciones Linux|Distribuições Linux|Distribuzioni Linux|Дистрибутивы Linux|توزيعات Linux
+Common.Load|加载|載入|Load|読み込む|불러오기|Laden|Charger|Cargar|Carregar|Carica|Загрузить|تحميل

@@ -317,5 +317,8 @@
   "App.Store": "Магазин",
 
   "Comp.Repair": "Восстановить",
-  "Comp.StoreRow": "Компоненты Store"
+  "Comp.StoreRow": "Компоненты Store",
+  "Comp.LoadWsl": "Дистрибутивы Linux",
+
+  "Common.Load": "Загрузить"
 }

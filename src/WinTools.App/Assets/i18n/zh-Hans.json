@@ -378,5 +378,8 @@
   "App.Store": "应用商店",
 
   "Comp.Repair": "修复",
-  "Comp.StoreRow": "应用商店组件"
+  "Comp.StoreRow": "应用商店组件",
+  "Comp.LoadWsl": "Linux 发行版",
+
+  "Common.Load": "加载"
 }

@@ -317,5 +317,8 @@
   "App.Store": "ストア",
 
   "Comp.Repair": "修復",
-  "Comp.StoreRow": "ストア パッケージ"
+  "Comp.StoreRow": "ストア パッケージ",
+  "Comp.LoadWsl": "Linux ディストリビューション",
+
+  "Common.Load": "読み込む"
 }

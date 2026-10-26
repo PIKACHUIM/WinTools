@@ -378,5 +378,8 @@
   "App.Store": "Store",
 
   "Comp.Repair": "Repair",
-  "Comp.StoreRow": "Microsoft Store packages"
+  "Comp.StoreRow": "Microsoft Store packages",
+  "Comp.LoadWsl": "Linux distros",
+
+  "Common.Load": "Load"
 }

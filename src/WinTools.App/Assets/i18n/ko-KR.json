@@ -317,5 +317,8 @@
   "App.Store": "스토어",
 
   "Comp.Repair": "복구",
-  "Comp.StoreRow": "스토어 패키지"
+  "Comp.StoreRow": "스토어 패키지",
+  "Comp.LoadWsl": "Linux 배포판",
+
+  "Common.Load": "불러오기"
 }

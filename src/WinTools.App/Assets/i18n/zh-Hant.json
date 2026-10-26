@@ -377,5 +377,8 @@
   "App.Store": "Microsoft Store",
 
   "Comp.Repair": "修復",
-  "Comp.StoreRow": "Microsoft Store 元件"
+  "Comp.StoreRow": "Microsoft Store 元件",
+  "Comp.LoadWsl": "Linux 發行版",
+
+  "Common.Load": "載入"
 }

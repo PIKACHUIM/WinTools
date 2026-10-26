@@ -87,7 +87,8 @@ public interface IStoreService
     Task<OperationResult> RepairAppAsync(StoreApp app, CancellationToken cancellationToken);
 
     /// <summary>WSL 发行版（已装 + 可在线安装）。</summary>
-    Task<IReadOnlyList<WslDistro>> GetWslAsync(CancellationToken cancellationToken);
+    /// <summary>WSL 发行版。includeOnline=true 时联机拉取可安装清单（慢，按需调用）。</summary>
+    Task<IReadOnlyList<WslDistro>> GetWslAsync(bool includeOnline, CancellationToken cancellationToken);
 
     Task<OperationResult> InstallWslAsync(WslDistro distro, CancellationToken cancellationToken);
 }

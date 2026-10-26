@@ -317,5 +317,8 @@
   "App.Store": "Store",
 
   "Comp.Repair": "Ripara",
-  "Comp.StoreRow": "Componenti Store"
+  "Comp.StoreRow": "Componenti Store",
+  "Comp.LoadWsl": "Distribuzioni Linux",
+
+  "Common.Load": "Carica"
 }

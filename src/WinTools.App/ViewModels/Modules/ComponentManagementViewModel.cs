@@ -110,8 +110,7 @@ public sealed partial class StoreSectionViewModel : ListSectionViewModel
         HasSecondary = true;
         SecondaryLabel = Loc.T("Comp.UninstallSelected");
 
-        ExtraActions.Add(new ToolbarAction(Loc.T("Comp.RepairSelected"), RepairSelectedCommand));
-        ExtraActions.Add(new ToolbarAction(Loc.T("Comp.RepairStore"), RepairStoreCommand));
+        _ = ReloadAsync();
     }
 
     public override bool CanPrimary => !IsBusy && IsReady && CheckedRows.Count > 0;
@@ -140,8 +139,11 @@ public sealed partial class StoreSectionViewModel : ListSectionViewModel
 
             row.ShowCheckbox = true;
             row.ShowAction = true;
-            row.ActionLabel = app.IsInstalled ? Loc.T("Common.Uninstall") : Loc.T("Common.Install");
-            row.ActionCommand = new AsyncRelayCommand(() => ToggleInstallAsync(row, app, !app.IsInstalled));
+            // 已安装 → 修复（重新注册清单）；未安装 → 安装。卸载统一走勾选 + 工具栏
+            row.ActionLabel = app.IsInstalled ? Loc.T("Comp.Repair") : Loc.T("Common.Install");
+            row.ActionCommand = app.IsInstalled
+                ? new AsyncRelayCommand(() => RepairOneAsync(row, app))
+                : new AsyncRelayCommand(() => ToggleInstallAsync(row, app, install: true));
 
             Rows.Add(row);
         }
@@ -155,16 +157,27 @@ public sealed partial class StoreSectionViewModel : ListSectionViewModel
         storeRow.ActionLabel = Loc.T("Comp.Repair");
         storeRow.ActionCommand = RepairStoreCommand;
         Rows.Add(storeRow);
-        // WSL 需要联网拉清单，放到后台，先把应用列表显示出来
-        _ = LoadWslAsync(cancellationToken);
+
+        // Linux 发行版：联机清单较慢，做成一行按需触发
+        var wslRow = new RowItem("wsl-load", Loc.T("Comp.LoadWsl"), Loc.T("Comp.WslDistro"),
+            null, null, RowTone.Neutral)
+        {
+            ShowIcon = false
+        };
+        wslRow.ShowAction = true;
+        wslRow.ActionLabel = Loc.T("Common.Load");
+        wslRow.ActionCommand = LoadWslCommand;
+        Rows.Add(wslRow);
     }
 
+    /// <summary>按需加载 WSL 发行版（含联机清单），避免进页面就卡在网络上。</summary>
+    [RelayCommand]
     private async Task LoadWslAsync(CancellationToken cancellationToken)
     {
         IReadOnlyList<WslDistro> wsl;
         try
         {
-            wsl = await _store.GetWslAsync(cancellationToken).ConfigureAwait(true);
+            wsl = await _store.GetWslAsync(includeOnline: true, cancellationToken).ConfigureAwait(true);
         }
         catch
         {
@@ -193,6 +206,17 @@ public sealed partial class StoreSectionViewModel : ListSectionViewModel
 
             Rows.Add(row);
         }
+    }
+
+    private async Task RepairOneAsync(RowItem row, StoreApp app)
+    {
+        row.IsActionEnabled = false;
+        await ExecuteAsync(async ct =>
+        {
+            var result = await _store.RepairAppAsync(app, ct).ConfigureAwait(true);
+            Report(result);
+        }).ConfigureAwait(true);
+        row.IsActionEnabled = true;
     }
 
     private async Task ToggleInstallAsync(RowItem row, StoreApp app, bool install)

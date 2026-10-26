@@ -317,5 +317,8 @@
   "App.Store": "المتجر",
 
   "Comp.Repair": "إصلاح",
-  "Comp.StoreRow": "حزم المتجر"
+  "Comp.StoreRow": "حزم المتجر",
+  "Comp.LoadWsl": "توزيعات Linux",
+
+  "Common.Load": "تحميل"
 }
