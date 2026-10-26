@@ -4,6 +4,9 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$Version,
 
+    # 产物名里的标识：beta 或版本号，生成 WinTools-<Token>-setup-win-x64.exe
+    [string]$Token = "",
+
     [string]$SourceDir = "",
 
     [string]$OutputDir = ""
@@ -52,9 +55,16 @@ if ($LASTEXITCODE -ne 0) {
     throw "Inno Setup 编译失败（退出码 $LASTEXITCODE）"
 }
 
-$setup = Join-Path $OutputDir "WinTools-$normalized-setup-win-x64.exe"
-if (-not (Test-Path $setup)) {
-    throw "未生成安装包：$setup"
+$built = Join-Path $OutputDir "WinTools-$normalized-setup-win-x64.exe"
+if (-not (Test-Path $built)) {
+    throw "未生成安装包：$built"
+}
+
+# 按发布渠道改名：WinTools-<beta|版本>-setup-win-x64.exe
+$token = if ($Token) { $Token.Trim().TrimStart('v', 'V') } else { $normalized }
+$setup = Join-Path $OutputDir "WinTools-$token-setup-win-x64.exe"
+if ($setup -ne $built) {
+    Move-Item -LiteralPath $built -Destination $setup -Force
 }
 
 $size = [math]::Round((Get-Item $setup).Length / 1MB, 1)

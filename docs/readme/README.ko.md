@@ -37,8 +37,8 @@ WPF 앱이며 백그라운드에 상주하거나 시작 프로그램에 등록�
 
 | 빌드 | 설명 | 링크 |
 | --- | --- | --- |
-| 포터블 | 런타임 포함, 압축 해제 후 실행 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| 프레임워크 종속 | .NET 10 Desktop Runtime 필요 | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 포터블 | 런타임 포함, 압축 해제 후 실행 | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 프레임워크 종속 | .NET 10 Desktop Runtime 필요 | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | `main` 푸시마다 자동 재빌드 | [Beta 프리릴리스](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 정식 버전에는 Certum 클라우드 서명과 타임스탬프가 있습니다. `Get-AuthenticodeSignature`로 확인할 수 있으며, 각 릴리스에 `SHA256SUMS.txt`가 함께 제공됩니다.

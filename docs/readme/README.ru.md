@@ -37,8 +37,8 @@
 
 | Вариант | Примечание | Ссылка |
 | --- | --- | --- |
-| Портативный | Среда выполнения включена, распаковать и запустить | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Зависит от платформы | Нужен .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Портативный | Среда выполнения включена, распаковать и запустить | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Зависит от платформы | Нужен .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | Пересобирается при каждом push в `main` | [Предварительная версия Beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 Официальные сборки подписаны облачным сертификатом Certum с отметкой времени; проверка через `Get-AuthenticodeSignature`. К каждой версии прилагается `SHA256SUMS.txt`.

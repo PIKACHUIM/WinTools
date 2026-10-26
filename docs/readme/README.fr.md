@@ -37,8 +37,8 @@ Dix modules : **Nettoyage, Optimisation, Fonctionnalités, Mises à jour, Démar
 
 | Version | Remarque | Lien |
 | --- | --- | --- |
-| Portable | Runtime inclus, décompresser et lancer | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Dépendante du framework | Nécessite .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Portable | Runtime inclus, décompresser et lancer | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Dépendante du framework | Nécessite .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | Reconstruite à chaque push sur `main` | [Préversion Beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 Les versions officielles portent une signature cloud Certum avec horodatage, vérifiable via `Get-AuthenticodeSignature`. Un `SHA256SUMS.txt` accompagne chaque version.

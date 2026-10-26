@@ -37,8 +37,8 @@ WPF アプリで、バックグラウンドには常駐せず、スタートア�
 
 | 版 | 説明 | リンク |
 | --- | --- | --- |
-| ポータブル | ランタイム同梱、解凍して実行 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| フレームワーク依存 | .NET 10 Desktop Runtime が必要 | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| ポータブル | ランタイム同梱、解凍して実行 | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| フレームワーク依存 | .NET 10 Desktop Runtime が必要 | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | `main` への push ごとに再ビルド | [Beta プレリリース](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 正式版は Certum のクラウド署名とタイムスタンプ付き。`Get-AuthenticodeSignature` で検証できます。各リリースに `SHA256SUMS.txt` を添付しています。

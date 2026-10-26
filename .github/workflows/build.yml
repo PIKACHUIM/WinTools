@@ -143,8 +143,10 @@ jobs:
     runs-on: windows-latest
     outputs:
       artifact: ${{ steps.pack.outputs.artifact }}
-      portable: ${{ steps.pack.outputs.portable }}
-      framework: ${{ steps.pack.outputs.framework }}
+      # 对外仍用 portable/framework 这两个名字（发布说明里在引用），实际产物已改名为 green/frame
+      portable: ${{ steps.pack.outputs.green }}
+      framework: ${{ steps.pack.outputs.frame }}
+      setup: ${{ steps.pack.outputs.setup }}
       signed: ${{ steps.sign.outputs.signed }}
     env:
       CHANNEL: ${{ needs.prepare.outputs.channel }}
@@ -232,31 +234,20 @@ jobs:
           pwsh -NoProfile -ExecutionPolicy Bypass -File tools/publish.ps1 -Profile both -Version $env:VERSION
           if ($LASTEXITCODE -ne 0) { throw '发布失败' }
 
-      - name: 打包安装程序
-        shell: pwsh
-        run: |
-          # Inno Setup 生成 WinTools-<版本>-setup-win-x64.exe，随后与主程序一起签名
-          choco install innosetup --no-progress -y
-          pwsh -NoProfile -ExecutionPolicy Bypass -File tools/build-installer.ps1 -Version $env:VERSION
-          if ($LASTEXITCODE -ne 0) { throw '安装包构建失败' }
-
-      - name: 签名产物
+      - name: 签名载荷
         id: sign
         if: steps.creds.outputs.enabled == 'true'
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $targets = @(
-            'artifacts/publish/portable/WinTools.exe',
-            'artifacts/publish/framework/WinTools.exe',
-            'artifacts/publish/framework/WinTools.dll',
-            'artifacts/publish/framework/WinTools.Core.dll',
-            'artifacts/publish/framework/WinTools.Infrastructure.dll'
-          ) | Where-Object { Test-Path $_ }
 
-          # 安装包也一起签，否则用户双击时仍会看到“未知发布者”
-          $targets += @(Get-ChildItem 'artifacts/publish/*-setup-win-x64.exe' -ErrorAction SilentlyContinue |
-            ForEach-Object { $_.FullName })
+          # 先签「要装进压缩包和安装包里的文件」，再打包。
+          # 否则 zip 里的 dll、安装包内嵌的 exe/dll 都是未签名的，只有外壳带签名。
+          $payload = @()
+          $payload += @(Get-ChildItem 'artifacts/publish/portable' -Filter *.exe -File | ForEach-Object { $_.FullName })
+          $payload += @(Get-ChildItem 'artifacts/publish/framework' -Include *.exe, *.dll -File -Recurse | ForEach-Object { $_.FullName })
+          $payload = @($payload | Where-Object { Test-Path $_ })
+          Write-Host "待签载荷 $($payload.Count) 个文件"
 
           try {
             # 1) 装 SimplySign Desktop + 注册表预配置（登录框自动弹出、断开后不注销证书）
@@ -273,13 +264,12 @@ jobs:
             }
             if (-not $authed) { throw 'Certum 云签名认证失败（3 次重试都未挂载云证书）' }
 
-            # 3) 签名：证书可用但签名失败时必须失败，避免发布未签名产物
+            # 3) 签名：路径与扩展名走环境变量（pwsh -File 传数组会按位置拆到别的参数上）
             $env:WINTOOLS_SIGN_REQUIRED = '1'
-            # 路径与扩展名走环境变量：pwsh -File 传数组会按位置拆开，把文件路径塞进 -Thumbprint / -TimestampUrl
-          $env:WINTOOLS_SIGN_PATHS = ($targets -join ';')
-          $env:WINTOOLS_SIGN_EXTENSIONS = '.exe;.dll'
-          pwsh -NoProfile -ExecutionPolicy Bypass -File tools/signing/Sign-Windows.ps1
-            if ($LASTEXITCODE -ne 0) { throw "签名失败（退出码 $LASTEXITCODE）" }
+            $env:WINTOOLS_SIGN_PATHS = ($payload -join ';')
+            $env:WINTOOLS_SIGN_EXTENSIONS = '.exe;.dll'
+            pwsh -NoProfile -ExecutionPolicy Bypass -File tools/signing/Sign-Windows.ps1
+            if ($LASTEXITCODE -ne 0) { throw "签名载荷失败（退出码 $LASTEXITCODE）" }
 
             "signed=true" >> $env:GITHUB_OUTPUT
           } catch {
@@ -288,6 +278,27 @@ jobs:
             "signed=false" >> $env:GITHUB_OUTPUT
           }
 
+      - name: 打包安装程序
+        shell: pwsh
+        run: |
+          # 用已签名的 framework 目录编译，Inno 压进去的就是带签名的文件
+          choco install innosetup --no-progress -y
+          $token = if ($env:CHANNEL -eq 'beta') { 'beta' } else { $env:VERSION }
+          pwsh -NoProfile -ExecutionPolicy Bypass -File tools/build-installer.ps1 -Version $env:VERSION -Token $token
+          if ($LASTEXITCODE -ne 0) { throw '安装包构建失败' }
+
+      - name: 签名安装包
+        if: steps.sign.outputs.signed == 'true'
+        shell: pwsh
+        run: |
+          $setup = Get-ChildItem 'artifacts/publish/*-setup-win-x64.exe' -File | Select-Object -First 1
+          if (-not $setup) { throw '找不到安装包' }
+
+          $env:WINTOOLS_SIGN_REQUIRED = '1'
+          $env:WINTOOLS_SIGN_PATHS = $setup.FullName
+          $env:WINTOOLS_SIGN_EXTENSIONS = '.exe'
+          pwsh -NoProfile -ExecutionPolicy Bypass -File tools/signing/Sign-Windows.ps1
+          if ($LASTEXITCODE -ne 0) { throw "签名安装包失败（退出码 $LASTEXITCODE）" }
       - name: 校验签名
         if: steps.sign.outputs.signed == 'true'
         shell: pwsh
@@ -301,17 +312,12 @@ jobs:
             Write-Host '::warning title=未校验证书指纹::CERTUM_CERTIFICATE_SHA1 缺失或格式不对，仅校验签名状态'
           }
 
-          $targets = @(
-            'artifacts/publish/portable/WinTools.exe',
-            'artifacts/publish/framework/WinTools.exe',
-            'artifacts/publish/framework/WinTools.dll',
-            'artifacts/publish/framework/WinTools.Core.dll',
-            'artifacts/publish/framework/WinTools.Infrastructure.dll'
-          ) | Where-Object { Test-Path $_ }
-
-          # 安装包也一起签，否则用户双击时仍会看到“未知发布者”
-          $targets += @(Get-ChildItem 'artifacts/publish/*-setup-win-x64.exe' -ErrorAction SilentlyContinue |
-            ForEach-Object { $_.FullName })
+          # 校验范围必须和签名范围一致：单文件 exe + framework 内全部 exe/dll + 安装包
+          $targets = @()
+          $targets += @(Get-ChildItem 'artifacts/publish/portable' -Filter *.exe -File | ForEach-Object { $_.FullName })
+          $targets += @(Get-ChildItem 'artifacts/publish/framework' -Include *.exe, *.dll -File -Recurse | ForEach-Object { $_.FullName })
+          $targets += @(Get-ChildItem 'artifacts/publish/*-setup-win-x64.exe' -File | ForEach-Object { $_.FullName })
+          $targets = @($targets | Where-Object { Test-Path $_ })
 
           $bad = @()
           foreach ($file in $targets) {
@@ -337,25 +343,18 @@ jobs:
           $channel = $env:CHANNEL
           New-Item -ItemType Directory -Force -Path dist | Out-Null
 
-          if ($channel -eq 'beta') {
-            $portableName = 'WinTools-beta-portable-win-x64.exe'
-            $frameworkName = 'WinTools-beta-framework-win-x64.zip'
-          } else {
-            $portableName = "WinTools-$version-portable-win-x64.exe"
-            $frameworkName = "WinTools-$version-framework-win-x64.zip"
-          }
+          # 命名：WinTools-<beta|版本>-<green|frame|setup>-win-x64.<ext>
+          #   green = 单文件便携版，frame = 框架依赖压缩包，setup = 安装包
+          $token = if ($channel -eq 'beta') { 'beta' } else { $version.TrimStart('v', 'V') }
+          $greenName = "WinTools-$token-green-win-x64.exe"
+          $frameName = "WinTools-$token-frame-win-x64.zip"
+          $setupName = "WinTools-$token-setup-win-x64.exe"
 
-          Copy-Item 'artifacts/publish/portable/WinTools.exe' (Join-Path 'dist' $portableName) -Force
+          Copy-Item 'artifacts/publish/portable/WinTools.exe' (Join-Path 'dist' $greenName) -Force
 
-          # 安装包：beta 用固定名，正式版带版本号
-          $setup = Get-ChildItem 'artifacts/publish/*-setup-win-x64.exe' -ErrorAction SilentlyContinue |
+          $setup = Get-ChildItem 'artifacts/publish/*-setup-win-x64.exe' -File -ErrorAction SilentlyContinue |
             Select-Object -First 1
           if ($setup) {
-            $setupName = if ($channel -eq 'beta') {
-              'WinTools-beta-setup-win-x64.exe'
-            } else {
-              "WinTools-$version-setup-win-x64.exe"
-            }
             Copy-Item $setup.FullName (Join-Path 'dist' $setupName) -Force
           }
 
@@ -374,7 +373,7 @@ jobs:
           Copy-Item 'README.md' (Join-Path $fw 'README.md') -Force
           Copy-Item 'LICENSE' (Join-Path $fw 'LICENSE.txt') -Force
 
-          Compress-Archive -Path (Join-Path $fw '*') -DestinationPath (Join-Path 'dist' $frameworkName) -CompressionLevel Optimal
+          Compress-Archive -Path (Join-Path $fw '*') -DestinationPath (Join-Path 'dist' $frameName) -CompressionLevel Optimal
 
           # 校验和放在所有产物生成之后
           Get-ChildItem dist -File | Where-Object { $_.Name -ne 'SHA256SUMS.txt' } | ForEach-Object {
@@ -385,8 +384,9 @@ jobs:
           Get-ChildItem dist | ForEach-Object { "{0,-48} {1,8:N1} MB" -f $_.Name, ($_.Length / 1MB) }
 
           "artifact=wintools-$channel" >> $env:GITHUB_OUTPUT
-          "portable=$portableName" >> $env:GITHUB_OUTPUT
-          "framework=$frameworkName" >> $env:GITHUB_OUTPUT
+          "green=$greenName" >> $env:GITHUB_OUTPUT
+          "frame=$frameName" >> $env:GITHUB_OUTPUT
+          "setup=$setupName" >> $env:GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
         with:

@@ -37,8 +37,8 @@ WinTools تطبيق WPF لا يعمل باستمرار في الخلفية ول�
 
 | النسخة | ملاحظة | الرابط |
 | --- | --- | --- |
-| محمولة | تتضمن بيئة التشغيل، فك الضغط والتشغيل | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| معتمدة على إطار العمل | تحتاج .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| محمولة | تتضمن بيئة التشغيل، فك الضغط والتشغيل | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| معتمدة على إطار العمل | تحتاج .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | تُعاد بناؤها مع كل دفع إلى `main` | [إصدار Beta تجريبي](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 النسخ الرسمية موقّعة سحابيًا من Certum مع ختم زمني، ويمكن التحقق منها عبر `Get-AuthenticodeSignature`. يُرفق ملف `SHA256SUMS.txt` مع كل إصدار.

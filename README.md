@@ -39,8 +39,8 @@ WPF 桌面程序，不在后台常驻，也不自行联网。只有搜索更新�
 
 | 版本 | 说明 | 下载 |
 | --- | --- | --- |
-| 便携版 | 自带运行时，解压即用 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| 框架依赖版 | 需要 .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 便携版 | 自带运行时，解压即用 | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 框架依赖版 | 需要 .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | 每次推送到 `main` 自动重建 | [Beta 预发布](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 各版本体积以 Releases 页面里的实际附件为准。

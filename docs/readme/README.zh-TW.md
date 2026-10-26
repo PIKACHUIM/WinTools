@@ -37,8 +37,8 @@
 
 | 版本 | 說明 | 下載 |
 | --- | --- | --- |
-| 免安裝版 | 自帶執行環境，解壓即用 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| 框架相依版 | 需要 .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 免安裝版 | 自帶執行環境，解壓即用 | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 框架相依版 | 需要 .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | 每次推送到 `main` 自動重建 | [Beta 預覽版](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 正式版具備 Certum 雲端簽章與時間戳，可用 `Get-AuthenticodeSignature` 驗證。每個版本附帶 `SHA256SUMS.txt`。
