@@ -1,6 +1,6 @@
 <p align="center">
-  <b>English</b> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a><br/>
-  <sub>Windows system toolbox · cleanup / tweaks / components / drivers / imaging</sub>
+  <b>简体中文</b> · <a href="docs/readme/README.zh-TW.md">繁體中文</a> · <a href="docs/readme/README.en.md">English</a> · <a href="docs/readme/README.ja.md">日本語</a> · <a href="docs/readme/README.ko.md">한국어</a> · <a href="docs/readme/README.de.md">Deutsch</a><br/>
+  <a href="docs/readme/README.fr.md">Français</a> · <a href="docs/readme/README.es.md">Español</a> · <a href="docs/readme/README.pt.md">Português</a> · <a href="docs/readme/README.it.md">Italiano</a> · <a href="docs/readme/README.ru.md">Русский</a> · <a href="docs/readme/README.ar.md">العربية</a>
 </p>
 
 <p align="center">
@@ -10,164 +10,195 @@
 <h1 align="center">WinTools</h1>
 
 <p align="center">
-  <a href="https://github.com/PIKACHUIM/WinTools/releases"><img src="https://img.shields.io/badge/version-0.1.0-orange" alt="Version"></a>
-  <a href="https://www.microsoft.com/windows"><img src="https://img.shields.io/badge/Windows-10%20%2F%2011-0078D4" alt="Platform"></a>
+  <a href="https://github.com/PIKACHUIM/WinTools/releases"><img src="https://img.shields.io/badge/version-0.1.0-orange" alt="版本"></a>
+  <a href="https://www.microsoft.com/windows"><img src="https://img.shields.io/badge/Windows-10%20%2F%2011-0078D4" alt="平台"></a>
   <a href="https://dotnet.microsoft.com"><img src="https://img.shields.io/badge/.NET-10.0-512BD4" alt=".NET"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-blue" alt="License"></a>
-  <a href="https://github.com/PIKACHUIM/WinTools/actions/workflows/build.yml"><img src="https://github.com/PIKACHUIM/WinTools/actions/workflows/build.yml/badge.svg" alt="Build"></a>
-  <a href="https://wtools.opkg.cn/"><img src="https://img.shields.io/badge/docs-online-41B883" alt="Docs"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-AGPL--3.0-blue" alt="许可"></a>
+  <a href="https://github.com/PIKACHUIM/WinTools/actions/workflows/build.yml"><img src="https://github.com/PIKACHUIM/WinTools/actions/workflows/build.yml/badge.svg" alt="构建"></a>
+  <a href="https://wtools.opkg.cn/"><img src="https://img.shields.io/badge/docs-online-41B883" alt="文档"></a>
 </p>
 
-## Introduction
+## 项目简介
 
-WinTools puts common Windows maintenance tasks into one window: cleaning caches and update leftovers, disabling unwanted telemetry, removing a problematic update, checking what starts with the system, installing missing runtimes, exporting old drivers, and capturing an image before reinstalling.
+WinTools 把常见的系统维护操作放进一个窗口：清缓存和更新残留、关掉不需要的遥测、卸载出问题的补丁、查看开机加载了哪些东西、补装运行库、导出旧驱动、重装前打个镜像。
 
-It is a WPF application that runs locally. No background service, no driver, no scheduled task, no network calls. Close the window and nothing is left running.
+WPF 桌面程序，纯本地运行。不装服务、不加载驱动、不加开机自启、不联网，关掉窗口进程就结束。
 
-Ten modules: **Cleanup, Optimize, Features, Updates, Startup, Components, Runtimes, Apps, Drivers, Backup.**
+十个模块：**垃圾清理、系统优化、功能管理、更新管理、运行管理、组件管理、运行环境、应用管理、驱动管理、备份还原**。
 
-## Requirements
+## 系统要求
 
-- Windows 10 1809 (17763) or later, or Windows 11, x64
-- Framework-dependent build requires [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
-- Administrator rights (declared in the manifest) for DISM, drivers, services and imaging
-- Some features rely on system components shipped with Windows: DISM, Windows Update Agent, `pnputil`, WIMGAPI. They may be missing on heavily trimmed images
+- Windows 10 1809（17763）及以上，或 Windows 11，x64
+- 框架依赖版需要 [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
+- 需要管理员权限（清单里已声明），DISM、驱动、服务、镜像操作都依赖它
+- 部分功能调用系统自带组件：DISM、Windows Update Agent、`pnputil`、WIMGAPI。精简版系统上可能已被移除
 
-## Download
+## 下载地址
 
-| Build | Size | Notes | Link |
+| 版本 | 体积 | 说明 | 下载 |
 | --- | --- | --- | --- |
-| Portable | ~70 MB | Self-contained, unzip and run | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Framework-dependent | ~22 MB | Needs .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Beta | same | Rebuilt on every push to `main` | [releases/tag/beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
+| 便携版 | 约 70 MB | 自带运行时，解压即用 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 框架依赖版 | 约 22 MB | 需要 .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Beta | 同上 | 每次推送到 `main` 自动重建 | [releases/tag/beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
-Release builds are signed with a Certum cloud certificate and timestamped. Verify with `Get-AuthenticodeSignature`. A `SHA256SUMS.txt` is attached to each release.
+正式版带 Certum 云签名与时间戳，可用 `Get-AuthenticodeSignature` 校验。每个版本附带 `SHA256SUMS.txt`。
 
-## Features
+## 功能介绍
 
-### Overview
+点击标题展开对应模块，收起后只占一行。
 
-System version and build, CPU and memory usage, per-disk free space, and recent activity. All data is read locally.
+<details open>
+<summary><b>系统概览</b> — 首屏状态</summary>
 
-![Overview](docs/public/screenshots/dashboard.png)
+系统版本与内部版本号、CPU 与内存占用、各磁盘剩余空间、近期活动。数据全部本地读取。
 
-### Cleanup
+![系统概览](docs/public/screenshots/dashboard.png)
 
-Scans whole disks with 23 categories and 1623 rules covering system temp folders, Windows Update cache, logs and dumps, browser caches, developer caches (npm, pip, NuGet, Gradle, Docker) and the cache directories of 150+ applications.
+</details>
 
-Results are grouped by category with size and safety level. Files locked by running processes are skipped and reported. Rules are plain JSON under `src/WinTools.Infrastructure/Rules/`, so paths can be added without touching code.
+<details>
+<summary><b>垃圾清理</b> — 23 个分类、1623 条规则</summary>
 
-![Cleanup](docs/public/screenshots/cleanup.png)
+按磁盘扫描，覆盖系统临时目录、更新缓存、日志与转储、浏览器缓存、开发工具缓存（npm、pip、NuGet、Gradle、Docker）以及 150 多款软件的缓存目录。
 
-### Optimize
+结果按分类折叠，标出大小和安全等级。被进程占用的文件会跳过并记录，不会卡住整轮清理。规则是纯 JSON，放在 `src/WinTools.Infrastructure/Rules/`，加路径不用改代码。
 
-153 tweaks in 7 groups: privacy and telemetry, performance, File Explorer, system behaviour, network, updates, gaming.
+![垃圾清理](docs/public/screenshots/cleanup.png)
 
-Each entry supports detect, apply and rollback, so the current state can be checked before changing anything. Recommended items are limited to entries with well-known, low-risk effects.
+</details>
 
-![Optimize](docs/public/screenshots/optimize.png)
+<details>
+<summary><b>系统优化</b> — 153 条，7 组</summary>
 
-### Features
+隐私与遥测、性能与响应、资源管理器、系统行为、网络、更新、游戏。
 
-- **System features**: lists all optional features through the DISM API, grouped by purpose, with descriptions and current state. Changes are applied in one batch.
-- **Edition channel**: reads the current SKU, version and activation state. Switching editions uses the built-in `changepk` flow with a generic key and does not activate Windows.
+每条都支持检测、应用、回滚，改之前可以先看当前状态。推荐项只包含副作用明确的条目。
 
-![System features](docs/public/screenshots/features-systemfeatures.png)
+![系统优化](docs/public/screenshots/optimize.png)
 
-### Updates
+</details>
 
-- **Installed updates**: enumerate and uninstall individual updates.
-- **Available updates**: manual search against Windows Update, with category, KB, size and date, batch install and a result summary.
-- **Feature flags**: manage `FeatureManagement\Overrides` by ID with state, priority and variant, plus import, export and reset.
+<details>
+<summary><b>功能管理</b> — 系统功能、系统渠道</summary>
 
-![Available updates](docs/public/screenshots/updates-available.png)
+- **系统功能**：通过 DISM API 列出全部可选功能，按用途分组，带说明与当前状态，改完批量应用。
+- **系统渠道**：读取当前 SKU、版本号与激活状态。切换版本走系统自带的 `changepk`，使用内置通用密钥，不会激活系统。
 
-### Startup
+![系统功能](docs/public/screenshots/features-systemfeatures.png)
 
-Startup entries, scheduled tasks and services in one place. Entries show their real program icon and use switches instead of checkboxes. Services can change their start type inline (Automatic, Automatic delayed, Manual, Disabled).
+</details>
 
-![Startup](docs/public/screenshots/startup-services.png)
+<details>
+<summary><b>更新管理</b> — 已安装更新、可安装补丁、功能开关</summary>
 
-### Components
+- **已安装更新**：枚举并卸载单条更新。
+- **可安装补丁**：手动触发 Windows Update 搜索，显示分类、KB、体积与日期，支持批量安装并给出结果汇总。
+- **功能开关**：按 ID 管理 `FeatureManagement\Overrides`，含状态、优先级、变体，支持导入、导出与重置。
 
-- **Security center**: 14 settings including real-time protection, cloud protection, behaviour monitoring, PUA, network protection, controlled folder access, memory integrity, UAC, SmartScreen and the three firewall profiles, plus exclusions.
-- **System components**: built-in apps (Terminal, Calculator, Notepad, Paint, Photos and others) with install, repair and uninstall; WSL distributions; Android subsystem from a local package; Store repair.
+![可安装补丁](docs/public/screenshots/updates-available.png)
 
-![Security center](docs/public/screenshots/components-securitycenter.png)
+</details>
 
-### Runtimes
+<details>
+<summary><b>运行管理</b> — 启动项、计划任务、服务</summary>
 
-Lists installed .NET and Visual C++ runtimes. Available versions are fetched on demand: .NET from the official `releases-index.json` with SHA512 verification, VC++ from `aka.ms` links with Authenticode verification. Both install silently and can be uninstalled.
+集中在一页。显示程序真实图标，启用状态用开关控制。服务可以行内切换启动类型（自动、延迟自动、手动、禁用）。
 
-![Runtimes](docs/public/screenshots/runtimes-dotnet.png)
+![运行管理](docs/public/screenshots/startup-services.png)
 
-### Apps
+</details>
 
-Installed programs and Appx packages with icon, version, size, install date and last activity. Uninstall runs the vendor's own uninstaller; Appx packages are removed through the deployment API.
+<details>
+<summary><b>组件管理</b> — 安全中心、系统组件</summary>
 
-![Apps](docs/public/screenshots/apps-programs.png)
+- **安全中心**：14 项设置，含实时保护、云保护、行为监控、PUA、网络保护、受控文件夹、内存完整性、UAC、SmartScreen、三个防火墙配置文件，以及排除项。
+- **系统组件**：内置应用（终端、计算器、记事本、画图、照片等）的安装、修复与卸载；WSL 发行版；安卓子系统本地包安装；应用商店修复。
 
-### Drivers
+![安全中心](docs/public/screenshots/components-securitycenter.png)
 
-Single page for the whole DriverStore. Select any number of packages and back them up, remove them, or install from a folder. Every batch shows per-item progress and a result summary.
+</details>
 
-![Drivers](docs/public/screenshots/drivers-systemdrivers.png)
+<details>
+<summary><b>运行环境</b> — .NET 与 VC++ 在线安装</summary>
 
-### Backup
+列出已安装的 .NET 与 Visual C++ 运行时。可安装版本按需拉取：.NET 读官方 `releases-index.json` 并校验 SHA512，VC++ 用 `aka.ms` 链接并校验 Authenticode。两者都静默安装，也能卸载。
 
-WIM capture and apply. Source volume is chosen from a dropdown, the image format (wim / esd / swm) drives the file extension and compression, split size applies to swm, and a default exclusion list is shown before capture. Apply can verify the image and repair the bootloader with `bcdboot`.
+![运行环境](docs/public/screenshots/runtimes-dotnet.png)
 
-![Backup](docs/public/screenshots/backup-capture.png)
+</details>
 
-## Build
+<details>
+<summary><b>应用管理</b> — 已安装程序、应用包</summary>
 
-Requires the .NET 10 SDK.
+显示图标、版本、占用空间、安装日期与最近活动。卸载调用软件自带的卸载程序，应用包走部署接口。
+
+![应用管理](docs/public/screenshots/apps-programs.png)
+
+</details>
+
+<details>
+<summary><b>驱动管理</b> — 单页批量操作</summary>
+
+整页管理 DriverStore。勾选任意数量的驱动包后备份、删除，或从目录安装。批量操作有逐项进度和结果汇总。
+
+![驱动管理](docs/public/screenshots/drivers-systemdrivers.png)
+
+</details>
+
+<details>
+<summary><b>备份还原</b> — WIM 捕获与释放</summary>
+
+源分区用下拉选择，映像格式（wim / esd / swm）联动扩展名与压缩方式，分卷大小只对 swm 生效，捕获前会列出默认排除项。释放时可校验映像，并用 `bcdboot` 修复引导。
+
+![备份还原](docs/public/screenshots/backup-capture.png)
+
+</details>
+
+## 开发构建
+
+需要 .NET 10 SDK。
 
 ```powershell
-# Debug build
+# 调试构建
 dotnet build src/WinTools.App/WinTools.App.csproj
 
-# Release build
+# Release 构建
 dotnet build src/WinTools.App/WinTools.App.csproj -c Release
 
-# Produce both packages under artifacts/publish/{portable,framework}
+# 生成两种发行包 → artifacts/publish/{portable,framework}
 powershell -ExecutionPolicy Bypass -File tools/publish.ps1 -Profile both
 ```
 
-Architecture notes, module internals, rule format and localization are documented at **[wtools.opkg.cn](https://wtools.opkg.cn/)** or in [docs/guide/development.md](docs/guide/development.md).
+架构说明、模块实现、规则格式、本地化与调试技巧见 **[wtools.opkg.cn](https://wtools.opkg.cn/)** 或 [docs/guide/development.md](docs/guide/development.md)。
 
-## References
+## 参考项目
 
-| Project | Used for |
+| 项目 | 借鉴内容 |
 | --- | --- |
-| [winutil](https://github.com/ChrisTitusTech/winutil) | Tweak grouping and the select-then-apply flow |
-| [Optimizer](https://github.com/hellzerg/optimizer) | Tweak categories, risk wording, startup and service layout |
-| [ZyperWinOptimize](https://github.com/ZyperRap/ZyperWinOptimize) | Tweak list and information density for Chinese users |
-| [Dism-Multi-language](https://github.com/Chuyu-Team/Dism-Multi-language) | DISM usage and multilingual resource layout |
-| [Geek Uninstaller](https://geekuninstaller.com/) | Fields shown in the installed programs list |
-| [ViVeTool](https://github.com/thebookisclosed/ViVe) | Feature flag data model and three-state semantics |
+| [winutil](https://github.com/ChrisTitusTech/winutil) | 优化项分组、先选后应用的交互 |
+| [Optimizer](https://github.com/hellzerg/optimizer) | 优化分类、风险提示措辞、启动项与服务组织 |
+| [ZyperWinOptimize](https://github.com/ZyperRap/ZyperWinOptimize) | 中文环境下的优化清单与信息密度 |
+| [Dism-Multi-language](https://github.com/Chuyu-Team/Dism-Multi-language) | DISM 用法与多语言资源组织 |
+| [Geek Uninstaller](https://geekuninstaller.com/) | 已安装程序列表的字段取舍 |
+| [ViVeTool](https://github.com/thebookisclosed/ViVe) | 特性开关的数据结构与三态语义 |
 
-Cleanup rules started from a personal list of cache paths and grew from there. They are maintained as `tools/rules/*.txt` and generated by `tools/Generate-CleanupRules.ps1`.
+清理规则最初来自一份个人整理的缓存路径清单，之后陆续补齐。现在由 `tools/rules/*.txt` 维护，`tools/Generate-CleanupRules.ps1` 生成。
 
-## Disclaimer
+## 免责声明
 
-- The tool modifies the registry, service start types, system features and drivers. Create a restore point or back up important data first.
-- The author is not responsible for data loss or system damage caused by using this tool.
-- Do not use it to bypass software licensing, activation, or any other purpose that violates local law.
+- 工具会修改注册表、服务启动类型、系统功能与驱动。使用前请创建还原点或备份重要数据。
+- 因使用本工具造成的数据丢失或系统损坏，作者不承担责任。
+- 请勿用于绕过软件许可、激活或其他违反当地法律法规的用途。
 
-## License
+## 开源许可
 
 [AGPL-3.0](LICENSE) © WinTools
 
-### Third-party components
+### 第三方组件
 
-| Component | License | Used for |
+| 组件 | 许可 | 用途 |
 | --- | --- | --- |
-| [Maple Mono NF CN](https://github.com/subframe7536/maple-font) | SIL OFL 1.1 | UI font, embedded as TTF |
-| [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet) 8.4.2 | MIT | MVVM source generators |
-| [Microsoft.Extensions.DependencyInjection](https://github.com/dotnet/runtime) 10.0.13 | MIT | Dependency injection |
-| [VitePress](https://vitepress.dev/) | MIT | Documentation site only |
-
-The bundled font is redistributed under OFL-1.1: it may be used, modified and redistributed, but not sold on its own; modified versions must not use the reserved font name; this notice must accompany redistribution. The upstream WOFF2 release was converted to TTF with `tools/Convert-Woff2ToTtf.py` so WPF can embed it; the glyph outlines are unchanged.
-
-`Segoe Fluent Icons` / `Segoe MDL2 Assets` are Windows system fonts and are not redistributed with this program.
+| [Maple Mono NF CN](https://github.com/subframe7536/maple-font) | SIL OFL 1.1 | 界面字体，以 TTF 内嵌 |
+| [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet) 8.4.2 | MIT | MVVM 源生成器 |
+| [Microsoft.Extensions.DependencyInjection](https://github.com/dotnet/runtime) 10.0.13 | MIT | 依赖注入 |
+| [VitePress](https://vitepress.dev/) | MIT | 仅用于文档站 |
