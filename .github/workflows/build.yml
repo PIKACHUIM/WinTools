@@ -388,6 +388,44 @@ jobs:
           "frame=$frameName" >> $env:GITHUB_OUTPUT
           "setup=$setupName" >> $env:GITHUB_OUTPUT
 
+      - name: 校验发布产物
+        if: steps.sign.outputs.signed == 'true'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $expected = ($env:CERTUM_CERTIFICATE_SHA1 -replace '[^0-9a-fA-F]', '').ToUpperInvariant()
+          $strict = $expected.Length -eq 40
+
+          function Assert-Signed([string]$file) {
+            $sig = Get-AuthenticodeSignature -LiteralPath $file
+            $thumb = if ($sig.SignerCertificate) { ($sig.SignerCertificate.Thumbprint -replace '[^0-9a-fA-F]', '').ToUpperInvariant() } else { '' }
+            $ok = if ($strict) {
+              ($thumb -eq $expected) -and ($sig.Status -eq 'Valid')
+            } else {
+              ($sig.Status -eq 'Valid') -and ($null -ne $sig.SignerCertificate)
+            }
+            Write-Host ("  {0,-44} {1,-10} {2}" -f (Split-Path $file -Leaf), $sig.Status, $thumb)
+            if (-not $ok) { throw "签名校验不通过：$file（$($sig.Status)）" }
+          }
+
+          Write-Host '==== 单文件与安装包 ===='
+          Get-ChildItem 'dist' -Filter *.exe -File | ForEach-Object { Assert-Signed $_.FullName }
+
+          # 直接解压 frame 包逐个验签：这是「压缩包里的文件确实带签名」的唯一硬证据
+          $zip = Get-ChildItem 'dist' -Filter *-frame-win-x64.zip -File | Select-Object -First 1
+          if (-not $zip) { throw 'dist 里没有 frame 压缩包' }
+
+          $tmp = Join-Path $env:RUNNER_TEMP 'frame-verify'
+          if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }
+          Expand-Archive -Path $zip.FullName -DestinationPath $tmp -Force
+
+          $inner = @(Get-ChildItem $tmp -Include *.exe, *.dll -File -Recurse)
+          Write-Host "==== $($zip.Name) 内可执行文件 $($inner.Count) 个 ===="
+          if (-not $inner.Count) { throw '压缩包里没有 exe/dll，打包有问题' }
+          foreach ($f in $inner) { Assert-Signed $f.FullName }
+
+          Write-Host '全部发布产物（含压缩包内文件）签名校验通过'
+
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.pack.outputs.artifact }}
