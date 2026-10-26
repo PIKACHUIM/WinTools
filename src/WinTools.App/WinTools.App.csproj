@@ -20,7 +20,6 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" />
   </ItemGroup>
 
   <ItemGroup>

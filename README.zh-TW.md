@@ -158,3 +158,16 @@ powershell -ExecutionPolicy Bypass -File tools/publish.ps1 -Profile both
 ## 開源授權
 
 [AGPL-3.0](LICENSE) © WinTools
+
+### 第三方元件
+
+| 元件 | 授權 | 用途 |
+| --- | --- | --- |
+| [Maple Mono NF CN](https://github.com/subframe7536/maple-font) | SIL OFL 1.1 | 介面字型，以 TTF 內嵌 |
+| [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet) 8.4.2 | MIT | MVVM 來源產生器 |
+| [Microsoft.Extensions.DependencyInjection](https://github.com/dotnet/runtime) 10.0.13 | MIT | 相依性注入 |
+| [VitePress](https://vitepress.dev/) | MIT | 僅用於文件站 |
+
+內嵌字型依 OFL-1.1 再散布：可自由使用、修改與再散布，但不得單獨販售字型本身；修改後的版本不得繼續使用保留字型名稱；再散布時需附上本聲明。上游提供的是 WOFF2，WPF 僅支援 TrueType/OpenType，因此以 `tools/Convert-Woff2ToTtf.py` 轉為 TTF 後內嵌，字形輪廓未作更動。
+
+`Segoe Fluent Icons` / `Segoe MDL2 Assets` 為 Windows 系統內建字型，不隨本程式散布。

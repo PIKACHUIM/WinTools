@@ -282,7 +282,7 @@ py tools/Convert-Woff2ToTtf.py 新字体.woff2 src\WinTools.App\Assets\Fonts\新
 - `#` 后面是**字体族名**（不是文件名），可用 `py tools/Convert-Woff2ToTtf.py` 打印；
 - 逗号后面是回退链，用于字体缺字时（例如生僻符号、Emoji）；
 - 图标仍然使用 `Segoe Fluent Icons`（`App.IconFontFamily`），不要被全局字体覆盖；
-- 新增字体需同时更新 `THIRD-PARTY-NOTICES.md` 的许可声明。
+- 新增字体需同时更新 README 中「第三方组件」一节的许可声明。
 
 ## CI 构建与发布
 

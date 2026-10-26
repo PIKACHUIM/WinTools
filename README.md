@@ -158,3 +158,16 @@ Cleanup rules started from a personal list of cache paths and grew from there. T
 ## License
 
 [AGPL-3.0](LICENSE) © WinTools
+
+### Third-party components
+
+| Component | License | Used for |
+| --- | --- | --- |
+| [Maple Mono NF CN](https://github.com/subframe7536/maple-font) | SIL OFL 1.1 | UI font, embedded as TTF |
+| [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet) 8.4.2 | MIT | MVVM source generators |
+| [Microsoft.Extensions.DependencyInjection](https://github.com/dotnet/runtime) 10.0.13 | MIT | Dependency injection |
+| [VitePress](https://vitepress.dev/) | MIT | Documentation site only |
+
+The bundled font is redistributed under OFL-1.1: it may be used, modified and redistributed, but not sold on its own; modified versions must not use the reserved font name; this notice must accompany redistribution. The upstream WOFF2 release was converted to TTF with `tools/Convert-Woff2ToTtf.py` so WPF can embed it; the glyph outlines are unchanged.
+
+`Segoe Fluent Icons` / `Segoe MDL2 Assets` are Windows system fonts and are not redistributed with this program.

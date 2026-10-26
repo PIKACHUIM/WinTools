@@ -286,6 +286,10 @@ jobs:
             "signed  : $(if ('${{ steps.sign.outputs.signed }}' -eq 'true') { 'yes' } else { 'no' })"
           ) | Set-Content -Path (Join-Path $fw 'BUILD_INFO.txt') -Encoding UTF8
 
+          # 许可与第三方声明随包分发（OFL-1.1 要求再分发时附带声明）
+          Copy-Item 'README.md' (Join-Path $fw 'README.md') -Force
+          Copy-Item 'LICENSE' (Join-Path $fw 'LICENSE.txt') -Force
+
           Compress-Archive -Path (Join-Path $fw '*') -DestinationPath (Join-Path 'dist' $frameworkName) -CompressionLevel Optimal
 
           # 校验和放在所有产物生成之后
