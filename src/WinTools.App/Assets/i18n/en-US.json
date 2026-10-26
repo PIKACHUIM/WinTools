@@ -399,5 +399,7 @@
 
   "Comp.WsaRow": "Android subsystem",
   "Comp.WsaHint": "Install a third-party build",
-  "Comp.PickPackage": "Choose package"
+  "Comp.PickPackage": "Choose package",
+
+  "Flag.NameUnknown": "Feature {0}"
 }

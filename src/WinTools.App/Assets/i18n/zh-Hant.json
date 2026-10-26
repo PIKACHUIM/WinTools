@@ -399,5 +399,7 @@
 
   "Comp.WsaRow": "Android 子系統",
   "Comp.WsaHint": "支援安裝第三方封裝版",
-  "Comp.PickPackage": "選擇安裝包"
+  "Comp.PickPackage": "選擇安裝包",
+
+  "Flag.NameUnknown": "特性 {0}"
 }

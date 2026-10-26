@@ -206,8 +206,10 @@ public sealed partial class FeatureFlagsSectionViewModel : ListSectionViewModel
             // 状态交给开关、优先级交给下拉，行里不再重复显示，避免右侧挤在一起
             var row = new RowItem(
                 entry.FeatureId,
-                entry.FeatureId,
-                Loc.F("Flag.Variant", entry.Variant),
+                string.IsNullOrWhiteSpace(entry.Name)
+                    ? Loc.F("Flag.NameUnknown", entry.FeatureId)
+                    : entry.Name,
+                $"ID {entry.FeatureId} · " + Loc.F("Flag.Variant", entry.Variant),
                 null,
                 null,
                 entry.EnabledState switch

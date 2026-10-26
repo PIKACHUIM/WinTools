@@ -20,9 +20,9 @@
 
 ## 소개
 
-WinTools는 자주 쓰는 시스템 유지 관리를 한 창에 모읍니다. 캐시와 업데이트 잔여물 정리, 불필요한 원격 측정 끄기, 문제 있는 업데이트 제거, 시작 프로그램 확인, 런타임 추가 설치, 오래된 드라이버 내보내기, 재설치 전 이미지 만들기.
+Windows를 다시 설치하기 전 드라이버를 백업하고, 오래된 프로그램에 필요한 런타임을 찾고, 쌓인 업데이트 캐시를 정리하는 일은 여기저기 도구를 오가게 만듭니다. WinTools는 이런 자주 하는 작업을 한 데스크톱 앱에 모았습니다.
 
-WPF 데스크톱 앱이며 전부 로컬에서 동작합니다. 서비스도, 상주 프로세스도, 시작 프로그램도, 네트워크 통신도 없습니다. 창을 닫으면 끝납니다.
+WPF 앱이며 백그라운드에 상주하거나 시작 프로그램에 등록되지 않습니다. 업데이트 검색, 런타임 다운로드, WSL 온라인 배포판 목록을 요청할 때만 네트워크에 연결합니다. 창을 닫으면 앱이 종료됩니다.
 
 모듈 10개: **정리, 최적화, 기능 관리, 업데이트 관리, 시작 관리, 구성 요소 관리, 런타임, 앱 관리, 드라이버 관리, 백업**.
 
@@ -35,11 +35,11 @@ WPF 데스크톱 앱이며 전부 로컬에서 동작합니다. 서비스도, �
 
 ## 다운로드
 
-| 빌드 | 크기 | 설명 | 링크 |
-| --- | --- | --- | --- |
-| 포터블 | 약 70 MB | 런타임 포함, 압축 해제 후 실행 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| 프레임워크 종속 | 약 22 MB | .NET 10 Desktop Runtime 필요 | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Beta | 동일 | `main` 푸시마다 자동 재빌드 | [releases/tag/beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
+| 빌드 | 설명 | 링크 |
+| --- | --- | --- |
+| 포터블 | 런타임 포함, 압축 해제 후 실행 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 프레임워크 종속 | .NET 10 Desktop Runtime 필요 | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Beta | `main` 푸시마다 자동 재빌드 | [Beta 프리릴리스](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 정식 버전에는 Certum 클라우드 서명과 타임스탬프가 있습니다. `Get-AuthenticodeSignature`로 확인할 수 있으며, 각 릴리스에 `SHA256SUMS.txt`가 함께 제공됩니다.
 
@@ -143,7 +143,7 @@ WPF 데스크톱 앱이며 전부 로컬에서 동작합니다. 서비스도, �
 
 ### 앱 관리
 
-아이콘, 버전, 차지하는 공간, 설치 날짜, 최근 사용을 표시합니다. 제거는 각 프로그램의 제거 프로그램을 호출하고, 패키지는 배포 API를 사용합니다.
+아이콘, 버전, 예상 크기와 설치 정보를 확인할 수 있습니다. 일반 프로그램은 자체 제거 프로그램을 실행하고, Appx 패키지는 Windows 기본 패키지 관리 도구로 처리합니다.
 
 <details>
 <summary>스크린샷</summary>

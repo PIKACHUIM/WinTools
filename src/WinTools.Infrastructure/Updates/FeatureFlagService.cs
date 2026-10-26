@@ -48,7 +48,8 @@ public sealed class FeatureFlagService : IFeatureFlagService
                     ReadInt(key, "EnabledStateOptions", 0),
                     ReadInt(key, "Variant", 0),
                     ReadInt(key, "VariantPayloadKind", 0),
-                    ReadInt(key, "Priority", 0)));
+                    ReadInt(key, "Priority", 0),
+                    FeatureNames.GetValueOrDefault(featureId)));
             }
         }
         catch (Exception ex)

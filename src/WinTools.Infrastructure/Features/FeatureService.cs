@@ -107,6 +107,18 @@ public sealed partial class FeatureService : IFeatureService
         var displayVersion = key?.GetValue("DisplayVersion") as string ?? string.Empty;
         var build = key?.GetValue("CurrentBuild") as string ?? Environment.OSVersion.Version.Build.ToString();
         var ubr = key?.GetValue("UBR");
+
+        // 注册表里的 ProductName 从 Windows 11 起一直是「Windows 10 ...」，
+        // 微软没有更新过这个值，只能按构建号纠正，否则渠道页会把 Win11 显示成 Win10。
+        if (int.TryParse(build, out var buildNumber) && buildNumber >= 22000)
+        {
+            productName = productName.Replace("Windows 10", "Windows 11", StringComparison.OrdinalIgnoreCase);
+
+            if (!productName.Contains("Windows 11", StringComparison.OrdinalIgnoreCase))
+            {
+                productName = "Windows 11 " + productName;
+            }
+        }
         var installationType = key?.GetValue("InstallationType") as string ?? "Client";
 
         var licensing = Wmi.Query(

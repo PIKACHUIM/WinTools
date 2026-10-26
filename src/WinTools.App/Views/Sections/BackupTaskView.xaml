@@ -4,11 +4,11 @@
 
     <UserControl.Resources>
         <Style x:Key="FieldLabel" TargetType="TextBlock" BasedOn="{StaticResource CaptionText}">
-            <Setter Property="Margin" Value="0,0,0,4" />
+            <Setter Property="Margin" Value="0,0,0,5" />
         </Style>
 
         <Style x:Key="FieldBox" TargetType="TextBox">
-            <Setter Property="Height" Value="32" />
+            <Setter Property="Height" Value="34" />
             <Setter Property="Padding" Value="10,6" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Background" Value="{DynamicResource App.SurfaceAlt}" />
@@ -16,91 +16,92 @@
             <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
             <Setter Property="CaretBrush" Value="{DynamicResource App.Text.Primary}" />
         </Style>
+
+        <Style x:Key="FieldCombo" TargetType="ComboBox">
+            <Setter Property="Height" Value="34" />
+            <Setter Property="Padding" Value="10,0" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Background" Value="{DynamicResource App.SurfaceAlt}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
+        </Style>
+
+        <!-- 每组选项之间留出稳定的竖直间距，避免标签压到输入框 -->
+        <Style x:Key="FieldRow" TargetType="StackPanel">
+            <Setter Property="Margin" Value="0,0,0,16" />
+        </Style>
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-    <Border Style="{StaticResource Card}" Padding="20" VerticalAlignment="Top">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <Border Style="{StaticResource Card}" Padding="22,20" VerticalAlignment="Top">
+            <StackPanel>
 
-            <TextBlock Grid.Row="0" Text="{Binding TitleText}" Style="{StaticResource SectionTitle}" />
+                <TextBlock Text="{Binding TitleText}" Style="{StaticResource SectionTitle}" />
 
-            <!-- 表单 -->
-            <Grid Grid.Row="1" Margin="0,14,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                <!-- 源分区 / 映像文件 -->
+                <Grid Margin="0,18,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="18" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <!-- 源目录 -->
-                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,12,12"
-                            Visibility="{Binding ShowSource, Converter={StaticResource BoolToVisibility}}">
-                    <TextBlock Text="{Binding SourceLabel}" Style="{StaticResource FieldLabel}" />
-                    <ComboBox Height="34" ItemsSource="{Binding Volumes}" DisplayMemberPath="Name"
-                              SelectedItem="{Binding SelectedVolume, Mode=TwoWay}"
-                              Background="{DynamicResource App.SurfaceAlt}"
-                              BorderBrush="{DynamicResource App.Border}"
-                              Foreground="{DynamicResource App.Text.Primary}" Padding="10,0" />
-                </StackPanel>
+                    <StackPanel Grid.Column="0" Style="{StaticResource FieldRow}"
+                                Visibility="{Binding ShowSource, Converter={StaticResource BoolToVisibility}}">
+                        <TextBlock Text="{Binding SourceLabel}" Style="{StaticResource FieldLabel}" />
+                        <ComboBox Style="{StaticResource FieldCombo}"
+                                  ItemsSource="{Binding Volumes}"
+                                  DisplayMemberPath="Name"
+                                  SelectedItem="{Binding SelectedVolume, Mode=TwoWay}" />
+                    </StackPanel>
 
-                <!-- 映像路径 -->
-                <StackPanel Grid.Row="0" Grid.Column="1" Margin="12,0,0,12">
+                    <!-- 名称/描述只在备份时出现，占右列 -->
+                    <StackPanel Grid.Column="2" Style="{StaticResource FieldRow}"
+                                Visibility="{Binding ShowImageSettings, Converter={StaticResource BoolToVisibility}}">
+                        <TextBlock Text="{Binding NameLabel}" Style="{StaticResource FieldLabel}" />
+                        <TextBox Style="{StaticResource FieldBox}"
+                                 Text="{Binding ImageName, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- 映像文件：备份和释放都要，独占整行 -->
+                <StackPanel Style="{StaticResource FieldRow}">
                     <TextBlock Text="{Binding ImageLabel}" Style="{StaticResource FieldLabel}" />
                     <TextBox Style="{StaticResource FieldBox}"
                              Text="{Binding ImagePath, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 
-                <!-- 映像名称 -->
-                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,12,12"
-                            Visibility="{Binding ShowImageSettings, Converter={StaticResource BoolToVisibility}}">
-                    <TextBlock Text="{Binding NameLabel}" Style="{StaticResource FieldLabel}" />
-                    <TextBox Style="{StaticResource FieldBox}"
-                             Text="{Binding ImageName, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
-
-                <!-- 描述 -->
-                <StackPanel Grid.Row="1" Grid.Column="1" Margin="12,0,0,12"
+                <!-- 映像描述 -->
+                <StackPanel Style="{StaticResource FieldRow}"
                             Visibility="{Binding ShowImageSettings, Converter={StaticResource BoolToVisibility}}">
                     <TextBlock Text="{Binding DescriptionLabel}" Style="{StaticResource FieldLabel}" />
                     <TextBox Style="{StaticResource FieldBox}"
                              Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 
-                <!-- 释放目标目录 -->
-                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,12,12"
-                            Visibility="{Binding ShowApplySettings, Converter={StaticResource BoolToVisibility}}">
-                    <TextBlock Text="{Binding TargetLabel}" Style="{StaticResource FieldLabel}" />
-                    <TextBox Style="{StaticResource FieldBox}"
-                             Text="{Binding TargetPath, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
+                <!-- 释放目标 / 索引 -->
+                <Grid Visibility="{Binding ShowApplySettings, Converter={StaticResource BoolToVisibility}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="18" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <!-- 索引 + 校验 -->
-                <StackPanel Grid.Row="1" Grid.Column="1" Margin="12,0,0,12" Orientation="Horizontal"
-                            Visibility="{Binding ShowApplySettings, Converter={StaticResource BoolToVisibility}}">
-                    <StackPanel Width="120">
+                    <StackPanel Grid.Column="0" Style="{StaticResource FieldRow}">
+                        <TextBlock Text="{Binding TargetLabel}" Style="{StaticResource FieldLabel}" />
+                        <TextBox Style="{StaticResource FieldBox}"
+                                 Text="{Binding TargetPath, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Style="{StaticResource FieldRow}">
                         <TextBlock Text="{Binding IndexLabel}" Style="{StaticResource FieldLabel}" />
                         <TextBox Style="{StaticResource FieldBox}"
                                  Text="{Binding ImageIndex, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
-                    <CheckBox Style="{StaticResource AppCheckBox}" Content="{Binding VerifyLabel}"
-                              IsChecked="{Binding Verify}" Margin="12,24,0,0" VerticalAlignment="Top" />
-                    <CheckBox Style="{StaticResource AppCheckBox}" Content="{Binding RepairBootLabel}"
-                              IsChecked="{Binding RepairBoot}" Margin="10,24,0,0" VerticalAlignment="Top" />
-                </StackPanel>
+                </Grid>
 
                 <!-- 压缩级别 -->
-                <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,4"
+                <StackPanel Style="{StaticResource FieldRow}"
                             Visibility="{Binding ShowImageSettings, Converter={StaticResource BoolToVisibility}}">
                     <TextBlock Text="{Binding CompressionLabel}" Style="{StaticResource FieldLabel}" />
                     <ListBox ItemsSource="{Binding CompressionOptions}"
@@ -116,64 +117,82 @@
                     </ListBox>
                 </StackPanel>
 
-                <!-- 格式与分卷 -->
-                <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,0,6"
+                <!-- 映像格式 / 分卷大小 -->
+                <Grid Margin="0,0,0,16"
                       Visibility="{Binding ShowImageSettings, Converter={StaticResource BoolToVisibility}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="18" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                    <StackPanel Grid.Column="0">
                         <TextBlock Text="{Binding FormatLabel}" Style="{StaticResource FieldLabel}" />
-                        <ComboBox Height="34" ItemsSource="{Binding Formats}"
-                                  SelectedIndex="{Binding SelectedFormatIndex, Mode=TwoWay}"
-                                  Background="{DynamicResource App.SurfaceAlt}"
-                                  BorderBrush="{DynamicResource App.Border}"
-                                  Foreground="{DynamicResource App.Text.Primary}" Padding="10,0" />
+                        <ComboBox Style="{StaticResource FieldCombo}"
+                                  ItemsSource="{Binding Formats}"
+                                  SelectedIndex="{Binding SelectedFormatIndex, Mode=TwoWay}" />
                     </StackPanel>
 
-                    <StackPanel Grid.Column="1" Margin="12,0,0,0" IsEnabled="{Binding IsSplitEnabled}">
+                    <StackPanel Grid.Column="2" IsEnabled="{Binding IsSplitEnabled}">
                         <TextBlock Text="{Binding SplitLabel}" Style="{StaticResource FieldLabel}" />
-                        <ComboBox Height="34" ItemsSource="{Binding SplitSizes}"
-                                  SelectedIndex="{Binding SelectedSplitSizeIndex, Mode=TwoWay}"
-                                  Background="{DynamicResource App.SurfaceAlt}"
-                                  BorderBrush="{DynamicResource App.Border}"
-                                  Foreground="{DynamicResource App.Text.Primary}" Padding="10,0" />
+                        <ComboBox Style="{StaticResource FieldCombo}"
+                                  ItemsSource="{Binding SplitSizes}"
+                                  SelectedIndex="{Binding SelectedSplitSizeIndex, Mode=TwoWay}" />
                     </StackPanel>
                 </Grid>
 
-                <!-- 排除项 -->
-                <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="0,48,0,0"
+                <!-- 排除项：独立一行，不再和上面的控件挤在同一格 -->
+                <StackPanel Style="{StaticResource FieldRow}"
                             Visibility="{Binding ShowImageSettings, Converter={StaticResource BoolToVisibility}}">
                     <TextBlock Text="{Binding ExcludesLabel}" Style="{StaticResource FieldLabel}" />
-                    <TextBlock Text="{Binding ExcludesText}" Style="{StaticResource CaptionText}"
-                               TextWrapping="Wrap" Foreground="{DynamicResource App.Text.Secondary}" />
+                    <Border Background="{DynamicResource App.SurfaceAlt}"
+                            BorderBrush="{DynamicResource App.Border}" BorderThickness="1"
+                            CornerRadius="8" Padding="12,9">
+                        <TextBlock Text="{Binding ExcludesText}" Style="{StaticResource CaptionText}"
+                                   TextWrapping="Wrap" />
+                    </Border>
                 </StackPanel>
-            </Grid>
 
-            <!-- 操作与进度 -->
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
-                <Button Content="{Binding StartLabel}" Style="{StaticResource PrimaryButton}"
-                        Command="{Binding StartCommand}" Padding="18,8" />
-                <ProgressBar Style="{StaticResource AppProgress}" Width="220" Height="4" Margin="16,0,0,0"
-                             VerticalAlignment="Center" Maximum="100" Value="{Binding ProgressPercent}"
-                             Visibility="{Binding ShowProgress, Converter={StaticResource BoolToVisibility}}" />
-                <TextBlock Text="{Binding Status}" Style="{StaticResource CaptionText}" Margin="14,0,0,0"
-                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
-                           Visibility="{Binding HasStatus, Converter={StaticResource BoolToVisibility}}" />
+                <!-- 复选框：单独一行，自动换行 -->
+                <WrapPanel Margin="0,0,0,18">
+                    <CheckBox Style="{StaticResource AppCheckBox}" Content="{Binding VerifyLabel}"
+                              IsChecked="{Binding Verify}"
+                              Visibility="{Binding ShowApplySettings, Converter={StaticResource BoolToVisibility}}" />
+                    <CheckBox Style="{StaticResource AppCheckBox}" Content="{Binding RepairBootLabel}"
+                              IsChecked="{Binding RepairBoot}" Margin="20,0,0,0"
+                              Visibility="{Binding ShowApplySettings, Converter={StaticResource BoolToVisibility}}" />
+                </WrapPanel>
+
+                <!-- 操作与进度 -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Content="{Binding StartLabel}" Style="{StaticResource PrimaryButton}"
+                            Command="{Binding StartCommand}" Padding="20,8" VerticalAlignment="Center" />
+
+                    <StackPanel Grid.Column="1" Margin="18,0,0,0" VerticalAlignment="Center">
+                        <ProgressBar Style="{StaticResource AppProgress}" Height="4" Maximum="100"
+                                     Value="{Binding ProgressPercent}"
+                                     Visibility="{Binding ShowProgress, Converter={StaticResource BoolToVisibility}}" />
+                        <TextBlock Text="{Binding Status}" Style="{StaticResource CaptionText}" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"
+                                   Visibility="{Binding HasStatus, Converter={StaticResource BoolToVisibility}}" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- 日志 -->
+                <Border Style="{StaticResource SoftCard}" Margin="0,16,0,0" Padding="12"
+                        Visibility="{Binding Log, Converter={StaticResource StringToVisibility}}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding LogLabel}" Style="{StaticResource FieldLabel}" />
+                        <TextBlock Text="{Binding Log}" Style="{StaticResource CaptionText}" TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+
             </StackPanel>
-
-            <!-- 日志 -->
-            <Border Grid.Row="3" Style="{StaticResource SoftCard}" Margin="0,14,0,0" Padding="12"
-                    Visibility="{Binding Log, Converter={StaticResource StringToVisibility}}">
-                <StackPanel>
-                    <TextBlock Text="{Binding LogLabel}" Style="{StaticResource FieldLabel}" />
-                    <TextBlock Text="{Binding Log}" Style="{StaticResource CaptionText}" TextWrapping="Wrap"
-                               Foreground="{DynamicResource App.Text.Secondary}" />
-                </StackPanel>
-            </Border>
-        </Grid>
-    </Border>
+        </Border>
     </ScrollViewer>
 </UserControl>

@@ -399,5 +399,7 @@
 
   "Comp.WsaRow": "Sous-système Android",
   "Comp.WsaHint": "Installer une version tierce",
-  "Comp.PickPackage": "Choisir le paquet"
+  "Comp.PickPackage": "Choisir le paquet",
+
+  "Flag.NameUnknown": "Fonctionnalité {0}"
 }

@@ -399,5 +399,7 @@
 
   "Comp.WsaRow": "Android 하위 시스템",
   "Comp.WsaHint": "타사 빌드 설치",
-  "Comp.PickPackage": "패키지 선택"
+  "Comp.PickPackage": "패키지 선택",
+
+  "Flag.NameUnknown": "기능 {0}"
 }

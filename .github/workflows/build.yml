@@ -226,6 +226,14 @@ jobs:
           pwsh -NoProfile -ExecutionPolicy Bypass -File tools/publish.ps1 -Profile both -Version $env:VERSION
           if ($LASTEXITCODE -ne 0) { throw '发布失败' }
 
+      - name: 打包安装程序
+        shell: pwsh
+        run: |
+          # Inno Setup 生成 WinTools-<版本>-setup-win-x64.exe，随后与主程序一起签名
+          choco install innosetup --no-progress -y
+          pwsh -NoProfile -ExecutionPolicy Bypass -File tools/build-installer.ps1 -Version $env:VERSION
+          if ($LASTEXITCODE -ne 0) { throw '安装包构建失败' }
+
       - name: 签名产物
         id: sign
         if: steps.creds.outputs.enabled == 'true'
@@ -239,6 +247,10 @@ jobs:
             'artifacts/publish/framework/WinTools.Core.dll',
             'artifacts/publish/framework/WinTools.Infrastructure.dll'
           ) | Where-Object { Test-Path $_ }
+
+          # 安装包也一起签，否则用户双击时仍会看到“未知发布者”
+          $targets += @(Get-ChildItem 'artifacts/publish/*-setup-win-x64.exe' -ErrorAction SilentlyContinue |
+            ForEach-Object { $_.FullName })
 
           try {
             # 1) 装 SimplySign Desktop + 注册表预配置（登录框自动弹出、断开后不注销证书）
@@ -280,6 +292,10 @@ jobs:
             'artifacts/publish/framework/WinTools.Infrastructure.dll'
           ) | Where-Object { Test-Path $_ }
 
+          # 安装包也一起签，否则用户双击时仍会看到“未知发布者”
+          $targets += @(Get-ChildItem 'artifacts/publish/*-setup-win-x64.exe' -ErrorAction SilentlyContinue |
+            ForEach-Object { $_.FullName })
+
           $bad = @()
           foreach ($file in $targets) {
             $sig = Get-AuthenticodeSignature -LiteralPath $file
@@ -309,6 +325,18 @@ jobs:
           }
 
           Copy-Item 'artifacts/publish/portable/WinTools.exe' (Join-Path 'dist' $portableName) -Force
+
+          # 安装包：beta 用固定名，正式版带版本号
+          $setup = Get-ChildItem 'artifacts/publish/*-setup-win-x64.exe' -ErrorAction SilentlyContinue |
+            Select-Object -First 1
+          if ($setup) {
+            $setupName = if ($channel -eq 'beta') {
+              'WinTools-beta-setup-win-x64.exe'
+            } else {
+              "WinTools-$version-setup-win-x64.exe"
+            }
+            Copy-Item $setup.FullName (Join-Path 'dist' $setupName) -Force
+          }
 
           # 框架包内附构建信息，便于用户与工单核对
           $fw = 'artifacts/publish/framework'

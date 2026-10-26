@@ -20,9 +20,9 @@
 
 ## 專案簡介
 
-WinTools 把常見的系統維護工作集中到一個視窗：清理快取與更新殘留、關閉不需要的遙測、移除有問題的更新、查看開機載入了哪些項目、補裝執行環境、匯出舊驅動、重裝系統前建立映像。
+重裝系統前得先備份驅動，舊軟體缺執行環境時要找安裝包，更新快取也會越積越多；查這些設定，往往得在好幾個系統工具之間來回切。WinTools 把常用的維護工作放在同一個桌面程式裡，不必每次重新找入口。
 
-WPF 桌面程式，完全在本機執行。不裝服務、不載入驅動、不加入開機啟動、不連網，關閉視窗後行程即結束。
+它是 WPF 桌面工具，不會在背景常駐，也不會自行連網。只有搜尋更新、下載執行環境或查詢 WSL 線上發行版時才會連線；關閉視窗後程式就結束。
 
 十個模組：**垃圾清理、系統優化、功能管理、更新管理、執行管理、元件管理、執行環境、應用管理、驅動管理、備份還原**。
 
@@ -35,11 +35,11 @@ WPF 桌面程式，完全在本機執行。不裝服務、不載入驅動、不�
 
 ## 下載
 
-| 版本 | 大小 | 說明 | 下載 |
-| --- | --- | --- | --- |
-| 免安裝版 | 約 70 MB | 自帶執行環境，解壓即用 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| 框架相依版 | 約 22 MB | 需要 .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Beta | 同上 | 每次推送到 `main` 自動重建 | [releases/tag/beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
+| 版本 | 說明 | 下載 |
+| --- | --- | --- |
+| 免安裝版 | 自帶執行環境，解壓即用 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 框架相依版 | 需要 .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Beta | 每次推送到 `main` 自動重建 | [Beta 預覽版](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 正式版具備 Certum 雲端簽章與時間戳，可用 `Get-AuthenticodeSignature` 驗證。每個版本附帶 `SHA256SUMS.txt`。
 
@@ -143,7 +143,7 @@ WPF 桌面程式，完全在本機執行。不裝服務、不載入驅動、不�
 
 ### 應用管理
 
-顯示圖示、版本、占用空間、安裝日期與最近使用。移除時呼叫軟體自帶的移除程式，應用程式套件則走部署介面。
+可查看圖示、版本、大小與安裝資訊。移除一般程式時會呼叫原廠卸載程式；Appx 套件則使用 Windows 內建的套件管理工具。
 
 <details>
 <summary>截圖</summary>

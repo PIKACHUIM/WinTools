@@ -399,5 +399,7 @@
 
   "Comp.WsaRow": "Подсистема Android",
   "Comp.WsaHint": "Установить стороннюю сборку",
-  "Comp.PickPackage": "Выбрать пакет"
+  "Comp.PickPackage": "Выбрать пакет",
+
+  "Flag.NameUnknown": "Функция {0}"
 }

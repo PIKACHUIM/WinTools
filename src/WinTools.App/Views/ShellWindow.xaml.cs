@@ -30,8 +30,13 @@ public partial class ShellWindow
         BootTrace.Log("InitializeComponent done");
         DataContext = viewModel;
 
-        Width = settings.Current.WindowWidth;
-        Height = settings.Current.WindowHeight;
+        // 大屏上开得更大，小屏则收在可用工作区内，避免窗口超出屏幕
+        var work = SystemParameters.WorkArea;
+        var width = Math.Max(settings.Current.WindowWidth, 1380);
+        var height = Math.Max(settings.Current.WindowHeight, 880);
+
+        Width = Math.Min(width, work.Width * 0.94);
+        Height = Math.Min(height, work.Height * 0.94);
 
         if (settings.Current.WindowMaximized)
         {

@@ -20,9 +20,9 @@
 
 ## 概要
 
-WinTools はよく使うシステム保守を 1 つのウィンドウにまとめます。キャッシュと更新の残骸の削除、不要なテレメトリの停止、問題のある更新の削除、スタートアップの確認、ランタイムの追加インストール、古いドライバーのエクスポート、再インストール前のイメージ作成。
+Windows のメンテナンスは細かな作業がいくつもあります。更新の残骸を片づけたり、起動時に何が動くか確認したり、古いアプリに必要なランタイムを探したり。WinTools は、こうした作業をひとつのデスクトップ アプリにまとめます。
 
-WPF デスクトップ アプリで、すべてローカルで動作します。サービスも常駐プロセスも起動項目もネットワーク通信もありません。ウィンドウを閉じれば終了します。
+WPF アプリで、バックグラウンドには常駐せず、スタートアップにも登録しません。更新検索、ランタイムのダウンロード、WSL のオンライン一覧を開くときだけネットワークに接続します。ウィンドウを閉じれば終了します。
 
 10 個のモジュール: **クリーンアップ、最適化、機能管理、更新管理、起動管理、コンポーネント管理、ランタイム、アプリ管理、ドライバー管理、バックアップ**.
 
@@ -35,11 +35,11 @@ WPF デスクトップ アプリで、すべてローカルで動作します。
 
 ## ダウンロード
 
-| 版 | サイズ | 説明 | リンク |
-| --- | --- | --- | --- |
-| ポータブル | 約 70 MB | ランタイム同梱、解凍して実行 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| フレームワーク依存 | 約 22 MB | .NET 10 Desktop Runtime が必要 | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Beta | 同上 | `main` への push ごとに再ビルド | [releases/tag/beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
+| 版 | 説明 | リンク |
+| --- | --- | --- |
+| ポータブル | ランタイム同梱、解凍して実行 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| フレームワーク依存 | .NET 10 Desktop Runtime が必要 | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Beta | `main` への push ごとに再ビルド | [Beta プレリリース](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 正式版は Certum のクラウド署名とタイムスタンプ付き。`Get-AuthenticodeSignature` で検証できます。各リリースに `SHA256SUMS.txt` を添付しています。
 
@@ -143,7 +143,7 @@ WPF デスクトップ アプリで、すべてローカルで動作します。
 
 ### アプリ管理
 
-アイコン、バージョン、サイズ、インストール日、最近の使用を表示します。アンインストールは各ソフトのアンインストーラーを呼び、パッケージは配置 API を使用します。
+アイコン、バージョン、サイズ、インストール情報を確認できます。通常のプログラムは付属のアンインストーラーで削除し、Appx パッケージは Windows 標準の管理コマンドで処理します。
 
 <details>
 <summary>スクリーンショット</summary>

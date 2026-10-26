@@ -399,5 +399,7 @@
 
   "Comp.WsaRow": "安卓子系统",
   "Comp.WsaHint": "支持安装第三方打包版",
-  "Comp.PickPackage": "选择安装包"
+  "Comp.PickPackage": "选择安装包",
+
+  "Flag.NameUnknown": "特性 {0}"
 }

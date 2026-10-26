@@ -399,5 +399,7 @@
 
   "Comp.WsaRow": "Android サブシステム",
   "Comp.WsaHint": "サードパーティ版をインストール",
-  "Comp.PickPackage": "パッケージを選択"
+  "Comp.PickPackage": "パッケージを選択",
+
+  "Flag.NameUnknown": "機能 {0}"
 }

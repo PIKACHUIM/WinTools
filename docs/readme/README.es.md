@@ -20,9 +20,9 @@
 
 ## Introducción
 
-WinTools reúne el mantenimiento habitual del sistema en una sola ventana: limpiar cachés y restos de actualizaciones, desactivar telemetría innecesaria, quitar una actualización problemática, revisar qué arranca con el sistema, instalar runtimes que falten, exportar controladores antiguos, crear una imagen antes de reinstalar.
+Antes de reinstalar Windows toca guardar los controladores; algunos programas antiguos necesitan un runtime y la caché de actualizaciones acaba creciendo. Para estas tareas solemos ir saltando entre varias herramientas del sistema. WinTools reúne las más habituales en una aplicación de escritorio.
 
-Aplicación WPF, totalmente local. Sin servicio, sin controlador, sin inicio automático, sin conexión de red. Al cerrar la ventana el proceso termina.
+Es una aplicación WPF: no se queda ejecutándose en segundo plano ni se añade al inicio. Solo se conecta al buscar actualizaciones, descargar runtimes o consultar la lista en línea de distribuciones WSL. Al cerrar la ventana, el proceso termina.
 
 Diez módulos: **Limpieza, Optimización, Funciones, Actualizaciones, Inicio, Componentes, Runtimes, Aplicaciones, Controladores, Copia de seguridad.**
 
@@ -35,11 +35,11 @@ Diez módulos: **Limpieza, Optimización, Funciones, Actualizaciones, Inicio, Co
 
 ## Descarga
 
-| Versión | Tamaño | Nota | Enlace |
-| --- | --- | --- | --- |
-| Portátil | ~70 MB | Runtime incluido, descomprimir y ejecutar | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Dependiente del framework | ~22 MB | Requiere .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Beta | igual | Se recompila en cada push a `main` | [releases/tag/beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
+| Versión | Nota | Enlace |
+| --- | --- | --- |
+| Portátil | Runtime incluido, descomprimir y ejecutar | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Dependiente del framework | Requiere .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Beta | Se recompila en cada push a `main` | [Versión preliminar Beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 Las versiones oficiales llevan firma en la nube de Certum con sello de tiempo, verificable con `Get-AuthenticodeSignature`. Cada versión incluye `SHA256SUMS.txt`.
 
@@ -143,7 +143,7 @@ Lista los runtimes .NET y Visual C++ instalados. Las versiones disponibles se ob
 
 ### Aplicaciones
 
-Muestra icono, versión, tamaño, fecha de instalación y última actividad. La desinstalación ejecuta el desinstalador del fabricante; los paquetes usan la API de implementación.
+Muestra iconos, versiones, tamaño estimado e información de instalación. Para desinstalar un programa ejecuta su propio desinstalador; los paquetes Appx se gestionan con las herramientas incluidas en Windows.
 
 <details>
 <summary>Captura de pantalla</summary>

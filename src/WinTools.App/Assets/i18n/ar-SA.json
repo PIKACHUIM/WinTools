@@ -399,5 +399,7 @@
 
   "Comp.WsaRow": "النظام الفرعي أندرويد",
   "Comp.WsaHint": "تثبيت إصدار طرف ثالث",
-  "Comp.PickPackage": "اختيار الحزمة"
+  "Comp.PickPackage": "اختيار الحزمة",
+
+  "Flag.NameUnknown": "الميزة {0}"
 }

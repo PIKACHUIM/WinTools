@@ -20,11 +20,13 @@
 
 ## 项目简介
 
-WinTools 把常见的系统维护操作放进一个窗口：清缓存和更新残留、关掉不需要的遥测、卸载出问题的补丁、查看开机加载了哪些东西、补装运行库、导出旧驱动、重装前打个镜像。
+WinTools 是一个 Windows 系统工具箱，把常用的维护功能收在一个程序里，共十个模块、上百项可执行操作：
 
-WPF 桌面程序，纯本地运行。不装服务、不加载驱动、不加开机自启、不联网，关掉窗口进程就结束。
+**垃圾清理**（23 个分类、1623 条规则）、**系统优化**（153 条优化项）、**功能管理**（系统功能与版本渠道）、**更新管理**（补丁卸载、可安装更新、功能开关）、**运行管理**（启动项、计划任务、服务）、**组件管理**（安全中心 14 项设置、内置应用、WSL、安卓子系统）、**运行环境**（.NET 与 VC++ 在线安装）、**应用管理**（程序与应用包）、**驱动管理**（批量备份/安装/删除）、**备份还原**（WIM 捕获与释放）。
 
-十个模块：**垃圾清理、系统优化、功能管理、更新管理、运行管理、组件管理、运行环境、应用管理、驱动管理、备份还原**。
+WPF 桌面程序，不在后台常驻，也不自行联网。只有搜索更新、下载运行库或查询 WSL 在线发行版时才会连接网络；关掉窗口，程序就退出。
+
+支持**垃圾清理、系统优化、功能管理、更新管理、运行管理、组件管理、运行环境、应用管理、驱动管理、备份还原**。
 
 ## 系统要求
 
@@ -35,11 +37,13 @@ WPF 桌面程序，纯本地运行。不装服务、不加载驱动、不加开�
 
 ## 下载地址
 
-| 版本 | 体积 | 说明 | 下载 |
-| --- | --- | --- | --- |
-| 便携版 | 约 70 MB | 自带运行时，解压即用 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| 框架依赖版 | 约 22 MB | 需要 .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Beta | 同上 | 每次推送到 `main` 自动重建 | [releases/tag/beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
+| 版本 | 说明 | 下载 |
+| --- | --- | --- |
+| 便携版 | 自带运行时，解压即用 | [WinTools-*-portable-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 框架依赖版 | 需要 .NET 10 Desktop Runtime | [WinTools-*-framework-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Beta | 每次推送到 `main` 自动重建 | [Beta 预发布](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
+
+各版本体积以 Releases 页面里的实际附件为准。
 
 正式版带 Certum 云签名与时间戳，可用 `Get-AuthenticodeSignature` 校验。每个版本附带 `SHA256SUMS.txt`。
 
@@ -47,7 +51,7 @@ WPF 桌面程序，纯本地运行。不装服务、不加载驱动、不加开�
 
 ### 系统概览
 
-系统版本与内部版本号、CPU 与内存占用、各磁盘剩余空间、近期活动。数据全部本地读取。
+打开后可以快速看系统版本、CPU 和内存占用，以及各磁盘还剩多少空间。
 
 <details>
 <summary>截图</summary>
@@ -58,9 +62,9 @@ WPF 桌面程序，纯本地运行。不装服务、不加载驱动、不加开�
 
 ### 垃圾清理
 
-按磁盘扫描，23 个分类、1623 条规则，覆盖系统临时目录、更新缓存、日志与转储、浏览器缓存、开发工具缓存（npm、pip、NuGet、Gradle、Docker）以及 150 多款软件的缓存目录。
+选择磁盘后开始扫描。目前有 23 个分类、1623 条规则，包含系统临时文件、更新缓存、日志、浏览器和开发工具缓存，以及 150 多款软件的缓存。
 
-结果按分类折叠，标出大小和安全等级。被进程占用的文件会跳过并记录，不会卡住整轮清理。规则是纯 JSON，放在 `src/WinTools.Infrastructure/Rules/`，加路径不用改代码。
+扫描结果按类别列出，可查看大小和安全等级，再勾选要清理的项目。正在使用的文件会跳过并记入结果。
 
 <details>
 <summary>截图</summary>
@@ -71,9 +75,9 @@ WPF 桌面程序，纯本地运行。不装服务、不加载驱动、不加开�
 
 ### 系统优化
 
-153 条优化项，分 7 组：隐私与遥测、性能与响应、资源管理器、系统行为、网络、更新、游戏。
+共 153 条优化项，分为隐私与遥测、性能、资源管理器、系统、网络、更新和游戏 7 组。
 
-每条都支持检测、应用、回滚，改之前可以先看当前状态。推荐项只包含副作用明确的条目。
+每条都能先检查当前状态，再选择应用或回滚；不需要的项目可以单独跳过。
 
 <details>
 <summary>截图</summary>
@@ -143,7 +147,7 @@ WPF 桌面程序，纯本地运行。不装服务、不加载驱动、不加开�
 
 ### 应用管理
 
-已安装程序与应用包，显示图标、版本、占用空间、安装日期与最近活动。卸载调用软件自带的卸载程序，应用包走部署接口。
+列表显示已安装程序和应用包的图标、版本、大小及安装信息。卸载程序时会调用软件自带的卸载程序；Appx 包通过 Windows 自带的应用包管理工具处理。
 
 <details>
 <summary>截图</summary>
@@ -189,7 +193,7 @@ dotnet build src/WinTools.App/WinTools.App.csproj -c Release
 powershell -ExecutionPolicy Bypass -File tools/publish.ps1 -Profile both
 ```
 
-架构说明、模块实现、规则格式、本地化与调试技巧见 **[wtools.opkg.cn](https://wtools.opkg.cn/)** 或 [docs/guide/development.md](docs/guide/development.md)。
+开发文档和构建说明见 **[wtools.opkg.cn](https://wtools.opkg.cn/)** 或 [docs/guide/development.md](docs/guide/development.md)。
 
 ## 参考项目
 
@@ -202,7 +206,7 @@ powershell -ExecutionPolicy Bypass -File tools/publish.ps1 -Profile both
 | [Geek Uninstaller](https://geekuninstaller.com/) | 已安装程序列表的字段取舍 |
 | [ViVeTool](https://github.com/thebookisclosed/ViVe) | 特性开关的数据结构与三态语义 |
 
-清理规则最初来自一份个人整理的缓存路径清单，之后陆续补齐。现在由 `tools/rules/*.txt` 维护，`tools/Generate-CleanupRules.ps1` 生成。
+清理规则由 `tools/rules/*.txt` 维护，并通过 `tools/Generate-CleanupRules.ps1` 生成。
 
 ## 免责声明
 

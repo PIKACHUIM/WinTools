@@ -7,7 +7,7 @@
         xmlns:mod="clr-namespace:WinTools.App.ViewModels.Modules"
         xmlns:svc="clr-namespace:WinTools.App.Services"
         Title="WinTools"
-        Width="1200" Height="800"
+        Width="1380" Height="900"
         MinWidth="1100" MinHeight="660"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource App.Background}"
