@@ -59,17 +59,36 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
+; 启动方式二选一。程序清单要求管理员权限，直接启动每次都会弹 UAC；
+; 计划任务方式由任务以最高权限拉起，启动时不再询问。
+Name: "launch_task"; Description: "免 UAC 启动（创建计划任务，推荐）"; GroupDescription: "启动方式："; Flags: exclusive
+Name: "launch_direct"; Description: "直接启动（每次询问管理员权限）"; GroupDescription: "启动方式："; Flags: exclusive unchecked
+
 [Files]
 ; 框架依赖包：目标机需已安装 .NET 10 Desktop Runtime，安装程序会检查
 Source: "{#SourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
+; 免 UAC 启动脚本（仅当选了计划任务方式）
+Source: "launch.vbs"; DestDir: "{app}"; Flags: ignoreversion; Tasks: launch_task
+
 [Icons]
-Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExe}"
+; 计划任务方式：用 wscript 静默执行 launch.vbs，不闪控制台
+Name: "{group}\{#AppName}"; Filename: "{sys}\wscript.exe"; Parameters: """{app}\launch.vbs"""; Tasks: launch_task
+Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExe}"; Tasks: launch_direct
 Name: "{group}\卸载 {#AppName}"; Filename: "{uninstallexe}"
-Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExe}"; Tasks: desktopicon
+Name: "{autodesktop}\{#AppName}"; Filename: "{sys}\wscript.exe"; Parameters: """{app}\launch.vbs"""; Tasks: desktopicon and launch_task
+Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExe}"; Tasks: desktopicon and launch_direct
 
 [Run]
-Filename: "{app}\{#AppExe}"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: nowait postinstall skipifsilent
+; 注册计划任务：安装器本身已是管理员，这一步不会再弹 UAC。
+; 任务没有触发器，只能被 launch.vbs 里的 schtasks /run 唤醒。
+Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -NonInteractive -WindowStyle Hidden -Command ""Register-ScheduledTask -TaskName 'WinTools' -Action (New-ScheduledTaskAction -Execute '{app}\{#AppExe}') -RunLevel Highest -Force | Out-Null"""; Flags: runhidden waituntilterminated; Tasks: launch_task; StatusMsg: "正在配置免 UAC 启动…"
+
+Filename: "{app}\{#AppExe}"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: nowait postinstall skipifsilent; Tasks: launch_direct
+Filename: "{sys}\wscript.exe"; Parameters: """{app}\launch.vbs"""; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: nowait postinstall skipifsilent; Tasks: launch_task
+
+[UninstallRun]
+Filename: "{sys}\schtasks.exe"; Parameters: "/delete /tn ""WinTools"" /f"; Flags: runhidden; RunOnceId: "DelLaunchTask"
 
 [Code]
 const
