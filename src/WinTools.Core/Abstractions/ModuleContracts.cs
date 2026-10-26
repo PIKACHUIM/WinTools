@@ -27,6 +27,9 @@ public interface IFeatureFlagService
     /// <summary>修改优先级（1=User 2=Device 3=Fallback 4=Service），ViVe 里对应 Priority。</summary>
     Task<OperationResult> SetPriorityAsync(FeatureFlagEntry entry, int priority, CancellationToken cancellationToken);
 
+    /// <summary>拉取在线名称表并刷新本地缓存（失败静默，继续用内置表）。</summary>
+    Task RefreshNamesAsync(CancellationToken cancellationToken);
+
     Task<OperationResult> SetEnabledStateAsync(FeatureFlagEntry entry, int enabledState, CancellationToken cancellationToken);
     Task<OperationResult> AddAsync(string featureId, int enabledState, CancellationToken cancellationToken);
     Task<OperationResult> RemoveAsync(FeatureFlagEntry entry, CancellationToken cancellationToken);

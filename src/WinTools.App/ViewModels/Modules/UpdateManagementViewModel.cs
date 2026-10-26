@@ -191,6 +191,8 @@ public sealed partial class FeatureFlagsSectionViewModel : ListSectionViewModel
 
     protected override async Task LoadAsync(CancellationToken cancellationToken)
     {
+        // 先刷新在线名称表（8 秒超时、失败静默），再读覆盖项，列表里就能带出名称与说明
+        await _flags.RefreshNamesAsync(cancellationToken).ConfigureAwait(true);
         var entries = await _flags.GetOverridesAsync(cancellationToken).ConfigureAwait(true);
 
         Rows.Clear();
@@ -209,7 +211,9 @@ public sealed partial class FeatureFlagsSectionViewModel : ListSectionViewModel
                 string.IsNullOrWhiteSpace(entry.Name)
                     ? Loc.F("Flag.NameUnknown", entry.FeatureId)
                     : entry.Name,
-                $"ID {entry.FeatureId} · " + Loc.F("Flag.Variant", entry.Variant),
+                string.IsNullOrWhiteSpace(entry.Description)
+                    ? $"ID {entry.FeatureId} · " + Loc.F("Flag.Variant", entry.Variant)
+                    : entry.Description,
                 null,
                 null,
                 entry.EnabledState switch

@@ -41,7 +41,8 @@ public sealed record FeatureFlagEntry(
     int Variant,
     int VariantPayloadKind,
     int Priority = 0,
-    string? Name = null);
+    string? Name = null,
+    string? Description = null);
 
 /// <summary>启动项（运行管理）。</summary>
 public sealed record StartupEntry(

@@ -49,7 +49,8 @@ public sealed class FeatureFlagService : IFeatureFlagService
                     ReadInt(key, "Variant", 0),
                     ReadInt(key, "VariantPayloadKind", 0),
                     ReadInt(key, "Priority", 0),
-                    FeatureNames.GetValueOrDefault(featureId)));
+                    FeatureNames.GetName(featureId),
+                    FeatureNames.GetDescription(featureId)));
             }
         }
         catch (Exception ex)
@@ -88,6 +89,8 @@ public sealed class FeatureFlagService : IFeatureFlagService
             return OperationResult.Fail(ex.Message);
         }
     }, cancellationToken);
+
+    public Task RefreshNamesAsync(CancellationToken cancellationToken) => FeatureNames.RefreshAsync(cancellationToken);
 
     public Task<OperationResult> SetPriorityAsync(
         FeatureFlagEntry entry,
