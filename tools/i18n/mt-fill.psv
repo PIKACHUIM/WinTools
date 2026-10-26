@@ -1,0 +1,50 @@
+# 机翻补全：此前 9 种语言沿用英文原文的键
+key|zh-Hans|zh-Hant|en-US|ja-JP|ko-KR|de-DE|fr-FR|es-ES|pt-BR|it-IT|ru-RU|ar-SA
+Cat.SystemUpdate|系统更新|系統更新|Windows Update|Windows Update|Windows 업데이트|Windows Update|Windows Update|Windows Update|Windows Update|Windows Update|Центр обновления Windows|تحديث Windows
+Dashboard.Hardware|硬件信息|硬體資訊|Hardware|ハードウェア|하드웨어|Hardware|Matériel|Hardware|Hardware|Hardware|Оборудование|الأجهزة
+Dashboard.Network|网络|網路|Network|ネットワーク|네트워크|Netzwerk|Réseau|Red|Rede|Rete|Сеть|الشبكة
+Dashboard.Gpu|显卡占用|顯示卡使用率|GPU usage|GPU 使用率|GPU 사용률|GPU-Auslastung|Utilisation GPU|Uso de GPU|Uso da GPU|Utilizzo GPU|Загрузка GPU|استخدام GPU
+Dashboard.Board|主板|主機板|Motherboard|マザーボード|메인보드|Hauptplatine|Carte mère|Placa base|Placa-mãe|Scheda madre|Материнская плата|اللوحة الأم
+Dashboard.Graphics|显卡|顯示卡|Graphics|グラフィックス|그래픽|Grafik|Graphique|Gráficos|Gráficos|Scheda video|Видеоадаптер|الرسومات
+Dashboard.MemoryModules|内存|記憶體|Memory|メモリ|메모리|Arbeitsspeicher|Mémoire|Memoria|Memória|Memoria|Память|الذاكرة
+Dashboard.Disks|硬盘|硬碟|Disks|ディスク|디스크|Datenträger|Disques|Discos|Discos|Dischi|Диски|الأقراص
+Dashboard.Sound|声卡|音效卡|Audio|オーディオ|오디오|Audio|Audio|Audio|Áudio|Audio|Звук|الصوت
+Dashboard.Volume|分区|磁碟區|Volumes|ボリューム|볼륨|Volumes|Volumes|Volúmenes|Volumes|Volumi|Тома|وحدات التخزين
+Dashboard.Connected|已连接|已連線|Connected|接続済み|연결됨|Verbunden|Connecté|Conectado|Conectado|Connesso|Подключено|متصل
+Dashboard.Disconnected|未连接|未連線|Disconnected|未接続|연결 안 됨|Getrennt|Déconnecté|Desconectado|Desconectado|Disconnesso|Не подключено|غير متصل
+Cleanup.Rescan|重新扫描|重新掃描|Rescan|再スキャン|다시 검사|Erneut scannen|Rescanner|Volver a analizar|Verificar novamente|Rianalizza|Сканировать снова|إعادة الفحص
+Cleanup.Clean|清理所选|清理所選|Clean selected|選択項目をクリーン|선택 항목 정리|Auswahl bereinigen|Nettoyer la sélection|Limpiar seleccionados|Limpar selecionados|Pulisci selezionati|Очистить выбранное|تنظيف المحدد
+Cleanup.DiskUsage|磁盘占用|磁碟使用量|Disk usage|ディスク使用率|디스크 사용량|Datenträgerbelegung|Utilisation du disque|Uso del disco|Uso do disco|Utilizzo disco|Занято на диске|استخدام القرص
+Cleanup.ScanIdle|扫描整块磁盘，找出可安全清理的垃圾|掃描整顆磁碟，找出可安全清理的垃圾|Scan the whole disk for safely removable junk|ディスク全体をスキャンして安全に削除できる項目を探します|디스크 전체를 검사해 안전하게 정리할 수 있는 항목을 찾습니다|Gesamten Datenträger nach sicher entfernbarem Ballast durchsuchen|Analyser tout le disque pour trouver les fichiers supprimables sans risque|Analizar todo el disco para encontrar archivos eliminables sin riesgo|Verificar o disco inteiro em busca de itens removíveis com segurança|Analizza l'intero disco per trovare elementi eliminabili in sicurezza|Проверить весь диск и найти безопасно удаляемый мусор|فحص القرص بالكامل للعثور على ما يمكن حذفه بأمان
+Cleanup.FileCount|{0} 个文件|{0} 個檔案|{0} files|{0} 個のファイル|파일 {0}개|{0} Dateien|{0} fichiers|{0} archivos|{0} arquivos|{0} file|Файлов: {0}|{0} ملف
+FeatGroup.Virtualization|虚拟化与容器|虛擬化與容器|Virtualization & containers|仮想化とコンテナー|가상화 및 컨테이너|Virtualisierung & Container|Virtualisation et conteneurs|Virtualización y contenedores|Virtualização e contêineres|Virtualizzazione e container|Виртуализация и контейнеры|المحاكاة الافتراضية والحاويات
+FeatGroup.Server|服务器与角色|伺服器與角色|Server roles|サーバーの役割|서버 역할|Serverrollen|Rôles serveur|Roles de servidor|Funções de servidor|Ruoli server|Роли сервера|أدوار الخادم
+FeatGroup.Dev|开发与运行时|開發與執行環境|Development & runtimes|開発とランタイム|개발 및 런타임|Entwicklung & Laufzeiten|Développement et runtimes|Desarrollo y runtimes|Desenvolvimento e runtimes|Sviluppo e runtime|Разработка и среды выполнения|التطوير وبيئات التشغيل
+FeatGroup.Print|打印与传真|列印與傳真|Printing & fax|印刷と FAX|인쇄 및 팩스|Drucken & Fax|Impression et fax|Impresión y fax|Impressão e fax|Stampa e fax|Печать и факс|الطباعة والفاكس
+FeatGroup.Media|媒体与播放|媒體與播放|Media & playback|メディアと再生|미디어 및 재생|Medien & Wiedergabe|Médias et lecture|Medios y reproducción|Mídia e reprodução|Media e riproduzione|Мультимедиа и воспроизведение|الوسائط والتشغيل
+FeatGroup.Security|安全与加密|安全性與加密|Security & encryption|セキュリティと暗号化|보안 및 암호화|Sicherheit & Verschlüsselung|Sécurité et chiffrement|Seguridad y cifrado|Segurança e criptografia|Sicurezza e crittografia|Безопасность и шифрование|الأمان والتشفير
+FeatGroup.Network|网络与共享|網路與共用|Network & sharing|ネットワークと共有|네트워크 및 공유|Netzwerk & Freigabe|Réseau et partage|Red y uso compartido|Rede e compartilhamento|Rete e condivisione|Сеть и общий доступ|الشبكة والمشاركة
+FeatGroup.Other|其他|其他|Other|その他|기타|Sonstiges|Autres|Otros|Outros|Altro|Прочее|أخرى
+Feat.PendingChanges|{0} 项待应用|{0} 項待套用|{0} pending|{0} 件を適用待ち|{0}개 적용 대기|{0} ausstehend|{0} en attente|{0} pendientes|{0} pendentes|{0} in sospeso|Ожидает: {0}|{0} قيد الانتظار
+Feat.Applying|正在应用 {0}/{1}|正在套用 {0}/{1}|Applying {0}/{1}|適用中 {0}/{1}|적용 중 {0}/{1}|Wird angewendet {0}/{1}|Application {0}/{1}|Aplicando {0}/{1}|Aplicando {0}/{1}|Applicazione {0}/{1}|Применение {0}/{1}|جارٍ التطبيق {0}/{1}
+Optimize.Recommended|推荐项|推薦項目|Recommended|推奨|추천|Empfohlen|Recommandé|Recomendado|Recomendado|Consigliato|Рекомендуется|موصى به
+Optimize.Pending|{0} 项待处理|{0} 項待處理|{0} pending|{0} 件待機|{0}개 대기|{0} ausstehend|{0} en attente|{0} pendientes|{0} pendentes|{0} in sospeso|Ожидает: {0}|{0} قيد الانتظار
+Grp.Security|账户与安全|帳戶與安全|Security|アカウントとセキュリティ|계정 및 보안|Konto & Sicherheit|Compte et sécurité|Cuenta y seguridad|Conta e segurança|Account e sicurezza|Учётная запись и безопасность|الحساب والأمان
+Grp.Taskbar|任务栏与开始菜单|工作列與開始功能表|Taskbar & Start|タスクバーとスタート|작업 표시줄 및 시작|Taskleiste & Start|Barre des tâches et Démarrer|Barra de tareas e Inicio|Barra de tarefas e Iniciar|Barra delle applicazioni e Start|Панель задач и Пуск|شريط المهام وابدأ
+Grp.Boot|开机与引导|開機與引導|Boot|起動とブート|부팅 및 시작|Start & Boot|Démarrage et amorçage|Inicio y arranque|Inicialização e boot|Avvio e boot|Загрузка|الإقلاع
+Risk.Low|低风险|低風險|Low|低|낮음|Niedrig|Faible|Bajo|Baixo|Basso|Низкий|منخفض
+Risk.Medium|中风险|中風險|Medium|中|보통|Mittel|Moyen|Medio|Médio|Medio|Средний|متوسط
+Risk.High|高风险|高風險|High|高|높음|Hoch|Élevé|Alto|Alto|Alto|Высокий|مرتفع
+Cat.VideoCache|视频播放缓存|影片播放快取|Video cache|動画キャッシュ|동영상 캐시|Video-Cache|Cache vidéo|Caché de vídeo|Cache de vídeo|Cache video|Кэш видео|ذاكرة التخزين المؤقت للفيديو
+Cat.MusicCache|音乐播放缓存|音樂播放快取|Music cache|音楽キャッシュ|음악 캐시|Musik-Cache|Cache audio|Caché de música|Cache de música|Cache musicale|Кэш музыки|ذاكرة التخزين المؤقت للموسيقى
+Cat.SecuritySuite|安全软件更新包|安全軟體更新包|Security suite updates|セキュリティ ソフトの更新パッケージ|보안 소프트웨어 업데이트 패키지|Updates von Sicherheitssoftware|Mises à jour de sécurité tierces|Actualizaciones de suites de seguridad|Atualizações de suítes de segurança|Aggiornamenti suite di sicurezza|Обновления антивирусных пакетов|تحديثات حزم الأمان
+Cat.DriverLeftover|驱动安装残留|驅動安裝殘留|Driver leftovers|ドライバーの残骸|드라이버 잔여 파일|Treiberreste|Résidus de pilotes|Restos de controladores|Restos de drivers|Residui dei driver|Остатки драйверов|بقايا برامج التشغيل
+Dashboard.DiskUsage|磁盘占用|磁碟使用量|Disk usage|ディスク使用率|디스크 사용량|Datenträgerbelegung|Utilisation du disque|Uso del disco|Uso do disco|Utilizzo disco|Занято на диске|استخدام القرص
+Dashboard.NetworkOnline|{0} 个已连接|{0} 個已連線|{0} connected|{0} 台接続中|{0}개 연결됨|{0} verbunden|{0} connectés|{0} conectados|{0} conectados|{0} connessi|Подключено: {0}|{0} متصل
+Edition.Home|家庭版|家用版|Home|Home|Home|Home|Famille|Home|Home|Home|Домашняя|Home
+Edition.HomeSingleLanguage|家庭单语言版|家用單語言版|Home Single Language|Home Single Language|Home Single Language|Home Single Language|Famille Single Language|Home Single Language|Home Single Language|Home Single Language|Домашняя для одного языка|Home Single Language
+Edition.HomeChina|家庭中文版|家用中文版|Home China|Home China|Home China|Home China|Home China|Home China|Home China|Home China|Домашняя для Китая|Home China
+Edition.Professional|专业版|專業版|Pro|Pro|Pro|Pro|Professionnel|Pro|Pro|Pro|Профессиональная|Pro
+Edition.ProfessionalWorkstation|专业工作站版|專業工作站版|Pro for Workstations|Pro for Workstations|Pro for Workstations|Pro for Workstations|Pro pour Stations de travail|Pro para estaciones de trabajo|Pro para Estações de Trabalho|Pro for Workstations|Профессиональная для рабочих станций|Pro for Workstations
+Edition.Enterprise|企业版|企業版|Enterprise|Enterprise|Enterprise|Enterprise|Entreprise|Enterprise|Enterprise|Enterprise|Корпоративная|Enterprise
+Edition.Education|教育版|教育版|Education|Education|Education|Education|Éducation|Education|Education|Education|Образование|Education
