@@ -393,5 +393,11 @@
   "Flag.ConfirmDelete": "Se eliminará la sustitución de la característica {0}; tras reiniciar vuelve el valor predeterminado.",
 
   "App.LastUsed": "Uso {0}",
-  "App.InstalledOn": "Instalado {0}"
+  "App.InstalledOn": "Instalado {0}",
+
+  "Wim.RepairBoot": "Reparar arranque",
+
+  "Comp.WsaRow": "Subsistema Android",
+  "Comp.WsaHint": "Instalar una versión de terceros",
+  "Comp.PickPackage": "Elegir paquete"
 }

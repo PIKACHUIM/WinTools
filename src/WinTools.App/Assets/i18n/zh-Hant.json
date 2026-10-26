@@ -393,5 +393,11 @@
   "Flag.ConfirmDelete": "將刪除特性 {0} 的覆寫，重新啟動後恢復系統預設。",
 
   "App.LastUsed": "使用 {0}",
-  "App.InstalledOn": "安裝 {0}"
+  "App.InstalledOn": "安裝 {0}",
+
+  "Wim.RepairBoot": "修復開機",
+
+  "Comp.WsaRow": "Android 子系統",
+  "Comp.WsaHint": "支援安裝第三方封裝版",
+  "Comp.PickPackage": "選擇安裝包"
 }

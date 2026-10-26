@@ -393,5 +393,11 @@
   "Flag.ConfirmDelete": "La sostituzione della funzionalità {0} verrà rimossa; dopo il riavvio torna il valore predefinito.",
 
   "App.LastUsed": "Usato {0}",
-  "App.InstalledOn": "Installato {0}"
+  "App.InstalledOn": "Installato {0}",
+
+  "Wim.RepairBoot": "Ripara avvio",
+
+  "Comp.WsaRow": "Sottosistema Android",
+  "Comp.WsaHint": "Installa una build di terze parti",
+  "Comp.PickPackage": "Scegli pacchetto"
 }

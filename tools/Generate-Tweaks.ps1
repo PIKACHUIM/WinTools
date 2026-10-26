@@ -104,6 +104,31 @@ lock-camera-off|Privacy|锁屏禁用相机|Disable camera on lock screen|Low|HKC
 wifi-hotspot-off|Network|关闭移动热点|Disable mobile hotspot|Low|HKLM|SOFTWARE\Microsoft\WlanSvc\AnqpCache|EnableHostedNetwork|DWord|0
 fax-off|System|关闭传真服务|Disable Fax service|Low|HKLM|SOFTWARE\Microsoft\Fax\Devices|ArchiveFolder|String|
 smartscreen-on|System|开启 SmartScreen|Enable SmartScreen|Low|HKCU|SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer|SmartScreenEnabled|String|Warn
+diagtrack-off|Privacy|关闭诊断跟踪服务|Stop DiagTrack service|Low|HKLM|SYSTEM\CurrentControlSet\Services\DiagTrack|Start|DWord|4
+dmwappush-off|Privacy|关闭 WAP 推送服务|Stop dmwappushservice|Low|HKLM|SYSTEM\CurrentControlSet\Services\dmwappushservice|Start|DWord|4
+mapsbroker-off|Privacy|关闭地图服务|Stop MapsBroker|Low|HKLM|SYSTEM\CurrentControlSet\Services\MapsBroker|Start|DWord|4
+wsearch-off|Performance|关闭搜索索引服务|Stop Windows Search indexer|Medium|HKLM|SYSTEM\CurrentControlSet\Services\WSearch|Start|DWord|4
+remoteregistry-off|System|关闭远程注册表服务|Stop Remote Registry|Low|HKLM|SYSTEM\CurrentControlSet\Services\RemoteRegistry|Start|DWord|4
+faxsvc-off|System|关闭传真服务启动|Disable Fax service startup|Low|HKLM|SYSTEM\CurrentControlSet\Services\Fax|Start|DWord|4
+tablet-mode-off|System|关闭平板模式|Disable tablet mode|Low|HKCU|SOFTWARE\Microsoft\Windows\CurrentVersion\ImmersiveShell|TabletMode|DWord|0
+background-apps-off|Privacy|禁止后台应用|Disable background apps|Low|HKCU|SOFTWARE\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications|GlobalUserDisabled|DWord|1
+ceip-off|Privacy|退出客户体验计划|Leave Customer Experience Program|Low|HKLM|SOFTWARE\Microsoft\SQMClient\Windows|CEIPEnable|DWord|0
+appcompat-ait-off|Privacy|关闭应用兼容遥测|Disable AppCompat telemetry|Low|HKLM|SOFTWARE\Policies\Microsoft\Windows\AppCompat|AITEnable|DWord|0
+appcompat-inventory-off|Privacy|关闭应用清单收集|Disable inventory collector|Low|HKLM|SOFTWARE\Policies\Microsoft\Windows\AppCompat|DisableInventory|DWord|1
+appcompat-uar-off|Privacy|关闭步骤记录器|Disable Steps Recorder|Low|HKLM|SOFTWARE\Policies\Microsoft\Windows\AppCompat|DisableUAR|DWord|1
+defender-samples-off|Privacy|不上传样本|Do not submit samples|Low|HKLM|SOFTWARE\Policies\Microsoft\Windows Defender\Spynet|SubmitSamplesConsent|DWord|2
+defender-archive-off|Performance|关闭压缩包扫描|Disable archive scanning|Medium|HKLM|SOFTWARE\Policies\Microsoft\Windows Defender\Scan|DisableArchiveScanning|DWord|1
+defender-removable-off|Performance|关闭可移动盘扫描|Disable removable drive scanning|Medium|HKLM|SOFTWARE\Policies\Microsoft\Windows Defender\Scan|DisableRemovableDriveScanning|DWord|1
+defender-cpu-limit|Performance|限制杀毒 CPU 占用|Cap antivirus CPU usage|Low|HKLM|SOFTWARE\Policies\Microsoft\Windows Defender\Scan|AvgCPULoadFactor|DWord|20
+lock-screen-off|Privacy|关闭锁屏界面|Disable lock screen|Low|HKLM|SOFTWARE\Policies\Microsoft\Windows\Personalization|NoLockScreen|DWord|1
+compressed-color-on|Explorer|显示压缩文件颜色|Show compressed file colors|Low|HKCU|SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer|ShowCompColor|DWord|1
+vbs-off|Performance|关闭基于虚拟化的安全|Disable VBS|High|HKLM|SYSTEM\CurrentControlSet\Control\DeviceGuard|EnableVirtualizationBasedSecurity|DWord|0
+edge-superdrag-off|Privacy|关闭 Edge 超级拖放|Disable Edge super drag drop|Low|HKLM|SOFTWARE\Policies\Microsoft\Edge|SuperDragDropEnabled|DWord|0
+edge-background-off|Performance|关闭 Edge 后台运行|Disable Edge background mode|Low|HKLM|SOFTWARE\Policies\Microsoft\Edge|BackgroundModeEnabled|DWord|0
+edge-prelaunch-off|Performance|关闭 Edge 预启动|Disable Edge prelaunch|Low|HKLM|SOFTWARE\Policies\Microsoft\Edge|AllowPrelaunch|DWord|0
+store-auto-download-off|Update|关闭商店自动下载|Disable Store auto download|Low|HKCU|SOFTWARE\Microsoft\WindowsStore|AutoDownload|DWord|2
+cortana-consent-off|Privacy|关闭 Cortana 授权|Disable Cortana consent|Low|HKCU|SOFTWARE\Microsoft\Windows\CurrentVersion\Search|CortanaConsent|DWord|0
+telemetry-feedback-off|Privacy|关闭遥测反馈提示|Disable telemetry feedback prompts|Low|HKLM|SOFTWARE\Policies\Microsoft\Windows\DataCollection|DoNotShowFeedbackNotifications|DWord|1
 '@
 
 $entries = New-Object System.Collections.Generic.List[object]

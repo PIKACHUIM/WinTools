@@ -393,5 +393,11 @@
   "Flag.ConfirmDelete": "기능 {0}의 재정의를 삭제합니다. 다시 시작하면 기본값으로 돌아갑니다.",
 
   "App.LastUsed": "사용 {0}",
-  "App.InstalledOn": "설치 {0}"
+  "App.InstalledOn": "설치 {0}",
+
+  "Wim.RepairBoot": "부팅 복구",
+
+  "Comp.WsaRow": "Android 하위 시스템",
+  "Comp.WsaHint": "타사 빌드 설치",
+  "Comp.PickPackage": "패키지 선택"
 }

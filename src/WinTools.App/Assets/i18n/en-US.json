@@ -393,5 +393,11 @@
   "Flag.ConfirmDelete": "The override for feature {0} will be removed; the system default returns after restart.",
 
   "App.LastUsed": "Used {0}",
-  "App.InstalledOn": "Installed {0}"
+  "App.InstalledOn": "Installed {0}",
+
+  "Wim.RepairBoot": "Repair boot",
+
+  "Comp.WsaRow": "Android subsystem",
+  "Comp.WsaHint": "Install a third-party build",
+  "Comp.PickPackage": "Choose package"
 }

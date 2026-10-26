@@ -393,5 +393,11 @@
   "Flag.ConfirmDelete": "機能 {0} の上書きを削除します。再起動後に既定に戻ります。",
 
   "App.LastUsed": "使用 {0}",
-  "App.InstalledOn": "インストール {0}"
+  "App.InstalledOn": "インストール {0}",
+
+  "Wim.RepairBoot": "ブート修復",
+
+  "Comp.WsaRow": "Android サブシステム",
+  "Comp.WsaHint": "サードパーティ版をインストール",
+  "Comp.PickPackage": "パッケージを選択"
 }

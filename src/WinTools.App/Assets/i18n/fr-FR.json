@@ -393,5 +393,11 @@
   "Flag.ConfirmDelete": "La substitution de la fonctionnalité {0} sera supprimée ; le système revient au défaut après redémarrage.",
 
   "App.LastUsed": "Utilisé {0}",
-  "App.InstalledOn": "Installé {0}"
+  "App.InstalledOn": "Installé {0}",
+
+  "Wim.RepairBoot": "Réparer le boot",
+
+  "Comp.WsaRow": "Sous-système Android",
+  "Comp.WsaHint": "Installer une version tierce",
+  "Comp.PickPackage": "Choisir le paquet"
 }

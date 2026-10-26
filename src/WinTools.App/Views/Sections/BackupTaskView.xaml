@@ -94,7 +94,9 @@
                                  Text="{Binding ImageIndex, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                     <CheckBox Style="{StaticResource AppCheckBox}" Content="{Binding VerifyLabel}"
-                              IsChecked="{Binding Verify}" Margin="18,24,0,0" VerticalAlignment="Top" />
+                              IsChecked="{Binding Verify}" Margin="12,24,0,0" VerticalAlignment="Top" />
+                    <CheckBox Style="{StaticResource AppCheckBox}" Content="{Binding RepairBootLabel}"
+                              IsChecked="{Binding RepairBoot}" Margin="10,24,0,0" VerticalAlignment="Top" />
                 </StackPanel>
 
                 <!-- 压缩级别 -->

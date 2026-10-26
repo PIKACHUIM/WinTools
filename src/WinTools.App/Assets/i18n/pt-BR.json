@@ -393,5 +393,11 @@
   "Flag.ConfirmDelete": "A substituição do recurso {0} será removida; após reiniciar, o padrão do sistema volta.",
 
   "App.LastUsed": "Uso {0}",
-  "App.InstalledOn": "Instalado {0}"
+  "App.InstalledOn": "Instalado {0}",
+
+  "Wim.RepairBoot": "Reparar boot",
+
+  "Comp.WsaRow": "Subsistema Android",
+  "Comp.WsaHint": "Instalar versão de terceiros",
+  "Comp.PickPackage": "Escolher pacote"
 }

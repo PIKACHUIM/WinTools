@@ -168,6 +168,17 @@ public sealed partial class StoreSectionViewModel : ListSectionViewModel
         wslRow.ActionLabel = Loc.T("Common.Load");
         wslRow.ActionCommand = LoadWslCommand;
         Rows.Add(wslRow);
+
+        // 安卓子系统：官方已停服，只能装第三方打包版（用户自备 .msix）
+        var wsaRow = new RowItem("wsa-install", Loc.T("Comp.WsaRow"), Loc.T("Comp.WsaHint"),
+            null, null, RowTone.Neutral)
+        {
+            ShowIcon = false
+        };
+        wsaRow.ShowAction = true;
+        wsaRow.ActionLabel = Loc.T("Comp.PickPackage");
+        wsaRow.ActionCommand = InstallWsaCommand;
+        Rows.Add(wsaRow);
     }
 
     /// <summary>按需加载 WSL 发行版（含联机清单），避免进页面就卡在网络上。</summary>
@@ -267,6 +278,37 @@ public sealed partial class StoreSectionViewModel : ListSectionViewModel
             }
         }).ConfigureAwait(true);
         row.IsActionEnabled = true;
+    }
+
+    /// <summary>从本地 .msix/.appx 安装（安卓子系统第三方打包版走这里）。</summary>
+    [RelayCommand]
+    private async Task InstallWsaAsync()
+    {
+        var dialog = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = Loc.T("Comp.PickPackage"),
+            Filter = "Appx 包 (*.msix;*.appx;*.msixbundle)|*.msix;*.appx;*.msixbundle|所有文件 (*.*)|*.*",
+            Multiselect = false
+        };
+
+        if (dialog.ShowDialog() != true)
+        {
+            return;
+        }
+
+        await ExecuteAsync(async ct =>
+        {
+            ShowProgress = true;
+            LoadingText = Loc.T("Common.Installing");
+
+            var result = await _store.InstallPackageFileAsync(dialog.FileName, ct).ConfigureAwait(true);
+            Report(result);
+
+            if (result.Success)
+            {
+                await RefreshQuietlyAsync(ct).ConfigureAwait(true);
+            }
+        }).ConfigureAwait(true);
     }
 
     /// <summary>修复所选：已安装的包重新注册清单。</summary>

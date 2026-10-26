@@ -125,6 +125,17 @@ public sealed partial class BackupTaskViewModel : ObservableObject, ILocalizable
     [ObservableProperty]
     private int _selectedSplitSizeIndex = 2;
 
+    /// <summary>释放完成后是否调用 bcdboot 修复引导。</summary>
+    [ObservableProperty]
+    private bool _repairBoot;
+
+    public string RepairBootLabel => Loc.T("Wim.RepairBoot");
+
+    /// <summary>分卷大小（MB）；非 SWM 格式返回 0 表示不分卷。</summary>
+    private int SplitSizeMb => IsSplitEnabled
+        ? SelectedSplitSizeIndex switch { 0 => 1024, 1 => 2048, 3 => 8192, _ => 4096 }
+        : 0;
+
     /// <summary>默认排除项：系统还原、回收站、页面文件与休眠文件。</summary>
     public string ExcludesText => "System Volume Information, $Recycle.Bin, pagefile.sys, hiberfil.sys";
 
@@ -280,7 +291,8 @@ public sealed partial class BackupTaskViewModel : ObservableObject, ILocalizable
                         ImagePath.Trim(),
                         (int)Math.Max(1, Math.Round(ImageIndex)),
                         TargetPath.Trim(),
-                        Verify),
+                        Verify,
+                        RepairBoot),
                     progress,
                     CancellationToken.None).ConfigureAwait(true);
             }
@@ -300,7 +312,8 @@ public sealed partial class BackupTaskViewModel : ObservableObject, ILocalizable
                         string.IsNullOrWhiteSpace(ImageName) ? "WinTools" : ImageName.Trim(),
                         Description.Trim(),
                         Append: IsAppend,
-                        CompressionType: compression),
+                        CompressionType: compression,
+                        SplitSizeMb: SplitSizeMb),
                     progress,
                     CancellationToken.None).ConfigureAwait(true);
             }

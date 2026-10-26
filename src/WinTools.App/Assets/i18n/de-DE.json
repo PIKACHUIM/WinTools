@@ -393,5 +393,11 @@
   "Flag.ConfirmDelete": "Die Überschreibung für Feature {0} wird entfernt; nach einem Neustart gilt der Systemstandard.",
 
   "App.LastUsed": "Verwendet {0}",
-  "App.InstalledOn": "Installiert {0}"
+  "App.InstalledOn": "Installiert {0}",
+
+  "Wim.RepairBoot": "Bootloader reparieren",
+
+  "Comp.WsaRow": "Android-Subsystem",
+  "Comp.WsaHint": "Drittanbieter-Build installieren",
+  "Comp.PickPackage": "Paket wählen"
 }

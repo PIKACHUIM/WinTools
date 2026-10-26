@@ -30,3 +30,6 @@ Comp.Repair|修复|修復|Repair|修復|복구|Reparieren|Réparer|Reparar|Repar
 Comp.StoreRow|应用商店组件|Microsoft Store 元件|Microsoft Store packages|ストア パッケージ|스토어 패키지|Store-Pakete|Composants du Store|Componentes de Store|Componentes da Store|Componenti Store|Компоненты Store|حزم المتجر
 Comp.LoadWsl|Linux 发行版|Linux 發行版|Linux distros|Linux ディストリビューション|Linux 배포판|Linux-Distributionen|Distributions Linux|Distribuciones Linux|Distribuições Linux|Distribuzioni Linux|Дистрибутивы Linux|توزيعات Linux
 Common.Load|加载|載入|Load|読み込む|불러오기|Laden|Charger|Cargar|Carregar|Carica|Загрузить|تحميل
+Comp.WsaRow|安卓子系统|Android 子系統|Android subsystem|Android サブシステム|Android 하위 시스템|Android-Subsystem|Sous-système Android|Subsistema Android|Subsistema Android|Sottosistema Android|Подсистема Android|النظام الفرعي أندرويد
+Comp.WsaHint|支持安装第三方打包版|支援安裝第三方封裝版|Install a third-party build|サードパーティ版をインストール|타사 빌드 설치|Drittanbieter-Build installieren|Installer une version tierce|Instalar una versión de terceros|Instalar versão de terceiros|Installa una build di terze parti|Установить стороннюю сборку|تثبيت إصدار طرف ثالث
+Comp.PickPackage|选择安装包|選擇安裝包|Choose package|パッケージを選択|패키지 선택|Paket wählen|Choisir le paquet|Elegir paquete|Escolher pacote|Scegli pacchetto|Выбрать пакет|اختيار الحزمة

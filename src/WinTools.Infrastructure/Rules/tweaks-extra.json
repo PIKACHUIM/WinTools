@@ -414,7 +414,7 @@
     },
     {
         "id":  "taskbar-align-left",
-        "group":  "Taskbar",
+        "group":  "Explorer",
         "recommended":  false,
         "name":  {
                      "zh-Hans":  "任务栏图标左对齐",
@@ -458,7 +458,7 @@
     },
     {
         "id":  "start-recommendations-off",
-        "group":  "Taskbar",
+        "group":  "Explorer",
         "recommended":  true,
         "name":  {
                      "zh-Hans":  "关闭开始菜单推荐项",
@@ -500,7 +500,7 @@
     },
     {
         "id":  "autorun-off",
-        "group":  "Security",
+        "group":  "System",
         "recommended":  true,
         "name":  {
                      "zh-Hans":  "禁用所有驱动器自动运行",
@@ -542,7 +542,7 @@
     },
     {
         "id":  "remote-assistance-off",
-        "group":  "Security",
+        "group":  "System",
         "recommended":  true,
         "name":  {
                      "zh-Hans":  "关闭远程协助邀请",
@@ -586,7 +586,7 @@
     },
     {
         "id":  "llmnr-off",
-        "group":  "Security",
+        "group":  "System",
         "recommended":  false,
         "name":  {
                      "zh-Hans":  "关闭 LLMNR 名称解析",
@@ -3271,6 +3271,992 @@
                           "hive":  "HKCU",
                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\PushNotifications",
                           "name":  "ToastEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "diagtrack-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭诊断跟踪服务",
+                     "en-US":  "Stop DiagTrack service"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭诊断跟踪服务",
+                            "en-US":  "Stop DiagTrack service"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\DiagTrack",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\DiagTrack",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ]
+    },
+    {
+        "id":  "dmwappush-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 WAP 推送服务",
+                     "en-US":  "Stop dmwappushservice"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 WAP 推送服务",
+                            "en-US":  "Stop dmwappushservice"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\dmwappushservice",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\dmwappushservice",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ]
+    },
+    {
+        "id":  "mapsbroker-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭地图服务",
+                     "en-US":  "Stop MapsBroker"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭地图服务",
+                            "en-US":  "Stop MapsBroker"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\MapsBroker",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\MapsBroker",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ]
+    },
+    {
+        "id":  "wsearch-off",
+        "group":  "Performance",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭搜索索引服务",
+                     "en-US":  "Stop Windows Search indexer"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭搜索索引服务",
+                            "en-US":  "Stop Windows Search indexer"
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\WSearch",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\WSearch",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ]
+    },
+    {
+        "id":  "remoteregistry-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭远程注册表服务",
+                     "en-US":  "Stop Remote Registry"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭远程注册表服务",
+                            "en-US":  "Stop Remote Registry"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\RemoteRegistry",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\RemoteRegistry",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ]
+    },
+    {
+        "id":  "faxsvc-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭传真服务启动",
+                     "en-US":  "Disable Fax service startup"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭传真服务启动",
+                            "en-US":  "Disable Fax service startup"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\Fax",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\Fax",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ]
+    },
+    {
+        "id":  "tablet-mode-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭平板模式",
+                     "en-US":  "Disable tablet mode"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭平板模式",
+                            "en-US":  "Disable tablet mode"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell",
+                           "name":  "TabletMode",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ImmersiveShell",
+                          "name":  "TabletMode",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "background-apps-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "禁止后台应用",
+                     "en-US":  "Disable background apps"
+                 },
+        "description":  {
+                            "zh-Hans":  "禁止后台应用",
+                            "en-US":  "Disable background apps"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications",
+                           "name":  "GlobalUserDisabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications",
+                          "name":  "GlobalUserDisabled",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "ceip-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "退出客户体验计划",
+                     "en-US":  "Leave Customer Experience Program"
+                 },
+        "description":  {
+                            "zh-Hans":  "退出客户体验计划",
+                            "en-US":  "Leave Customer Experience Program"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\SQMClient\\Windows",
+                           "name":  "CEIPEnable",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Microsoft\\SQMClient\\Windows",
+                          "name":  "CEIPEnable",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "appcompat-ait-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭应用兼容遥测",
+                     "en-US":  "Disable AppCompat telemetry"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭应用兼容遥测",
+                            "en-US":  "Disable AppCompat telemetry"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\AppCompat",
+                           "name":  "AITEnable",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\AppCompat",
+                          "name":  "AITEnable",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "appcompat-inventory-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭应用清单收集",
+                     "en-US":  "Disable inventory collector"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭应用清单收集",
+                            "en-US":  "Disable inventory collector"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\AppCompat",
+                           "name":  "DisableInventory",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\AppCompat",
+                          "name":  "DisableInventory",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "appcompat-uar-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭步骤记录器",
+                     "en-US":  "Disable Steps Recorder"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭步骤记录器",
+                            "en-US":  "Disable Steps Recorder"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\AppCompat",
+                           "name":  "DisableUAR",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\AppCompat",
+                          "name":  "DisableUAR",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "defender-samples-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "不上传样本",
+                     "en-US":  "Do not submit samples"
+                 },
+        "description":  {
+                            "zh-Hans":  "不上传样本",
+                            "en-US":  "Do not submit samples"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Spynet",
+                           "name":  "SubmitSamplesConsent",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Spynet",
+                          "name":  "SubmitSamplesConsent",
+                          "kind":  "DWord",
+                          "value":  "2"
+                      }
+                  ]
+    },
+    {
+        "id":  "defender-archive-off",
+        "group":  "Performance",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭压缩包扫描",
+                     "en-US":  "Disable archive scanning"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭压缩包扫描",
+                            "en-US":  "Disable archive scanning"
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Scan",
+                           "name":  "DisableArchiveScanning",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Scan",
+                          "name":  "DisableArchiveScanning",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "defender-removable-off",
+        "group":  "Performance",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭可移动盘扫描",
+                     "en-US":  "Disable removable drive scanning"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭可移动盘扫描",
+                            "en-US":  "Disable removable drive scanning"
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Scan",
+                           "name":  "DisableRemovableDriveScanning",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Scan",
+                          "name":  "DisableRemovableDriveScanning",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "defender-cpu-limit",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "限制杀毒 CPU 占用",
+                     "en-US":  "Cap antivirus CPU usage"
+                 },
+        "description":  {
+                            "zh-Hans":  "限制杀毒 CPU 占用",
+                            "en-US":  "Cap antivirus CPU usage"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Scan",
+                           "name":  "AvgCPULoadFactor",
+                           "kind":  "DWord",
+                           "value":  "20"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Scan",
+                          "name":  "AvgCPULoadFactor",
+                          "kind":  "DWord",
+                          "value":  "20"
+                      }
+                  ]
+    },
+    {
+        "id":  "lock-screen-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭锁屏界面",
+                     "en-US":  "Disable lock screen"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭锁屏界面",
+                            "en-US":  "Disable lock screen"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+                           "name":  "NoLockScreen",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization",
+                          "name":  "NoLockScreen",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "compressed-color-on",
+        "group":  "Explorer",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "显示压缩文件颜色",
+                     "en-US":  "Show compressed file colors"
+                 },
+        "description":  {
+                            "zh-Hans":  "显示压缩文件颜色",
+                            "en-US":  "Show compressed file colors"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+                           "name":  "ShowCompColor",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
+                          "name":  "ShowCompColor",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "vbs-off",
+        "group":  "Performance",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭基于虚拟化的安全",
+                     "en-US":  "Disable VBS"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭基于虚拟化的安全",
+                            "en-US":  "Disable VBS"
+                        },
+        "risk":  "High",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\DeviceGuard",
+                           "name":  "EnableVirtualizationBasedSecurity",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Control\\DeviceGuard",
+                          "name":  "EnableVirtualizationBasedSecurity",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "edge-superdrag-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 Edge 超级拖放",
+                     "en-US":  "Disable Edge super drag drop"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Edge 超级拖放",
+                            "en-US":  "Disable Edge super drag drop"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "SuperDragDropEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "SuperDragDropEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "edge-background-off",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 Edge 后台运行",
+                     "en-US":  "Disable Edge background mode"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Edge 后台运行",
+                            "en-US":  "Disable Edge background mode"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "BackgroundModeEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "BackgroundModeEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "edge-prelaunch-off",
+        "group":  "Performance",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 Edge 预启动",
+                     "en-US":  "Disable Edge prelaunch"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Edge 预启动",
+                            "en-US":  "Disable Edge prelaunch"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "AllowPrelaunch",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "AllowPrelaunch",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "store-auto-download-off",
+        "group":  "Update",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭商店自动下载",
+                     "en-US":  "Disable Store auto download"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭商店自动下载",
+                            "en-US":  "Disable Store auto download"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\WindowsStore",
+                           "name":  "AutoDownload",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\WindowsStore",
+                          "name":  "AutoDownload",
+                          "kind":  "DWord",
+                          "value":  "2"
+                      }
+                  ]
+    },
+    {
+        "id":  "cortana-consent-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 Cortana 授权",
+                     "en-US":  "Disable Cortana consent"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Cortana 授权",
+                            "en-US":  "Disable Cortana consent"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search",
+                           "name":  "CortanaConsent",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search",
+                          "name":  "CortanaConsent",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "telemetry-feedback-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭遥测反馈提示",
+                     "en-US":  "Disable telemetry feedback prompts"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭遥测反馈提示",
+                            "en-US":  "Disable telemetry feedback prompts"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+                           "name":  "DoNotShowFeedbackNotifications",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+                          "name":  "DoNotShowFeedbackNotifications",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "passport-off",
+        "group":  "System",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 Windows Hello 企业版",
+                     "en-US":  "Disable Windows Hello for Business"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Windows Hello 企业版",
+                            "en-US":  "Disable Windows Hello for Business"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\PassportForWork",
+                           "name":  "Enabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\PassportForWork",
+                          "name":  "Enabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ]
+    },
+    {
+        "id":  "defender-notify-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 Defender 增强通知",
+                     "en-US":  "Disable Defender enhanced notifications"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Defender 增强通知",
+                            "en-US":  "Disable Defender enhanced notifications"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Reporting",
+                           "name":  "DisableEnhancedNotifications",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Reporting",
+                          "name":  "DisableEnhancedNotifications",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "edge-sync-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 Edge 同步",
+                     "en-US":  "Disable Edge sync"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Edge 同步",
+                            "en-US":  "Disable Edge sync"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "SyncDisabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "SyncDisabled",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ]
+    },
+    {
+        "id":  "edge-autofill-off",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭 Edge 地址自动填充",
+                     "en-US":  "Disable Edge address autofill"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Edge 地址自动填充",
+                            "en-US":  "Disable Edge address autofill"
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "AutofillAddressEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "AutofillAddressEnabled",
                           "kind":  "DWord",
                           "value":  "0"
                       }

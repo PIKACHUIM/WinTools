@@ -3,3 +3,4 @@ key|zh-Hans|zh-Hant|en-US|ja-JP|ko-KR|de-DE|fr-FR|es-ES|pt-BR|it-IT|ru-RU|ar-SA
 Wim.Format|映像格式|映像格式|Image format|イメージ形式|이미지 형식|Imageformat|Format d'image|Formato de imagen|Formato da imagem|Formato immagine|Формат образа|تنسيق الصورة
 Wim.SplitSize|分卷大小|分卷大小|Split size|分割サイズ|분할 크기|Teilgröße|Taille des volumes|Tamaño de división|Tamanho da divisão|Dimensione suddivisione|Размер тома|حجم التقسيم
 Wim.Excludes|默认排除项|預設排除項目|Default exclusions|既定の除外|기본 제외|Standardausschlüsse|Exclusions par défaut|Exclusiones predeterminadas|Exclusões padrão|Esclusioni predefinite|Исключения по умолчанию|الاستثناءات الافتراضية
+Wim.RepairBoot|修复引导|修復開機|Repair boot|ブート修復|부팅 복구|Bootloader reparieren|Réparer le boot|Reparar arranque|Reparar boot|Ripara avvio|Восстановить загрузку|إصلاح الإقلاع

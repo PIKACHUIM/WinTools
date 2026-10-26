@@ -221,6 +221,26 @@ public sealed partial class StoreService
 
             return map;
         }, cancellationToken);
+    public async Task<OperationResult> InstallPackageFileAsync(string path, CancellationToken cancellationToken)
+    {
+        if (!File.Exists(path))
+        {
+            return OperationResult.Fail("安装包不存在");
+        }
+
+        var escaped = path.Replace("'", "''");
+        var result = await ProcessRunner.RunPowerShellAsync(
+            $"Add-AppxPackage -Path '{escaped}' -ForceApplicationShutdown -ErrorAction Stop",
+            timeoutMs: 900_000,
+            cancellationToken: cancellationToken).ConfigureAwait(false);
+
+        _logger.Audit("Component.InstallFile", path, $"exit={result.ExitCode}");
+
+        return result.Success
+            ? OperationResult.Ok("已安装")
+            : OperationResult.Fail(Summarize(result.Combined, "安装失败：请确认已启用「虚拟机平台」并重启"));
+    }
+
     /// <summary>wsl.exe 的输出是 UTF-16，按行切分后去掉 BOM 与零宽字符。</summary>
     private static IEnumerable<string> CleanWslOutput(string text)
         => text

@@ -94,6 +94,9 @@ public interface IStoreService
     Task<IReadOnlyList<WslDistro>> GetWslAsync(bool includeOnline, CancellationToken cancellationToken);
 
     Task<OperationResult> InstallWslAsync(WslDistro distro, CancellationToken cancellationToken);
+
+    /// <summary>安装本地 .msix / .appx 包（安卓子系统等第三方打包版走这里）。</summary>
+    Task<OperationResult> InstallPackageFileAsync(string path, CancellationToken cancellationToken);
 }
 
 /// <summary>运行环境：.NET / VC++。</summary>

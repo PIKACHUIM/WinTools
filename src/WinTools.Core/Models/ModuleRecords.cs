@@ -174,14 +174,16 @@ public sealed record WimCaptureRequest(
     string ImageName,
     string? Description,
     bool Append,
-    uint CompressionType);
+    uint CompressionType,
+    int SplitSizeMb = 0);
 
 /// <summary>WIM 释放请求。</summary>
 public sealed record WimApplyRequest(
     string ImagePath,
     int ImageIndex,
     string TargetPath,
-    bool Verify);
+    bool Verify,
+    bool RepairBoot = false);
 
 /// <summary>WIM 操作进度。</summary>
 public sealed record WimProgress(long CurrentBytes, long TotalBytes, int Percent, string Stage)

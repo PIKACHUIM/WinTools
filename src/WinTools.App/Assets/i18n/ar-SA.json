@@ -393,5 +393,11 @@
   "Flag.ConfirmDelete": "ستتم إزالة تجاوز الميزة {0}؛ يعود النظام إلى الافتراضي بعد إعادة التشغيل.",
 
   "App.LastUsed": "استُخدم {0}",
-  "App.InstalledOn": "مثبّت {0}"
+  "App.InstalledOn": "مثبّت {0}",
+
+  "Wim.RepairBoot": "إصلاح الإقلاع",
+
+  "Comp.WsaRow": "النظام الفرعي أندرويد",
+  "Comp.WsaHint": "تثبيت إصدار طرف ثالث",
+  "Comp.PickPackage": "اختيار الحزمة"
 }

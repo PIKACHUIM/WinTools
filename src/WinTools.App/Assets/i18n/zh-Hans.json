@@ -393,5 +393,11 @@
   "Flag.ConfirmDelete": "将删除特性 {0} 的覆盖项，重启后恢复系统默认。",
 
   "App.LastUsed": "使用 {0}",
-  "App.InstalledOn": "安装 {0}"
+  "App.InstalledOn": "安装 {0}",
+
+  "Wim.RepairBoot": "修复引导",
+
+  "Comp.WsaRow": "安卓子系统",
+  "Comp.WsaHint": "支持安装第三方打包版",
+  "Comp.PickPackage": "选择安装包"
 }

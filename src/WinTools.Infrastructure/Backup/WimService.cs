@@ -118,7 +118,7 @@ public sealed class WimService : IWimService
 
                 if (extension is ".esd" or ".swm")
                 {
-                    var convert = ConvertAsync(actualTarget, target, extension, cancellationToken)
+                    var convert = ConvertAsync(actualTarget, target, extension, request.SplitSizeMb, cancellationToken)
                         .GetAwaiter().GetResult();
 
                     if (!convert.Success)
@@ -341,6 +341,7 @@ public sealed class WimService : IWimService
         string wimPath,
         string targetPath,
         string extension,
+        int splitSizeMb,
         CancellationToken cancellationToken)
     {
         ProcessResult result;
@@ -359,7 +360,7 @@ public sealed class WimService : IWimService
             result = await ProcessRunner.RunAsync(
                 "dism.exe",
                 ["/English", "/Split-Image", "/ImageFile:" + wimPath,
-                 "/SWMFile:" + targetPath, "/FileSize:4096", "/CheckIntegrity"],
+                 "/SWMFile:" + targetPath, "/FileSize:" + (splitSizeMb > 0 ? splitSizeMb : 4096), "/CheckIntegrity"],
                 3_600_000,
                 cancellationToken).ConfigureAwait(false);
         }
@@ -396,9 +397,34 @@ public sealed class WimService : IWimService
 
         _logger.Audit("Wim.ApplyDism", request.ImagePath, $"索引 {request.ImageIndex} -> {request.TargetPath}");
 
-        return result.ExitCode is 0 or 3010
-            ? OperationResult.Ok("映像已释放完成", 1)
-            : OperationResult.Fail("释放失败: " + result.Combined.Trim());
+        if (result.ExitCode is not (0 or 3010))
+        {
+            return OperationResult.Fail("释放失败: " + result.Combined.Trim());
+        }
+
+        // 释放完成后可选修复引导：bcdboot 是系统里唯一的引导写入入口
+        if (request.RepairBoot)
+        {
+            var windowsDir = Path.Combine(request.TargetPath, "Windows");
+            if (!Directory.Exists(windowsDir))
+            {
+                return OperationResult.Ok("映像已释放，但目标分区没有 Windows 目录，已跳过引导修复", 1);
+            }
+
+            var boot = await ProcessRunner.RunAsync(
+                "bcdboot.exe",
+                [windowsDir, "/f", "ALL"],
+                180_000,
+                cancellationToken).ConfigureAwait(false);
+
+            _logger.Audit("Wim.BootRepair", request.TargetPath, $"exit={boot.ExitCode}");
+
+            return boot.ExitCode == 0
+                ? OperationResult.Ok("映像已释放，引导已修复", 1)
+                : OperationResult.Ok("映像已释放，但引导修复失败：" + boot.Combined.Trim(), 1);
+        }
+
+        return OperationResult.Ok("映像已释放完成", 1);
     }
 
     private static void TryDelete(string path)
