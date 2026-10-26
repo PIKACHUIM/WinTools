@@ -36,7 +36,11 @@ if (-not $iscc) {
 $normalized = $Version.Trim().TrimStart('v', 'V')
 $iss = Join-Path $root 'installer/WinTools.iss'
 
-Write-Host "==> 打包安装程序：$normalized" -ForegroundColor Cyan
+# 简体中文语言包随仓库提供；缺失时 .iss 会退回只用英文
+$zhIsl = Join-Path $root 'installer/languages/ChineseSimplified.isl'
+$languages = if (Test-Path $zhIsl) { '简体中文 + English' } else { '仅 English（缺少 languages/ChineseSimplified.isl）' }
+
+Write-Host "==> 打包安装程序：$normalized（界面语言：$languages）" -ForegroundColor Cyan
 
 & $iscc `
     "/DAppVersion=$normalized" `

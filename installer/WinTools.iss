@@ -49,7 +49,11 @@ VersionInfoProductName={#AppName}
 VersionInfoProductVersion={#AppVersion}
 
 [Languages]
-Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
+; 简体中文语言包不在 Inno Setup 默认安装里，随仓库提供（installer/languages/）；
+; 万一文件被删掉，就退回只有英文，不让整个打包因此失败
+#ifexist "languages\ChineseSimplified.isl"
+Name: "chinesesimplified"; MessagesFile: "languages\ChineseSimplified.isl"
+#endif
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
