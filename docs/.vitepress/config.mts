@@ -13,7 +13,8 @@ export default defineConfig({
 
   // 架构方案文档与规则种子数据不参与站点构建
   // 规则源与历史清单不参与站点构建
-  srcExclude: ['**/legacy/**'],
+  // readme/ 是给 GitHub 用的多语言 README，链接指向仓库根目录，纳入构建会产生死链
+  srcExclude: ['**/legacy/**', 'readme/**'],
 
   head: [
     ['link', { rel: 'icon', type: 'image/png', href: `${base}logo.png` }],
