@@ -36,6 +36,27 @@ param(
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'CertumSigning.ps1')
 
+# pwsh -File 不会把数组当单个参数：写 -Path a,b,c 时只有第一个进入 $Path，
+# 其余会按位置落到 $Thumbprint / $TimestampUrl 上（指纹于是变成路径里的十六进制字符）。
+# 因此额外支持用环境变量传目标列表与扩展名，避免再被参数错位坑到。
+if (-not $Path -or $Path.Count -eq 0) {
+    if ($env:WINTOOLS_SIGN_PATHS) {
+        $Path = @($env:WINTOOLS_SIGN_PATHS -split '[;,]' | Where-Object { $_.Trim() })
+    }
+}
+
+# 扩展名同样可能被当成一个整串传入（".exe,.dll"），统一拆开并补点号
+$extSource = @($Extensions | ForEach-Object { $_ -split '[,;]' } | Where-Object { $_.Trim() })
+if ($env:WINTOOLS_SIGN_EXTENSIONS) {
+    $extSource += @($env:WINTOOLS_SIGN_EXTENSIONS -split '[,;]')
+}
+$Extensions = @($extSource | ForEach-Object {
+        $item = $_.Trim().ToLowerInvariant()
+        if (-not $item) { $null } elseif ($item.StartsWith('.')) { $item } else { ".$item" }
+    } | Where-Object { $_ })
+
+if (-not $Extensions.Count) { $Extensions = @('.exe') }
+
 $required = Test-SignEnvFlag 'WINTOOLS_SIGN_REQUIRED'
 $skip = Test-SignEnvFlag 'WINTOOLS_SIGN_SKIP'
 

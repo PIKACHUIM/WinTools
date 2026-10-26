@@ -275,7 +275,10 @@ jobs:
 
             # 3) 签名：证书可用但签名失败时必须失败，避免发布未签名产物
             $env:WINTOOLS_SIGN_REQUIRED = '1'
-            pwsh -NoProfile -ExecutionPolicy Bypass -File tools/signing/Sign-Windows.ps1 -Path $targets -Extensions .exe,.dll
+            # 路径与扩展名走环境变量：pwsh -File 传数组会按位置拆开，把文件路径塞进 -Thumbprint / -TimestampUrl
+          $env:WINTOOLS_SIGN_PATHS = ($targets -join ';')
+          $env:WINTOOLS_SIGN_EXTENSIONS = '.exe;.dll'
+          pwsh -NoProfile -ExecutionPolicy Bypass -File tools/signing/Sign-Windows.ps1
             if ($LASTEXITCODE -ne 0) { throw "签名失败（退出码 $LASTEXITCODE）" }
 
             "signed=true" >> $env:GITHUB_OUTPUT
