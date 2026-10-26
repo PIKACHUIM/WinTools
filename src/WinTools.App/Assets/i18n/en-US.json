@@ -389,5 +389,22 @@
   "Rt.Version": "Version {0}",
   "Rt.Downloading": "Downloading {0}…",
   "Rt.Installing": "Installing…",
-  "Rt.NoNetwork": "No versions found. Check your connection and retry"
+  "Rt.NoNetwork": "No versions found. Check your connection and retry",
+
+  "Drv.BackupSelected": "Back up selected",
+  "Drv.RemoveSelected": "Remove selected",
+  "Drv.InstallFromFolder": "Install from folder",
+  "Drv.PickBackupFolder": "Choose backup folder",
+  "Drv.PickDriverFolder": "Choose a folder containing .inf",
+  "Drv.BackingUp": "Backing up {0}/{1}: {2}",
+  "Drv.Removing": "Removing {0}/{1}: {2}",
+  "Drv.Installing": "Installing drivers…",
+  "Drv.BackupDone": "Driver backup finished",
+  "Drv.RemoveDone": "Drivers removed",
+  "Drv.RemoveConfirm": "{0} driver packages will be removed; devices using them may need a restart.",
+  "Drv.RemoveOneConfirm": "The driver \"{0}\" will be removed.",
+
+  "Wim.Format": "Image format",
+  "Wim.SplitSize": "Split size",
+  "Wim.Excludes": "Default exclusions"
 }

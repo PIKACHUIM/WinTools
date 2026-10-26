@@ -328,5 +328,22 @@
   "Rt.Version": "Version {0}",
   "Rt.Downloading": "Téléchargement de {0}…",
   "Rt.Installing": "Installation…",
-  "Rt.NoNetwork": "Aucune version trouvée. Vérifiez la connexion"
+  "Rt.NoNetwork": "Aucune version trouvée. Vérifiez la connexion",
+
+  "Drv.BackupSelected": "Sauvegarder la sélection",
+  "Drv.RemoveSelected": "Supprimer la sélection",
+  "Drv.InstallFromFolder": "Installer depuis un dossier",
+  "Drv.PickBackupFolder": "Choisir le dossier de sauvegarde",
+  "Drv.PickDriverFolder": "Choisir un dossier avec .inf",
+  "Drv.BackingUp": "Sauvegarde {0}/{1} : {2}",
+  "Drv.Removing": "Suppression {0}/{1} : {2}",
+  "Drv.Installing": "Installation des pilotes…",
+  "Drv.BackupDone": "Sauvegarde des pilotes terminée",
+  "Drv.RemoveDone": "Pilotes supprimés",
+  "Drv.RemoveConfirm": "{0} paquets de pilotes vont être supprimés ; un redémarrage peut être requis.",
+  "Drv.RemoveOneConfirm": "Le pilote « {0} » va être supprimé.",
+
+  "Wim.Format": "Format d'image",
+  "Wim.SplitSize": "Taille des volumes",
+  "Wim.Excludes": "Exclusions par défaut"
 }

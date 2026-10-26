@@ -328,5 +328,22 @@
   "Rt.Version": "버전 {0}",
   "Rt.Downloading": "{0} 다운로드 중…",
   "Rt.Installing": "설치 중…",
-  "Rt.NoNetwork": "버전을 가져오지 못했습니다. 네트워크를 확인하세요"
+  "Rt.NoNetwork": "버전을 가져오지 못했습니다. 네트워크를 확인하세요",
+
+  "Drv.BackupSelected": "선택 항목 백업",
+  "Drv.RemoveSelected": "선택 항목 삭제",
+  "Drv.InstallFromFolder": "폴더에서 설치",
+  "Drv.PickBackupFolder": "백업 폴더 선택",
+  "Drv.PickDriverFolder": ".inf가 있는 폴더 선택",
+  "Drv.BackingUp": "백업 중 {0}/{1}: {2}",
+  "Drv.Removing": "삭제 중 {0}/{1}: {2}",
+  "Drv.Installing": "드라이버 설치 중…",
+  "Drv.BackupDone": "드라이버 백업 완료",
+  "Drv.RemoveDone": "드라이버 삭제 완료",
+  "Drv.RemoveConfirm": "선택한 드라이버 패키지 {0}개를 삭제합니다. 다시 시작이 필요할 수 있습니다.",
+  "Drv.RemoveOneConfirm": "드라이버 \"{0}\"을(를) 삭제합니다.",
+
+  "Wim.Format": "이미지 형식",
+  "Wim.SplitSize": "분할 크기",
+  "Wim.Excludes": "기본 제외"
 }

@@ -328,5 +328,22 @@
   "Rt.Version": "الإصدار {0}",
   "Rt.Downloading": "جارٍ تنزيل {0}…",
   "Rt.Installing": "جارٍ التثبيت…",
-  "Rt.NoNetwork": "لم يتم العثور على إصدارات. تحقق من الشبكة"
+  "Rt.NoNetwork": "لم يتم العثور على إصدارات. تحقق من الشبكة",
+
+  "Drv.BackupSelected": "نسخ احتياطي للمحدد",
+  "Drv.RemoveSelected": "إزالة المحدد",
+  "Drv.InstallFromFolder": "تثبيت من مجلد",
+  "Drv.PickBackupFolder": "اختر مجلد النسخ الاحتياطي",
+  "Drv.PickDriverFolder": "اختر مجلدًا يحتوي على ‎.inf",
+  "Drv.BackingUp": "جارٍ النسخ {0}/{1}: {2}",
+  "Drv.Removing": "جارٍ الإزالة {0}/{1}: {2}",
+  "Drv.Installing": "جارٍ تثبيت برامج التشغيل…",
+  "Drv.BackupDone": "اكتمل نسخ برامج التشغيل",
+  "Drv.RemoveDone": "تمت إزالة برامج التشغيل",
+  "Drv.RemoveConfirm": "ستتم إزالة {0} من حزم برامج التشغيل؛ قد يلزم إعادة التشغيل.",
+  "Drv.RemoveOneConfirm": "ستتم إزالة برنامج التشغيل \"{0}\".",
+
+  "Wim.Format": "تنسيق الصورة",
+  "Wim.SplitSize": "حجم التقسيم",
+  "Wim.Excludes": "الاستثناءات الافتراضية"
 }

@@ -129,6 +129,9 @@ public interface IDriverService
 {
     Task<IReadOnlyList<DriverPackage>> GetAsync(CancellationToken cancellationToken);
     Task<OperationResult> ExportAsync(string targetDirectory, IProgress<string>? progress, CancellationToken cancellationToken);
+
+    /// <summary>导出单个驱动包（批量勾选时逐个调用）。</summary>
+    Task<OperationResult> ExportAsync(DriverPackage driver, string targetDirectory, CancellationToken cancellationToken);
     Task<OperationResult> InstallAsync(string path, CancellationToken cancellationToken);
     Task<OperationResult> RemoveAsync(DriverPackage driver, CancellationToken cancellationToken);
 }

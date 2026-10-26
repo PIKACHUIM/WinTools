@@ -328,5 +328,22 @@
   "Rt.Version": "バージョン {0}",
   "Rt.Downloading": "{0} をダウンロード中…",
   "Rt.Installing": "インストール中…",
-  "Rt.NoNetwork": "バージョンを取得できませんでした。ネットワークを確認してください"
+  "Rt.NoNetwork": "バージョンを取得できませんでした。ネットワークを確認してください",
+
+  "Drv.BackupSelected": "選択項目をバックアップ",
+  "Drv.RemoveSelected": "選択項目を削除",
+  "Drv.InstallFromFolder": "フォルダーからインストール",
+  "Drv.PickBackupFolder": "バックアップ先フォルダーを選択",
+  "Drv.PickDriverFolder": ".inf を含むフォルダーを選択",
+  "Drv.BackingUp": "バックアップ中 {0}/{1}: {2}",
+  "Drv.Removing": "削除中 {0}/{1}: {2}",
+  "Drv.Installing": "ドライバーをインストール中…",
+  "Drv.BackupDone": "ドライバーのバックアップ完了",
+  "Drv.RemoveDone": "ドライバーを削除しました",
+  "Drv.RemoveConfirm": "選択した {0} 個のドライバー パッケージを削除します。再起動が必要な場合があります。",
+  "Drv.RemoveOneConfirm": "ドライバー「{0}」を削除します。",
+
+  "Wim.Format": "イメージ形式",
+  "Wim.SplitSize": "分割サイズ",
+  "Wim.Excludes": "既定の除外"
 }

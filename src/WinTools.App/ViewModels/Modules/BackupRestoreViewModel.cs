@@ -11,13 +11,17 @@ namespace WinTools.App.ViewModels.Modules;
 /// <summary>备份还原：系统备份 / 增量备份 / WIM 信息 / 释放镜像。</summary>
 public sealed partial class BackupRestoreViewModel : ModuleViewModelBase
 {
-    public BackupRestoreViewModel(IModuleCatalog catalog, IWimService wim, IAppLogger logger)
+    public BackupRestoreViewModel(
+        IModuleCatalog catalog,
+        IWimService wim,
+        IAppLogger logger,
+        WinTools.Infrastructure.System.HardwareInfoService hardware)
         : base(catalog, "Backup")
     {
-        Register("Capture", new BackupTaskViewModel(wim, logger, BackupMode.Capture));
-        Register("Incremental", new BackupTaskViewModel(wim, logger, BackupMode.Append));
+        Register("Capture", new BackupTaskViewModel(wim, logger, hardware, BackupMode.Capture));
+        Register("Incremental", new BackupTaskViewModel(wim, logger, hardware, BackupMode.Append));
         Register("WimInfo", new WimInfoSectionViewModel(wim));
-        Register("Apply", new BackupTaskViewModel(wim, logger, BackupMode.Apply));
+        Register("Apply", new BackupTaskViewModel(wim, logger, hardware, BackupMode.Apply));
         SelectSection(Sections[0].Id);
     }
 }
@@ -77,14 +81,101 @@ public sealed partial class BackupTaskViewModel : ObservableObject, ILocalizable
 {
     private readonly IWimService _wim;
     private readonly IAppLogger _logger;
+    private readonly WinTools.Infrastructure.System.HardwareInfoService _hardware;
 
-    public BackupTaskViewModel(IWimService wim, IAppLogger logger, BackupMode mode)
+    public BackupTaskViewModel(
+        IWimService wim,
+        IAppLogger logger,
+        WinTools.Infrastructure.System.HardwareInfoService hardware,
+        BackupMode mode)
     {
         _wim = wim;
         _logger = logger;
+        _hardware = hardware;
         Mode = mode;
+
+        LoadVolumes();
     }
 
+    // ---------------- 分区下拉 / 格式 / 分卷 ----------------
+
+    public ObservableCollection<VolumeInfo> Volumes { get; } = [];
+
+    [ObservableProperty]
+    private VolumeInfo? _selectedVolume;
+
+    partial void OnSelectedVolumeChanged(VolumeInfo? value)
+    {
+        if (value is not null)
+        {
+            SourcePath = value.Name;
+        }
+    }
+
+    /// <summary>格式：WIM 通用、ESD 高压缩、SWM 分卷。</summary>
+    public ObservableCollection<string> Formats { get; } = ["WIM", "ESD", "SWM"];
+
+    [ObservableProperty]
+    private int _selectedFormatIndex;
+
+    public bool IsSplitEnabled => SelectedFormatIndex == 2;
+
+    public ObservableCollection<string> SplitSizes { get; } = ["1024 MB", "2048 MB", "4096 MB", "8192 MB"];
+
+    [ObservableProperty]
+    private int _selectedSplitSizeIndex = 2;
+
+    /// <summary>默认排除项：系统还原、回收站、页面文件与休眠文件。</summary>
+    public string ExcludesText => "System Volume Information, $Recycle.Bin, pagefile.sys, hiberfil.sys";
+
+    partial void OnSelectedFormatIndexChanged(int value)
+    {
+        OnPropertyChanged(nameof(IsSplitEnabled));
+
+        if (string.IsNullOrWhiteSpace(ImagePath) || IsApply)
+        {
+            return;
+        }
+
+        var extension = value switch { 1 => ".esd", 2 => ".swm", _ => ".wim" };
+        if (!string.IsNullOrEmpty(System.IO.Path.GetExtension(ImagePath)))
+        {
+            ImagePath = System.IO.Path.ChangeExtension(ImagePath, extension);
+        }
+    }
+
+    /// <summary>直接从 DriveInfo 读分区：不需要 WMI，进页面即可用。</summary>
+    private void LoadVolumes()
+    {
+        Volumes.Clear();
+
+        foreach (var drive in System.IO.DriveInfo.GetDrives())
+        {
+            try
+            {
+                if (!drive.IsReady)
+                {
+                    continue;
+                }
+
+                Volumes.Add(new VolumeInfo(
+                    drive.Name,
+                    string.IsNullOrWhiteSpace(drive.VolumeLabel) ? drive.Name.TrimEnd('\\') : drive.VolumeLabel,
+                    drive.DriveFormat,
+                    drive.TotalSize,
+                    drive.TotalFreeSpace,
+                    true));
+            }
+            catch
+            {
+                // 光驱、未格式化分区等读不到就跳过
+            }
+        }
+
+        var systemRoot = System.IO.Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.Windows));
+        SelectedVolume ??= Volumes.FirstOrDefault(v => string.Equals(v.Name, systemRoot, StringComparison.OrdinalIgnoreCase))
+                           ?? Volumes.FirstOrDefault();
+    }
     public BackupMode Mode { get; }
 
     public bool IsCapture => Mode == BackupMode.Capture;
@@ -136,6 +227,12 @@ public sealed partial class BackupTaskViewModel : ObservableObject, ILocalizable
     };
 
     public string SourceLabel => Loc.T("Wim.SourcePath");
+
+    public string FormatLabel => Loc.T("Wim.Format");
+
+    public string SplitLabel => Loc.T("Wim.SplitSize");
+
+    public string ExcludesLabel => Loc.T("Wim.Excludes");
 
     public string ImageLabel => Loc.T("Wim.ImagePath");
 

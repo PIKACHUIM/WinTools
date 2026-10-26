@@ -328,5 +328,22 @@
   "Rt.Version": "Версия {0}",
   "Rt.Downloading": "Загрузка {0}…",
   "Rt.Installing": "Установка…",
-  "Rt.NoNetwork": "Версии не найдены. Проверьте сеть"
+  "Rt.NoNetwork": "Версии не найдены. Проверьте сеть",
+
+  "Drv.BackupSelected": "Сохранить выбранные",
+  "Drv.RemoveSelected": "Удалить выбранные",
+  "Drv.InstallFromFolder": "Установить из папки",
+  "Drv.PickBackupFolder": "Выберите папку для копии",
+  "Drv.PickDriverFolder": "Выберите папку с .inf",
+  "Drv.BackingUp": "Копирование {0}/{1}: {2}",
+  "Drv.Removing": "Удаление {0}/{1}: {2}",
+  "Drv.Installing": "Установка драйверов…",
+  "Drv.BackupDone": "Копирование драйверов завершено",
+  "Drv.RemoveDone": "Драйверы удалены",
+  "Drv.RemoveConfirm": "Будет удалено пакетов драйверов: {0}; может потребоваться перезагрузка.",
+  "Drv.RemoveOneConfirm": "Драйвер «{0}» будет удалён.",
+
+  "Wim.Format": "Формат образа",
+  "Wim.SplitSize": "Размер тома",
+  "Wim.Excludes": "Исключения по умолчанию"
 }

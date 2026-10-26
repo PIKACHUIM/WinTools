@@ -389,5 +389,22 @@
   "Rt.Version": "版本 {0}",
   "Rt.Downloading": "正在下载 {0}…",
   "Rt.Installing": "正在安装…",
-  "Rt.NoNetwork": "没有取到可用版本，请检查网络后重试"
+  "Rt.NoNetwork": "没有取到可用版本，请检查网络后重试",
+
+  "Drv.BackupSelected": "备份所选",
+  "Drv.RemoveSelected": "删除所选",
+  "Drv.InstallFromFolder": "从目录安装",
+  "Drv.PickBackupFolder": "选择驱动备份目录",
+  "Drv.PickDriverFolder": "选择含 .inf 的驱动目录",
+  "Drv.BackingUp": "正在备份 {0}/{1}：{2}",
+  "Drv.Removing": "正在删除 {0}/{1}：{2}",
+  "Drv.Installing": "正在安装驱动…",
+  "Drv.BackupDone": "驱动备份完成",
+  "Drv.RemoveDone": "驱动删除完成",
+  "Drv.RemoveConfirm": "将删除所选 {0} 个驱动包，使用这些驱动的设备可能需要重启。",
+  "Drv.RemoveOneConfirm": "将删除驱动「{0}」。",
+
+  "Wim.Format": "映像格式",
+  "Wim.SplitSize": "分卷大小",
+  "Wim.Excludes": "默认排除项"
 }

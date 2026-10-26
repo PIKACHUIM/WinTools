@@ -388,5 +388,22 @@
   "Rt.Version": "版本 {0}",
   "Rt.Downloading": "正在下載 {0}…",
   "Rt.Installing": "正在安裝…",
-  "Rt.NoNetwork": "沒有取得可用版本，請檢查網路後重試"
+  "Rt.NoNetwork": "沒有取得可用版本，請檢查網路後重試",
+
+  "Drv.BackupSelected": "備份所選",
+  "Drv.RemoveSelected": "刪除所選",
+  "Drv.InstallFromFolder": "從目錄安裝",
+  "Drv.PickBackupFolder": "選擇驅動程式備份目錄",
+  "Drv.PickDriverFolder": "選擇含 .inf 的驅動程式目錄",
+  "Drv.BackingUp": "正在備份 {0}/{1}：{2}",
+  "Drv.Removing": "正在刪除 {0}/{1}：{2}",
+  "Drv.Installing": "正在安裝驅動程式…",
+  "Drv.BackupDone": "驅動程式備份完成",
+  "Drv.RemoveDone": "驅動程式刪除完成",
+  "Drv.RemoveConfirm": "將刪除所選 {0} 個驅動程式套件，使用這些驅動程式的裝置可能需要重新啟動。",
+  "Drv.RemoveOneConfirm": "將刪除驅動程式「{0}」。",
+
+  "Wim.Format": "映像格式",
+  "Wim.SplitSize": "分卷大小",
+  "Wim.Excludes": "預設排除項目"
 }

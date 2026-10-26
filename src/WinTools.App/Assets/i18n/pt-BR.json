@@ -328,5 +328,22 @@
   "Rt.Version": "Versão {0}",
   "Rt.Downloading": "Baixando {0}…",
   "Rt.Installing": "Instalando…",
-  "Rt.NoNetwork": "Nenhuma versão encontrada. Verifique a conexão"
+  "Rt.NoNetwork": "Nenhuma versão encontrada. Verifique a conexão",
+
+  "Drv.BackupSelected": "Fazer backup dos selecionados",
+  "Drv.RemoveSelected": "Remover selecionados",
+  "Drv.InstallFromFolder": "Instalar da pasta",
+  "Drv.PickBackupFolder": "Escolher pasta de backup",
+  "Drv.PickDriverFolder": "Escolher pasta com .inf",
+  "Drv.BackingUp": "Backup {0}/{1}: {2}",
+  "Drv.Removing": "Removendo {0}/{1}: {2}",
+  "Drv.Installing": "Instalando drivers…",
+  "Drv.BackupDone": "Backup de drivers concluído",
+  "Drv.RemoveDone": "Drivers removidos",
+  "Drv.RemoveConfirm": "{0} pacotes de driver serão removidos; pode exigir reinício.",
+  "Drv.RemoveOneConfirm": "O driver \"{0}\" será removido.",
+
+  "Wim.Format": "Formato da imagem",
+  "Wim.SplitSize": "Tamanho da divisão",
+  "Wim.Excludes": "Exclusões padrão"
 }

@@ -47,8 +47,11 @@
                 <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,12,12"
                             Visibility="{Binding ShowSource, Converter={StaticResource BoolToVisibility}}">
                     <TextBlock Text="{Binding SourceLabel}" Style="{StaticResource FieldLabel}" />
-                    <TextBox Style="{StaticResource FieldBox}"
-                             Text="{Binding SourcePath, UpdateSourceTrigger=PropertyChanged}" />
+                    <ComboBox Height="34" ItemsSource="{Binding Volumes}" DisplayMemberPath="Name"
+                              SelectedItem="{Binding SelectedVolume, Mode=TwoWay}"
+                              Background="{DynamicResource App.SurfaceAlt}"
+                              BorderBrush="{DynamicResource App.Border}"
+                              Foreground="{DynamicResource App.Text.Primary}" Padding="10,0" />
                 </StackPanel>
 
                 <!-- 映像路径 -->
@@ -109,6 +112,41 @@
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
+                </StackPanel>
+
+                <!-- 格式与分卷 -->
+                <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,0,6"
+                      Visibility="{Binding ShowImageSettings, Converter={StaticResource BoolToVisibility}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                        <TextBlock Text="{Binding FormatLabel}" Style="{StaticResource FieldLabel}" />
+                        <ComboBox Height="34" ItemsSource="{Binding Formats}"
+                                  SelectedIndex="{Binding SelectedFormatIndex, Mode=TwoWay}"
+                                  Background="{DynamicResource App.SurfaceAlt}"
+                                  BorderBrush="{DynamicResource App.Border}"
+                                  Foreground="{DynamicResource App.Text.Primary}" Padding="10,0" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="12,0,0,0" IsEnabled="{Binding IsSplitEnabled}">
+                        <TextBlock Text="{Binding SplitLabel}" Style="{StaticResource FieldLabel}" />
+                        <ComboBox Height="34" ItemsSource="{Binding SplitSizes}"
+                                  SelectedIndex="{Binding SelectedSplitSizeIndex, Mode=TwoWay}"
+                                  Background="{DynamicResource App.SurfaceAlt}"
+                                  BorderBrush="{DynamicResource App.Border}"
+                                  Foreground="{DynamicResource App.Text.Primary}" Padding="10,0" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- 排除项 -->
+                <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="0,48,0,0"
+                            Visibility="{Binding ShowImageSettings, Converter={StaticResource BoolToVisibility}}">
+                    <TextBlock Text="{Binding ExcludesLabel}" Style="{StaticResource FieldLabel}" />
+                    <TextBlock Text="{Binding ExcludesText}" Style="{StaticResource CaptionText}"
+                               TextWrapping="Wrap" Foreground="{DynamicResource App.Text.Secondary}" />
                 </StackPanel>
             </Grid>
 

@@ -143,8 +143,21 @@
         <Grid Grid.Row="3" Margin="0,12,0,0">
             <ContentControl Content="{Binding SelectedSection.Content}" />
 
-            <Border Style="{StaticResource Card}" Padding="8" DataContext="{Binding Toolbar}"
-                    Visibility="{Binding IsOverlayVisible, Converter={StaticResource BoolToVisibility}}">
+            <Border Padding="8" DataContext="{Binding Toolbar}">
+                <Border.Style>
+                    <Style TargetType="Border" BasedOn="{StaticResource Card}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding DataContext.HasToolbar, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True" />
+                                    <Condition Binding="{Binding IsOverlayVisible}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
                 <ctl:PageStateOverlay />
             </Border>
         </Grid>
