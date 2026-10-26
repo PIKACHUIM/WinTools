@@ -51,6 +51,8 @@ env:
   CERTUM_OTP_URI: ${{ secrets.CERTUM_OTP_URI }}
   CERTUM_USERNAME: ${{ secrets.CERTUM_USERNAME }}
   CERTUM_CERTIFICATE_SHA1: ${{ secrets.CERTUM_CERTIFICATE_SHA1 }}
+  # 兼容另一种常见命名
+  CERTUM_CERT_THUMBPRINT: ${{ secrets.CERTUM_CERT_THUMBPRINT }}
 
 concurrency:
   # 推送触发的 beta 只保留最新一次；手动发布单独分组，避免被推送取消
@@ -167,15 +169,48 @@ jobs:
         id: creds
         shell: pwsh
         run: |
-          $ok = $env:CERTUM_USERNAME -and $env:CERTUM_OTP_URI -and $env:CERTUM_CERTIFICATE_SHA1
+          # 除了标准的 CERTUM_CERTIFICATE_SHA1，也接受 CERTUM_CERT_THUMBPRINT 这个常见写法
+          $sha1 = if ($env:CERTUM_CERTIFICATE_SHA1) { $env:CERTUM_CERTIFICATE_SHA1.Trim() } else { "$env:CERTUM_CERT_THUMBPRINT".Trim() }
+          $user = "$env:CERTUM_USERNAME".Trim()
+          $otp = "$env:CERTUM_OTP_URI".Trim()
+
+          # 只报告「有没有、多长、格式对不对」，绝不打印密钥内容
+          $report = @(
+            "USERNAME          : $(if ($user) { "已设置（$($user.Length) 字符）" } else { '缺失' })"
+            "OTP_URI           : $(if ($otp) { "已设置（$($otp.Length) 字符，前缀 $($otp.Substring(0, [Math]::Min(12, $otp.Length)))）" } else { '缺失' })"
+            "CERTIFICATE_SHA1  : $(if ($sha1) { "已设置（$($sha1.Length) 字符）" } else { '缺失' })"
+          )
+          $report | ForEach-Object { Write-Host $_ }
+
+          $missing = @()
+          if (-not $user) { $missing += 'CERTUM_USERNAME' }
+          if (-not $otp) { $missing += 'CERTUM_OTP_URI' }
+          if (-not $sha1) { $missing += 'CERTUM_CERTIFICATE_SHA1（或 CERTUM_CERT_THUMBPRINT）' }
+
+          if ($otp -and -not $otp.StartsWith('otpauth://')) {
+            $missing += 'CERTUM_OTP_URI 不是 otpauth:// 开头，请填完整的 otpauth URI 而不是单独的密钥'
+          }
+
+          if ($sha1 -and $sha1.Replace(' ', '') -notmatch '^[0-9A-Fa-f]{40}$') {
+            Write-Host '::warning title=证书指纹格式可疑::指纹通常是 40 位十六进制字符，请确认没有带空格或引号'
+          }
+
+          $ok = $missing.Count -eq 0
           "enabled=$($ok.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
-          if (-not $ok) {
-            if ($env:CHANNEL -eq 'release') {
-              throw '正式发布必须签名，但缺少 CERTUM_USERNAME / CERTUM_OTP_URI / CERTUM_CERTIFICATE_SHA1 Secrets'
-            }
-            Write-Host '::warning title=本次未签名::缺少 Certum Secrets，beta 产物将不带数字签名'
+
+          if ($ok) {
+            Write-Host "Certum 云签名已启用（证书指纹 $sha1）"
+            "CERTUM_CERTIFICATE_SHA1=$sha1" >> $env:GITHUB_ENV
           } else {
-            Write-Host "Certum 云签名已启用（证书指纹 $env:CERTUM_CERTIFICATE_SHA1）"
+            $detail = $missing -join '；'
+            if ($env:CHANNEL -eq 'release') {
+              throw "正式发布必须签名，但签名凭据不完整：$detail"
+            }
+            Write-Host "::warning title=本次产物不会签名::$detail"
+            Write-Host '如果你确实在仓库里配了 Secrets，请检查三点：'
+            Write-Host '  1) 是否配在 Settings → Secrets and variables → Actions → Repository secrets，而不是 Environment secrets'
+            Write-Host '  2) 变量名是否与上面列出的完全一致（大小写敏感）'
+            Write-Host '  3) 配好之后是否重新触发过一次构建（旧产物不会自动补签名）'
           }
 
       - name: 编译
