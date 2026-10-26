@@ -320,5 +320,13 @@
   "Comp.StoreRow": "스토어 패키지",
   "Comp.LoadWsl": "Linux 배포판",
 
-  "Common.Load": "불러오기"
+  "Common.Load": "불러오기",
+
+  "Rt.CheckAvailable": "설치 가능한 버전",
+  "Rt.Fetching": "버전 목록을 가져오는 중…",
+  "Rt.Available": "설치 가능",
+  "Rt.Version": "버전 {0}",
+  "Rt.Downloading": "{0} 다운로드 중…",
+  "Rt.Installing": "설치 중…",
+  "Rt.NoNetwork": "버전을 가져오지 못했습니다. 네트워크를 확인하세요"
 }

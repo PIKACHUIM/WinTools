@@ -381,5 +381,13 @@
   "Comp.StoreRow": "Microsoft Store packages",
   "Comp.LoadWsl": "Linux distros",
 
-  "Common.Load": "Load"
+  "Common.Load": "Load",
+
+  "Rt.CheckAvailable": "Check available versions",
+  "Rt.Fetching": "Fetching version list…",
+  "Rt.Available": "Available",
+  "Rt.Version": "Version {0}",
+  "Rt.Downloading": "Downloading {0}…",
+  "Rt.Installing": "Installing…",
+  "Rt.NoNetwork": "No versions found. Check your connection and retry"
 }

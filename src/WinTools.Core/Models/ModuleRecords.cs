@@ -79,6 +79,17 @@ public sealed record SecurityStatus(
     string? EngineVersion,
     IReadOnlyList<string> Exclusions);
 
+/// <summary>可在线安装的运行库（.NET / VC++）。</summary>
+public sealed record RuntimePackage(
+    string Id,
+    string DisplayName,
+    string Version,
+    string Architecture,
+    string Url,
+    string? Sha512,
+    long SizeBytes,
+    string Kind);
+
 /// <summary>系统组件中心里的一个内置应用或可选组件。</summary>
 public sealed record StoreApp(
     string Id,

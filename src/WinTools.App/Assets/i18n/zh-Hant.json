@@ -380,5 +380,13 @@
   "Comp.StoreRow": "Microsoft Store 元件",
   "Comp.LoadWsl": "Linux 發行版",
 
-  "Common.Load": "載入"
+  "Common.Load": "載入",
+
+  "Rt.CheckAvailable": "檢查可安裝版本",
+  "Rt.Fetching": "正在取得版本清單…",
+  "Rt.Available": "可安裝",
+  "Rt.Version": "版本 {0}",
+  "Rt.Downloading": "正在下載 {0}…",
+  "Rt.Installing": "正在安裝…",
+  "Rt.NoNetwork": "沒有取得可用版本，請檢查網路後重試"
 }

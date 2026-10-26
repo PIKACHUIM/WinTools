@@ -28,7 +28,7 @@ public partial class App : Application
 
         // 单实例：已有实例在跑就直接退出。
         // 诊断模式（截图/扫描探针）不参与单实例：否则残留实例会让自动截图全部静默失败。
-        var isDiagnostic = e.Args.Contains("--shots") || e.Args.Contains("--scan") || e.Args.Contains("--components");
+        var isDiagnostic = e.Args.Contains("--shots") || e.Args.Contains("--scan") || e.Args.Contains("--components") || e.Args.Contains("--runtimes");
         if (!isDiagnostic)
         {
             _singleInstanceMutex = new Mutex(initiallyOwned: true, "WinTools.SingleInstance", out var isNew);
@@ -119,6 +119,35 @@ public partial class App : Application
                 Path.Combine(Path.GetTempPath(), "wintools-components.txt"),
                 string.Join(Environment.NewLine, log));
 
+            Shutdown(0);
+            return;
+        }
+
+        // ---- 诊断入口（无界面）：--runtimes 验证在线版本清单 ----
+        if (e.Args.Contains("--runtimes"))
+        {
+            var rt = _services.GetRequiredService<IRuntimeService>();
+            var log = new List<string>();
+
+            foreach (var kind in new[] { "dotnet", "vcpp" })
+            {
+                var sw = System.Diagnostics.Stopwatch.StartNew();
+                try
+                {
+                    var packages = Task.Run(() => rt.GetAvailableAsync(kind, CancellationToken.None)).GetAwaiter().GetResult();
+                    log.Add($"{kind}: {packages.Count} 项 / {sw.ElapsedMilliseconds}ms");
+                    foreach (var pkg in packages.Take(6))
+                    {
+                        log.Add($"  {pkg.Id} {pkg.Version} {pkg.Architecture} {(pkg.SizeBytes > 0 ? $"{pkg.SizeBytes / 1024 / 1024}MB" : "?")} hash={(string.IsNullOrEmpty(pkg.Sha512) ? "sig" : "sha512")}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Add($"{kind} FAILED: {ex.Message}");
+                }
+            }
+
+            File.WriteAllText(Path.Combine(Path.GetTempPath(), "wintools-runtimes.txt"), string.Join(Environment.NewLine, log));
             Shutdown(0);
             return;
         }

@@ -320,5 +320,13 @@
   "Comp.StoreRow": "ストア パッケージ",
   "Comp.LoadWsl": "Linux ディストリビューション",
 
-  "Common.Load": "読み込む"
+  "Common.Load": "読み込む",
+
+  "Rt.CheckAvailable": "インストール可能なバージョン",
+  "Rt.Fetching": "バージョン一覧を取得中…",
+  "Rt.Available": "インストール可能",
+  "Rt.Version": "バージョン {0}",
+  "Rt.Downloading": "{0} をダウンロード中…",
+  "Rt.Installing": "インストール中…",
+  "Rt.NoNetwork": "バージョンを取得できませんでした。ネットワークを確認してください"
 }

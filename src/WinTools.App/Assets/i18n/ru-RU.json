@@ -320,5 +320,13 @@
   "Comp.StoreRow": "Компоненты Store",
   "Comp.LoadWsl": "Дистрибутивы Linux",
 
-  "Common.Load": "Загрузить"
+  "Common.Load": "Загрузить",
+
+  "Rt.CheckAvailable": "Доступные версии",
+  "Rt.Fetching": "Загрузка списка версий…",
+  "Rt.Available": "Доступно",
+  "Rt.Version": "Версия {0}",
+  "Rt.Downloading": "Загрузка {0}…",
+  "Rt.Installing": "Установка…",
+  "Rt.NoNetwork": "Версии не найдены. Проверьте сеть"
 }

@@ -1,0 +1,9 @@
+# 运行环境：在线安装
+key|zh-Hans|zh-Hant|en-US|ja-JP|ko-KR|de-DE|fr-FR|es-ES|pt-BR|it-IT|ru-RU|ar-SA
+Rt.CheckAvailable|检查可安装版本|檢查可安裝版本|Check available versions|インストール可能なバージョン|설치 가능한 버전|Verfügbare Versionen|Versions disponibles|Versiones disponibles|Versões disponíveis|Versioni disponibili|Доступные версии|الإصدارات المتاحة
+Rt.Fetching|正在获取版本清单…|正在取得版本清單…|Fetching version list…|バージョン一覧を取得中…|버전 목록을 가져오는 중…|Versionsliste wird geladen…|Récupération de la liste…|Obteniendo la lista…|Obtendo a lista…|Recupero elenco…|Загрузка списка версий…|جارٍ جلب قائمة الإصدارات…
+Rt.Available|可安装|可安裝|Available|インストール可能|설치 가능|Verfügbar|Disponible|Disponible|Disponível|Disponibile|Доступно|متاح
+Rt.Version|版本 {0}|版本 {0}|Version {0}|バージョン {0}|버전 {0}|Version {0}|Version {0}|Versión {0}|Versão {0}|Versione {0}|Версия {0}|الإصدار {0}
+Rt.Downloading|正在下载 {0}…|正在下載 {0}…|Downloading {0}…|{0} をダウンロード中…|{0} 다운로드 중…|{0} wird heruntergeladen…|Téléchargement de {0}…|Descargando {0}…|Baixando {0}…|Download di {0}…|Загрузка {0}…|جارٍ تنزيل {0}…
+Rt.Installing|正在安装…|正在安裝…|Installing…|インストール中…|설치 중…|Wird installiert…|Installation…|Instalando…|Instalando…|Installazione…|Установка…|جارٍ التثبيت…
+Rt.NoNetwork|没有取到可用版本，请检查网络后重试|沒有取得可用版本，請檢查網路後重試|No versions found. Check your connection and retry|バージョンを取得できませんでした。ネットワークを確認してください|버전을 가져오지 못했습니다. 네트워크를 확인하세요|Keine Versionen gefunden. Verbindung prüfen|Aucune version trouvée. Vérifiez la connexion|No se encontraron versiones. Compruebe la conexión|Nenhuma versão encontrada. Verifique a conexão|Nessuna versione trovata. Controlla la rete|Версии не найдены. Проверьте сеть|لم يتم العثور على إصدارات. تحقق من الشبكة

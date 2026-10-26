@@ -381,5 +381,13 @@
   "Comp.StoreRow": "应用商店组件",
   "Comp.LoadWsl": "Linux 发行版",
 
-  "Common.Load": "加载"
+  "Common.Load": "加载",
+
+  "Rt.CheckAvailable": "检查可安装版本",
+  "Rt.Fetching": "正在获取版本清单…",
+  "Rt.Available": "可安装",
+  "Rt.Version": "版本 {0}",
+  "Rt.Downloading": "正在下载 {0}…",
+  "Rt.Installing": "正在安装…",
+  "Rt.NoNetwork": "没有取到可用版本，请检查网络后重试"
 }

@@ -54,6 +54,38 @@ public sealed partial class RuntimeService : IRuntimeService
             }
         }
 
+        // 新版安装器不再写 sharedfx 注册表项，直接扫共享框架目录（Program Files\dotnet\shared\<stack>\<版本>）
+        foreach (var (stack, label) in DotNetStacks)
+        {
+            foreach (var (root, arch) in new[]
+                     {
+                         (Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "x64"),
+                         (Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "x86")
+                     })
+            {
+                var dir = Path.Combine(root, "dotnet", "shared", stack);
+                if (!Directory.Exists(dir))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    foreach (var version in Directory.EnumerateDirectories(dir).Select(Path.GetFileName))
+                    {
+                        if (version is not null && VersionPattern().IsMatch(version))
+                        {
+                            list.Add(new InstalledRuntime(label, version, arch, null, null));
+                        }
+                    }
+                }
+                catch
+                {
+                    // 目录不可读时忽略
+                }
+            }
+        }
+
         cancellationToken.ThrowIfCancellationRequested();
 
         return (IReadOnlyList<InstalledRuntime>)list

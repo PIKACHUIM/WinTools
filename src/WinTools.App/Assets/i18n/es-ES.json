@@ -320,5 +320,13 @@
   "Comp.StoreRow": "Componentes de Store",
   "Comp.LoadWsl": "Distribuciones Linux",
 
-  "Common.Load": "Cargar"
+  "Common.Load": "Cargar",
+
+  "Rt.CheckAvailable": "Versiones disponibles",
+  "Rt.Fetching": "Obteniendo la lista…",
+  "Rt.Available": "Disponible",
+  "Rt.Version": "Versión {0}",
+  "Rt.Downloading": "Descargando {0}…",
+  "Rt.Installing": "Instalando…",
+  "Rt.NoNetwork": "No se encontraron versiones. Compruebe la conexión"
 }

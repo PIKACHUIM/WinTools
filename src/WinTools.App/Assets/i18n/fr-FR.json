@@ -320,5 +320,13 @@
   "Comp.StoreRow": "Composants du Store",
   "Comp.LoadWsl": "Distributions Linux",
 
-  "Common.Load": "Charger"
+  "Common.Load": "Charger",
+
+  "Rt.CheckAvailable": "Versions disponibles",
+  "Rt.Fetching": "Récupération de la liste…",
+  "Rt.Available": "Disponible",
+  "Rt.Version": "Version {0}",
+  "Rt.Downloading": "Téléchargement de {0}…",
+  "Rt.Installing": "Installation…",
+  "Rt.NoNetwork": "Aucune version trouvée. Vérifiez la connexion"
 }

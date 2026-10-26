@@ -320,5 +320,13 @@
   "Comp.StoreRow": "Store-Pakete",
   "Comp.LoadWsl": "Linux-Distributionen",
 
-  "Common.Load": "Laden"
+  "Common.Load": "Laden",
+
+  "Rt.CheckAvailable": "Verfügbare Versionen",
+  "Rt.Fetching": "Versionsliste wird geladen…",
+  "Rt.Available": "Verfügbar",
+  "Rt.Version": "Version {0}",
+  "Rt.Downloading": "{0} wird heruntergeladen…",
+  "Rt.Installing": "Wird installiert…",
+  "Rt.NoNetwork": "Keine Versionen gefunden. Verbindung prüfen"
 }

@@ -320,5 +320,13 @@
   "Comp.StoreRow": "حزم المتجر",
   "Comp.LoadWsl": "توزيعات Linux",
 
-  "Common.Load": "تحميل"
+  "Common.Load": "تحميل",
+
+  "Rt.CheckAvailable": "الإصدارات المتاحة",
+  "Rt.Fetching": "جارٍ جلب قائمة الإصدارات…",
+  "Rt.Available": "متاح",
+  "Rt.Version": "الإصدار {0}",
+  "Rt.Downloading": "جارٍ تنزيل {0}…",
+  "Rt.Installing": "جارٍ التثبيت…",
+  "Rt.NoNetwork": "لم يتم العثور على إصدارات. تحقق من الشبكة"
 }

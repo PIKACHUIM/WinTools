@@ -99,6 +99,15 @@ public interface IRuntimeService
     Task<IReadOnlyList<InstalledRuntime>> GetDotNetAsync(CancellationToken cancellationToken);
     Task<IReadOnlyList<InstalledRuntime>> GetVcRuntimeAsync(CancellationToken cancellationToken);
     Task<OperationResult> UninstallAsync(InstalledRuntime runtime, CancellationToken cancellationToken);
+
+    /// <summary>可在线安装的版本清单（kind：dotnet / vcpp）。需要联网，按需调用。</summary>
+    Task<IReadOnlyList<RuntimePackage>> GetAvailableAsync(string kind, CancellationToken cancellationToken);
+
+    /// <summary>下载 → 校验 → 静默安装。</summary>
+    Task<OperationResult> InstallAsync(
+        RuntimePackage package,
+        IProgress<double>? progress,
+        CancellationToken cancellationToken);
 }
 
 /// <summary>应用管理：已安装程序。</summary>
