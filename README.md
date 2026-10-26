@@ -45,110 +45,130 @@ WPF 桌面程序，纯本地运行。不装服务、不加载驱动、不加开�
 
 ## 功能介绍
 
-点击标题展开对应模块，收起后只占一行。
-
-<details open>
-<summary><b>系统概览</b> — 首屏状态</summary>
+### 系统概览
 
 系统版本与内部版本号、CPU 与内存占用、各磁盘剩余空间、近期活动。数据全部本地读取。
+
+<details>
+<summary>截图</summary>
 
 ![系统概览](docs/public/screenshots/dashboard.png)
 
 </details>
 
-<details>
-<summary><b>垃圾清理</b> — 23 个分类、1623 条规则</summary>
+### 垃圾清理
 
-按磁盘扫描，覆盖系统临时目录、更新缓存、日志与转储、浏览器缓存、开发工具缓存（npm、pip、NuGet、Gradle、Docker）以及 150 多款软件的缓存目录。
+按磁盘扫描，23 个分类、1623 条规则，覆盖系统临时目录、更新缓存、日志与转储、浏览器缓存、开发工具缓存（npm、pip、NuGet、Gradle、Docker）以及 150 多款软件的缓存目录。
 
 结果按分类折叠，标出大小和安全等级。被进程占用的文件会跳过并记录，不会卡住整轮清理。规则是纯 JSON，放在 `src/WinTools.Infrastructure/Rules/`，加路径不用改代码。
+
+<details>
+<summary>截图</summary>
 
 ![垃圾清理](docs/public/screenshots/cleanup.png)
 
 </details>
 
-<details>
-<summary><b>系统优化</b> — 153 条，7 组</summary>
+### 系统优化
 
-隐私与遥测、性能与响应、资源管理器、系统行为、网络、更新、游戏。
+153 条优化项，分 7 组：隐私与遥测、性能与响应、资源管理器、系统行为、网络、更新、游戏。
 
 每条都支持检测、应用、回滚，改之前可以先看当前状态。推荐项只包含副作用明确的条目。
+
+<details>
+<summary>截图</summary>
 
 ![系统优化](docs/public/screenshots/optimize.png)
 
 </details>
 
-<details>
-<summary><b>功能管理</b> — 系统功能、系统渠道</summary>
+### 功能管理
 
 - **系统功能**：通过 DISM API 列出全部可选功能，按用途分组，带说明与当前状态，改完批量应用。
 - **系统渠道**：读取当前 SKU、版本号与激活状态。切换版本走系统自带的 `changepk`，使用内置通用密钥，不会激活系统。
+
+<details>
+<summary>截图</summary>
 
 ![系统功能](docs/public/screenshots/features-systemfeatures.png)
 
 </details>
 
-<details>
-<summary><b>更新管理</b> — 已安装更新、可安装补丁、功能开关</summary>
+### 更新管理
 
 - **已安装更新**：枚举并卸载单条更新。
 - **可安装补丁**：手动触发 Windows Update 搜索，显示分类、KB、体积与日期，支持批量安装并给出结果汇总。
 - **功能开关**：按 ID 管理 `FeatureManagement\Overrides`，含状态、优先级、变体，支持导入、导出与重置。
 
+<details>
+<summary>截图</summary>
+
 ![可安装补丁](docs/public/screenshots/updates-available.png)
 
 </details>
 
-<details>
-<summary><b>运行管理</b> — 启动项、计划任务、服务</summary>
+### 运行管理
 
-集中在一页。显示程序真实图标，启用状态用开关控制。服务可以行内切换启动类型（自动、延迟自动、手动、禁用）。
+启动项、计划任务、服务集中在一页。显示程序真实图标，启用状态用开关控制。服务可以行内切换启动类型（自动、延迟自动、手动、禁用）。
+
+<details>
+<summary>截图</summary>
 
 ![运行管理](docs/public/screenshots/startup-services.png)
 
 </details>
 
-<details>
-<summary><b>组件管理</b> — 安全中心、系统组件</summary>
+### 组件管理
 
 - **安全中心**：14 项设置，含实时保护、云保护、行为监控、PUA、网络保护、受控文件夹、内存完整性、UAC、SmartScreen、三个防火墙配置文件，以及排除项。
 - **系统组件**：内置应用（终端、计算器、记事本、画图、照片等）的安装、修复与卸载；WSL 发行版；安卓子系统本地包安装；应用商店修复。
+
+<details>
+<summary>截图</summary>
 
 ![安全中心](docs/public/screenshots/components-securitycenter.png)
 
 </details>
 
-<details>
-<summary><b>运行环境</b> — .NET 与 VC++ 在线安装</summary>
+### 运行环境
 
 列出已安装的 .NET 与 Visual C++ 运行时。可安装版本按需拉取：.NET 读官方 `releases-index.json` 并校验 SHA512，VC++ 用 `aka.ms` 链接并校验 Authenticode。两者都静默安装，也能卸载。
+
+<details>
+<summary>截图</summary>
 
 ![运行环境](docs/public/screenshots/runtimes-dotnet.png)
 
 </details>
 
-<details>
-<summary><b>应用管理</b> — 已安装程序、应用包</summary>
+### 应用管理
 
-显示图标、版本、占用空间、安装日期与最近活动。卸载调用软件自带的卸载程序，应用包走部署接口。
+已安装程序与应用包，显示图标、版本、占用空间、安装日期与最近活动。卸载调用软件自带的卸载程序，应用包走部署接口。
+
+<details>
+<summary>截图</summary>
 
 ![应用管理](docs/public/screenshots/apps-programs.png)
 
 </details>
 
-<details>
-<summary><b>驱动管理</b> — 单页批量操作</summary>
+### 驱动管理
 
 整页管理 DriverStore。勾选任意数量的驱动包后备份、删除，或从目录安装。批量操作有逐项进度和结果汇总。
+
+<details>
+<summary>截图</summary>
 
 ![驱动管理](docs/public/screenshots/drivers-systemdrivers.png)
 
 </details>
 
-<details>
-<summary><b>备份还原</b> — WIM 捕获与释放</summary>
+### 备份还原
 
 源分区用下拉选择，映像格式（wim / esd / swm）联动扩展名与压缩方式，分卷大小只对 swm 生效，捕获前会列出默认排除项。释放时可校验映像，并用 `bcdboot` 修复引导。
+
+<details>
+<summary>截图</summary>
 
 ![备份还原](docs/public/screenshots/backup-capture.png)
 

@@ -45,110 +45,130 @@ Release-Builds tragen eine Certum-Cloud-Signatur mit Zeitstempel; prüfbar mit `
 
 ## Funktionen
 
-Titel anklicken zum Aufklappen; zugeklappt belegt jeder Modul eine Zeile.
-
-<details open>
-<summary><b>Systemübersicht</b> — erster Bildschirm</summary>
+### Systemübersicht
 
 Systemversion und Buildnummer, CPU- und Speicherauslastung, freier Speicher je Datenträger, letzte Aktivitäten. Alle Daten werden lokal gelesen.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Systemübersicht](../public/screenshots/dashboard.png)
 
 </details>
 
-<details>
-<summary><b>Bereinigung</b> — 23 Kategorien, 1623 Regeln</summary>
+### Bereinigung
 
 Durchsucht ganze Datenträger und deckt temporäre Systemordner, Update-Cache, Protokolle und Dumps, Browsercaches, Entwickler-Caches (npm, pip, NuGet, Gradle, Docker) sowie die Cacheordner von über 150 Anwendungen ab.
 
 Ergebnisse sind nach Kategorie gruppiert, mit Größe und Sicherheitsstufe. Dateien, die von laufenden Prozessen gehalten werden, werden übersprungen und protokolliert, statt den Lauf zu blockieren. Regeln sind reines JSON unter `src/WinTools.Infrastructure/Rules/`; neue Pfade brauchen keine Codeänderung.
 
+<details>
+<summary>Screenshot</summary>
+
 ![Bereinigung](../public/screenshots/cleanup.png)
 
 </details>
 
-<details>
-<summary><b>Optimierung</b> — 153 Einträge, 7 Gruppen</summary>
+### Optimierung
 
 Datenschutz und Telemetrie, Leistung, Datei-Explorer, Systemverhalten, Netzwerk, Updates, Spiele.
 
 Jeder Eintrag unterstützt Erkennen, Anwenden und Zurücknehmen, sodass der aktuelle Zustand vorher sichtbar ist. Empfohlene Einträge beschränken sich auf gut belegte Wirkungen.
 
+<details>
+<summary>Screenshot</summary>
+
 ![Optimierung](../public/screenshots/optimize.png)
 
 </details>
 
-<details>
-<summary><b>Funktionen</b> — Systemfunktionen, Editionskanal</summary>
+### Funktionen
 
 - **Systemfunktionen**: listet alle optionalen Features über die DISM-API, nach Zweck gruppiert, mit Beschreibung und aktuellem Zustand; Änderungen werden gesammelt angewendet.
 - **Editionskanal**: liest SKU, Version und Aktivierungsstatus. Der Wechsel nutzt den systemeigenen `changepk`-Ablauf mit generischem Schlüssel und aktiviert Windows nicht.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Systemfunktionen](../public/screenshots/features-systemfeatures.png)
 
 </details>
 
-<details>
-<summary><b>Updates</b> — installierte Updates, verfügbare Updates, Feature-Flags</summary>
+### Updates
 
 - **Installierte Updates**: auflisten und einzeln deinstallieren.
 - **Verfügbare Updates**: Windows-Update-Suche manuell starten, mit Kategorie, KB, Größe und Datum, Sammelinstallation und Ergebnistext.
 - **Feature-Flags**: `FeatureManagement\Overrides` nach ID verwalten, mit Zustand, Priorität und Variante sowie Import, Export und Zurücksetzen.
 
+<details>
+<summary>Screenshot</summary>
+
 ![Verfügbare Updates](../public/screenshots/updates-available.png)
 
 </details>
 
-<details>
-<summary><b>Autostart</b> — Autostart, geplante Aufgaben, Dienste</summary>
+### Autostart
 
 Alles auf einer Seite. Echte Programmsymbole, Schalter für den Zustand. Dienste ändern ihren Starttyp direkt in der Zeile (Automatisch, Automatisch verzögert, Manuell, Deaktiviert).
+
+<details>
+<summary>Screenshot</summary>
 
 ![Autostart](../public/screenshots/startup-services.png)
 
 </details>
 
-<details>
-<summary><b>Komponenten</b> — Sicherheitscenter, Systemkomponenten</summary>
+### Komponenten
 
 - **Sicherheitscenter**: 14 Einstellungen zu Echtzeitschutz, Cloudschutz, Verhaltensüberwachung, PUA, Netzwerkschutz, überwachtem Ordnerzugriff, Speicherintegrität, UAC, SmartScreen, den drei Firewall-Profilen und Ausschlüssen.
 - **Systemkomponenten**: integrierte Apps (Terminal, Rechner, Editor, Paint, Fotos und weitere) installieren, reparieren, entfernen; WSL-Distributionen; Android-Subsystem aus lokaler Datei; Store-Reparatur.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Sicherheitscenter](../public/screenshots/components-securitycenter.png)
 
 </details>
 
-<details>
-<summary><b>Runtimes</b> — .NET und VC++ online installieren</summary>
+### Runtimes
 
 Listet installierte .NET- und Visual-C++-Runtimes. Verfügbare Versionen werden bei Bedarf geladen: .NET aus der offiziellen `releases-index.json` mit SHA512-Prüfung, VC++ über `aka.ms`-Links mit Authenticode-Prüfung. Beide installieren still und lassen sich deinstallieren.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Runtimes](../public/screenshots/runtimes-dotnet.png)
 
 </details>
 
-<details>
-<summary><b>Apps</b> — installierte Programme, Pakete</summary>
+### Apps
 
 Zeigt Symbol, Version, Größe, Installationsdatum und letzte Nutzung. Deinstallieren startet das Programm des Herstellers; Pakete laufen über die Bereitstellungs-API.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Apps](../public/screenshots/apps-programs.png)
 
 </details>
 
-<details>
-<summary><b>Treiber</b> — Sammelaktionen auf einer Seite</summary>
+### Treiber
 
 Verwaltet den gesamten DriverStore. Beliebig viele Pakete auswählen und sichern, entfernen oder aus einem Ordner installieren. Sammelläufe zeigen Fortschritt je Eintrag und eine Zusammenfassung.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Treiber](../public/screenshots/drivers-systemdrivers.png)
 
 </details>
 
-<details>
-<summary><b>Sicherung</b> — WIM erstellen und anwenden</summary>
+### Sicherung
 
 Das Quellvolume wird per Dropdown gewählt; das Abbildformat (wim / esd / swm) bestimmt Endung und Kompression; die Teilgröße gilt nur für swm; vor dem Erstellen wird die Standardausschlussliste angezeigt. Beim Anwenden lässt sich das Abbild prüfen und der Bootloader mit `bcdboot` reparieren.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Sicherung](../public/screenshots/backup-capture.png)
 

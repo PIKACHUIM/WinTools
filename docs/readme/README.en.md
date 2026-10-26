@@ -45,110 +45,130 @@ Release builds carry a Certum cloud signature and timestamp; verify with `Get-Au
 
 ## Features
 
-Click a title to expand that module; collapsed, each takes one line.
-
-<details open>
-<summary><b>Overview</b> — first screen</summary>
+### Overview
 
 System version and build number, CPU and memory usage, free space per disk, recent activity. All read locally.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Overview](../public/screenshots/dashboard.png)
 
 </details>
 
-<details>
-<summary><b>Cleanup</b> — 23 categories, 1623 rules</summary>
+### Cleanup
 
 Scans whole disks and covers system temp folders, update cache, logs and dumps, browser caches, developer caches (npm, pip, NuGet, Gradle, Docker) and the cache directories of 150+ applications.
 
 Results are grouped by category with size and safety level. Files held by running processes are skipped and recorded instead of stalling the run. Rules are plain JSON under `src/WinTools.Infrastructure/Rules/`; adding a path needs no code change.
 
+<details>
+<summary>Screenshot</summary>
+
 ![Cleanup](../public/screenshots/cleanup.png)
 
 </details>
 
-<details>
-<summary><b>Optimize</b> — 153 entries, 7 groups</summary>
+### Optimize
 
 Privacy and telemetry, performance, File Explorer, system behaviour, network, updates, gaming.
 
 Every entry supports detect, apply and rollback, so the current state can be checked before changing anything. Recommended items are limited to entries with well-known effects.
 
+<details>
+<summary>Screenshot</summary>
+
 ![Optimize](../public/screenshots/optimize.png)
 
 </details>
 
-<details>
-<summary><b>Features</b> — system features, edition channel</summary>
+### Features
 
 - **System features**: lists every optional feature through the DISM API, grouped by purpose, with descriptions and current state; changes are applied in one batch.
 - **Edition channel**: reads the current SKU, version and activation state. Switching editions uses the built-in `changepk` flow with a generic key and does not activate Windows.
+
+<details>
+<summary>Screenshot</summary>
 
 ![System features](../public/screenshots/features-systemfeatures.png)
 
 </details>
 
-<details>
-<summary><b>Updates</b> — installed updates, available updates, feature flags</summary>
+### Updates
 
 - **Installed updates**: enumerate and uninstall individual updates.
 - **Available updates**: manually trigger a Windows Update search showing category, KB, size and date, with batch install and a result summary.
 - **Feature flags**: manage `FeatureManagement\Overrides` by ID with state, priority and variant, plus import, export and reset.
 
+<details>
+<summary>Screenshot</summary>
+
 ![Available updates](../public/screenshots/updates-available.png)
 
 </details>
 
-<details>
-<summary><b>Startup</b> — startup items, scheduled tasks, services</summary>
+### Startup
 
 All on one page. Real program icons, switches for enable state. Services can change their start type inline (Automatic, Automatic delayed, Manual, Disabled).
+
+<details>
+<summary>Screenshot</summary>
 
 ![Startup](../public/screenshots/startup-services.png)
 
 </details>
 
-<details>
-<summary><b>Components</b> — security center, system components</summary>
+### Components
 
 - **Security center**: 14 settings covering real-time protection, cloud protection, behaviour monitoring, PUA, network protection, controlled folder access, memory integrity, UAC, SmartScreen, the three firewall profiles, and exclusions.
 - **System components**: built-in apps (Terminal, Calculator, Notepad, Paint, Photos and more) with install, repair and uninstall; WSL distributions; Android subsystem from a local package; Store repair.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Security center](../public/screenshots/components-securitycenter.png)
 
 </details>
 
-<details>
-<summary><b>Runtimes</b> — online install of .NET and VC++</summary>
+### Runtimes
 
 Lists installed .NET and Visual C++ runtimes. Available versions are fetched on demand: .NET from the official `releases-index.json` with SHA512 verification, VC++ from `aka.ms` links with Authenticode verification. Both install silently and can be uninstalled.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Runtimes](../public/screenshots/runtimes-dotnet.png)
 
 </details>
 
-<details>
-<summary><b>Apps</b> — installed programs, packages</summary>
+### Apps
 
 Shows icon, version, size, install date and recent activity. Uninstall runs the vendor's own uninstaller; packages go through the deployment API.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Apps](../public/screenshots/apps-programs.png)
 
 </details>
 
-<details>
-<summary><b>Drivers</b> — batch operations on one page</summary>
+### Drivers
 
 Manages the whole DriverStore. Select any number of packages and back them up, remove them, or install from a folder. Batch runs show per-item progress and a result summary.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Drivers](../public/screenshots/drivers-systemdrivers.png)
 
 </details>
 
-<details>
-<summary><b>Backup</b> — WIM capture and apply</summary>
+### Backup
 
 Source volume is chosen from a dropdown; the image format (wim / esd / swm) drives the extension and compression; split size applies to swm only; a default exclusion list is shown before capture. Apply can verify the image and repair the bootloader with `bcdboot`.
+
+<details>
+<summary>Screenshot</summary>
 
 ![Backup](../public/screenshots/backup-capture.png)
 

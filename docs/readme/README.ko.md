@@ -45,110 +45,130 @@ WPF 데스크톱 앱이며 전부 로컬에서 동작합니다. 서비스도, �
 
 ## 기능
 
-제목을 클릭하면 펼쳐집니다. 접으면 한 줄만 차지합니다.
-
-<details open>
-<summary><b>시스템 개요</b> — 첫 화면</summary>
+### 시스템 개요
 
 시스템 버전과 빌드 번호, CPU 및 메모리 사용률, 디스크별 남은 공간, 최근 활동. 모든 데이터는 로컬에서 읽습니다.
+
+<details>
+<summary>스크린샷</summary>
 
 ![시스템 개요](../public/screenshots/dashboard.png)
 
 </details>
 
-<details>
-<summary><b>정리</b> — 23개 분류, 1623개 규칙</summary>
+### 정리
 
 디스크 단위로 검사하며 시스템 임시 폴더, 업데이트 캐시, 로그와 덤프, 브라우저 캐시, 개발 도구 캐시(npm, pip, NuGet, Gradle, Docker), 150개 이상 앱의 캐시 폴더를 대상으로 합니다.
 
 결과는 분류별로 묶이고 크기와 안전 등급을 표시합니다. 사용 중인 파일은 건너뛰고 기록하며 전체 작업을 멈추지 않습니다. 규칙은 `src/WinTools.Infrastructure/Rules/`의 JSON이라 경로 추가에 코드 수정이 필요 없습니다.
 
+<details>
+<summary>스크린샷</summary>
+
 ![정리](../public/screenshots/cleanup.png)
 
 </details>
 
-<details>
-<summary><b>최적화</b> — 153개 항목, 7개 그룹</summary>
+### 최적화
 
 개인 정보 및 원격 측정, 성능, 파일 탐색기, 시스템 동작, 네트워크, 업데이트, 게임.
 
 모든 항목이 검사, 적용, 되돌리기를 지원하므로 변경 전에 현재 상태를 확인할 수 있습니다. 추천 항목은 영향이 분명한 것만 포함합니다.
 
+<details>
+<summary>스크린샷</summary>
+
 ![최적화](../public/screenshots/optimize.png)
 
 </details>
 
-<details>
-<summary><b>기능 관리</b> — 시스템 기능, 에디션 채널</summary>
+### 기능 관리
 
 - **시스템 기능**: DISM API로 모든 선택적 기능을 나열하고 용도별로 묶어 설명과 현재 상태를 표시합니다. 변경은 한 번에 적용합니다.
 - **에디션 채널**: 현재 SKU, 버전, 정품 인증 상태를 읽습니다. 전환은 기본 제공 `changepk`와 범용 키를 사용하며 정품 인증은 하지 않습니다.
+
+<details>
+<summary>스크린샷</summary>
 
 ![시스템 기능](../public/screenshots/features-systemfeatures.png)
 
 </details>
 
-<details>
-<summary><b>업데이트 관리</b> — 설치된 업데이트, 설치 가능한 업데이트, 기능 플래그</summary>
+### 업데이트 관리
 
 - **설치된 업데이트**: 목록 조회와 개별 제거.
 - **설치 가능한 업데이트**: 수동으로 Windows Update를 검색해 분류, KB, 크기, 날짜를 표시하고 일괄 설치와 결과 요약을 제공합니다.
 - **기능 플래그**: `FeatureManagement\Overrides`를 ID 단위로 관리합니다. 상태, 우선 순위, 변형을 다루며 가져오기, 내보내기, 초기화를 지원합니다.
 
+<details>
+<summary>스크린샷</summary>
+
 ![설치 가능한 업데이트](../public/screenshots/updates-available.png)
 
 </details>
 
-<details>
-<summary><b>시작 관리</b> — 시작 프로그램, 예약 작업, 서비스</summary>
+### 시작 관리
 
 한 페이지에 모았습니다. 실제 프로그램 아이콘을 표시하고 사용 상태는 스위치로 조작합니다. 서비스는 행 안에서 시작 유형(자동, 자동(지연), 수동, 사용 안 함)을 바꿀 수 있습니다.
+
+<details>
+<summary>스크린샷</summary>
 
 ![시작 관리](../public/screenshots/startup-services.png)
 
 </details>
 
-<details>
-<summary><b>구성 요소 관리</b> — 보안 센터, 시스템 구성 요소</summary>
+### 구성 요소 관리
 
 - **보안 센터**: 14개 설정. 실시간 보호, 클라우드 보호, 동작 모니터링, PUA, 네트워크 보호, 제어된 폴더 액세스, 메모리 무결성, UAC, SmartScreen, 방화벽 프로필 3종, 제외 항목.
 - **시스템 구성 요소**: 기본 앱(터미널, 계산기, 메모장, 그림판, 사진 등)의 설치·복구·제거, WSL 배포판, 로컬 패키지로 Android 하위 시스템 설치, 스토어 복구.
+
+<details>
+<summary>스크린샷</summary>
 
 ![보안 센터](../public/screenshots/components-securitycenter.png)
 
 </details>
 
-<details>
-<summary><b>런타임</b> — .NET 및 VC++ 온라인 설치</summary>
+### 런타임
 
 설치된 .NET과 Visual C++ 런타임을 나열합니다. 설치 가능한 버전은 필요할 때 가져옵니다. .NET은 공식 `releases-index.json`을 읽고 SHA512를 검증하며, VC++는 `aka.ms` 링크를 사용하고 Authenticode를 검증합니다. 둘 다 자동 설치되며 제거도 가능합니다.
+
+<details>
+<summary>스크린샷</summary>
 
 ![런타임](../public/screenshots/runtimes-dotnet.png)
 
 </details>
 
-<details>
-<summary><b>앱 관리</b> — 설치된 프로그램, 패키지</summary>
+### 앱 관리
 
 아이콘, 버전, 차지하는 공간, 설치 날짜, 최근 사용을 표시합니다. 제거는 각 프로그램의 제거 프로그램을 호출하고, 패키지는 배포 API를 사용합니다.
+
+<details>
+<summary>스크린샷</summary>
 
 ![앱 관리](../public/screenshots/apps-programs.png)
 
 </details>
 
-<details>
-<summary><b>드라이버 관리</b> — 한 페이지 일괄 작업</summary>
+### 드라이버 관리
 
 DriverStore 전체를 관리합니다. 원하는 수만큼 패키지를 선택해 백업, 삭제하거나 폴더에서 설치할 수 있습니다. 일괄 작업은 항목별 진행률과 결과 요약을 보여 줍니다.
+
+<details>
+<summary>스크린샷</summary>
 
 ![드라이버 관리](../public/screenshots/drivers-systemdrivers.png)
 
 </details>
 
-<details>
-<summary><b>백업</b> — WIM 캡처와 적용</summary>
+### 백업
 
 원본 볼륨은 드롭다운에서 선택합니다. 이미지 형식(wim / esd / swm)에 따라 확장자와 압축 방식이 바뀌고, 분할 크기는 swm에만 적용됩니다. 캡처 전에 기본 제외 항목을 보여 줍니다. 적용 시 이미지를 확인하고 `bcdboot`로 부팅을 복구할 수 있습니다.
+
+<details>
+<summary>스크린샷</summary>
 
 ![백업](../public/screenshots/backup-capture.png)
 

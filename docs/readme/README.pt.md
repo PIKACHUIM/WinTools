@@ -45,110 +45,130 @@ As versões oficiais têm assinatura em nuvem Certum com carimbo de tempo, verif
 
 ## Recursos
 
-Clique no título para expandir o módulo; recolhido ocupa uma linha.
-
-<details open>
-<summary><b>Visão geral</b> — primeira tela</summary>
+### Visão geral
 
 Versão e número de build do sistema, uso de CPU e memória, espaço livre por disco, atividade recente. Todos os dados são lidos localmente.
+
+<details>
+<summary>Captura de tela</summary>
 
 ![Visão geral](../public/screenshots/dashboard.png)
 
 </details>
 
-<details>
-<summary><b>Limpeza</b> — 23 categorias, 1623 regras</summary>
+### Limpeza
 
 Analisa discos inteiros e cobre pastas temporárias do sistema, cache de atualizações, logs e despejos, caches de navegadores, caches de ferramentas de desenvolvimento (npm, pip, NuGet, Gradle, Docker) e as pastas de cache de mais de 150 aplicativos.
 
 Os resultados são agrupados por categoria com tamanho e nível de segurança. Arquivos em uso são ignorados e registrados em vez de travar a análise. As regras são JSON em `src/WinTools.Infrastructure/Rules/`; adicionar um caminho não exige alterar código.
 
+<details>
+<summary>Captura de tela</summary>
+
 ![Limpeza](../public/screenshots/cleanup.png)
 
 </details>
 
-<details>
-<summary><b>Otimização</b> — 153 itens, 7 grupos</summary>
+### Otimização
 
 Privacidade e telemetria, desempenho, Explorador de Arquivos, comportamento do sistema, rede, atualizações, jogos.
 
 Cada item permite detectar, aplicar e reverter, então o estado atual aparece antes de qualquer mudança. Os itens recomendados são limitados a efeitos bem conhecidos.
 
+<details>
+<summary>Captura de tela</summary>
+
 ![Otimização](../public/screenshots/optimize.png)
 
 </details>
 
-<details>
-<summary><b>Recursos</b> — recursos do sistema, canal de edição</summary>
+### Recursos
 
 - **Recursos do sistema**: lista todos os recursos opcionais pela API DISM, agrupados por finalidade, com descrição e estado atual; as mudanças são aplicadas em lote.
 - **Canal de edição**: lê o SKU, a versão e o estado de ativação. A troca usa o `changepk` com chave genérica e não ativa o Windows.
+
+<details>
+<summary>Captura de tela</summary>
 
 ![Recursos do sistema](../public/screenshots/features-systemfeatures.png)
 
 </details>
 
-<details>
-<summary><b>Atualizações</b> — instaladas, disponíveis, sinalizadores</summary>
+### Atualizações
 
 - **Instaladas**: enumerar e desinstalar individualmente.
 - **Disponíveis**: disparar manualmente a busca do Windows Update com categoria, KB, tamanho e data, instalação em lote e resumo.
 - **Sinalizadores de recurso**: gerenciar `FeatureManagement\Overrides` por ID com estado, prioridade e variante, além de importar, exportar e redefinir.
 
+<details>
+<summary>Captura de tela</summary>
+
 ![Atualizações disponíveis](../public/screenshots/updates-available.png)
 
 </details>
 
-<details>
-<summary><b>Inicialização</b> — itens de inicialização, tarefas agendadas, serviços</summary>
+### Inicialização
 
 Tudo em uma página. Ícones reais dos programas, interruptores para o estado. Serviços mudam o tipo de inicialização na própria linha (Automático, Automático atrasado, Manual, Desativado).
+
+<details>
+<summary>Captura de tela</summary>
 
 ![Inicialização](../public/screenshots/startup-services.png)
 
 </details>
 
-<details>
-<summary><b>Componentes</b> — central de segurança, componentes do sistema</summary>
+### Componentes
 
 - **Central de segurança**: 14 ajustes cobrindo proteção em tempo real, proteção na nuvem, monitoramento de comportamento, PUA, proteção de rede, acesso controlado a pastas, integridade de memória, UAC, SmartScreen, os três perfis de firewall e exclusões.
 - **Componentes do sistema**: aplicativos integrados (Terminal, Calculadora, Bloco de Notas, Paint, Fotos e outros) para instalar, reparar ou desinstalar; distribuições WSL; subsistema Android a partir de pacote local; reparo da Store.
+
+<details>
+<summary>Captura de tela</summary>
 
 ![Central de segurança](../public/screenshots/components-securitycenter.png)
 
 </details>
 
-<details>
-<summary><b>Runtimes</b> — instalação online de .NET e VC++</summary>
+### Runtimes
 
 Lista os runtimes .NET e Visual C++ instalados. As versões disponíveis são obtidas sob demanda: .NET do `releases-index.json` oficial com verificação SHA512, VC++ por links `aka.ms` com verificação Authenticode. Ambos instalam em silêncio e podem ser desinstalados.
+
+<details>
+<summary>Captura de tela</summary>
 
 ![Runtimes](../public/screenshots/runtimes-dotnet.png)
 
 </details>
 
-<details>
-<summary><b>Aplicativos</b> — programas instalados, pacotes</summary>
+### Aplicativos
 
 Mostra ícone, versão, tamanho, data de instalação e última atividade. A desinstalação chama o desinstalador do próprio programa; pacotes usam a API de implantação.
+
+<details>
+<summary>Captura de tela</summary>
 
 ![Aplicativos](../public/screenshots/apps-programs.png)
 
 </details>
 
-<details>
-<summary><b>Drivers</b> — operações em lote em uma página</summary>
+### Drivers
 
 Gerencia todo o DriverStore. Selecione qualquer quantidade de pacotes para fazer backup, remover ou instalar a partir de uma pasta. As operações em lote mostram progresso por item e um resumo.
+
+<details>
+<summary>Captura de tela</summary>
 
 ![Drivers](../public/screenshots/drivers-systemdrivers.png)
 
 </details>
 
-<details>
-<summary><b>Backup</b> — captura e aplicação de WIM</summary>
+### Backup
 
 O volume de origem é escolhido numa lista; o formato (wim / esd / swm) define a extensão e a compactação; o tamanho de divisão vale apenas para swm; antes da captura é exibida a lista de exclusões padrão. Na aplicação é possível verificar a imagem e reparar a inicialização com `bcdboot`.
+
+<details>
+<summary>Captura de tela</summary>
 
 ![Backup](../public/screenshots/backup-capture.png)
 

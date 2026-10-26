@@ -45,110 +45,130 @@ WPF デスクトップ アプリで、すべてローカルで動作します。
 
 ## 機能
 
-タイトルをクリックすると展開します。折りたたむと 1 行に収まります。
-
-<details open>
-<summary><b>システム概要</b> — 起動直後の状態</summary>
+### システム概要
 
 システムのバージョンとビルド番号、CPU とメモリの使用率、各ディスクの空き容量、最近のアクティビティ。データはすべてローカルで読み取ります。
+
+<details>
+<summary>スクリーンショット</summary>
 
 ![システム概要](../public/screenshots/dashboard.png)
 
 </details>
 
-<details>
-<summary><b>クリーンアップ</b> — 23 分類、1623 ルール</summary>
+### クリーンアップ
 
 ディスク単位でスキャンし、システムの一時フォルダー、更新キャッシュ、ログとダンプ、ブラウザーのキャッシュ、開発ツールのキャッシュ（npm、pip、NuGet、Gradle、Docker）、150 以上のアプリのキャッシュを対象にします。
 
 結果は分類ごとにまとまり、サイズと安全レベルを表示します。使用中のファイルはスキップして記録し、処理全体を止めません。ルールは `src/WinTools.Infrastructure/Rules/` の JSON で、パスの追加にコード変更は不要です。
 
+<details>
+<summary>スクリーンショット</summary>
+
 ![クリーンアップ](../public/screenshots/cleanup.png)
 
 </details>
 
-<details>
-<summary><b>最適化</b> — 153 項目、7 グループ</summary>
+### 最適化
 
 プライバシーとテレメトリ、パフォーマンス、エクスプローラー、システム動作、ネットワーク、更新、ゲーム。
 
 各項目は検出・適用・元に戻すに対応し、変更前に現在の状態を確認できます。推奨項目は影響が明確なものだけです。
 
+<details>
+<summary>スクリーンショット</summary>
+
 ![最適化](../public/screenshots/optimize.png)
 
 </details>
 
-<details>
-<summary><b>機能管理</b> — システム機能、エディション チャネル</summary>
+### 機能管理
 
 - **システム機能**: DISM API でオプション機能を一覧表示し、用途別にグループ化。説明と現在の状態を表示し、まとめて適用します。
 - **エディション チャネル**: 現在の SKU、バージョン、ライセンス状態を読み取ります。切り替えは標準の `changepk` と汎用キーを使い、ライセンス認証は行いません。
+
+<details>
+<summary>スクリーンショット</summary>
 
 ![システム機能](../public/screenshots/features-systemfeatures.png)
 
 </details>
 
-<details>
-<summary><b>更新管理</b> — インストール済み更新、利用可能な更新、機能フラグ</summary>
+### 更新管理
 
 - **インストール済み更新**: 一覧表示と個別の削除。
 - **利用可能な更新**: 手動で Windows Update を検索し、分類、KB、サイズ、日付を表示。一括インストールと結果の要約。
 - **機能フラグ**: `FeatureManagement\Overrides` を ID 単位で管理。状態、優先度、バリアントに対応し、インポート、エクスポート、リセットが可能。
 
+<details>
+<summary>スクリーンショット</summary>
+
 ![利用可能な更新](../public/screenshots/updates-available.png)
 
 </details>
 
-<details>
-<summary><b>起動管理</b> — スタートアップ、タスク、サービス</summary>
+### 起動管理
 
 1 ページに集約。実際のプログラム アイコンを表示し、有効状態はスイッチで操作します。サービスは行内でスタートアップの種類（自動、自動（遅延）、手動、無効）を変更できます。
+
+<details>
+<summary>スクリーンショット</summary>
 
 ![起動管理](../public/screenshots/startup-services.png)
 
 </details>
 
-<details>
-<summary><b>コンポーネント管理</b> — セキュリティ センター、システム コンポーネント</summary>
+### コンポーネント管理
 
 - **セキュリティ センター**: 14 項目。リアルタイム保護、クラウド保護、行動監視、PUA、ネットワーク保護、コントロールされたフォルダー アクセス、メモリ整合性、UAC、SmartScreen、3 つのファイアウォール プロファイル、除外項目。
 - **システム コンポーネント**: 組み込みアプリ（ターミナル、電卓、メモ帳、ペイント、フォトなど）のインストール、修復、削除。WSL ディストリビューション。ローカル パッケージからの Android サブシステム。ストアの修復。
+
+<details>
+<summary>スクリーンショット</summary>
 
 ![セキュリティ センター](../public/screenshots/components-securitycenter.png)
 
 </details>
 
-<details>
-<summary><b>ランタイム</b> — .NET と VC++ のオンライン インストール</summary>
+### ランタイム
 
 インストール済みの .NET と Visual C++ ランタイムを一覧表示します。利用可能な版は必要時に取得します。.NET は公式 `releases-index.json` を読み SHA512 を検証、VC++ は `aka.ms` のリンクを使い Authenticode を検証します。どちらもサイレント インストールでき、アンインストールも可能です。
+
+<details>
+<summary>スクリーンショット</summary>
 
 ![ランタイム](../public/screenshots/runtimes-dotnet.png)
 
 </details>
 
-<details>
-<summary><b>アプリ管理</b> — インストール済みプログラム、パッケージ</summary>
+### アプリ管理
 
 アイコン、バージョン、サイズ、インストール日、最近の使用を表示します。アンインストールは各ソフトのアンインストーラーを呼び、パッケージは配置 API を使用します。
+
+<details>
+<summary>スクリーンショット</summary>
 
 ![アプリ管理](../public/screenshots/apps-programs.png)
 
 </details>
 
-<details>
-<summary><b>ドライバー管理</b> — 1 ページで一括操作</summary>
+### ドライバー管理
 
 DriverStore 全体を管理します。任意の数のパッケージを選んでバックアップ、削除、またはフォルダーからインストールできます。一括操作は項目ごとの進捗と結果の要約を表示します。
+
+<details>
+<summary>スクリーンショット</summary>
 
 ![ドライバー管理](../public/screenshots/drivers-systemdrivers.png)
 
 </details>
 
-<details>
-<summary><b>バックアップ</b> — WIM の作成と適用</summary>
+### バックアップ
 
 ソース ボリュームはドロップダウンで選択します。イメージ形式（wim / esd / swm）に応じて拡張子と圧縮方式が変わり、分割サイズは swm のみ有効です。作成前に既定の除外項目を表示します。適用時はイメージの検証と `bcdboot` によるブート修復が可能です。
+
+<details>
+<summary>スクリーンショット</summary>
 
 ![バックアップ](../public/screenshots/backup-capture.png)
 

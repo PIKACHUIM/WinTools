@@ -45,110 +45,130 @@ Le versioni ufficiali hanno firma cloud Certum con marca temporale, verificabile
 
 ## Funzioni
 
-Clicca un titolo per espandere il modulo; chiuso occupa una riga.
-
-<details open>
-<summary><b>Panoramica di sistema</b> — prima schermata</summary>
+### Panoramica di sistema
 
 Versione e numero di build, uso di CPU e memoria, spazio libero per disco, attività recente. Tutti i dati sono letti localmente.
+
+<details>
+<summary>Schermata</summary>
 
 ![Panoramica di sistema](../public/screenshots/dashboard.png)
 
 </details>
 
-<details>
-<summary><b>Pulizia</b> — 23 categorie, 1623 regole</summary>
+### Pulizia
 
 Analizza interi dischi e copre cartelle temporanee di sistema, cache degli aggiornamenti, log e dump, cache dei browser, cache degli strumenti di sviluppo (npm, pip, NuGet, Gradle, Docker) e le cartelle cache di oltre 150 applicazioni.
 
 I risultati sono raggruppati per categoria con dimensione e livello di sicurezza. I file in uso vengono saltati e registrati invece di bloccare l'analisi. Le regole sono JSON in `src/WinTools.Infrastructure/Rules/`; aggiungere un percorso non richiede modifiche al codice.
 
+<details>
+<summary>Schermata</summary>
+
 ![Pulizia](../public/screenshots/cleanup.png)
 
 </details>
 
-<details>
-<summary><b>Ottimizzazione</b> — 153 voci, 7 gruppi</summary>
+### Ottimizzazione
 
 Privacy e telemetria, prestazioni, Esplora file, comportamento del sistema, rete, aggiornamenti, giochi.
 
 Ogni voce supporta rilevamento, applicazione e ripristino, così lo stato attuale è visibile prima di ogni modifica. Le voci consigliate si limitano a effetti ben noti.
 
+<details>
+<summary>Schermata</summary>
+
 ![Ottimizzazione](../public/screenshots/optimize.png)
 
 </details>
 
-<details>
-<summary><b>Funzionalità</b> — funzionalità di sistema, canale edizione</summary>
+### Funzionalità
 
 - **Funzionalità di sistema**: elenca tutte le funzionalità facoltative tramite l'API DISM, raggruppate per uso, con descrizione e stato attuale; le modifiche vengono applicate in blocco.
 - **Canale edizione**: legge SKU, versione e stato di attivazione. Il cambio usa `changepk` con chiave generica e non attiva Windows.
+
+<details>
+<summary>Schermata</summary>
 
 ![Funzionalità di sistema](../public/screenshots/features-systemfeatures.png)
 
 </details>
 
-<details>
-<summary><b>Aggiornamenti</b> — installati, disponibili, flag</summary>
+### Aggiornamenti
 
 - **Installati**: elenco e disinstallazione singola.
 - **Disponibili**: avvia manualmente la ricerca di Windows Update con categoria, KB, dimensione e data, installazione in blocco e riepilogo.
 - **Flag di funzionalità**: gestisci `FeatureManagement\Overrides` per ID con stato, priorità e variante, oltre a importazione, esportazione e ripristino.
 
+<details>
+<summary>Schermata</summary>
+
 ![Aggiornamenti disponibili](../public/screenshots/updates-available.png)
 
 </details>
 
-<details>
-<summary><b>Avvio</b> — elementi di avvio, attività pianificate, servizi</summary>
+### Avvio
 
 Tutto in una pagina. Icone reali dei programmi, interruttori per lo stato. I servizi cambiano il tipo di avvio nella riga stessa (Automatico, Automatico ritardato, Manuale, Disabilitato).
+
+<details>
+<summary>Schermata</summary>
 
 ![Avvio](../public/screenshots/startup-services.png)
 
 </details>
 
-<details>
-<summary><b>Componenti</b> — centro sicurezza, componenti di sistema</summary>
+### Componenti
 
 - **Centro sicurezza**: 14 impostazioni su protezione in tempo reale, protezione cloud, monitoraggio del comportamento, PUA, protezione di rete, accesso controllato alle cartelle, integrità della memoria, UAC, SmartScreen, i tre profili firewall e le esclusioni.
 - **Componenti di sistema**: app integrate (Terminale, Calcolatrice, Blocco note, Paint, Foto e altre) da installare, riparare o rimuovere; distribuzioni WSL; sottosistema Android da pacchetto locale; riparazione dello Store.
+
+<details>
+<summary>Schermata</summary>
 
 ![Centro sicurezza](../public/screenshots/components-securitycenter.png)
 
 </details>
 
-<details>
-<summary><b>Runtime</b> — installazione online di .NET e VC++</summary>
+### Runtime
 
 Elenca i runtime .NET e Visual C++ installati. Le versioni disponibili vengono recuperate su richiesta: .NET dal `releases-index.json` ufficiale con verifica SHA512, VC++ dai link `aka.ms` con verifica Authenticode. Entrambi si installano in silenzio e possono essere rimossi.
+
+<details>
+<summary>Schermata</summary>
 
 ![Runtime](../public/screenshots/runtimes-dotnet.png)
 
 </details>
 
-<details>
-<summary><b>Applicazioni</b> — programmi installati, pacchetti</summary>
+### Applicazioni
 
 Mostra icona, versione, dimensione, data di installazione e ultima attività. La disinstallazione avvia il disinstallatore del produttore; i pacchetti passano dall'API di distribuzione.
+
+<details>
+<summary>Schermata</summary>
 
 ![Applicazioni](../public/screenshots/apps-programs.png)
 
 </details>
 
-<details>
-<summary><b>Driver</b> — operazioni in blocco su una pagina</summary>
+### Driver
 
 Gestisce l'intero DriverStore. Seleziona qualsiasi numero di pacchetti per eseguirne il backup, rimuoverli o installarli da una cartella. Le operazioni in blocco mostrano il progresso per voce e un riepilogo.
+
+<details>
+<summary>Schermata</summary>
 
 ![Driver](../public/screenshots/drivers-systemdrivers.png)
 
 </details>
 
-<details>
-<summary><b>Backup</b> — acquisizione e applicazione WIM</summary>
+### Backup
 
 Il volume di origine si sceglie da un elenco; il formato (wim / esd / swm) determina estensione e compressione; la dimensione di suddivisione vale solo per swm; prima dell'acquisizione viene mostrato l'elenco predefinito delle esclusioni. In applicazione è possibile verificare l'immagine e riparare l'avvio con `bcdboot`.
+
+<details>
+<summary>Schermata</summary>
 
 ![Backup](../public/screenshots/backup-capture.png)
 

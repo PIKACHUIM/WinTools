@@ -45,110 +45,130 @@ Les versions officielles portent une signature cloud Certum avec horodatage, vé
 
 ## Fonctionnalités
 
-Cliquez sur un titre pour déplier le module ; replié, il tient sur une ligne.
-
-<details open>
-<summary><b>Vue d'ensemble</b> — premier écran</summary>
+### Vue d'ensemble
 
 Version du système et numéro de build, utilisation CPU et mémoire, espace libre par disque, activité récente. Toutes les données sont lues localement.
+
+<details>
+<summary>Capture d'écran</summary>
 
 ![Vue d'ensemble](../public/screenshots/dashboard.png)
 
 </details>
 
-<details>
-<summary><b>Nettoyage</b> — 23 catégories, 1623 règles</summary>
+### Nettoyage
 
 Analyse les disques entiers et couvre les dossiers temporaires système, le cache des mises à jour, journaux et vidages, caches de navigateurs, caches d'outils de développement (npm, pip, NuGet, Gradle, Docker) et les dossiers de cache de plus de 150 applications.
 
 Les résultats sont groupés par catégorie avec taille et niveau de sécurité. Les fichiers verrouillés par un processus sont ignorés et journalisés au lieu de bloquer l'analyse. Les règles sont du JSON dans `src/WinTools.Infrastructure/Rules/` ; ajouter un chemin ne demande aucune modification de code.
 
+<details>
+<summary>Capture d'écran</summary>
+
 ![Nettoyage](../public/screenshots/cleanup.png)
 
 </details>
 
-<details>
-<summary><b>Optimisation</b> — 153 entrées, 7 groupes</summary>
+### Optimisation
 
 Confidentialité et télémétrie, performances, Explorateur de fichiers, comportement du système, réseau, mises à jour, jeux.
 
 Chaque entrée gère détection, application et retour arrière : l'état actuel est visible avant toute modification. Les éléments recommandés se limitent aux effets bien établis.
 
+<details>
+<summary>Capture d'écran</summary>
+
 ![Optimisation](../public/screenshots/optimize.png)
 
 </details>
 
-<details>
-<summary><b>Fonctionnalités</b> — fonctionnalités système, canal d'édition</summary>
+### Fonctionnalités
 
 - **Fonctionnalités système** : liste toutes les fonctionnalités facultatives via l'API DISM, groupées par usage, avec description et état ; les changements sont appliqués en une fois.
 - **Canal d'édition** : lit le SKU, la version et l'état d'activation. Le changement utilise `changepk` avec une clé générique et n'active pas Windows.
+
+<details>
+<summary>Capture d'écran</summary>
 
 ![Fonctionnalités système](../public/screenshots/features-systemfeatures.png)
 
 </details>
 
-<details>
-<summary><b>Mises à jour</b> — installées, disponibles, indicateurs de fonctionnalité</summary>
+### Mises à jour
 
 - **Mises à jour installées** : énumérer et désinstaller individuellement.
 - **Mises à jour disponibles** : lancer manuellement une recherche Windows Update avec catégorie, KB, taille et date, installation par lot et récapitulatif.
 - **Indicateurs de fonctionnalité** : gérer `FeatureManagement\Overrides` par ID avec état, priorité et variante, plus import, export et réinitialisation.
 
+<details>
+<summary>Capture d'écran</summary>
+
 ![Mises à jour disponibles](../public/screenshots/updates-available.png)
 
 </details>
 
-<details>
-<summary><b>Démarrage</b> — éléments de démarrage, tâches planifiées, services</summary>
+### Démarrage
 
 Tout sur une page. Icônes réelles des programmes, interrupteurs pour l'état. Les services changent leur type de démarrage dans la ligne (Automatique, Automatique différé, Manuel, Désactivé).
+
+<details>
+<summary>Capture d'écran</summary>
 
 ![Démarrage](../public/screenshots/startup-services.png)
 
 </details>
 
-<details>
-<summary><b>Composants</b> — centre de sécurité, composants système</summary>
+### Composants
 
 - **Centre de sécurité** : 14 réglages couvrant la protection en temps réel, la protection cloud, la surveillance du comportement, les PUA, la protection réseau, l'accès contrôlé aux dossiers, l'intégrité de la mémoire, l'UAC, SmartScreen, les trois profils de pare-feu et les exclusions.
 - **Composants système** : applications intégrées (Terminal, Calculatrice, Bloc-notes, Paint, Photos, etc.) à installer, réparer ou désinstaller ; distributions WSL ; sous-système Android depuis un paquet local ; réparation du Store.
+
+<details>
+<summary>Capture d'écran</summary>
 
 ![Centre de sécurité](../public/screenshots/components-securitycenter.png)
 
 </details>
 
-<details>
-<summary><b>Runtimes</b> — installation en ligne de .NET et VC++</summary>
+### Runtimes
 
 Liste les runtimes .NET et Visual C++ installés. Les versions disponibles sont récupérées à la demande : .NET depuis `releases-index.json` officiel avec vérification SHA512, VC++ via les liens `aka.ms` avec vérification Authenticode. Les deux s'installent en silence et peuvent être désinstallés.
+
+<details>
+<summary>Capture d'écran</summary>
 
 ![Runtimes](../public/screenshots/runtimes-dotnet.png)
 
 </details>
 
-<details>
-<summary><b>Applications</b> — programmes installés, paquets</summary>
+### Applications
 
 Affiche l'icône, la version, la taille, la date d'installation et la dernière activité. La désinstallation lance le désinstalleur de l'éditeur ; les paquets passent par l'API de déploiement.
+
+<details>
+<summary>Capture d'écran</summary>
 
 ![Applications](../public/screenshots/apps-programs.png)
 
 </details>
 
-<details>
-<summary><b>Pilotes</b> — opérations par lot sur une page</summary>
+### Pilotes
 
 Gère tout le DriverStore. Sélectionnez autant de paquets que voulu pour les sauvegarder, les supprimer ou installer depuis un dossier. Les traitements par lot affichent la progression et un récapitulatif.
+
+<details>
+<summary>Capture d'écran</summary>
 
 ![Pilotes](../public/screenshots/drivers-systemdrivers.png)
 
 </details>
 
-<details>
-<summary><b>Sauvegarde</b> — capture et application WIM</summary>
+### Sauvegarde
 
 Le volume source se choisit dans une liste ; le format d'image (wim / esd / swm) pilote l'extension et la compression ; la taille de fractionnement ne concerne que swm ; la liste d'exclusions par défaut est affichée avant la capture. À l'application, l'image peut être vérifiée et le chargeur d'amorçage réparé avec `bcdboot`.
+
+<details>
+<summary>Capture d'écran</summary>
 
 ![Sauvegarde](../public/screenshots/backup-capture.png)
 

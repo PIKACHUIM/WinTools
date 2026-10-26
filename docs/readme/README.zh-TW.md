@@ -45,110 +45,130 @@ WPF 桌面程式，完全在本機執行。不裝服務、不載入驅動、不�
 
 ## 功能介紹
 
-點選標題展開對應模組，收合後只佔一行。
-
-<details open>
-<summary><b>系統概覽</b> — 首頁狀態</summary>
+### 系統概覽
 
 系統版本與組建編號、CPU 與記憶體使用率、各磁碟剩餘空間、近期活動。資料全部在本機讀取。
+
+<details>
+<summary>截圖</summary>
 
 ![系統概覽](../public/screenshots/dashboard.png)
 
 </details>
 
-<details>
-<summary><b>垃圾清理</b> — 23 個分類、1623 條規則</summary>
+### 垃圾清理
 
 依磁碟掃描，涵蓋系統暫存目錄、更新快取、記錄與傾印、瀏覽器快取、開發工具快取（npm、pip、NuGet、Gradle、Docker），以及 150 多款軟體的快取目錄。
 
 結果依分類收合，標示大小與安全等級。被行程占用的檔案會略過並記錄，不會卡住整輪清理。規則是純 JSON，放在 `src/WinTools.Infrastructure/Rules/`，新增路徑不需要改程式碼。
 
+<details>
+<summary>截圖</summary>
+
 ![垃圾清理](../public/screenshots/cleanup.png)
 
 </details>
 
-<details>
-<summary><b>系統優化</b> — 153 條，7 組</summary>
+### 系統優化
 
 隱私與遙測、效能與反應、檔案總管、系統行為、網路、更新、遊戲。
 
 每條都支援偵測、套用、還原，修改前可以先看目前狀態。推薦項目只包含副作用明確的條目。
 
+<details>
+<summary>截圖</summary>
+
 ![系統優化](../public/screenshots/optimize.png)
 
 </details>
 
-<details>
-<summary><b>功能管理</b> — 系統功能、系統通道</summary>
+### 功能管理
 
 - **系統功能**：透過 DISM API 列出全部選用功能，依用途分組，附說明與目前狀態，修改後批次套用。
 - **系統通道**：讀取目前 SKU、版本與啟用狀態。切換版本使用系統內建的 `changepk` 與內建通用金鑰，不會啟用系統。
+
+<details>
+<summary>截圖</summary>
 
 ![系統功能](../public/screenshots/features-systemfeatures.png)
 
 </details>
 
-<details>
-<summary><b>更新管理</b> — 已安裝更新、可安裝更新、功能開關</summary>
+### 更新管理
 
 - **已安裝更新**：列舉並移除單筆更新。
 - **可安裝更新**：手動觸發 Windows Update 搜尋，顯示分類、KB、大小與日期，支援批次安裝並提供結果摘要。
 - **功能開關**：依 ID 管理 `FeatureManagement\Overrides`，包含狀態、優先順序、變體，支援匯入、匯出與重設。
 
+<details>
+<summary>截圖</summary>
+
 ![可安裝更新](../public/screenshots/updates-available.png)
 
 </details>
 
-<details>
-<summary><b>執行管理</b> — 啟動項目、排程工作、服務</summary>
+### 執行管理
 
 集中在一頁。顯示程式實際圖示，啟用狀態以開關控制。服務可在列內切換啟動類型（自動、延遲自動、手動、停用）。
+
+<details>
+<summary>截圖</summary>
 
 ![執行管理](../public/screenshots/startup-services.png)
 
 </details>
 
-<details>
-<summary><b>元件管理</b> — 安全中心、系統元件</summary>
+### 元件管理
 
 - **安全中心**：14 項設定，包含即時保護、雲端保護、行為監控、PUA、網路保護、受控資料夾、記憶體完整性、UAC、SmartScreen、三個防火牆設定檔，以及排除項目。
 - **系統元件**：內建應用程式（終端機、計算機、記事本、小畫家、相片等）的安裝、修復與移除；WSL 發行版；Android 子系統本機套件安裝；Microsoft Store 修復。
+
+<details>
+<summary>截圖</summary>
 
 ![安全中心](../public/screenshots/components-securitycenter.png)
 
 </details>
 
-<details>
-<summary><b>執行環境</b> — .NET 與 VC++ 線上安裝</summary>
+### 執行環境
 
 列出已安裝的 .NET 與 Visual C++ 執行環境。可安裝版本依需求取得：.NET 讀取官方 `releases-index.json` 並驗證 SHA512，VC++ 使用 `aka.ms` 連結並驗證 Authenticode。兩者皆為靜默安裝，也能解除安裝。
+
+<details>
+<summary>截圖</summary>
 
 ![執行環境](../public/screenshots/runtimes-dotnet.png)
 
 </details>
 
-<details>
-<summary><b>應用管理</b> — 已安裝程式、應用程式套件</summary>
+### 應用管理
 
 顯示圖示、版本、占用空間、安裝日期與最近使用。移除時呼叫軟體自帶的移除程式，應用程式套件則走部署介面。
+
+<details>
+<summary>截圖</summary>
 
 ![應用管理](../public/screenshots/apps-programs.png)
 
 </details>
 
-<details>
-<summary><b>驅動管理</b> — 單頁批次操作</summary>
+### 驅動管理
 
 整頁管理 DriverStore。勾選任意數量的驅動套件後備份、刪除，或從資料夾安裝。批次操作有逐項進度與結果摘要。
+
+<details>
+<summary>截圖</summary>
 
 ![驅動管理](../public/screenshots/drivers-systemdrivers.png)
 
 </details>
 
-<details>
-<summary><b>備份還原</b> — WIM 擷取與釋放</summary>
+### 備份還原
 
 來源磁碟區以下拉選擇，映像格式（wim / esd / swm）連動副檔名與壓縮方式，分割大小僅對 swm 生效，擷取前會列出預設排除項目。釋放時可驗證映像，並以 `bcdboot` 修復開機。
+
+<details>
+<summary>截圖</summary>
 
 ![備份還原](../public/screenshots/backup-capture.png)
 
