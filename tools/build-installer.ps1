@@ -1,4 +1,4 @@
-# 用 Inno Setup 打包安装程序
+﻿# 用 Inno Setup 打包安装程序
 # 依赖：Inno Setup 6（CI 里由 chocolatey 安装，本地需自行安装并确保 ISCC.exe 在 PATH 或默认目录）
 param(
     [Parameter(Mandatory = $true)]

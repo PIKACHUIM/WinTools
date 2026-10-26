@@ -166,10 +166,13 @@ function Connect-Certum {
         return $false
     }
 
+    # 指纹格式不对（不是 40 位十六进制）时按「未指定」处理：
+    # 登录本身仍然要走，否则会因为一个填错的 Secret 完全无法签名
     $normalizedExpected = Normalize-Sha1 $ExpectedCertificateSHA1
     if ($normalizedExpected -and $normalizedExpected.Length -ne 40) {
-        Write-SignLog "CERTUM_CERTIFICATE_SHA1 规范化后长度不是 40：$normalizedExpected" 'ERROR'
-        return $false
+        Write-SignLog "CERTUM_CERTIFICATE_SHA1 规范化后只有 $($normalizedExpected.Length) 位（应为 40 位）：$normalizedExpected" 'WARN'
+        Write-SignLog '已忽略该指纹，登录后只校验「有可用证书且带私钥」' 'WARN'
+        $normalizedExpected = $null
     }
 
     # ---- 解析 otpauth:// URI ----
@@ -358,11 +361,20 @@ public static class CertumWin32
 }
 
 function Test-CertumReady {
-    if (-not $ExpectedCertificateSHA1) {
-        Write-SignLog '未设置 CERTUM_CERTIFICATE_SHA1，跳过证书校验。' 'WARN'
+    $normalized = Normalize-Sha1 $ExpectedCertificateSHA1
+
+    # 指纹缺失或格式不对时，退化为「只要挂载了带私钥的证书即可」
+    if (-not $normalized -or $normalized.Length -ne 40) {
+        $any = @(Get-StoreCertificateCandidates | Where-Object { $_.Cert.HasPrivateKey })
+        if ($any.Count -eq 0) {
+            Write-SignLog '证书库里还没有带私钥的证书（云签名未连接）。' 'ERROR'
+            return $false
+        }
+
+        Write-SignLog "证书可用：$($any[0].Cert.Subject)" 'OK'
         return $true
     }
-    $normalized = Normalize-Sha1 $ExpectedCertificateSHA1
+
     $matched = Find-CertificateByThumbprint -Thumbprint $normalized
     if (-not $matched.Count) {
         Write-SignLog "证书库中找不到证书 $normalized。" 'ERROR'

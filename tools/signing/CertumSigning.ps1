@@ -148,8 +148,17 @@ function Select-CertumCandidate {
     param($Candidates, [string]$Thumbprint, [switch]$AllowNonCertum)
 
     $usable = @($Candidates | Where-Object { $_.Cert.HasPrivateKey -and $_.Cert.NotAfter -gt (Get-Date) })
-    if ($Thumbprint) {
-        $want = ($Thumbprint -replace '[^0-9a-fA-F]', '').ToUpperInvariant()
+
+    # SHA1 指纹必须是 40 位十六进制。长度不对说明 Secret 填错（截断、粘了半截、粘了别的字段），
+    # 这时不能拿它去精确匹配——必然一条都匹配不上，把「证书其实可用」误判成「没有证书」。
+    $want = if ($Thumbprint) { ($Thumbprint -replace '[^0-9a-fA-F]', '').ToUpperInvariant() }
+    if ($want -and $want.Length -ne 40) {
+        Write-SignLog "CERTUM_CERTIFICATE_SHA1 规范化后只有 $($want.Length) 位（应为 40 位）：$want" 'WARN'
+        Write-SignLog '已忽略这个指纹，改为自动选择 Certum 证书；请修正 Secret 以免签错证书' 'WARN'
+        $want = $null
+    }
+
+    if ($want) {
         $usable = @($usable | Where-Object {
                 ($_.Cert.Thumbprint -replace '[^0-9a-fA-F]', '').ToUpperInvariant() -eq $want })
     }

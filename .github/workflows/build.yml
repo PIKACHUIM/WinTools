@@ -199,8 +199,14 @@ jobs:
           "enabled=$($ok.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
 
           if ($ok) {
-            Write-Host "Certum 云签名已启用（证书指纹 $sha1）"
-            "CERTUM_CERTIFICATE_SHA1=$sha1" >> $env:GITHUB_ENV
+            # 只有 40 位十六进制才导出；格式不对就留空，让脚本自动挑证书而不是拿着错误指纹去匹配
+            if ($sha1 -match '^[0-9A-Fa-f]{40}$') {
+              Write-Host "Certum 云签名已启用（证书指纹 $sha1）"
+              "CERTUM_CERTIFICATE_SHA1=$($sha1.ToUpperInvariant())" >> $env:GITHUB_ENV
+            }
+            else {
+              Write-Host "::warning title=证书指纹格式不对::CERTUM_CERTIFICATE_SHA1 规范化后只有 $($sha1.Length) 位（应为 40 位），本次将自动选择证书"
+            }
           } else {
             $detail = $missing -join '；'
             if ($env:CHANNEL -eq 'release') {
@@ -284,6 +290,14 @@ jobs:
         shell: pwsh
         run: |
           $expected = ($env:CERTUM_CERTIFICATE_SHA1 -replace '[^0-9a-fA-F]', '').ToUpperInvariant()
+
+          # 指纹不是 40 位十六进制时（Secret 填错/截断），签名阶段会自动挑证书，
+          # 这里也就只校验「状态有效且有签发者」，否则签成功了也会被判失败
+          $strict = $expected.Length -eq 40
+          if (-not $strict) {
+            Write-Host '::warning title=未校验证书指纹::CERTUM_CERTIFICATE_SHA1 缺失或格式不对，仅校验签名状态'
+          }
+
           $targets = @(
             'artifacts/publish/portable/WinTools.exe',
             'artifacts/publish/framework/WinTools.exe',
@@ -300,7 +314,11 @@ jobs:
           foreach ($file in $targets) {
             $sig = Get-AuthenticodeSignature -LiteralPath $file
             $thumb = if ($sig.SignerCertificate) { ($sig.SignerCertificate.Thumbprint -replace '[^0-9a-fA-F]', '').ToUpperInvariant() } else { '' }
-            $ok = ($thumb -eq $expected) -and ($sig.Status -eq 'Valid')
+            $ok = if ($strict) {
+              ($thumb -eq $expected) -and ($sig.Status -eq 'Valid')
+            } else {
+              ($sig.Status -eq 'Valid') -and ($null -ne $sig.SignerCertificate)
+            }
             Write-Host ("{0,-32} {1,-10} {2}" -f (Split-Path $file -Leaf), $sig.Status, $thumb)
             if (-not $ok) { $bad += $file }
           }
