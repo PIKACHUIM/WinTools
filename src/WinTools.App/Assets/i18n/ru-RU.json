@@ -403,5 +403,29 @@
 
   "Flag.NameUnknown": "Функция {0}",
 
-  "Drv.BackupAll": "Копия всех"
+  "Drv.BackupAll": "Копия всех",
+
+  "Dashboard.Device": "Устройство",
+  "Dashboard.DeviceType": "Тип устройства",
+  "Dashboard.DeviceDesktop": "Настольный ПК",
+  "Dashboard.DeviceLaptop": "Ноутбук",
+  "Dashboard.DeviceWorkstation": "Рабочая станция",
+  "Dashboard.DeviceOther": "Другое",
+  "Dashboard.ComputerName": "Имя компьютера",
+  "Dashboard.Os": "Операционная система",
+  "Dashboard.Bios": "BIOS",
+  "Dashboard.Cores": "Ядра / потоки",
+  "Dashboard.Clock": "Частота",
+  "Dashboard.Socket": "Сокет",
+  "Dashboard.Capacity": "Объём",
+  "Dashboard.ModuleCount": "{0} шт.",
+  "Dashboard.ModuleCountLabel": "Модули",
+  "Dashboard.Frequency": "Частота",
+  "Dashboard.Storage": "Хранилище",
+  "Dashboard.PhysicalDisks": "Физические диски",
+  "Dashboard.Download": "Загрузка",
+  "Dashboard.Upload": "Отдача",
+  "Dashboard.CustomBuild": "Сборка",
+  "Dashboard.Reading": "Чтение данных об оборудовании…",
+  "Dashboard.LiveUsage": "Текущая нагрузка"
 }

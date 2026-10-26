@@ -3,37 +3,123 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ctl="clr-namespace:WinTools.App.Controls"
              xmlns:vm="clr-namespace:WinTools.App.ViewModels"
-             d:DesignHeight="900" d:DesignWidth="1000"
+             d:DesignHeight="900" d:DesignWidth="1100"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <Style x:Key="MetricValueText" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="26" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
-        </Style>
-
-        <Style x:Key="MetricSubText" TargetType="TextBlock" BasedOn="{StaticResource CaptionText}">
-            <Setter Property="Margin" Value="0,6,0,0" />
-            <Setter Property="FontSize" Value="10.5" />
+        <!-- ================= 文本 ================= -->
+        <Style x:Key="CardTitle" TargetType="TextBlock" BasedOn="{StaticResource SectionTitle}">
+            <Setter Property="FontSize" Value="13.5" />
             <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         </Style>
 
-        <!-- 硬件行的标签列 -->
-        <Style x:Key="InfoLabel" TargetType="TextBlock" BasedOn="{StaticResource CaptionText}">
-            <Setter Property="Margin" Value="0,3,16,0" />
-            <Setter Property="VerticalAlignment" Value="Top" />
+        <Style x:Key="CardSubtitle" TargetType="TextBlock" BasedOn="{StaticResource CaptionText}">
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Margin" Value="0,2,0,0" />
+            <Setter Property="TextWrapping" Value="NoWrap" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        </Style>
+
+        <Style x:Key="BigMetric" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="27" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+        </Style>
+
+        <Style x:Key="LabelText" TargetType="TextBlock" BasedOn="{StaticResource CaptionText}">
+            <Setter Property="FontSize" Value="11.5" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="Margin" Value="7,0,0,5" />
         </Style>
 
         <Style x:Key="InfoPrimary" TargetType="TextBlock" BasedOn="{StaticResource BodyText}">
+            <Setter Property="FontSize" Value="12.5" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
         </Style>
 
         <Style x:Key="InfoSecondary" TargetType="TextBlock" BasedOn="{StaticResource CaptionText}">
+            <Setter Property="FontSize" Value="11" />
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="Margin" Value="0,2,0,0" />
+        </Style>
+
+        <!-- ================= 卡片骨架 ================= -->
+        <Style x:Key="CardShell" TargetType="Border" BasedOn="{StaticResource Card}">
+            <Setter Property="Padding" Value="18,16" />
+            <Setter Property="Margin" Value="0,0,6,12" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+
+        <Style x:Key="CardShellRight" TargetType="Border" BasedOn="{StaticResource CardShell}">
+            <Setter Property="Margin" Value="6,0,0,12" />
+        </Style>
+
+        <!-- 卡片图标块：短字标 + 每类硬件自己的色相 -->
+        <Style x:Key="IconTile" TargetType="Border">
+            <Setter Property="Width" Value="34" />
+            <Setter Property="Height" Value="34" />
+            <Setter Property="CornerRadius" Value="9" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="IconText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="9.5" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+        </Style>
+
+        <!-- 卡片头部的小标签（例如「整机」） -->
+        <Style x:Key="HeaderTag" TargetType="Border">
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Padding" Value="7,2" />
+            <Setter Property="Background" Value="{DynamicResource App.SurfaceAlt}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="CardDivider" TargetType="Border">
+            <Setter Property="Height" Value="1" />
+            <Setter Property="Background" Value="{DynamicResource App.Border}" />
+            <Setter Property="Margin" Value="0,13,0,11" />
+        </Style>
+
+        <!-- 数值方阵 -->
+        <Style x:Key="Chip" TargetType="Border">
+            <Setter Property="CornerRadius" Value="9" />
+            <Setter Property="Padding" Value="10,7" />
+            <Setter Property="Margin" Value="0,0,8,8" />
+            <Setter Property="Background" Value="{DynamicResource App.SurfaceAlt}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+
+        <Style x:Key="ChipValue" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12.5" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+            <Setter Property="MaxWidth" Value="150" />
+        </Style>
+
+        <Style x:Key="ChipLabel" TargetType="TextBlock" BasedOn="{StaticResource CaptionText}">
+            <Setter Property="FontSize" Value="10.5" />
+            <Setter Property="Margin" Value="0,2,0,0" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+            <Setter Property="MaxWidth" Value="150" />
+        </Style>
+
+        <!-- 骨架条 -->
+        <Style x:Key="SkeletonBar" TargetType="Border">
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Background" Value="{DynamicResource App.Track}" />
         </Style>
 
         <!-- 行尾复制按钮：默认半透明，悬停变实，点击复制该条 -->
@@ -68,6 +154,7 @@
             </Setter>
         </Style>
 
+        <!-- ================= 数据模板 ================= -->
         <!-- 多值硬件：每条一行，左侧小圆点，右侧复制 -->
         <DataTemplate DataType="{x:Type vm:HardwareLine}">
             <Grid Margin="0,2,0,2">
@@ -93,31 +180,68 @@
             </Grid>
         </DataTemplate>
 
+        <!-- 整机键值行：左标签、右值 -->
+        <DataTemplate DataType="{x:Type vm:SystemLine}">
+            <Grid Margin="0,3,0,3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="76" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="{Binding Label}" Style="{StaticResource CaptionText}"
+                           FontSize="11.5" VerticalAlignment="Top" Margin="0,2,0,0" />
+
+                <StackPanel Grid.Column="1" Margin="0,0,6,0">
+                    <TextBlock Text="{Binding Value}" Style="{StaticResource InfoPrimary}" />
+                    <TextBlock Text="{Binding Detail}" Style="{StaticResource InfoSecondary}"
+                               Visibility="{Binding Detail, Converter={StaticResource StringToVisibility}}" />
+                </StackPanel>
+
+                <Button Grid.Column="2" Style="{StaticResource CopyButton}" VerticalAlignment="Top"
+                        Command="{Binding DataContext.CopyLineCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding}" />
+            </Grid>
+        </DataTemplate>
+
+        <!-- 数值方阵 -->
+        <DataTemplate DataType="{x:Type vm:HardwareChip}">
+            <Border Style="{StaticResource Chip}">
+                <StackPanel>
+                    <TextBlock Text="{Binding Value}" Style="{StaticResource ChipValue}" />
+                    <TextBlock Text="{Binding Label}" Style="{StaticResource ChipLabel}" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
         <!-- 分区：固定宽度轨道 + 比例填充（不用 ProgressBar，避免 ItemsControl 里的测量死循环） -->
         <DataTemplate DataType="{x:Type vm:VolumeRow}">
-            <Grid Margin="0,3,0,7">
+            <Grid Margin="0,2,0,6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" Width="360" HorizontalAlignment="Left">
+                <StackPanel Grid.Column="0" Width="300" HorizontalAlignment="Left">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Style="{StaticResource BodyText}" FontSize="12" TextTrimming="CharacterEllipsis">
+                        <TextBlock Grid.Column="0" Style="{StaticResource BodyText}" FontSize="11.5"
+                                   Foreground="{DynamicResource App.Text.Primary}"
+                                   TextTrimming="CharacterEllipsis">
                             <Run Text="{Binding Label, Mode=OneWay}" />
                             <Run Text="   " />
-                            <Run Text="{Binding SizeText, Mode=OneWay}" />
+                            <Run Text="{Binding SizeText, Mode=OneWay}" Foreground="{DynamicResource App.Text.Tertiary}" />
                         </TextBlock>
 
                         <TextBlock Grid.Column="1" Text="{Binding PercentText}" Margin="10,0,0,0">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock" BasedOn="{StaticResource CaptionText}">
-                                    <Setter Property="Foreground" Value="{DynamicResource App.Accent}" />
+                                    <Setter Property="FontSize" Value="11" />
+                                    <Setter Property="Foreground" Value="{DynamicResource App.Text.Secondary}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsCritical}" Value="True">
                                             <Setter Property="Foreground" Value="{DynamicResource App.Danger}" />
@@ -128,12 +252,12 @@
                         </TextBlock>
                     </Grid>
 
-                    <Border Width="300" Height="5" CornerRadius="3" Margin="0,6,0,0" HorizontalAlignment="Left"
+                    <Border Width="300" Height="5" CornerRadius="3" Margin="0,5,0,0" HorizontalAlignment="Left"
                             Background="{DynamicResource App.Track}" ClipToBounds="True">
                         <Border HorizontalAlignment="Left" CornerRadius="3" Width="{Binding BarWidth}">
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="{DynamicResource App.Accent}" />
+                                    <Setter Property="Background" Value="{DynamicResource App.Amber}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsCritical}" Value="True">
                                             <Setter Property="Background" Value="{DynamicResource App.Danger}" />
@@ -177,14 +301,14 @@
                         <!-- 水平排列里不能带 TextWrapping=Wrap：无限宽度 + 换行会触发测量死循环 -->
                         <TextBlock Text="{Binding Name}" Style="{StaticResource InfoPrimary}"
                                    TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Margin="8,0,0,0" />
-                        <TextBlock Text="{Binding Status}" Style="{StaticResource CaptionText}"
+                        <TextBlock Text="{Binding Status}" Style="{StaticResource CaptionText}" FontSize="11"
                                    Margin="8,0,0,0" VerticalAlignment="Center" />
                     </StackPanel>
 
                     <TextBlock Text="{Binding Detail}" Style="{StaticResource InfoSecondary}" Margin="15,1,0,0"
                                Visibility="{Binding Detail, Converter={StaticResource StringToVisibility}}" />
                     <TextBlock Text="{Binding Mac}" Style="{StaticResource InfoSecondary}" Margin="15,0,0,0"
-                               FontSize="11" Foreground="{DynamicResource App.Text.Tertiary}"
+                               Foreground="{DynamicResource App.Text.Tertiary}"
                                Visibility="{Binding Mac, Converter={StaticResource StringToVisibility}}" />
                 </StackPanel>
 
@@ -196,190 +320,361 @@
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <!-- 右侧多留 14px：垂直滚动条出现时会占掉视口宽度，否则第 5 张卡片会被压住 -->
+        <!-- 右侧多留 14px：垂直滚动条出现时会占掉视口宽度 -->
         <StackPanel Margin="28,20,42,28">
 
-            <!-- 标题 -->
+            <!-- ================= 标题 ================= -->
             <Grid>
                 <StackPanel>
                     <TextBlock Text="{Binding Title}" Style="{StaticResource PageTitle}" />
-                    <TextBlock Style="{StaticResource CaptionText}" Margin="0,5,0,0">
-                        <Run Text="{Binding Profile.ComputerName, Mode=OneWay, FallbackValue='—'}" />
-                        <Run Text="  ·  " />
-                        <Run Text="{Binding Profile.OsName, Mode=OneWay}" />
-                    </TextBlock>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,7,0,0">
+                        <TextBlock Text="{Binding HeaderSubtitle}" Style="{StaticResource CaptionText}"
+                                   FontSize="12.5" TextTrimming="CharacterEllipsis" MaxWidth="520" />
+                        <Border Width="1" Height="10" Margin="10,0" VerticalAlignment="Center"
+                                Background="{DynamicResource App.BorderStrong}"
+                                Visibility="{Binding UptimeText, Converter={StaticResource StringToVisibility}}" />
+                        <Border Width="6" Height="6" CornerRadius="3" VerticalAlignment="Center"
+                                Background="{DynamicResource App.Success}"
+                                Visibility="{Binding UptimeText, Converter={StaticResource StringToVisibility}}" />
+                        <TextBlock Text="{Binding UptimeText}" Style="{StaticResource CaptionText}"
+                                   FontSize="12.5" Margin="6,0,0,0"
+                                   Visibility="{Binding UptimeText, Converter={StaticResource StringToVisibility}}" />
+                    </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <Button Content="{Binding CopyAllLabel}" Style="{StaticResource GhostButton}"
                             Command="{Binding CopyAllCommand}" Padding="14,7" Margin="0,0,8,0" />
-                    <Button Content="{Binding RefreshLabel}" Style="{StaticResource GhostButton}"
-                            Command="{Binding RefreshCommand}" Padding="14,7" />
+                    <Button Style="{StaticResource GhostButton}" Command="{Binding RefreshCommand}" Padding="14,7">
+                        <StackPanel Orientation="Horizontal">
+                            <ctl:Spinner Width="13" Height="13" Margin="0,0,7,0"
+                                         Foreground="{DynamicResource App.Text.Secondary}"
+                                         Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}" />
+                            <TextBlock Text="{Binding RefreshLabel}" />
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </Grid>
 
-            <!-- 实时占用 -->
-            <UniformGrid Columns="5" Margin="0,18,0,0">
-                <Border Style="{StaticResource Card}" Margin="0,0,10,0" Padding="15,13">
+            <!-- ================= 首帧骨架 ================= -->
+            <Grid Margin="0,16,0,0">
+                <ItemsControl ItemsSource="{Binding SkeletonSlots}"
+                              Visibility="{Binding HasProfile, Converter={StaticResource InverseBoolToVisibility}}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource Card}" Padding="18,16" Margin="0,0,12,12">
+                                <StackPanel>
+                                    <Grid>
+                                        <Border Width="34" Height="34" CornerRadius="9"
+                                                Style="{StaticResource SkeletonBar}" HorizontalAlignment="Left" />
+                                        <StackPanel Margin="46,2,0,0" HorizontalAlignment="Left">
+                                            <Border Width="96" Height="10" Style="{StaticResource SkeletonBar}" />
+                                            <Border Width="150" Height="8" Margin="0,7,0,0" Opacity="0.7"
+                                                    Style="{StaticResource SkeletonBar}" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Border Height="1" Margin="0,14,0,12" Background="{DynamicResource App.Border}" />
+                                    <Border Height="26" Width="92" HorizontalAlignment="Left"
+                                            Style="{StaticResource SkeletonBar}" />
+                                    <Border Height="5" Margin="0,10,0,0" Style="{StaticResource SkeletonBar}" />
+                                    <Border Height="8" Margin="0,14,90,0" Opacity="0.7" Style="{StaticResource SkeletonBar}" />
+                                    <Border Height="8" Margin="0,8,140,0" Opacity="0.7" Style="{StaticResource SkeletonBar}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <TextBlock Text="{Binding ReadingLabel}" Style="{StaticResource CaptionText}"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,24"
+                           Visibility="{Binding HasProfile, Converter={StaticResource InverseBoolToVisibility}}" />
+            </Grid>
+
+            <!-- ================= 硬件卡片 ================= -->
+            <Grid Margin="0,16,0,0" Visibility="{Binding HasProfile, Converter={StaticResource BoolToVisibility}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- 整机 / OEM -->
+                <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource CardShell}">
                     <StackPanel>
-                        <TextBlock Text="{Binding CpuLabel}" Style="{StaticResource CaptionText}" />
-                        <TextBlock Text="{Binding CpuPercent, Converter={StaticResource PercentText}}"
-                                   Style="{StaticResource MetricValueText}" Margin="0,4,0,0" />
-                        <ProgressBar Style="{StaticResource AppProgress}" Value="{Binding CpuPercent}"
-                                     Maximum="100" Margin="0,10,0,0" />
-                        <TextBlock Text="{Binding CpuSummary}" Style="{StaticResource MetricSubText}" />
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="44" Height="44" CornerRadius="11"
+                                        Background="{Binding Oem.Color}">
+                                    <Viewbox Stretch="Uniform" MaxWidth="34" MaxHeight="16"
+                                             HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Oem.Monogram, FallbackValue='PC'}"
+                                                   FontSize="14" FontWeight="Bold" Foreground="White" />
+                                    </Viewbox>
+                                </Border>
+
+                                <StackPanel Margin="12,0,0,0" VerticalAlignment="Center" MaxWidth="320">
+                                    <TextBlock Text="{Binding Oem.DisplayName}" FontSize="14.5" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource App.Text.Primary}"
+                                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="{Binding ModelText}" Style="{StaticResource CardSubtitle}"
+                                               FontSize="11.5" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Border Style="{StaticResource HeaderTag}" Margin="0,0,4,0">
+                                    <TextBlock Text="{Binding DeviceSection}" FontSize="10.5"
+                                               Foreground="{DynamicResource App.Text.Secondary}" />
+                                </Border>
+                                <Button Style="{StaticResource CopyButton}"
+                                        Command="{Binding CopyCardCommand}" CommandParameter="device" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Border Style="{StaticResource CardDivider}" />
+
+                        <ItemsControl ItemsSource="{Binding SystemLines}" />
                     </StackPanel>
                 </Border>
 
-                <Border Style="{StaticResource Card}" Margin="0,0,10,0" Padding="15,13">
+                <!-- 处理器 -->
+                <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CardShellRight}">
                     <StackPanel>
-                        <TextBlock Text="{Binding MemoryLabel}" Style="{StaticResource CaptionText}" />
-                        <TextBlock Text="{Binding MemoryPercent, Converter={StaticResource PercentText}}"
-                                   Style="{StaticResource MetricValueText}" Margin="0,4,0,0" />
-                        <ProgressBar Style="{StaticResource AppProgress}" Value="{Binding MemoryPercent}"
-                                     Maximum="100" Margin="0,10,0,0" />
-                        <TextBlock Text="{Binding MemoryText}" Style="{StaticResource MetricSubText}" />
-                    </StackPanel>
-                </Border>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}" Background="{DynamicResource App.Violet.Soft}">
+                                    <TextBlock Text="CPU" Style="{StaticResource IconText}"
+                                               Foreground="{DynamicResource App.Violet}" />
+                                </Border>
+                                <StackPanel Margin="11,0,0,0" VerticalAlignment="Center" MaxWidth="320">
+                                    <TextBlock Text="{Binding CpuLabel}" Style="{StaticResource CardTitle}" />
+                                    <TextBlock Text="{Binding CpuSummary}" Style="{StaticResource CardSubtitle}" />
+                                </StackPanel>
+                            </StackPanel>
 
-                <Border Style="{StaticResource Card}" Margin="0,0,10,0" Padding="15,13">
-                    <StackPanel>
-                        <TextBlock Text="{Binding DiskLabel}" Style="{StaticResource CaptionText}" />
-                        <TextBlock Text="{Binding DiskUsagePercent, Converter={StaticResource PercentText}}"
-                                   Style="{StaticResource MetricValueText}" Margin="0,4,0,0" />
-                        <ProgressBar Style="{StaticResource AppProgress}" Value="{Binding DiskUsagePercent}"
-                                     Maximum="100" Margin="0,10,0,0" />
-                        <TextBlock Text="{Binding DiskSummary}" Style="{StaticResource MetricSubText}" />
-                    </StackPanel>
-                </Border>
+                            <Button Style="{StaticResource CopyButton}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Command="{Binding CopyCardCommand}" CommandParameter="cpu" />
+                        </Grid>
 
-                <Border Style="{StaticResource Card}" Margin="0,0,10,0" Padding="15,13">
-                    <StackPanel>
-                        <TextBlock Text="{Binding NetworkSection}" Style="{StaticResource CaptionText}" />
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <TextBlock Text="↓" FontSize="13" Foreground="{DynamicResource App.Accent}"
-                                       VerticalAlignment="Center" Margin="0,0,5,0" />
-                            <TextBlock Text="{Binding NetDown, Converter={StaticResource BytesPerSecond}}"
-                                       Style="{StaticResource MetricValueText}" FontSize="13" />
+                        <Border Style="{StaticResource CardDivider}" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding CpuPercent, Converter={StaticResource PercentText}}"
+                                       Style="{StaticResource BigMetric}" />
+                            <TextBlock Text="{Binding LiveUsageLabel}" Style="{StaticResource LabelText}" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-                            <TextBlock Text="↑" FontSize="13" Foreground="{DynamicResource App.Success}"
-                                       VerticalAlignment="Center" Margin="0,0,5,0" />
-                            <TextBlock Text="{Binding NetUp, Converter={StaticResource BytesPerSecond}}"
-                                       Style="{StaticResource MetricValueText}" FontSize="13" />
-                        </StackPanel>
-                        <TextBlock Text="{Binding NetSummary}" Style="{StaticResource MetricSubText}" />
+
+                        <ProgressBar Style="{StaticResource AppProgress}" Maximum="100"
+                                     Value="{Binding CpuPercent}" Margin="0,8,0,0"
+                                     Foreground="{DynamicResource App.Violet}" />
+
+                        <ItemsControl ItemsSource="{Binding CpuChips}" Margin="0,13,0,0">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
                     </StackPanel>
                 </Border>
 
-                <Border Style="{StaticResource Card}" Padding="15,13">
+                <!-- 内存 -->
+                <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource CardShell}">
                     <StackPanel>
-                        <TextBlock Text="{Binding GpuLabel}" Style="{StaticResource CaptionText}" />
-                        <TextBlock Text="{Binding GpuPercent, Converter={StaticResource PercentText}}"
-                                   Style="{StaticResource MetricValueText}" Margin="0,4,0,0" />
-                        <ProgressBar Style="{StaticResource AppProgress}" Value="{Binding GpuPercent}"
-                                     Maximum="100" Margin="0,10,0,0" />
-                        <TextBlock Text="{Binding GpuSummary}" Style="{StaticResource MetricSubText}" />
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}" Background="{DynamicResource App.Teal.Soft}">
+                                    <TextBlock Text="RAM" Style="{StaticResource IconText}"
+                                               Foreground="{DynamicResource App.Teal}" />
+                                </Border>
+                                <StackPanel Margin="11,0,0,0" VerticalAlignment="Center" MaxWidth="320">
+                                    <TextBlock Text="{Binding MemoryLabel}" Style="{StaticResource CardTitle}" />
+                                    <TextBlock Text="{Binding MemorySummary}" Style="{StaticResource CardSubtitle}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <Button Style="{StaticResource CopyButton}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Command="{Binding CopyCardCommand}" CommandParameter="memory" />
+                        </Grid>
+
+                        <Border Style="{StaticResource CardDivider}" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding MemoryPercent, Converter={StaticResource PercentText}}"
+                                       Style="{StaticResource BigMetric}" />
+                            <TextBlock Text="{Binding MemoryText}" Style="{StaticResource LabelText}" />
+                        </StackPanel>
+
+                        <ProgressBar Style="{StaticResource AppProgress}" Maximum="100"
+                                     Value="{Binding MemoryPercent}" Margin="0,8,0,0"
+                                     Foreground="{DynamicResource App.Teal}" />
+
+                        <ItemsControl ItemsSource="{Binding MemoryChips}" Margin="0,13,0,0">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+
+                        <ItemsControl ItemsSource="{Binding MemoryModules}" Margin="0,2,0,0" />
                     </StackPanel>
                 </Border>
-            </UniformGrid>
 
-            <!-- 硬件信息 -->
-            <TextBlock Text="{Binding HardwareSection}" Style="{StaticResource SectionTitle}" Margin="2,22,0,10" />
+                <!-- 显卡 -->
+                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource CardShellRight}">
+                    <StackPanel>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}" Background="{DynamicResource App.Accent.Soft}">
+                                    <TextBlock Text="GPU" Style="{StaticResource IconText}"
+                                               Foreground="{DynamicResource App.Accent}" />
+                                </Border>
+                                <StackPanel Margin="11,0,0,0" VerticalAlignment="Center" MaxWidth="320">
+                                    <TextBlock Text="{Binding GraphicsLabel}" Style="{StaticResource CardTitle}" />
+                                    <TextBlock Text="{Binding GpuSummary}" Style="{StaticResource CardSubtitle}" />
+                                </StackPanel>
+                            </StackPanel>
 
-            <Border Style="{StaticResource Card}" Padding="20,16">
+                            <Button Style="{StaticResource CopyButton}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Command="{Binding CopyCardCommand}" CommandParameter="graphics" />
+                        </Grid>
+
+                        <Border Style="{StaticResource CardDivider}" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding GpuPercent, Converter={StaticResource PercentText}}"
+                                       Style="{StaticResource BigMetric}" />
+                            <TextBlock Text="{Binding GpuLabel}" Style="{StaticResource LabelText}" />
+                        </StackPanel>
+
+                        <ProgressBar Style="{StaticResource AppProgress}" Maximum="100"
+                                     Value="{Binding GpuPercent}" Margin="0,8,0,0" />
+
+                        <ItemsControl ItemsSource="{Binding Graphics}" Margin="0,13,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <!-- 存储 -->
+                <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource CardShell}">
+                    <StackPanel>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}" Background="{DynamicResource App.Amber.Soft}">
+                                    <TextBlock Text="SSD" Style="{StaticResource IconText}"
+                                               Foreground="{DynamicResource App.Amber}" />
+                                </Border>
+                                <StackPanel Margin="11,0,0,0" VerticalAlignment="Center" MaxWidth="320">
+                                    <TextBlock Text="{Binding StorageLabel}" Style="{StaticResource CardTitle}" />
+                                    <TextBlock Text="{Binding DiskSummary}" Style="{StaticResource CardSubtitle}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <Button Style="{StaticResource CopyButton}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Command="{Binding CopyCardCommand}" CommandParameter="storage" />
+                        </Grid>
+
+                        <Border Style="{StaticResource CardDivider}" />
+
+                        <ItemsControl ItemsSource="{Binding Volumes}" />
+
+                        <TextBlock Text="{Binding PhysicalDisksLabel}" Style="{StaticResource CaptionText}"
+                                   FontSize="11" Margin="0,8,0,4" />
+                        <ItemsControl ItemsSource="{Binding Disks}" />
+                    </StackPanel>
+                </Border>
+
+                <!-- 网络 -->
+                <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource CardShellRight}">
+                    <StackPanel>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}" Background="{DynamicResource App.Success.Soft}">
+                                    <TextBlock Text="NET" Style="{StaticResource IconText}"
+                                               Foreground="{DynamicResource App.Success}" />
+                                </Border>
+                                <StackPanel Margin="11,0,0,0" VerticalAlignment="Center" MaxWidth="320">
+                                    <TextBlock Text="{Binding NetworkSection}" Style="{StaticResource CardTitle}" />
+                                    <TextBlock Text="{Binding NetSummary}" Style="{StaticResource CardSubtitle}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <Button Style="{StaticResource CopyButton}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Command="{Binding CopyCardCommand}" CommandParameter="network" />
+                        </Grid>
+
+                        <Border Style="{StaticResource CardDivider}" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0" Style="{StaticResource SoftCard}" Padding="12,9" Margin="0,0,5,0">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="↓" FontSize="12" FontWeight="Bold" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource App.Accent}" />
+                                        <TextBlock Text="{Binding DownloadLabel}" Style="{StaticResource CaptionText}"
+                                                   FontSize="11" Margin="6,0,0,0" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding NetDown, Converter={StaticResource BytesPerSecond}}"
+                                               FontSize="14" FontWeight="SemiBold" Margin="0,3,0,0"
+                                               Foreground="{DynamicResource App.Text.Primary}" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1" Style="{StaticResource SoftCard}" Padding="12,9" Margin="5,0,0,0">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="↑" FontSize="12" FontWeight="Bold" VerticalAlignment="Center"
+                                                   Foreground="{DynamicResource App.Success}" />
+                                        <TextBlock Text="{Binding UploadLabel}" Style="{StaticResource CaptionText}"
+                                                   FontSize="11" Margin="6,0,0,0" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding NetUp, Converter={StaticResource BytesPerSecond}}"
+                                               FontSize="14" FontWeight="SemiBold" Margin="0,3,0,0"
+                                               Foreground="{DynamicResource App.Text.Primary}" />
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <ItemsControl ItemsSource="{Binding Networks}" Margin="0,12,0,0" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- ================= 声音设备 ================= -->
+            <Border Style="{StaticResource Card}" Padding="18,14" Margin="0,2,0,0"
+                    Visibility="{Binding HasProfile, Converter={StaticResource BoolToVisibility}}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="92" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
 
-                    <!-- 系统 -->
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding SystemLabel}" Style="{StaticResource InfoLabel}" />
-                    <Grid Grid.Row="0" Grid.Column="1" Margin="0,0,0,14">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <TextBlock Text="{Binding OsText}" Style="{StaticResource InfoPrimary}" />
-                            <TextBlock Text="{Binding OsDetailText}" Style="{StaticResource InfoSecondary}" />
-                        </StackPanel>
-                        <Button Grid.Column="1" Style="{StaticResource CopyButton}" VerticalAlignment="Top"
-                                Command="{Binding CopyLineCommand}" CommandParameter="{Binding OsText}" />
-                    </Grid>
+                    <TextBlock Grid.Column="0" Text="{Binding SoundLabel}" Style="{StaticResource SectionTitle}"
+                               FontSize="13" VerticalAlignment="Center" />
 
-                    <!-- 主板 -->
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding BoardLabel}" Style="{StaticResource InfoLabel}" />
-                    <Grid Grid.Row="1" Grid.Column="1" Margin="0,0,0,14">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding BoardText}" Style="{StaticResource InfoPrimary}" />
-                        <Button Grid.Column="1" Style="{StaticResource CopyButton}" VerticalAlignment="Top"
-                                Command="{Binding CopyLineCommand}" CommandParameter="{Binding BoardText}" />
-                    </Grid>
+                    <TextBlock Grid.Column="1" Text="{Binding SoundSummary}" Style="{StaticResource CaptionText}"
+                               FontSize="11.5" Margin="12,0,8,0" VerticalAlignment="Center"
+                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
 
-                    <!-- 处理器 -->
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding CpuLabel}" Style="{StaticResource InfoLabel}" />
-                    <Grid Grid.Row="2" Grid.Column="1" Margin="0,0,0,14">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <TextBlock Text="{Binding CpuText}" Style="{StaticResource InfoPrimary}" />
-                            <TextBlock Text="{Binding CpuDetailText}" Style="{StaticResource InfoSecondary}" />
-                        </StackPanel>
-                        <Button Grid.Column="1" Style="{StaticResource CopyButton}" VerticalAlignment="Top"
-                                Command="{Binding CopyLineCommand}"
-                                CommandParameter="{Binding CpuText}" />
-                    </Grid>
-
-                    <!-- 显卡 -->
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding GraphicsLabel}" Style="{StaticResource InfoLabel}" />
-                    <ItemsControl Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Graphics}" Margin="0,0,0,14" />
-
-                    <!-- 内存 -->
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding MemoryModuleLabel}" Style="{StaticResource InfoLabel}" />
-                    <StackPanel Grid.Row="4" Grid.Column="1" Margin="0,0,0,14">
-                        <TextBlock Text="{Binding MemorySummary}" Style="{StaticResource InfoPrimary}" Margin="0,0,0,2" />
-                        <ItemsControl ItemsSource="{Binding MemoryModules}" />
-                    </StackPanel>
-
-                    <!-- 硬盘 -->
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="{Binding DiskLabel2}" Style="{StaticResource InfoLabel}" />
-                    <ItemsControl Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Disks}" Margin="0,0,0,14" />
-
-                    <!-- 分区（带进度条） -->
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="{Binding VolumeLabel}" Style="{StaticResource InfoLabel}" />
-                    <ItemsControl Grid.Row="6" Grid.Column="1" ItemsSource="{Binding Volumes}" Margin="0,0,0,14" />
-
-                    <!-- 声卡 -->
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="{Binding SoundLabel}" Style="{StaticResource InfoLabel}" />
-                    <ItemsControl Grid.Row="7" Grid.Column="1" ItemsSource="{Binding SoundDevices}" Margin="0,0,0,14" />
-
-                    <!-- 网络 -->
-                    <TextBlock Grid.Row="8" Grid.Column="0" Text="{Binding NetworkSection}" Style="{StaticResource InfoLabel}" />
-                    <ItemsControl Grid.Row="8" Grid.Column="1" ItemsSource="{Binding Networks}" Margin="0,0,0,14" />
-
-                    <!-- 系统版本 -->
-                    <TextBlock Grid.Row="9" Grid.Column="0" Text="{Binding VersionLabel}" Style="{StaticResource InfoLabel}" />
-                    <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding Profile.OsBuild}"
-                               Style="{StaticResource InfoPrimary}" />
+                    <Button Grid.Column="2" Style="{StaticResource CopyButton}" VerticalAlignment="Center"
+                            Command="{Binding CopyCardCommand}" CommandParameter="sound" />
                 </Grid>
             </Border>
 

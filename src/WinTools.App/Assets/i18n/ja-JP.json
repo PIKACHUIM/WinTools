@@ -403,5 +403,29 @@
 
   "Flag.NameUnknown": "機能 {0}",
 
-  "Drv.BackupAll": "すべてバックアップ"
+  "Drv.BackupAll": "すべてバックアップ",
+
+  "Dashboard.Device": "本体",
+  "Dashboard.DeviceType": "デバイスの種類",
+  "Dashboard.DeviceDesktop": "デスクトップ",
+  "Dashboard.DeviceLaptop": "ノートPC",
+  "Dashboard.DeviceWorkstation": "ワークステーション",
+  "Dashboard.DeviceOther": "その他",
+  "Dashboard.ComputerName": "コンピューター名",
+  "Dashboard.Os": "オペレーティングシステム",
+  "Dashboard.Bios": "BIOS",
+  "Dashboard.Cores": "コア / スレッド",
+  "Dashboard.Clock": "クロック",
+  "Dashboard.Socket": "ソケット",
+  "Dashboard.Capacity": "容量",
+  "Dashboard.ModuleCount": "{0} 枚",
+  "Dashboard.ModuleCountLabel": "メモリ",
+  "Dashboard.Frequency": "速度",
+  "Dashboard.Storage": "ストレージ",
+  "Dashboard.PhysicalDisks": "物理ディスク",
+  "Dashboard.Download": "下り",
+  "Dashboard.Upload": "上り",
+  "Dashboard.CustomBuild": "自作PC",
+  "Dashboard.Reading": "ハードウェア情報を取得しています…",
+  "Dashboard.LiveUsage": "リアルタイム使用率"
 }

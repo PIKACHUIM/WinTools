@@ -1,0 +1,25 @@
+# 系统概览卡片化新增文案
+key|zh-Hans|zh-Hant|en-US|ja-JP|ko-KR|de-DE|fr-FR|es-ES|pt-BR|it-IT|ru-RU|ar-SA
+Dashboard.Device|整机|整機|Device|本体|본체|Gerät|Appareil|Equipo|Equipamento|Dispositivo|Устройство|الجهاز
+Dashboard.DeviceType|设备类型|裝置類型|Device type|デバイスの種類|장치 유형|Gerätetyp|Type d'appareil|Tipo de equipo|Tipo de dispositivo|Tipo di dispositivo|Тип устройства|نوع الجهاز
+Dashboard.DeviceDesktop|台式机|桌上型電腦|Desktop|デスクトップ|데스크톱|Desktop-PC|Ordinateur de bureau|Sobremesa|Desktop|Desktop|Настольный ПК|مكتبي
+Dashboard.DeviceLaptop|笔记本|筆記型電腦|Laptop|ノートPC|노트북|Notebook|Ordinateur portable|Portátil|Notebook|Notebook|Ноутбук|محمول
+Dashboard.DeviceWorkstation|工作站|工作站|Workstation|ワークステーション|워크스테이션|Workstation|Station de travail|Estación de trabajo|Estação de trabalho|Workstation|Рабочая станция|محطة عمل
+Dashboard.DeviceOther|其他设备|其他裝置|Other|その他|기타|Sonstiges|Autre|Otro|Outro|Altro|Другое|أخرى
+Dashboard.ComputerName|计算机名|電腦名稱|Computer name|コンピューター名|컴퓨터 이름|Computername|Nom de l'ordinateur|Nombre del equipo|Nome do computador|Nome computer|Имя компьютера|اسم الكمبيوتر
+Dashboard.Os|操作系统|作業系統|Operating system|オペレーティングシステム|운영 체제|Betriebssystem|Système d'exploitation|Sistema operativo|Sistema operacional|Sistema operativo|Операционная система|نظام التشغيل
+Dashboard.Bios|BIOS|BIOS|BIOS|BIOS|BIOS|BIOS|BIOS|BIOS|BIOS|BIOS|BIOS|BIOS
+Dashboard.Cores|核心 / 线程|核心 / 執行緒|Cores / threads|コア / スレッド|코어 / 스레드|Kerne / Threads|Cœurs / threads|Núcleos / hilos|Núcleos / threads|Core / thread|Ядра / потоки|الأنوية / الخيوط
+Dashboard.Clock|主频|時脈|Clock|クロック|클록|Takt|Fréquence|Frecuencia|Clock|Frequenza|Частота|التردد
+Dashboard.Socket|插槽|插槽|Socket|ソケット|소켓|Sockel|Socket|Zócalo|Socket|Socket|Сокет|المقبس
+Dashboard.Capacity|容量|容量|Capacity|容量|용량|Kapazität|Capacité|Capacidad|Capacidade|Capacità|Объём|السعة
+Dashboard.ModuleCount|{0} 条|{0} 條|{0} modules|{0} 枚|{0}개|{0} Module|{0} barrettes|{0} módulos|{0} módulos|{0} moduli|{0} шт.|{0} وحدات
+Dashboard.ModuleCountLabel|内存条|記憶體|Modules|メモリ|메모리|Module|Barrettes|Módulos|Módulos|Moduli|Модули|وحدات الذاكرة
+Dashboard.Frequency|频率|頻率|Speed|速度|속도|Takt|Fréquence|Velocidad|Frequência|Frequenza|Частота|التردد
+Dashboard.Storage|存储|儲存|Storage|ストレージ|저장소|Speicher|Stockage|Almacenamiento|Armazenamento|Archiviazione|Хранилище|التخزين
+Dashboard.PhysicalDisks|物理磁盘|實體磁碟|Physical disks|物理ディスク|물리 디스크|Datenträger|Disques physiques|Discos físicos|Discos físicos|Dischi fisici|Физические диски|الأقراص الفعلية
+Dashboard.Download|下行|下載|Download|下り|다운로드|Downstream|Réception|Descarga|Download|Download|Загрузка|تنزيل
+Dashboard.Upload|上行|上傳|Upload|上り|업로드|Upstream|Envoi|Subida|Upload|Upload|Отдача|رفع
+Dashboard.CustomBuild|组装机|自組電腦|Custom build|自作PC|조립 PC|Eigenbau|Assemblage|Equipo a medida|Montagem própria|Assemblaggio|Сборка|تجميع مخصص
+Dashboard.Reading|正在读取硬件信息…|正在讀取硬體資訊…|Reading hardware…|ハードウェア情報を取得しています…|하드웨어 정보를 읽는 중…|Hardware wird gelesen…|Lecture du matériel…|Leyendo el hardware…|Lendo o hardware…|Lettura dell'hardware…|Чтение данных об оборудовании…|جارٍ قراءة معلومات الأجهزة…
+Dashboard.LiveUsage|实时占用|即時使用率|Live usage|リアルタイム使用率|실시간 사용률|Live-Auslastung|Utilisation en direct|Uso en vivo|Uso ao vivo|Utilizzo live|Текущая нагрузка|الاستخدام الفوري

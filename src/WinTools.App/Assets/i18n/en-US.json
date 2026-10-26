@@ -403,5 +403,29 @@
 
   "Flag.NameUnknown": "Feature {0}",
 
-  "Drv.BackupAll": "Back up all"
+  "Drv.BackupAll": "Back up all",
+
+  "Dashboard.Device": "Device",
+  "Dashboard.DeviceType": "Device type",
+  "Dashboard.DeviceDesktop": "Desktop",
+  "Dashboard.DeviceLaptop": "Laptop",
+  "Dashboard.DeviceWorkstation": "Workstation",
+  "Dashboard.DeviceOther": "Other",
+  "Dashboard.ComputerName": "Computer name",
+  "Dashboard.Os": "Operating system",
+  "Dashboard.Bios": "BIOS",
+  "Dashboard.Cores": "Cores / threads",
+  "Dashboard.Clock": "Clock",
+  "Dashboard.Socket": "Socket",
+  "Dashboard.Capacity": "Capacity",
+  "Dashboard.ModuleCount": "{0} modules",
+  "Dashboard.ModuleCountLabel": "Modules",
+  "Dashboard.Frequency": "Speed",
+  "Dashboard.Storage": "Storage",
+  "Dashboard.PhysicalDisks": "Physical disks",
+  "Dashboard.Download": "Download",
+  "Dashboard.Upload": "Upload",
+  "Dashboard.CustomBuild": "Custom build",
+  "Dashboard.Reading": "Reading hardware…",
+  "Dashboard.LiveUsage": "Live usage"
 }

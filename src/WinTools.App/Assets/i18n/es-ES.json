@@ -403,5 +403,29 @@
 
   "Flag.NameUnknown": "Característica {0}",
 
-  "Drv.BackupAll": "Copia total"
+  "Drv.BackupAll": "Copia total",
+
+  "Dashboard.Device": "Equipo",
+  "Dashboard.DeviceType": "Tipo de equipo",
+  "Dashboard.DeviceDesktop": "Sobremesa",
+  "Dashboard.DeviceLaptop": "Portátil",
+  "Dashboard.DeviceWorkstation": "Estación de trabajo",
+  "Dashboard.DeviceOther": "Otro",
+  "Dashboard.ComputerName": "Nombre del equipo",
+  "Dashboard.Os": "Sistema operativo",
+  "Dashboard.Bios": "BIOS",
+  "Dashboard.Cores": "Núcleos / hilos",
+  "Dashboard.Clock": "Frecuencia",
+  "Dashboard.Socket": "Zócalo",
+  "Dashboard.Capacity": "Capacidad",
+  "Dashboard.ModuleCount": "{0} módulos",
+  "Dashboard.ModuleCountLabel": "Módulos",
+  "Dashboard.Frequency": "Velocidad",
+  "Dashboard.Storage": "Almacenamiento",
+  "Dashboard.PhysicalDisks": "Discos físicos",
+  "Dashboard.Download": "Descarga",
+  "Dashboard.Upload": "Subida",
+  "Dashboard.CustomBuild": "Equipo a medida",
+  "Dashboard.Reading": "Leyendo el hardware…",
+  "Dashboard.LiveUsage": "Uso en vivo"
 }

@@ -11,7 +11,7 @@ public sealed class HardwareInfoService
     public HardwareProfile GetProfile()
     {
         var computer = Wmi.Query(
-            "SELECT Name, TotalPhysicalMemory, Manufacturer, Model FROM Win32_ComputerSystem");
+            "SELECT Name, TotalPhysicalMemory, Manufacturer, Model, PCSystemType FROM Win32_ComputerSystem");
 
         var os = Wmi.Query(
             "SELECT Caption, Version, BuildNumber, OSArchitecture FROM Win32_OperatingSystem");
@@ -28,7 +28,13 @@ public sealed class HardwareInfoService
             "SELECT DeviceLocator, BankLabel, Capacity, Speed, Manufacturer, PartNumber FROM Win32_PhysicalMemory");
 
         var disks = Wmi.Query(
-            "SELECT Model, Size, InterfaceType, MediaType, SerialNumber FROM Win32_DiskDrive");
+            "SELECT Index, Model, Size, InterfaceType, MediaType, SerialNumber, PNPDeviceID FROM Win32_DiskDrive");
+
+        // Win32_DiskDrive.InterfaceType 对 SATA 磁盘同样返回 IDE（AHCI 走的还是 ATA 命令集），
+        // 总线类型以存储命名空间的 MSFT_PhysicalDisk.BusType 为准。
+        var storageDisks = Wmi.Query(
+            "SELECT DeviceId, SerialNumber, BusType, MediaType FROM MSFT_PhysicalDisk",
+            @"root\Microsoft\Windows\Storage");
 
         var sound = Wmi.Query("SELECT Name FROM Win32_SoundDevice");
 
@@ -46,6 +52,9 @@ public sealed class HardwareInfoService
             Text(Wmi.First(os, "Version"), Environment.OSVersion.Version.ToString()),
             Text(Wmi.First(os, "BuildNumber"), Environment.OSVersion.Version.Build.ToString()),
             Text(Wmi.First(os, "OSArchitecture"), Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit"),
+            Text(Wmi.First(computer, "Manufacturer")),
+            Text(Wmi.First(computer, "Model")),
+            ToInt(Wmi.First(computer, "PCSystemType")),
             Text(Wmi.First(board, "Manufacturer"), "—"),
             Text(Wmi.First(board, "Product"), "—"),
             Wmi.FirstString(bios, "Manufacturer"),
@@ -58,7 +67,7 @@ public sealed class HardwareInfoService
             ReadGraphics(graphics),
             totalMemory,
             ReadMemoryModules(memory),
-            ReadDisks(disks),
+            ReadDisks(disks, storageDisks),
             sound.Select(r => Text(r.TryGetValue("Name", out var n) ? n : null))
                 .Where(s => s.Length > 0)
                 .Distinct()
@@ -127,8 +136,31 @@ public sealed class HardwareInfoService
         return list;
     }
 
-    private static List<PhysicalDiskInfo> ReadDisks(IReadOnlyList<Dictionary<string, object?>> rows)
+    private static List<PhysicalDiskInfo> ReadDisks(
+        IReadOnlyList<Dictionary<string, object?>> rows,
+        IReadOnlyList<Dictionary<string, object?>> storageRows)
     {
+        var byIndex = new Dictionary<int, StorageDisk>();
+        var bySerial = new Dictionary<string, StorageDisk>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var row in storageRows)
+        {
+            var storage = new StorageDisk(
+                ToInt(row.TryGetValue("BusType", out var bt) ? bt : null),
+                ToInt(row.TryGetValue("MediaType", out var mt) ? mt : null));
+
+            if (int.TryParse(Text(row.TryGetValue("DeviceId", out var id) ? id : null), out var deviceId))
+            {
+                byIndex[deviceId] = storage;
+            }
+
+            var storageSerial = NormalizeSerial(Text(row.TryGetValue("SerialNumber", out var sn) ? sn : null));
+            if (storageSerial.Length > 0)
+            {
+                bySerial[storageSerial] = storage;
+            }
+        }
+
         var list = new List<PhysicalDiskInfo>();
 
         foreach (var row in rows)
@@ -139,16 +171,140 @@ public sealed class HardwareInfoService
                 continue;
             }
 
+            var serial = Text(row.TryGetValue("SerialNumber", out var sn) ? sn : null) is { Length: > 0 } rawSerial
+                ? rawSerial.Trim()
+                : null;
+
+            StorageDisk? storage = null;
+            if (int.TryParse(Text(row.TryGetValue("Index", out var idx) ? idx : null), out var index)
+                && byIndex.TryGetValue(index, out var indexed))
+            {
+                storage = indexed;
+            }
+
+            if (storage is null
+                && serial is not null
+                && bySerial.TryGetValue(NormalizeSerial(serial), out var serialized))
+            {
+                storage = serialized;
+            }
+
             list.Add(new PhysicalDiskInfo(
                 Text(row.TryGetValue("Model", out var m) ? m : null),
                 size,
-                Text(row.TryGetValue("InterfaceType", out var i) ? i : null) is { Length: > 0 } itf ? itf : null,
-                Text(row.TryGetValue("MediaType", out var md) ? md : null) is { Length: > 0 } media ? media : null,
-                Text(row.TryGetValue("SerialNumber", out var sn) ? sn : null) is { Length: > 0 } serial ? serial.Trim() : null));
+                ResolveBusType(
+                    storage?.BusType ?? 0,
+                    Text(row.TryGetValue("PNPDeviceID", out var pnp) ? pnp : null),
+                    Text(row.TryGetValue("InterfaceType", out var itf) ? itf : null)),
+                ResolveMediaType(
+                    storage?.MediaType ?? 0,
+                    Text(row.TryGetValue("MediaType", out var md) ? md : null)),
+                serial));
         }
 
         return list;
     }
+
+    /// <summary>MSFT_PhysicalDisk 里用到的两个枚举字段（BusType / MediaType）。</summary>
+    private sealed record StorageDisk(int BusType, int MediaType);
+
+    private static string? ResolveBusType(int busType, string devicePath, string legacyInterface)
+    {
+        var hint = BusTypeFromDevicePath(devicePath);
+
+        if (busType > 0)
+        {
+            // SCSI / ATA / RAID 只说明走了哪个控制器，底层链路可能是 SATA、NVMe 或 IDE，
+            // 这类值用设备实例路径修正；其余（SATA、NVMe、USB、SAS…）直接采用。
+            return busType is 1 or 2 or 3 or 8 && hint is not null ? hint : BusTypeText(busType);
+        }
+
+        return hint ?? (legacyInterface.Length > 0 ? legacyInterface : null);
+    }
+
+    /// <summary>BusType 枚举值 → 展示文本（与「任务管理器 / 磁盘管理」口径一致）。</summary>
+    private static string? BusTypeText(int busType) => busType switch
+    {
+        1 => "SCSI",
+        2 => "ATAPI",
+        3 => "ATA",
+        4 => "IEEE 1394",
+        5 => "SSA",
+        6 => "Fibre Channel",
+        7 => "USB",
+        8 => "RAID",
+        9 => "iSCSI",
+        10 => "SAS",
+        11 => "SATA",
+        12 => "SD",
+        13 => "MMC",
+        14 => "Virtual",
+        15 => "Virtual",
+        16 => "Storage Spaces",
+        17 => "NVMe",
+        18 => "SCM",
+        19 => "UFS",
+        _ => null
+    };
+
+    /// <summary>
+    /// 从设备实例路径反推物理链路：以 IDE\ 开头的才是真正的 PATA，
+    /// SCSI 路径里 VEN_ATA 是 AHCI 下的 SATA，VEN_NVME 是 NVMe。
+    /// </summary>
+    private static string? BusTypeFromDevicePath(string devicePath)
+    {
+        if (devicePath.Length == 0)
+        {
+            return null;
+        }
+
+        if (devicePath.StartsWith("USBSTOR", StringComparison.OrdinalIgnoreCase))
+        {
+            return "USB";
+        }
+
+        if (devicePath.StartsWith("IDE\\", StringComparison.OrdinalIgnoreCase))
+        {
+            return "IDE";
+        }
+
+        if (!devicePath.StartsWith("SCSI\\", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        if (devicePath.Contains("VEN_NVME", StringComparison.OrdinalIgnoreCase))
+        {
+            return "NVMe";
+        }
+
+        if (devicePath.Contains("VEN_ATA", StringComparison.OrdinalIgnoreCase)
+            || devicePath.Contains("VEN_ATAPI", StringComparison.OrdinalIgnoreCase))
+        {
+            return "SATA";
+        }
+
+        if (VirtualDiskVendors.Any(v => devicePath.Contains(v, StringComparison.OrdinalIgnoreCase)))
+        {
+            return "Virtual";
+        }
+
+        return null;
+    }
+
+    private static readonly string[] VirtualDiskVendors =
+        ["VEN_MSFT", "VEN_VMWARE", "VEN_VBOX", "VEN_QEMU", "VEN_PRLS", "VEN_XEN"];
+
+    private static string? ResolveMediaType(int mediaType, string legacyMediaType) => mediaType switch
+    {
+        3 => "HDD",
+        4 => "SSD",
+        5 => "SCM",
+        _ => legacyMediaType.Length > 0 ? legacyMediaType : null
+    };
+
+    private static string NormalizeSerial(string serial)
+        => new string(serial.Where(char.IsLetterOrDigit).ToArray()).ToUpperInvariant();
 
     private static List<NetworkAdapterInfo> ReadAdapters(IReadOnlyList<Dictionary<string, object?>> rows)
     {

@@ -403,5 +403,29 @@
 
   "Flag.NameUnknown": "الميزة {0}",
 
-  "Drv.BackupAll": "نسخ الكل"
+  "Drv.BackupAll": "نسخ الكل",
+
+  "Dashboard.Device": "الجهاز",
+  "Dashboard.DeviceType": "نوع الجهاز",
+  "Dashboard.DeviceDesktop": "مكتبي",
+  "Dashboard.DeviceLaptop": "محمول",
+  "Dashboard.DeviceWorkstation": "محطة عمل",
+  "Dashboard.DeviceOther": "أخرى",
+  "Dashboard.ComputerName": "اسم الكمبيوتر",
+  "Dashboard.Os": "نظام التشغيل",
+  "Dashboard.Bios": "BIOS",
+  "Dashboard.Cores": "الأنوية / الخيوط",
+  "Dashboard.Clock": "التردد",
+  "Dashboard.Socket": "المقبس",
+  "Dashboard.Capacity": "السعة",
+  "Dashboard.ModuleCount": "{0} وحدات",
+  "Dashboard.ModuleCountLabel": "وحدات الذاكرة",
+  "Dashboard.Frequency": "التردد",
+  "Dashboard.Storage": "التخزين",
+  "Dashboard.PhysicalDisks": "الأقراص الفعلية",
+  "Dashboard.Download": "تنزيل",
+  "Dashboard.Upload": "رفع",
+  "Dashboard.CustomBuild": "تجميع مخصص",
+  "Dashboard.Reading": "جارٍ قراءة معلومات الأجهزة…",
+  "Dashboard.LiveUsage": "الاستخدام الفوري"
 }

@@ -403,5 +403,29 @@
 
   "Flag.NameUnknown": "特性 {0}",
 
-  "Drv.BackupAll": "备份全部"
+  "Drv.BackupAll": "备份全部",
+
+  "Dashboard.Device": "整机",
+  "Dashboard.DeviceType": "设备类型",
+  "Dashboard.DeviceDesktop": "台式机",
+  "Dashboard.DeviceLaptop": "笔记本",
+  "Dashboard.DeviceWorkstation": "工作站",
+  "Dashboard.DeviceOther": "其他设备",
+  "Dashboard.ComputerName": "计算机名",
+  "Dashboard.Os": "操作系统",
+  "Dashboard.Bios": "BIOS",
+  "Dashboard.Cores": "核心 / 线程",
+  "Dashboard.Clock": "主频",
+  "Dashboard.Socket": "插槽",
+  "Dashboard.Capacity": "容量",
+  "Dashboard.ModuleCount": "{0} 条",
+  "Dashboard.ModuleCountLabel": "内存条",
+  "Dashboard.Frequency": "频率",
+  "Dashboard.Storage": "存储",
+  "Dashboard.PhysicalDisks": "物理磁盘",
+  "Dashboard.Download": "下行",
+  "Dashboard.Upload": "上行",
+  "Dashboard.CustomBuild": "组装机",
+  "Dashboard.Reading": "正在读取硬件信息…",
+  "Dashboard.LiveUsage": "实时占用"
 }

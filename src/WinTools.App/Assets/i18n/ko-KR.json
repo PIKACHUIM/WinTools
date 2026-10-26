@@ -403,5 +403,29 @@
 
   "Flag.NameUnknown": "기능 {0}",
 
-  "Drv.BackupAll": "전체 백업"
+  "Drv.BackupAll": "전체 백업",
+
+  "Dashboard.Device": "본체",
+  "Dashboard.DeviceType": "장치 유형",
+  "Dashboard.DeviceDesktop": "데스크톱",
+  "Dashboard.DeviceLaptop": "노트북",
+  "Dashboard.DeviceWorkstation": "워크스테이션",
+  "Dashboard.DeviceOther": "기타",
+  "Dashboard.ComputerName": "컴퓨터 이름",
+  "Dashboard.Os": "운영 체제",
+  "Dashboard.Bios": "BIOS",
+  "Dashboard.Cores": "코어 / 스레드",
+  "Dashboard.Clock": "클록",
+  "Dashboard.Socket": "소켓",
+  "Dashboard.Capacity": "용량",
+  "Dashboard.ModuleCount": "{0}개",
+  "Dashboard.ModuleCountLabel": "메모리",
+  "Dashboard.Frequency": "속도",
+  "Dashboard.Storage": "저장소",
+  "Dashboard.PhysicalDisks": "물리 디스크",
+  "Dashboard.Download": "다운로드",
+  "Dashboard.Upload": "업로드",
+  "Dashboard.CustomBuild": "조립 PC",
+  "Dashboard.Reading": "하드웨어 정보를 읽는 중…",
+  "Dashboard.LiveUsage": "실시간 사용률"
 }

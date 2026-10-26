@@ -403,5 +403,29 @@
 
   "Flag.NameUnknown": "特性 {0}",
 
-  "Drv.BackupAll": "備份全部"
+  "Drv.BackupAll": "備份全部",
+
+  "Dashboard.Device": "整機",
+  "Dashboard.DeviceType": "裝置類型",
+  "Dashboard.DeviceDesktop": "桌上型電腦",
+  "Dashboard.DeviceLaptop": "筆記型電腦",
+  "Dashboard.DeviceWorkstation": "工作站",
+  "Dashboard.DeviceOther": "其他裝置",
+  "Dashboard.ComputerName": "電腦名稱",
+  "Dashboard.Os": "作業系統",
+  "Dashboard.Bios": "BIOS",
+  "Dashboard.Cores": "核心 / 執行緒",
+  "Dashboard.Clock": "時脈",
+  "Dashboard.Socket": "插槽",
+  "Dashboard.Capacity": "容量",
+  "Dashboard.ModuleCount": "{0} 條",
+  "Dashboard.ModuleCountLabel": "記憶體",
+  "Dashboard.Frequency": "頻率",
+  "Dashboard.Storage": "儲存",
+  "Dashboard.PhysicalDisks": "實體磁碟",
+  "Dashboard.Download": "下載",
+  "Dashboard.Upload": "上傳",
+  "Dashboard.CustomBuild": "自組電腦",
+  "Dashboard.Reading": "正在讀取硬體資訊…",
+  "Dashboard.LiveUsage": "即時使用率"
 }

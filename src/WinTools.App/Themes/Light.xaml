@@ -29,6 +29,15 @@
     <SolidColorBrush x:Key="App.Warning" Color="#FF9A6700" />
     <SolidColorBrush x:Key="App.Danger" Color="#FFC42B1C" />
 
+    <!-- 概览卡片配色：每类硬件一个色相，明暗两套各自调过对比度 -->
+    <SolidColorBrush x:Key="App.Violet" Color="#FF6B46C1" />
+    <SolidColorBrush x:Key="App.Violet.Soft" Color="#166B46C1" />
+    <SolidColorBrush x:Key="App.Teal" Color="#FF0E7490" />
+    <SolidColorBrush x:Key="App.Teal.Soft" Color="#160E7490" />
+    <SolidColorBrush x:Key="App.Amber" Color="#FF9A6700" />
+    <SolidColorBrush x:Key="App.Amber.Soft" Color="#189A6700" />
+    <SolidColorBrush x:Key="App.Success.Soft" Color="#160F7B4F" />
+
     <SolidColorBrush x:Key="App.Safety1" Color="#FF0F7B4F" />
     <SolidColorBrush x:Key="App.Safety2" Color="#FF9A6700" />
     <SolidColorBrush x:Key="App.Safety3" Color="#FFC2410C" />
