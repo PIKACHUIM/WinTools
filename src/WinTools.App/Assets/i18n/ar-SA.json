@@ -401,5 +401,7 @@
   "Comp.WsaHint": "تثبيت إصدار طرف ثالث",
   "Comp.PickPackage": "اختيار الحزمة",
 
-  "Flag.NameUnknown": "الميزة {0}"
+  "Flag.NameUnknown": "الميزة {0}",
+
+  "Drv.BackupAll": "نسخ الكل"
 }

@@ -401,5 +401,7 @@
   "Comp.WsaHint": "支持安装第三方打包版",
   "Comp.PickPackage": "选择安装包",
 
-  "Flag.NameUnknown": "特性 {0}"
+  "Flag.NameUnknown": "特性 {0}",
+
+  "Drv.BackupAll": "备份全部"
 }

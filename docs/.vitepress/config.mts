@@ -9,7 +9,7 @@ export default defineConfig({
   base,
   lang: 'zh-CN',
   title: 'WinTools',
-  description: 'Windows 系统工具箱：清理、优化、功能、更新、运行、组件、环境、应用、驱动、备份还原',
+  description: 'WinTools 将 Windows 清理、优化、更新、驱动管理与备份等常用维护功能集中在一个桌面程序中。',
 
   // 架构方案文档与规则种子数据不参与站点构建
   // 规则源与历史清单不参与站点构建
@@ -21,7 +21,7 @@ export default defineConfig({
     ['meta', { name: 'theme-color', content: '#3FA9F5' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'WinTools · Windows 系统工具箱' }],
-    ['meta', { property: 'og:description', content: '项项系统维护一站完成，2 MB 框架依赖包，0.7 秒启动。' }]
+    ['meta', { property: 'og:description', content: '清理、优化、更新、驱动管理与备份等常用 Windows 维护功能，按模块集中管理。' }]
   ],
 
   markdown: {

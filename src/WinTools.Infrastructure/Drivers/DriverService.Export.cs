@@ -23,9 +23,21 @@ public sealed partial class DriverService
 
             _logger.Audit("Driver.Export", driver.PublishedName, $"exit={result.ExitCode} → {targetDirectory}");
 
-            return result.Success
-                ? OperationResult.Ok($"{driver.OriginalName} 已导出")
-                : OperationResult.Fail($"{driver.OriginalName} 导出失败（退出码 {result.ExitCode}）");
+            if (result.Success)
+            {
+                return OperationResult.Ok($"{driver.OriginalName} 已导出");
+            }
+
+            // 把 pnputil 的原话带出来：只报退出码无法判断是权限、路径还是驱动本身的问题
+            var detail = result.Combined.Trim();
+            if (detail.Length > 400)
+            {
+                detail = detail[..400] + "…";
+            }
+
+            return OperationResult.Fail(string.IsNullOrWhiteSpace(detail)
+                ? $"{driver.OriginalName} 导出失败（退出码 {result.ExitCode}）"
+                : $"{driver.OriginalName} 导出失败：{detail}");
         }
         catch (Exception ex)
         {

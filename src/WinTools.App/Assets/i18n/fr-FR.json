@@ -401,5 +401,7 @@
   "Comp.WsaHint": "Installer une version tierce",
   "Comp.PickPackage": "Choisir le paquet",
 
-  "Flag.NameUnknown": "Fonctionnalité {0}"
+  "Flag.NameUnknown": "Fonctionnalité {0}",
+
+  "Drv.BackupAll": "Tout sauvegarder"
 }

@@ -401,5 +401,7 @@
   "Comp.WsaHint": "Installa una build di terze parti",
   "Comp.PickPackage": "Scegli pacchetto",
 
-  "Flag.NameUnknown": "Funzionalità {0}"
+  "Flag.NameUnknown": "Funzionalità {0}",
+
+  "Drv.BackupAll": "Backup totale"
 }

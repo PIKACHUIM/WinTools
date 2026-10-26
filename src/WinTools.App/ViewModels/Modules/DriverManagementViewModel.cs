@@ -32,6 +32,7 @@ public sealed partial class DriverCenterSectionViewModel : ListSectionViewModel
         HasSecondary = true;
         SecondaryLabel = Loc.T("Drv.RemoveSelected");
 
+        ExtraActions.Add(new ToolbarAction(Loc.T("Drv.BackupAll"), BackupAllCommand));
         ExtraActions.Add(new ToolbarAction(Loc.T("Drv.InstallFromFolder"), InstallCommand));
 
         _ = ReloadAsync();
@@ -87,21 +88,56 @@ public sealed partial class DriverCenterSectionViewModel : ListSectionViewModel
             return;
         }
 
+        var folder = PickBackupFolder();
+        if (folder is null)
+        {
+            return;
+        }
+
+        await BackupAsync(targets, folder, cancellationToken).ConfigureAwait(true);
+    }
+
+    /// <summary>不勾选也能整库备份：多数人其实是想「先把现有驱动全留一份」。</summary>
+    [RelayCommand]
+    private async Task BackupAllAsync(CancellationToken cancellationToken)
+    {
+        var targets = Rows.Select(r => r.Tag).OfType<DriverPackage>().ToList();
+        if (targets.Count == 0)
+        {
+            UI.Toast.Warning(Loc.T("Common.NothingSelected"));
+            return;
+        }
+
+        var folder = PickBackupFolder();
+        if (folder is null)
+        {
+            return;
+        }
+
+        await BackupAsync(targets, folder, cancellationToken).ConfigureAwait(true);
+    }
+
+    private static string? PickBackupFolder()
+    {
         var dialog = new OpenFolderDialog
         {
             Title = Loc.T("Drv.PickBackupFolder"),
             Multiselect = false
         };
 
-        if (dialog.ShowDialog() != true)
-        {
-            return;
-        }
+        return dialog.ShowDialog() == true ? dialog.FolderName : null;
+    }
 
+    private async Task BackupAsync(
+        IReadOnlyList<DriverPackage> targets,
+        string folder,
+        CancellationToken cancellationToken)
+    {
         await ExecuteAsync(async ct =>
         {
             var ok = 0;
             var failed = 0;
+            var errors = new List<string>();
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
             ShowProgress = true;
@@ -112,7 +148,7 @@ public sealed partial class DriverCenterSectionViewModel : ListSectionViewModel
                 ProgressPercent = (int)(i * 100d / targets.Count);
                 LoadingText = Loc.F("Drv.BackingUp", i + 1, targets.Count, targets[i].OriginalName);
 
-                var result = await _drivers.ExportAsync(targets[i], dialog.FolderName, ct).ConfigureAwait(true);
+                var result = await _drivers.ExportAsync(targets[i], folder, ct).ConfigureAwait(true);
                 if (result.Success)
                 {
                     ok++;
@@ -120,6 +156,10 @@ public sealed partial class DriverCenterSectionViewModel : ListSectionViewModel
                 else
                 {
                     failed++;
+                    if (errors.Count < 3 && !string.IsNullOrWhiteSpace(result.Message))
+                    {
+                        errors.Add(result.Message);
+                    }
                 }
             }
 
@@ -133,8 +173,8 @@ public sealed partial class DriverCenterSectionViewModel : ListSectionViewModel
                     new ResultMetric(Loc.T("Common.Failed"), failed.ToString()),
                     new ResultMetric(Loc.T("Common.Elapsed").Replace("{0}", string.Empty).Trim(), $"{watch.Elapsed.TotalSeconds:0.0}s")
                 ],
-                failed == 0 ? dialog.FolderName : null);
-        }).ConfigureAwait(true);
+                failed == 0 ? folder : string.Join(Environment.NewLine, errors));
+        }, cancellationToken).ConfigureAwait(true);
     }
 
     // ------------------------------------------------------------------

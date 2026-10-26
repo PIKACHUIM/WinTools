@@ -401,5 +401,7 @@
   "Comp.WsaHint": "Instalar una versión de terceros",
   "Comp.PickPackage": "Elegir paquete",
 
-  "Flag.NameUnknown": "Característica {0}"
+  "Flag.NameUnknown": "Característica {0}",
+
+  "Drv.BackupAll": "Copia total"
 }

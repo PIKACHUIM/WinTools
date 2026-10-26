@@ -4,7 +4,7 @@ layout: home
 hero:
   name: WinTools
   text: Windows 系统工具箱
-  tagline: 清理、优化、功能、更新、运行、组件、环境、应用、驱动、备份还原 —— 十项维护一站完成
+  tagline: 把常用的 Windows 维护功能放在一个桌面程序里
   image:
     src: /logo.png
     alt: WinTools
@@ -22,31 +22,31 @@ hero:
 features:
   - icon: 🧹
     title: 垃圾清理
-    details: 15 类 / 1.5 条规则，支持自定义扫描范围，按安全等级挑选要清理的项。
+    details: 按类别扫描文件，可自定义扫描范围，并查看大小与安全等级后再清理。
   - icon: 🛠️
     title: 系统优化
-    details: 51 项声明式优化条目分 1. 个分类，先检测现状再勾选应用，每一项都可回滚。
+    details: 先检查当前设置，再选择要应用的项目；支持按记录回滚。
   - icon: 🧩
     title: 功能与更新
-    details: DISM 枚举全部可选功能；WUA 管理补丁；ViVeTool 式特性开关三态读写。
+    details: 管理 Windows 可选功能、已安装更新、可安装补丁和系统特性开关。
   - icon: ⚙️
     title: 运行与组件
-    details: 启动项、计划任务、服务一屏管理；Defender 与商店组件健康检查。
+    details: 管理启动项、计划任务和服务，并查看 Defender 与系统组件状态。
   - icon: 📦
     title: 环境与应用
-    details: .NET / VC++ 运行库检测与卸载，注册表程序列表与 Appx 应用管理。
+    details: 查看和管理 .NET、VC++ 运行库、已安装程序与 Appx 应用。
   - icon: 💾
     title: 驱动与备份
-    details: DriverStore 枚举、导出、安装、删除；WIMGAPI 捕获 wim / esd / swm 并释放。
+    details: 备份、安装或删除驱动；创建并还原 WIM 系列系统映像。
 ---
 
-## 为什么再做一个系统工具箱
+## 常用维护功能，按模块整理
 
-市面上的同类工具通常走向两个极端：要么功能堆到几百项、界面停留在 Windows 7 时代，要么为了"轻量"砍掉中文与批量能力。WinTools 的取舍是：
+WinTools 面向 Windows 10 和 Windows 11，把清理、优化、更新、启动项、服务、驱动和备份等操作集中在一个桌面程序中。操作前可以查看当前状态；清理项目会标注安全等级，高风险操作也会记录在日志中。
 
-- **中文优先，但不只有中文** —— 1  种语言，简中为默认，界面文案全部来自语言包，不硬编码。
-- **快是设计出来的** —— 手写控件模板、菜单数据驱动、页面懒加载、列表全虚拟化，框架依赖包仅  .1 MB。
-- **危险操作必须可追溯** —— 驱动删除、补丁卸载、版本切换都写审计日志，并尽量交回系统原生向导完成。
+- **界面支持 12 种语言**，默认使用简体中文。
+- 页面首次访问时再加载，长列表按需呈现。
+- 涉及系统更改时调用 Windows 提供的接口；部分高风险操作会交由系统工具处理。
 
 ## 界面
 
@@ -76,13 +76,13 @@ features:
   </figure>
 </div>
 
-## 三分钟上手
+## 开始使用
 
 ```powershell
 # 1. 下载便携版（自带运行时）
 #    https://github.com/PIKACHUIM/WinTools/releases/latest
 
-#  . 直接运行（会自动请求管理员权限）
+# 2. 直接运行（会自动请求管理员权限）
 .\WinTools.exe
 
 # 3. 或从源码构建
@@ -90,7 +90,7 @@ dotnet build src/WinTools.App/WinTools.App.csproj -c Release
 powershell -ExecutionPolicy Bypass -File tools/publish.ps1 -Profile both
 ```
 
-接下来的路径：
+接下来可以：
 
 - 想了解每个模块具体做什么 → [功能一览](/guide/features/)
 - 想参与开发或自行编译 → [开发指引](/guide/development)

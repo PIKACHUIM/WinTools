@@ -401,5 +401,7 @@
   "Comp.WsaHint": "타사 빌드 설치",
   "Comp.PickPackage": "패키지 선택",
 
-  "Flag.NameUnknown": "기능 {0}"
+  "Flag.NameUnknown": "기능 {0}",
+
+  "Drv.BackupAll": "전체 백업"
 }

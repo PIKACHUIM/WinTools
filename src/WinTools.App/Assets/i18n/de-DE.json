@@ -401,5 +401,7 @@
   "Comp.WsaHint": "Drittanbieter-Build installieren",
   "Comp.PickPackage": "Paket wählen",
 
-  "Flag.NameUnknown": "Feature {0}"
+  "Flag.NameUnknown": "Feature {0}",
+
+  "Drv.BackupAll": "Alle sichern"
 }

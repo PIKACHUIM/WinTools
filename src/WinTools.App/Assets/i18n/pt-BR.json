@@ -401,5 +401,7 @@
   "Comp.WsaHint": "Instalar versão de terceiros",
   "Comp.PickPackage": "Escolher pacote",
 
-  "Flag.NameUnknown": "Recurso {0}"
+  "Flag.NameUnknown": "Recurso {0}",
+
+  "Drv.BackupAll": "Backup total"
 }

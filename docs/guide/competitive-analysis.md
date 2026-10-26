@@ -73,7 +73,7 @@ ViVe 的 `FeatureManager` 通过 ntdll 导出函数 `RtlQueryAllFeatureConfigura
 
 ## 四、系统优化缺口
 
-WinTools 现有 51 项、10 个分类。与参考项目的差距如下：
+WinTools 的优化项按类别整理。与参考项目的差距如下：
 
 | 来源 | 参考数量 | 与现有重叠 | 需补充的方向 |
 | --- | --- | --- | --- |

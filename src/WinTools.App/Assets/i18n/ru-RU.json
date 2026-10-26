@@ -401,5 +401,7 @@
   "Comp.WsaHint": "Установить стороннюю сборку",
   "Comp.PickPackage": "Выбрать пакет",
 
-  "Flag.NameUnknown": "Функция {0}"
+  "Flag.NameUnknown": "Функция {0}",
+
+  "Drv.BackupAll": "Копия всех"
 }

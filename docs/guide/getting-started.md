@@ -4,10 +4,11 @@
 
 | | 便携单文件 | 框架依赖版 |
 | --- | --- | --- |
-| 体积 | ~64 MB | ~2 MB（21 个文件） |
+| 文件形式 | 单个 EXE | ZIP 压缩包（约 21 个文件） |
 | 依赖 | 无，自带 .NET 运行时 | 需已安装 .NET 10 Desktop Runtime |
-| 启动 | 略慢（单文件解压 + 反射加载） | 最快 |
-| 适用 | 临时排查、U 盘、PE 环境 | 自己长期使用的机器 |
+| 适用 | 临时排查、U 盘、PE 环境 | 已安装 .NET 10 的机器 |
+
+下载包大小以 [Releases](https://github.com/PIKACHUIM/WinTools/releases/latest) 中的实际附件为准。
 
 两个版本功能完全一致，都从 [Releases](https://github.com/PIKACHUIM/WinTools/releases/latest) 下载。
 
