@@ -115,7 +115,7 @@
       },
       {
         "id": "Store",
-        "title": { "zh-Hans": "应用商店", "zh-Hant": "應用商店", "en-US": "Microsoft Store", "ja-JP": "Microsoft Store", "ko-KR": "Microsoft Store", "de-DE": "Microsoft Store", "fr-FR": "Microsoft Store", "es-ES": "Microsoft Store", "pt-BR": "Microsoft Store", "it-IT": "Microsoft Store", "ru-RU": "Microsoft Store", "ar-SA": "متجر Microsoft" },
+        "title": { "zh-Hans": "系统组件", "zh-Hant": "系統元件", "en-US": "Microsoft Store", "ja-JP": "Microsoft Store", "ko-KR": "Microsoft Store", "de-DE": "Microsoft Store", "fr-FR": "Microsoft Store", "es-ES": "Microsoft Store", "pt-BR": "Microsoft Store", "it-IT": "Microsoft Store", "ru-RU": "Microsoft Store", "ar-SA": "متجر Microsoft" },
         "description": { "zh-Hans": "检测应用商店与相关组件状态，支持重置缓存与重装。", "en-US": "Detect Store health, reset cache and reinstall packages." },
         "items": [
           { "zh-Hans": "商店组件健康检查", "en-US": "Store package health check" },

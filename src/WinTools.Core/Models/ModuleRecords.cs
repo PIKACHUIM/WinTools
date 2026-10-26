@@ -79,6 +79,19 @@ public sealed record SecurityStatus(
     string? EngineVersion,
     IReadOnlyList<string> Exclusions);
 
+/// <summary>系统组件中心里的一个内置应用或可选组件。</summary>
+public sealed record StoreApp(
+    string Id,
+    string DisplayName,
+    string PackageName,
+    string? WingetId,
+    bool IsInstalled,
+    string? Version,
+    string Kind);
+
+/// <summary>WSL 发行版（可安装或已安装）。</summary>
+public sealed record WslDistro(string Name, string FriendlyName, bool IsInstalled, bool IsDefault);
+
 /// <summary>安全中心的一个可开关项。</summary>
 public sealed record SecuritySetting(string Id, bool Enabled, bool Supported);
 

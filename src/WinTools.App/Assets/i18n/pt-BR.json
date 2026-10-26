@@ -287,5 +287,35 @@
   "Sec.FirewallDomain": "Firewall da rede de domínio",
   "Sec.FirewallPrivate": "Firewall da rede privada",
   "Sec.FirewallPublic": "Firewall da rede pública",
-  "Sec.NotSupported": "Não suportado neste sistema"
+  "Sec.NotSupported": "Não suportado neste sistema",
+
+  "Comp.InstallSelected": "Instalar selecionados",
+  "Comp.UninstallSelected": "Desinstalar selecionados",
+  "Comp.RepairSelected": "Reparar selecionados",
+  "Comp.RepairStore": "Reparar Store",
+  "Comp.Installed": "Instalado",
+  "Comp.Missing": "Não instalado",
+  "Comp.WslDistro": "Distribuição Linux",
+  "Comp.ConfirmUninstall": "\"{0}\" será desinstalado. Você pode reinstalá-lo aqui.",
+  "Comp.ConfirmUninstallCount": "{0} aplicativos selecionados serão desinstalados.",
+  "Comp.RepairDone": "Reparo concluído",
+  "Comp.NothingToInstall": "Os aplicativos selecionados já estão instalados",
+
+  "Common.Installing": "Instalando",
+  "Common.Uninstalling": "Desinstalando",
+  "Common.NotInstalled": "Não instalado",
+
+  "App.Terminal": "Terminal",
+  "App.Calculator": "Calculadora",
+  "App.Notepad": "Bloco de notas",
+  "App.Paint": "Paint",
+  "App.Photos": "Fotos",
+  "App.Camera": "Câmera",
+  "App.Clock": "Relógio",
+  "App.MediaPlayer": "Media Player",
+  "App.StickyNotes": "Notas Autoadesivas",
+  "App.Store": "Store",
+
+  "Comp.Repair": "Reparar",
+  "Comp.StoreRow": "Componentes da Store"
 }

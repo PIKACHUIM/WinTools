@@ -287,5 +287,35 @@
   "Sec.FirewallDomain": "도메인 네트워크 방화벽",
   "Sec.FirewallPrivate": "개인 네트워크 방화벽",
   "Sec.FirewallPublic": "공용 네트워크 방화벽",
-  "Sec.NotSupported": "이 시스템에서는 지원되지 않음"
+  "Sec.NotSupported": "이 시스템에서는 지원되지 않음",
+
+  "Comp.InstallSelected": "선택 항목 설치",
+  "Comp.UninstallSelected": "선택 항목 제거",
+  "Comp.RepairSelected": "선택 항목 복구",
+  "Comp.RepairStore": "스토어 복구",
+  "Comp.Installed": "설치됨",
+  "Comp.Missing": "설치 안 됨",
+  "Comp.WslDistro": "Linux 배포판",
+  "Comp.ConfirmUninstall": "\"{0}\"을(를) 제거합니다. 나중에 이 화면에서 다시 설치할 수 있습니다.",
+  "Comp.ConfirmUninstallCount": "선택한 앱 {0}개를 제거합니다.",
+  "Comp.RepairDone": "복구 완료",
+  "Comp.NothingToInstall": "선택한 앱은 이미 설치되어 있습니다",
+
+  "Common.Installing": "설치 중",
+  "Common.Uninstalling": "제거 중",
+  "Common.NotInstalled": "설치 안 됨",
+
+  "App.Terminal": "터미널",
+  "App.Calculator": "계산기",
+  "App.Notepad": "메모장",
+  "App.Paint": "그림판",
+  "App.Photos": "사진",
+  "App.Camera": "카메라",
+  "App.Clock": "시계",
+  "App.MediaPlayer": "미디어 플레이어",
+  "App.StickyNotes": "스티커 메모",
+  "App.Store": "스토어",
+
+  "Comp.Repair": "복구",
+  "Comp.StoreRow": "스토어 패키지"
 }

@@ -5,7 +5,7 @@ using WinTools.Infrastructure.Common;
 namespace WinTools.Infrastructure.Components;
 
 /// <summary>应用商店：健康检查、缓存重置与重新注册。</summary>
-public sealed class StoreService : IStoreService
+public sealed partial class StoreService : IStoreService
 {
     private readonly IAppLogger _logger;
 

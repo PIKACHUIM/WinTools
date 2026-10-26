@@ -287,5 +287,35 @@
   "Sec.FirewallDomain": "جدار حماية شبكة النطاق",
   "Sec.FirewallPrivate": "جدار حماية الشبكة الخاصة",
   "Sec.FirewallPublic": "جدار حماية الشبكة العامة",
-  "Sec.NotSupported": "غير مدعوم في هذا النظام"
+  "Sec.NotSupported": "غير مدعوم في هذا النظام",
+
+  "Comp.InstallSelected": "تثبيت المحدد",
+  "Comp.UninstallSelected": "إلغاء تثبيت المحدد",
+  "Comp.RepairSelected": "إصلاح المحدد",
+  "Comp.RepairStore": "إصلاح المتجر",
+  "Comp.Installed": "مثبّت",
+  "Comp.Missing": "غير مثبّت",
+  "Comp.WslDistro": "توزيعة Linux",
+  "Comp.ConfirmUninstall": "ستتم إزالة \"{0}\". يمكنك إعادة تثبيته لاحقًا من هنا.",
+  "Comp.ConfirmUninstallCount": "ستتم إزالة {0} من التطبيقات المحددة.",
+  "Comp.RepairDone": "اكتمل الإصلاح",
+  "Comp.NothingToInstall": "التطبيقات المحددة مثبّتة بالفعل",
+
+  "Common.Installing": "جارٍ التثبيت",
+  "Common.Uninstalling": "جارٍ إلغاء التثبيت",
+  "Common.NotInstalled": "غير مثبّت",
+
+  "App.Terminal": "الطرفية",
+  "App.Calculator": "الآلة الحاسبة",
+  "App.Notepad": "المفكرة",
+  "App.Paint": "الرسام",
+  "App.Photos": "الصور",
+  "App.Camera": "الكاميرا",
+  "App.Clock": "الساعة",
+  "App.MediaPlayer": "مشغل الوسائط",
+  "App.StickyNotes": "الملاحظات اللاصقة",
+  "App.Store": "المتجر",
+
+  "Comp.Repair": "إصلاح",
+  "Comp.StoreRow": "حزم المتجر"
 }

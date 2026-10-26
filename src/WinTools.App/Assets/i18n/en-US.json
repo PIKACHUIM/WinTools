@@ -348,5 +348,35 @@
   "Sec.FirewallDomain": "Domain network firewall",
   "Sec.FirewallPrivate": "Private network firewall",
   "Sec.FirewallPublic": "Public network firewall",
-  "Sec.NotSupported": "Not supported on this system"
+  "Sec.NotSupported": "Not supported on this system",
+
+  "Comp.InstallSelected": "Install selected",
+  "Comp.UninstallSelected": "Uninstall selected",
+  "Comp.RepairSelected": "Repair selected",
+  "Comp.RepairStore": "Repair Store",
+  "Comp.Installed": "Installed",
+  "Comp.Missing": "Not installed",
+  "Comp.WslDistro": "Linux distribution",
+  "Comp.ConfirmUninstall": "\"{0}\" will be uninstalled. You can reinstall it from this page later.",
+  "Comp.ConfirmUninstallCount": "{0} selected apps will be uninstalled.",
+  "Comp.RepairDone": "Repair finished",
+  "Comp.NothingToInstall": "The selected apps are already installed",
+
+  "Common.Installing": "Installing",
+  "Common.Uninstalling": "Uninstalling",
+  "Common.NotInstalled": "Not installed",
+
+  "App.Terminal": "Terminal",
+  "App.Calculator": "Calculator",
+  "App.Notepad": "Notepad",
+  "App.Paint": "Paint",
+  "App.Photos": "Photos",
+  "App.Camera": "Camera",
+  "App.Clock": "Clock",
+  "App.MediaPlayer": "Media Player",
+  "App.StickyNotes": "Sticky Notes",
+  "App.Store": "Store",
+
+  "Comp.Repair": "Repair",
+  "Comp.StoreRow": "Microsoft Store packages"
 }

@@ -287,5 +287,35 @@
   "Sec.FirewallDomain": "Брандмауэр домена",
   "Sec.FirewallPrivate": "Брандмауэр частной сети",
   "Sec.FirewallPublic": "Брандмауэр общедоступной сети",
-  "Sec.NotSupported": "Не поддерживается в этой системе"
+  "Sec.NotSupported": "Не поддерживается в этой системе",
+
+  "Comp.InstallSelected": "Установить выбранные",
+  "Comp.UninstallSelected": "Удалить выбранные",
+  "Comp.RepairSelected": "Восстановить выбранные",
+  "Comp.RepairStore": "Восстановить Store",
+  "Comp.Installed": "Установлено",
+  "Comp.Missing": "Не установлено",
+  "Comp.WslDistro": "Дистрибутив Linux",
+  "Comp.ConfirmUninstall": "«{0}» будет удалён. Позже его можно установить снова.",
+  "Comp.ConfirmUninstallCount": "Выбранные приложения ({0}) будут удалены.",
+  "Comp.RepairDone": "Восстановление завершено",
+  "Comp.NothingToInstall": "Выбранные приложения уже установлены",
+
+  "Common.Installing": "Установка…",
+  "Common.Uninstalling": "Удаление…",
+  "Common.NotInstalled": "Не установлено",
+
+  "App.Terminal": "Терминал",
+  "App.Calculator": "Калькулятор",
+  "App.Notepad": "Блокнот",
+  "App.Paint": "Paint",
+  "App.Photos": "Фотографии",
+  "App.Camera": "Камера",
+  "App.Clock": "Часы",
+  "App.MediaPlayer": "Проигрыватель",
+  "App.StickyNotes": "Записки",
+  "App.Store": "Магазин",
+
+  "Comp.Repair": "Восстановить",
+  "Comp.StoreRow": "Компоненты Store"
 }

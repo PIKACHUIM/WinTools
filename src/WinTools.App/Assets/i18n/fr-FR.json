@@ -287,5 +287,35 @@
   "Sec.FirewallDomain": "Pare-feu réseau de domaine",
   "Sec.FirewallPrivate": "Pare-feu réseau privé",
   "Sec.FirewallPublic": "Pare-feu réseau public",
-  "Sec.NotSupported": "Non pris en charge sur ce système"
+  "Sec.NotSupported": "Non pris en charge sur ce système",
+
+  "Comp.InstallSelected": "Installer la sélection",
+  "Comp.UninstallSelected": "Désinstaller la sélection",
+  "Comp.RepairSelected": "Réparer la sélection",
+  "Comp.RepairStore": "Réparer le Store",
+  "Comp.Installed": "Installé",
+  "Comp.Missing": "Non installé",
+  "Comp.WslDistro": "Distribution Linux",
+  "Comp.ConfirmUninstall": "« {0} » va être désinstallé. Vous pourrez le réinstaller ici.",
+  "Comp.ConfirmUninstallCount": "{0} applications sélectionnées vont être désinstallées.",
+  "Comp.RepairDone": "Réparation terminée",
+  "Comp.NothingToInstall": "Les applications sélectionnées sont déjà installées",
+
+  "Common.Installing": "Installation…",
+  "Common.Uninstalling": "Désinstallation…",
+  "Common.NotInstalled": "Non installé",
+
+  "App.Terminal": "Terminal",
+  "App.Calculator": "Calculatrice",
+  "App.Notepad": "Bloc-notes",
+  "App.Paint": "Paint",
+  "App.Photos": "Photos",
+  "App.Camera": "Appareil photo",
+  "App.Clock": "Horloge",
+  "App.MediaPlayer": "Lecteur multimédia",
+  "App.StickyNotes": "Pense-bêtes",
+  "App.Store": "Store",
+
+  "Comp.Repair": "Réparer",
+  "Comp.StoreRow": "Composants du Store"
 }

@@ -137,7 +137,7 @@
   "Common.Delete": "削除",
   "Common.Enable": "有効化",
   "Common.Disable": "無効化",
-  "Common.Uninstall": "アンインストール",
+  "Common.Uninstall": "削除",
   "Common.Install": "インストール",
   "Common.Add": "追加",
   "Common.Remove": "削除",
@@ -287,5 +287,35 @@
   "Sec.FirewallDomain": "ドメイン ネットワークのファイアウォール",
   "Sec.FirewallPrivate": "プライベート ネットワークのファイアウォール",
   "Sec.FirewallPublic": "パブリック ネットワークのファイアウォール",
-  "Sec.NotSupported": "このシステムでは未対応"
+  "Sec.NotSupported": "このシステムでは未対応",
+
+  "Comp.InstallSelected": "選択項目をインストール",
+  "Comp.UninstallSelected": "選択項目を削除",
+  "Comp.RepairSelected": "選択項目を修復",
+  "Comp.RepairStore": "ストアを修復",
+  "Comp.Installed": "インストール済み",
+  "Comp.Missing": "未インストール",
+  "Comp.WslDistro": "Linux ディストリビューション",
+  "Comp.ConfirmUninstall": "「{0}」を削除します。後でこの画面から再インストールできます。",
+  "Comp.ConfirmUninstallCount": "選択した {0} 個のアプリを削除します。",
+  "Comp.RepairDone": "修復完了",
+  "Comp.NothingToInstall": "選択したアプリはすでにインストールされています",
+
+  "Common.Installing": "インストール中",
+  "Common.Uninstalling": "削除中",
+  "Common.NotInstalled": "未インストール",
+
+  "App.Terminal": "ターミナル",
+  "App.Calculator": "電卓",
+  "App.Notepad": "メモ帳",
+  "App.Paint": "ペイント",
+  "App.Photos": "フォト",
+  "App.Camera": "カメラ",
+  "App.Clock": "時計",
+  "App.MediaPlayer": "メディア プレーヤー",
+  "App.StickyNotes": "付箋",
+  "App.Store": "ストア",
+
+  "Comp.Repair": "修復",
+  "Comp.StoreRow": "ストア パッケージ"
 }

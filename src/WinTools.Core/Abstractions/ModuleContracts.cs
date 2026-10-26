@@ -75,6 +75,21 @@ public interface IStoreService
     Task<StoreStatus> GetAsync(CancellationToken cancellationToken);
     Task<OperationResult> ResetCacheAsync(CancellationToken cancellationToken);
     Task<OperationResult> ReRegisterAsync(CancellationToken cancellationToken);
+
+    /// <summary>内置应用与可选组件的清单（含安装状态与版本）。</summary>
+    Task<IReadOnlyList<StoreApp>> GetAppsAsync(CancellationToken cancellationToken);
+
+    Task<OperationResult> InstallAppAsync(StoreApp app, CancellationToken cancellationToken);
+
+    Task<OperationResult> UninstallAppAsync(StoreApp app, CancellationToken cancellationToken);
+
+    /// <summary>修复：重新注册包清单。</summary>
+    Task<OperationResult> RepairAppAsync(StoreApp app, CancellationToken cancellationToken);
+
+    /// <summary>WSL 发行版（已装 + 可在线安装）。</summary>
+    Task<IReadOnlyList<WslDistro>> GetWslAsync(CancellationToken cancellationToken);
+
+    Task<OperationResult> InstallWslAsync(WslDistro distro, CancellationToken cancellationToken);
 }
 
 /// <summary>运行环境：.NET / VC++。</summary>

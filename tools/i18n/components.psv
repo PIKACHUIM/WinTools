@@ -1,0 +1,30 @@
+# 系统组件中心：内置应用与 WSL
+key|zh-Hans|zh-Hant|en-US|ja-JP|ko-KR|de-DE|fr-FR|es-ES|pt-BR|it-IT|ru-RU|ar-SA
+Comp.InstallSelected|安装所选|安裝所選|Install selected|選択項目をインストール|선택 항목 설치|Auswahl installieren|Installer la sélection|Instalar seleccionados|Instalar selecionados|Installa selezionati|Установить выбранные|تثبيت المحدد
+Comp.UninstallSelected|卸载所选|解除安裝所選|Uninstall selected|選択項目を削除|선택 항목 제거|Auswahl deinstallieren|Désinstaller la sélection|Desinstalar seleccionados|Desinstalar selecionados|Disinstalla selezionati|Удалить выбранные|إلغاء تثبيت المحدد
+Comp.RepairSelected|修复所选|修復所選|Repair selected|選択項目を修復|선택 항목 복구|Auswahl reparieren|Réparer la sélection|Reparar seleccionados|Reparar selecionados|Ripara selezionati|Восстановить выбранные|إصلاح المحدد
+Comp.RepairStore|修复商店|修復商店|Repair Store|ストアを修復|스토어 복구|Store reparieren|Réparer le Store|Reparar Store|Reparar Store|Ripara Store|Восстановить Store|إصلاح المتجر
+Comp.Installed|已安装|已安裝|Installed|インストール済み|설치됨|Installiert|Installé|Instalado|Instalado|Installato|Установлено|مثبّت
+Comp.Missing|未安装|未安裝|Not installed|未インストール|설치 안 됨|Nicht installiert|Non installé|No instalado|Não instalado|Non installato|Не установлено|غير مثبّت
+Comp.WslDistro|Linux 发行版|Linux 發行版|Linux distribution|Linux ディストリビューション|Linux 배포판|Linux-Distribution|Distribution Linux|Distribución de Linux|Distribuição Linux|Distribuzione Linux|Дистрибутив Linux|توزيعة Linux
+Comp.ConfirmUninstall|将卸载「{0}」，卸载后可以从组件中心重新安装。|將解除安裝「{0}」，解除安裝後可以從元件中心重新安裝。|"{0}" will be uninstalled. You can reinstall it from this page later.|「{0}」を削除します。後でこの画面から再インストールできます。|"{0}"을(를) 제거합니다. 나중에 이 화면에서 다시 설치할 수 있습니다.|„{0}" wird deinstalliert. Eine Neuinstallation ist hier später möglich.|« {0} » va être désinstallé. Vous pourrez le réinstaller ici.|Se desinstalará «{0}». Podrá reinstalarlo aquí.|"{0}" será desinstalado. Você pode reinstalá-lo aqui.|"{0}" verrà disinstallato. Potrai reinstallarlo da qui.|«{0}» будет удалён. Позже его можно установить снова.|ستتم إزالة "{0}". يمكنك إعادة تثبيته لاحقًا من هنا.
+Comp.ConfirmUninstallCount|将卸载所选 {0} 个应用。|將解除安裝所選 {0} 個應用程式。|{0} selected apps will be uninstalled.|選択した {0} 個のアプリを削除します。|선택한 앱 {0}개를 제거합니다.|{0} ausgewählte Apps werden deinstalliert.|{0} applications sélectionnées vont être désinstallées.|Se desinstalarán {0} aplicaciones seleccionadas.|{0} aplicativos selecionados serão desinstalados.|Verranno disinstallate {0} app selezionate.|Выбранные приложения ({0}) будут удалены.|ستتم إزالة {0} من التطبيقات المحددة.
+Comp.RepairDone|修复完成|修復完成|Repair finished|修復完了|복구 완료|Reparatur abgeschlossen|Réparation terminée|Reparación completada|Reparo concluído|Riparazione completata|Восстановление завершено|اكتمل الإصلاح
+Comp.NothingToInstall|选中的应用都已安装|選取的應用程式都已安裝|The selected apps are already installed|選択したアプリはすでにインストールされています|선택한 앱은 이미 설치되어 있습니다|Die ausgewählten Apps sind bereits installiert|Les applications sélectionnées sont déjà installées|Las aplicaciones seleccionadas ya están instaladas|Os aplicativos selecionados já estão instalados|Le app selezionate sono già installate|Выбранные приложения уже установлены|التطبيقات المحددة مثبّتة بالفعل
+Common.Install|安装|安裝|Install|インストール|설치|Installieren|Installer|Instalar|Instalar|Installa|Установить|تثبيت
+Common.Uninstall|卸载|解除安裝|Uninstall|削除|제거|Deinstallieren|Désinstaller|Desinstalar|Desinstalar|Disinstalla|Удалить|إلغاء التثبيت
+Common.Installing|正在安装|正在安裝|Installing|インストール中|설치 중|Wird installiert|Installation…|Instalando|Instalando|Installazione…|Установка…|جارٍ التثبيت
+Common.Uninstalling|正在卸载|正在解除安裝|Uninstalling|削除中|제거 중|Wird deinstalliert|Désinstallation…|Desinstalando|Desinstalando|Disinstallazione…|Удаление…|جارٍ إلغاء التثبيت
+Common.NotInstalled|未安装|未安裝|Not installed|未インストール|설치 안 됨|Nicht installiert|Non installé|No instalado|Não instalado|Non installato|Не установлено|غير مثبّت
+App.Terminal|终端|終端機|Terminal|ターミナル|터미널|Terminal|Terminal|Terminal|Terminal|Terminale|Терминал|الطرفية
+App.Calculator|计算器|小算盤|Calculator|電卓|계산기|Rechner|Calculatrice|Calculadora|Calculadora|Calcolatrice|Калькулятор|الآلة الحاسبة
+App.Notepad|记事本|記事本|Notepad|メモ帳|메모장|Editor|Bloc-notes|Bloc de notas|Bloco de notas|Blocco note|Блокнот|المفكرة
+App.Paint|画图|小畫家|Paint|ペイント|그림판|Paint|Paint|Paint|Paint|Paint|Paint|الرسام
+App.Photos|照片|相片|Photos|フォト|사진|Fotos|Photos|Fotos|Fotos|Foto|Фотографии|الصور
+App.Camera|相机|相機|Camera|カメラ|카메라|Kamera|Appareil photo|Cámara|Câmera|Fotocamera|Камера|الكاميرا
+App.Clock|时钟|時鐘|Clock|時計|시계|Uhr|Horloge|Reloj|Relógio|Orologio|Часы|الساعة
+App.MediaPlayer|媒体播放器|媒體播放器|Media Player|メディア プレーヤー|미디어 플레이어|Media Player|Lecteur multimédia|Reproductor multimedia|Media Player|Media Player|Проигрыватель|مشغل الوسائط
+App.StickyNotes|便笺|便箋|Sticky Notes|付箋|스티커 메모|Notizen|Pense-bêtes|Notas rápidas|Notas Autoadesivas|Note appiccicose|Записки|الملاحظات اللاصقة
+App.Store|应用商店|Microsoft Store|Store|ストア|스토어|Store|Store|Store|Store|Store|Магазин|المتجر
+Comp.Repair|修复|修復|Repair|修復|복구|Reparieren|Réparer|Reparar|Reparar|Ripara|Восстановить|إصلاح
+Comp.StoreRow|应用商店组件|Microsoft Store 元件|Microsoft Store packages|ストア パッケージ|스토어 패키지|Store-Pakete|Composants du Store|Componentes de Store|Componentes da Store|Componenti Store|Компоненты Store|حزم المتجر

@@ -1,6 +1,8 @@
 using CommunityToolkit.Mvvm.Input;
 using WinTools.App.Localization;
+using WinTools.App.Services;
 using WinTools.Core.Abstractions;
+using WinTools.Core.Models;
 
 namespace WinTools.App.ViewModels.Modules;
 
@@ -92,60 +94,289 @@ public sealed partial class SecurityCenterSectionViewModel : ListSectionViewMode
     }
 }
 
-/// <summary>应用商店：健康检查、重置缓存、重新注册。</summary>
+/// <summary>系统组件：内置应用（终端/计算器/记事本…）、WSL 发行版与商店修复。</summary>
 public sealed partial class StoreSectionViewModel : ListSectionViewModel
 {
     private readonly IStoreService _store;
 
+
+
     public StoreSectionViewModel(IStoreService store)
     {
         _store = store;
+        ShowCheckboxes = true;
         HasPrimary = true;
-        PrimaryLabel = Loc.T("Store.ResetCache");
+        PrimaryLabel = Loc.T("Comp.InstallSelected");
         HasSecondary = true;
-        SecondaryLabel = Loc.T("Store.ReRegister");
-        _ = ReloadAsync();
+        SecondaryLabel = Loc.T("Comp.UninstallSelected");
+
+        ExtraActions.Add(new ToolbarAction(Loc.T("Comp.RepairSelected"), RepairSelectedCommand));
+        ExtraActions.Add(new ToolbarAction(Loc.T("Comp.RepairStore"), RepairStoreCommand));
     }
+
+    public override bool CanPrimary => !IsBusy && IsReady && CheckedRows.Count > 0;
 
     protected override async Task LoadAsync(CancellationToken cancellationToken)
     {
-        var status = await _store.GetAsync(cancellationToken).ConfigureAwait(true);
+        var apps = await _store.GetAppsAsync(cancellationToken).ConfigureAwait(true);
 
         Rows.Clear();
-        Rows.Add(new RowItem(
-            "installed",
-            Loc.T("Sec.Installed"),
-            status.Installed ? Loc.T("Common.Done") : Loc.T("Common.Failed"),
-            null,
-            status.Installed ? Loc.T("Common.Done") : Loc.T("Common.Failed"),
-            status.Installed ? RowTone.Success : RowTone.Danger));
 
-        Rows.Add(new RowItem("version", Loc.T("Settings.Version"), status.Version ?? Loc.T("Common.None")));
-        Rows.Add(StateRow("services", Loc.T("Store.Services"), status.ServiceRunning));
-        Rows.Add(new RowItem("location", Loc.T("Store.Location"), status.InstallLocation ?? Loc.T("Common.None")));
+        foreach (var app in apps)
+        {
+            var name = Loc.T("App." + app.Id);
+            var row = new RowItem(
+                app.Id,
+                string.IsNullOrWhiteSpace(name) || name.StartsWith("App.", StringComparison.Ordinal) ? app.PackageName : name,
+                app.IsInstalled ? app.Version ?? Loc.T("Common.Enabled") : Loc.T("Common.NotInstalled"),
+                null,
+                app.IsInstalled ? Loc.T("Comp.Installed") : Loc.T("Comp.Missing"),
+                app.IsInstalled ? RowTone.Success : RowTone.Neutral)
+            {
+                Tag = app,
+                ShowIcon = true,
+                SearchBlob = $"{app.Id} {app.PackageName} {app.WingetId}"
+            };
 
-        Status = status.Installed ? Loc.T("Store.Hint") : Loc.T("Common.NoData");
+            row.ShowCheckbox = true;
+            row.ShowAction = true;
+            row.ActionLabel = app.IsInstalled ? Loc.T("Common.Uninstall") : Loc.T("Common.Install");
+            row.ActionCommand = new AsyncRelayCommand(() => ToggleInstallAsync(row, app, !app.IsInstalled));
+
+            Rows.Add(row);
+        }
+        // 商店自身修复：等效「应用商店疑难解答」
+        var storeRow = new RowItem("store-repair", Loc.T("Comp.RepairStore"), Loc.T("Comp.StoreRow"),
+            null, null, RowTone.Neutral)
+        {
+            ShowIcon = false
+        };
+        storeRow.ShowAction = true;
+        storeRow.ActionLabel = Loc.T("Comp.Repair");
+        storeRow.ActionCommand = RepairStoreCommand;
+        Rows.Add(storeRow);
+        // WSL 需要联网拉清单，放到后台，先把应用列表显示出来
+        _ = LoadWslAsync(cancellationToken);
     }
 
-    private static RowItem StateRow(string key, string title, bool ok) => new(
-        key,
-        title,
-        ok ? Loc.T("Common.Enabled") : Loc.T("Common.Disabled"),
-        null,
-        ok ? Loc.T("Common.Enabled") : Loc.T("Common.Disabled"),
-        ok ? RowTone.Success : RowTone.Warning);
+    private async Task LoadWslAsync(CancellationToken cancellationToken)
+    {
+        IReadOnlyList<WslDistro> wsl;
+        try
+        {
+            wsl = await _store.GetWslAsync(cancellationToken).ConfigureAwait(true);
+        }
+        catch
+        {
+            return;
+        }
+
+        foreach (var distro in wsl)
+        {
+            var row = new RowItem(
+                "wsl:" + distro.Name,
+                distro.Name,
+                Loc.T("Comp.WslDistro"),
+                null,
+                distro.IsInstalled ? Loc.T("Comp.Installed") : Loc.T("Comp.Missing"),
+                distro.IsInstalled ? RowTone.Success : RowTone.Neutral)
+            {
+                Tag = distro,
+                ShowIcon = true,
+                SearchBlob = distro.Name + " wsl"
+            };
+
+            row.ShowCheckbox = distro.IsInstalled;
+            row.ShowAction = !distro.IsInstalled;
+            row.ActionLabel = Loc.T("Common.Install");
+            row.ActionCommand = new AsyncRelayCommand(() => InstallWslAsync(row, distro));
+
+            Rows.Add(row);
+        }
+    }
+
+    private async Task ToggleInstallAsync(RowItem row, StoreApp app, bool install)
+    {
+        if (!install)
+        {
+            var confirmed = await UI.Confirm.AskAsync(new ConfirmRequest(
+                Loc.T("Common.Uninstall"),
+                Loc.F("Comp.ConfirmUninstall", Loc.T("App." + app.Id)),
+                [app.PackageName],
+                Loc.T("Common.Uninstall"),
+                Danger: true)).ConfigureAwait(true);
+
+            if (!confirmed)
+            {
+                return;
+            }
+        }
+
+        row.IsActionEnabled = false;
+        await ExecuteAsync(async ct =>
+        {
+            var result = install
+                ? await _store.InstallAppAsync(app, ct).ConfigureAwait(true)
+                : await _store.UninstallAppAsync(app, ct).ConfigureAwait(true);
+
+            Report(result);
+
+            if (result.Success)
+            {
+                await RefreshQuietlyAsync(ct).ConfigureAwait(true);
+            }
+        }).ConfigureAwait(true);
+        row.IsActionEnabled = true;
+    }
+
+    private async Task InstallWslAsync(RowItem row, WslDistro distro)
+    {
+        row.IsActionEnabled = false;
+        await ExecuteAsync(async ct =>
+        {
+            var result = await _store.InstallWslAsync(distro, ct).ConfigureAwait(true);
+            Report(result);
+
+            if (result.Success)
+            {
+                await RefreshQuietlyAsync(ct).ConfigureAwait(true);
+            }
+        }).ConfigureAwait(true);
+        row.IsActionEnabled = true;
+    }
+
+    /// <summary>修复所选：已安装的包重新注册清单。</summary>
+    [RelayCommand]
+    private async Task RepairSelectedAsync()
+    {
+        var targets = CheckedRows.Select(r => r.Tag).OfType<StoreApp>().Where(a => a.IsInstalled).ToList();
+        if (targets.Count == 0)
+        {
+            UI.Toast.Warning(Loc.T("Common.NothingSelected"));
+            return;
+        }
+
+        await ExecuteAsync(async ct =>
+        {
+            var ok = 0;
+            var failed = 0;
+            ShowProgress = true;
+
+            for (var i = 0; i < targets.Count; i++)
+            {
+                ProgressPercent = (int)(i * 100d / targets.Count);
+                var result = await _store.RepairAppAsync(targets[i], ct).ConfigureAwait(true);
+
+                if (result.Success)
+                {
+                    ok++;
+                }
+                else
+                {
+                    failed++;
+                }
+            }
+
+            await RefreshQuietlyAsync(ct).ConfigureAwait(true);
+            Result = new ResultSummary(
+                Loc.T("Comp.RepairDone"),
+                failed == 0 ? ResultKind.Success : ok > 0 ? ResultKind.Warning : ResultKind.Error,
+                [
+                    new ResultMetric(Loc.T("Common.Succeeded"), ok.ToString()),
+                    new ResultMetric(Loc.T("Common.Failed"), failed.ToString())
+                ]);
+        }).ConfigureAwait(true);
+    }
+
+    /// <summary>商店修复：重新注册 Store 包（等效于系统「应用商店疑难解答」）。</summary>
+    [RelayCommand]
+    private async Task RepairStoreAsync()
+    {
+        await ExecuteAsync(async ct =>
+        {
+            var result = await _store.ReRegisterAsync(ct).ConfigureAwait(true);
+            Report(result);
+            await RefreshQuietlyAsync(ct).ConfigureAwait(true);
+        }).ConfigureAwait(true);
+    }
 
     protected override async Task PrimaryCoreAsync(CancellationToken cancellationToken)
     {
-        var result = await _store.ResetCacheAsync(cancellationToken).ConfigureAwait(true);
-        Report(result);
-        await LoadAsync(cancellationToken).ConfigureAwait(true);
+        var targets = CheckedRows.Select(r => r.Tag).OfType<StoreApp>().Where(a => !a.IsInstalled).ToList();
+        if (targets.Count == 0)
+        {
+            UI.Toast.Warning(Loc.T("Comp.NothingToInstall"));
+            return;
+        }
+
+        await RunBatchAsync(targets, install: true, cancellationToken).ConfigureAwait(true);
     }
 
     protected override async Task SecondaryCoreAsync(CancellationToken cancellationToken)
     {
-        var result = await _store.ReRegisterAsync(cancellationToken).ConfigureAwait(true);
-        Report(result);
-        await LoadAsync(cancellationToken).ConfigureAwait(true);
+        var targets = CheckedRows.Select(r => r.Tag).OfType<StoreApp>().Where(a => a.IsInstalled).ToList();
+        if (targets.Count == 0)
+        {
+            UI.Toast.Warning(Loc.T("Common.NothingSelected"));
+            return;
+        }
+
+        var confirmed = await UI.Confirm.AskAsync(new ConfirmRequest(
+            Loc.T("Common.Uninstall"),
+            Loc.F("Comp.ConfirmUninstallCount", targets.Count),
+            targets.Select(t => Loc.T("App." + t.Id)).ToList(),
+            Loc.T("Common.Uninstall"),
+            Danger: true)).ConfigureAwait(true);
+
+        if (!confirmed)
+        {
+            return;
+        }
+
+        await RunBatchAsync(targets, install: false, cancellationToken).ConfigureAwait(true);
+    }
+
+    private async Task RunBatchAsync(List<StoreApp> targets, bool install, CancellationToken cancellationToken)
+    {
+        var ok = 0;
+        var failed = 0;
+        var restart = false;
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+
+        ShowProgress = true;
+
+        for (var i = 0; i < targets.Count; i++)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            ProgressPercent = (int)(i * 100d / targets.Count);
+            LoadingText = (install ? Loc.T("Common.Installing") : Loc.T("Common.Uninstalling")) + " · " + Loc.T("App." + targets[i].Id);
+
+            var result = install
+                ? await _store.InstallAppAsync(targets[i], cancellationToken).ConfigureAwait(true)
+                : await _store.UninstallAppAsync(targets[i], cancellationToken).ConfigureAwait(true);
+
+            if (result.Success)
+            {
+                ok++;
+                restart |= result.RestartRequired;
+            }
+            else
+            {
+                failed++;
+            }
+        }
+
+        watch.Stop();
+        await RefreshQuietlyAsync(cancellationToken).ConfigureAwait(true);
+
+        Result = new ResultSummary(
+            failed == 0 ? Loc.T("Common.Completed") : Loc.T("Common.ResultSummary"),
+            failed == 0 ? ResultKind.Success : ok > 0 ? ResultKind.Warning : ResultKind.Error,
+            [
+                new ResultMetric(Loc.T("Common.Succeeded"), ok.ToString()),
+                new ResultMetric(Loc.T("Common.Failed"), failed.ToString()),
+                new ResultMetric(Loc.T("Common.Elapsed").Replace("{0}", string.Empty).Trim(), $"{watch.Elapsed.TotalSeconds:0.0}s")
+            ],
+            restart ? Loc.T("Common.RestartNeeded") : null);
     }
 }

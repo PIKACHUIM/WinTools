@@ -348,5 +348,35 @@
   "Sec.FirewallDomain": "域网络防火墙",
   "Sec.FirewallPrivate": "专用网络防火墙",
   "Sec.FirewallPublic": "公用网络防火墙",
-  "Sec.NotSupported": "当前系统不支持该项"
+  "Sec.NotSupported": "当前系统不支持该项",
+
+  "Comp.InstallSelected": "安装所选",
+  "Comp.UninstallSelected": "卸载所选",
+  "Comp.RepairSelected": "修复所选",
+  "Comp.RepairStore": "修复商店",
+  "Comp.Installed": "已安装",
+  "Comp.Missing": "未安装",
+  "Comp.WslDistro": "Linux 发行版",
+  "Comp.ConfirmUninstall": "将卸载「{0}」，卸载后可以从组件中心重新安装。",
+  "Comp.ConfirmUninstallCount": "将卸载所选 {0} 个应用。",
+  "Comp.RepairDone": "修复完成",
+  "Comp.NothingToInstall": "选中的应用都已安装",
+
+  "Common.Installing": "正在安装",
+  "Common.Uninstalling": "正在卸载",
+  "Common.NotInstalled": "未安装",
+
+  "App.Terminal": "终端",
+  "App.Calculator": "计算器",
+  "App.Notepad": "记事本",
+  "App.Paint": "画图",
+  "App.Photos": "照片",
+  "App.Camera": "相机",
+  "App.Clock": "时钟",
+  "App.MediaPlayer": "媒体播放器",
+  "App.StickyNotes": "便笺",
+  "App.Store": "应用商店",
+
+  "Comp.Repair": "修复",
+  "Comp.StoreRow": "应用商店组件"
 }

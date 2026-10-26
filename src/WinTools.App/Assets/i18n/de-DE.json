@@ -287,5 +287,35 @@
   "Sec.FirewallDomain": "Firewall für Domänennetzwerk",
   "Sec.FirewallPrivate": "Firewall für privates Netzwerk",
   "Sec.FirewallPublic": "Firewall für öffentliches Netzwerk",
-  "Sec.NotSupported": "Auf diesem System nicht unterstützt"
+  "Sec.NotSupported": "Auf diesem System nicht unterstützt",
+
+  "Comp.InstallSelected": "Auswahl installieren",
+  "Comp.UninstallSelected": "Auswahl deinstallieren",
+  "Comp.RepairSelected": "Auswahl reparieren",
+  "Comp.RepairStore": "Store reparieren",
+  "Comp.Installed": "Installiert",
+  "Comp.Missing": "Nicht installiert",
+  "Comp.WslDistro": "Linux-Distribution",
+  "Comp.ConfirmUninstall": "„{0}\" wird deinstalliert. Eine Neuinstallation ist hier später möglich.",
+  "Comp.ConfirmUninstallCount": "{0} ausgewählte Apps werden deinstalliert.",
+  "Comp.RepairDone": "Reparatur abgeschlossen",
+  "Comp.NothingToInstall": "Die ausgewählten Apps sind bereits installiert",
+
+  "Common.Installing": "Wird installiert",
+  "Common.Uninstalling": "Wird deinstalliert",
+  "Common.NotInstalled": "Nicht installiert",
+
+  "App.Terminal": "Terminal",
+  "App.Calculator": "Rechner",
+  "App.Notepad": "Editor",
+  "App.Paint": "Paint",
+  "App.Photos": "Fotos",
+  "App.Camera": "Kamera",
+  "App.Clock": "Uhr",
+  "App.MediaPlayer": "Media Player",
+  "App.StickyNotes": "Notizen",
+  "App.Store": "Store",
+
+  "Comp.Repair": "Reparieren",
+  "Comp.StoreRow": "Store-Pakete"
 }

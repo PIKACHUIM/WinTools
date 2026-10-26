@@ -347,5 +347,35 @@
   "Sec.FirewallDomain": "網域網路防火牆",
   "Sec.FirewallPrivate": "私人網路防火牆",
   "Sec.FirewallPublic": "公用網路防火牆",
-  "Sec.NotSupported": "目前系統不支援此項目"
+  "Sec.NotSupported": "目前系統不支援此項目",
+
+  "Comp.InstallSelected": "安裝所選",
+  "Comp.UninstallSelected": "解除安裝所選",
+  "Comp.RepairSelected": "修復所選",
+  "Comp.RepairStore": "修復商店",
+  "Comp.Installed": "已安裝",
+  "Comp.Missing": "未安裝",
+  "Comp.WslDistro": "Linux 發行版",
+  "Comp.ConfirmUninstall": "將解除安裝「{0}」，解除安裝後可以從元件中心重新安裝。",
+  "Comp.ConfirmUninstallCount": "將解除安裝所選 {0} 個應用程式。",
+  "Comp.RepairDone": "修復完成",
+  "Comp.NothingToInstall": "選取的應用程式都已安裝",
+
+  "Common.Installing": "正在安裝",
+  "Common.Uninstalling": "正在解除安裝",
+  "Common.NotInstalled": "未安裝",
+
+  "App.Terminal": "終端機",
+  "App.Calculator": "小算盤",
+  "App.Notepad": "記事本",
+  "App.Paint": "小畫家",
+  "App.Photos": "相片",
+  "App.Camera": "相機",
+  "App.Clock": "時鐘",
+  "App.MediaPlayer": "媒體播放器",
+  "App.StickyNotes": "便箋",
+  "App.Store": "Microsoft Store",
+
+  "Comp.Repair": "修復",
+  "Comp.StoreRow": "Microsoft Store 元件"
 }
