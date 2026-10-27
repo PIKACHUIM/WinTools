@@ -456,5 +456,5 @@
   "Wim.WimBoot": "Usa WIMBoot",
   "Wim.WimBootHint": "WIMBoot funziona solo con immagini .wim e richiede il supporto sia di Windows sia dell'immagine (non supportato da Windows 10 1903; DISM segnalerà l'errore).",
   "Wim.WindowsToGo": "Distribuisci come Windows To Go",
-  "Wim.WindowsToGoHint": "La destinazione deve essere la radice di un disco USB (es. E:\\). Vengono scritti i file di avvio BIOS/UEFI; i computer UEFI richiedono una partizione di avvio FAT32 esistente, altrimenti avvia in modalità BIOS/legacy."
+  "Wim.WindowsToGoHint": "La destinazione deve essere la radice di un disco USB (es. E:\\); lo strumento non ripartiziona. Vengono scritti i file di avvio BIOS/UEFI; i computer UEFI richiedono una partizione di avvio FAT32 esistente, altrimenti avvia in modalità BIOS/legacy."
 }

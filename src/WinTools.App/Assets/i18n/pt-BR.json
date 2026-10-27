@@ -456,5 +456,5 @@
   "Wim.WimBoot": "Usar WIMBoot",
   "Wim.WimBootHint": "O WIMBoot só funciona com imagens .wim, e tanto o Windows quanto a imagem precisam suportar (sem suporte desde o Windows 10 1903; o DISM mostrará o erro).",
   "Wim.WindowsToGo": "Implantar como Windows To Go",
-  "Wim.WindowsToGoHint": "O destino deve ser a raiz de um disco USB (ex.: E:\\). Os arquivos de inicialização BIOS/UEFI são gravados; máquinas UEFI precisam de uma partição de inicialização FAT32 existente, caso contrário inicie em BIOS/legacy."
+  "Wim.WindowsToGoHint": "O destino deve ser a raiz de um disco USB (ex.: E:\\); a ferramenta não reparticiona. Os arquivos de inicialização BIOS/UEFI são gravados; máquinas UEFI precisam de uma partição de inicialização FAT32 existente, caso contrário inicie em BIOS/legacy."
 }

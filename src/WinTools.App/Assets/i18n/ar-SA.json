@@ -456,5 +456,5 @@
   "Wim.WimBoot": "استخدام WIMBoot",
   "Wim.WimBootHint": "يعمل WIMBoot مع صور .wim فقط، ويجب دعمه في Windows والصورة معًا (غير مدعوم افتراضيًا منذ Windows 10 1903، وسيعرض DISM الخطأ).",
   "Wim.WindowsToGo": "النشر كـ Windows To Go",
-  "Wim.WindowsToGoHint": "يجب أن يكون الهدف جذر قرص USB (مثل E:\\). ستُكتب ملفات إقلاع BIOS/UEFI؛ وتحتاج أجهزة UEFI إلى قسم إقلاع FAT32 موجود مسبقًا، وإلا فابدأ بوضع BIOS/legacy."
+  "Wim.WindowsToGoHint": "يجب أن يكون الهدف جذر قرص USB (مثل E:\\)، والأداة لا تعيد تقسيم القرص. ستُكتب ملفات إقلاع BIOS/UEFI؛ وتحتاج أجهزة UEFI إلى قسم إقلاع FAT32 موجود مسبقًا، وإلا فابدأ بوضع BIOS/legacy."
 }

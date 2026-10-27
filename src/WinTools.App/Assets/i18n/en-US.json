@@ -456,5 +456,5 @@
   "Wim.WimBoot": "Use WIMBoot",
   "Wim.WimBootHint": "WIMBoot works with .wim images only, and both Windows and the image must support it (unsupported by default since Windows 10 1903; DISM will report the error).",
   "Wim.WindowsToGo": "Deploy as Windows To Go",
-  "Wim.WindowsToGoHint": "The target must be a USB disk root (for example E:\\). BIOS/UEFI boot files are written; UEFI machines need an existing FAT32 boot partition on the target, otherwise boot in BIOS/legacy mode."
+  "Wim.WindowsToGoHint": "The target must be a USB disk root (for example E:\\); the tool does not repartition it. BIOS/UEFI boot files are written; UEFI machines need an existing FAT32 boot partition, otherwise boot in BIOS/legacy mode."
 }

@@ -456,5 +456,5 @@
   "Wim.WimBoot": "WIMBoot 사용",
   "Wim.WimBootHint": "WIMBoot는 .wim 이미지 전용이며 Windows와 이미지 모두 지원해야 합니다(Windows 10 1903 이후 기본 미지원, DISM이 오류를 반환).",
   "Wim.WindowsToGo": "Windows To Go로 배포",
-  "Wim.WindowsToGoHint": "대상은 USB 디스크 루트(예: E:\\)여야 합니다. BIOS/UEFI 부팅 파일을 기록하며, UEFI 컴퓨터는 대상에 FAT32 부팅 파티션이 필요합니다. 없으면 BIOS/레거시로 부팅하세요."
+  "Wim.WindowsToGoHint": "대상은 USB 디스크 루트(예: E:\\)여야 하며, 도구는 다시 파티션하지 않습니다. BIOS/UEFI 부팅 파일을 기록하며, UEFI 컴퓨터는 대상에 FAT32 부팅 파티션이 필요합니다. 없으면 BIOS/레거시로 부팅하세요."
 }

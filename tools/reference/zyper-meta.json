@@ -1,0 +1,14 @@
+{
+  "categories": {
+    "explorer": "Explorer",
+    "xingneng": "Performance",
+    "edge": "Privacy",
+    "system": "System",
+    "update": "Update",
+    "yinsi": "Privacy"
+  },
+  "excludeCategories": [ "safe" ],
+  "excludeNames": [ "幽灵", "熔断", "Exploit", "TSX", "不安全的下载警告" ],
+  "highRisk": [ "系统还原", "分页", "HPET", "大版本更新", "从不检查", "内存完整", "虚拟化", "防火墙", "UAC", "管理员审批", "SmartScreen", "遥测服务" ],
+  "mediumRisk": [ "禁用", "关闭", "禁止", "电源", "缓存", "远程", "休眠", "更新", "UAC" ]
+}

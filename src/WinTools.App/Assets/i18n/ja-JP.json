@@ -456,5 +456,5 @@
   "Wim.WimBoot": "WIMBoot を使う",
   "Wim.WimBootHint": "WIMBoot は .wim イメージ専用です。Windows とイメージの両方が対応している必要があります（Windows 10 1903 以降は既定で非対応、DISM がエラーを返します）。",
   "Wim.WindowsToGo": "Windows To Go として展開",
-  "Wim.WindowsToGoHint": "対象は USB ディスクのルート（例: E:\\）である必要があります。BIOS/UEFI の起動ファイルを書き込みます。UEFI 機では FAT32 の起動パーティションが必要です。ない場合は BIOS/レガシーで起動してください。"
+  "Wim.WindowsToGoHint": "対象は USB ディスクのルート（例: E:\\）である必要があります。ツールは再パーティションしません。BIOS/UEFI の起動ファイルを書き込みます。UEFI 機では FAT32 の起動パーティションが必要です。ない場合は BIOS/レガシーで起動してください。"
 }

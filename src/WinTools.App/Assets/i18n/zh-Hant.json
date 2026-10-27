@@ -456,5 +456,5 @@
   "Wim.WimBoot": "啟用 WIMBoot",
   "Wim.WimBootHint": "WIMBoot 僅支援 .wim 映像；需要系統與映像都支援 WIMBoot（Windows 10 1903 之後預設不再支援，DISM 會傳回對應錯誤）。",
   "Wim.WindowsToGo": "部署為 Windows To Go",
-  "Wim.WindowsToGoHint": "目標必須是 USB 磁碟的磁碟機代號根目錄（如 E:\\）。會寫入 BIOS/UEFI 引導檔案；UEFI 機器需要目標磁碟已有 FAT32 引導分割區，否則請用 BIOS/legacy 啟動。"
+  "Wim.WindowsToGoHint": "目標必須是 USB 磁碟的磁碟機代號根目錄（如 E:\\），工具不會重新分割。會寫入 BIOS/UEFI 引導檔案；UEFI 機器需要目標磁碟已有 FAT32 引導分割區，否則請用 BIOS/legacy 啟動。"
 }

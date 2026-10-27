@@ -456,5 +456,5 @@
   "Wim.WimBoot": "WIMBoot verwenden",
   "Wim.WimBootHint": "WIMBoot funktioniert nur mit .wim-Images; Windows und Image müssen es unterstützen (seit Windows 10 1903 standardmäßig nicht mehr, DISM meldet den Fehler).",
   "Wim.WindowsToGo": "Als Windows To Go bereitstellen",
-  "Wim.WindowsToGoHint": "Das Ziel muss ein USB-Datenträger-Stammverzeichnis sein (z. B. E:\\). BIOS-/UEFI-Startdateien werden geschrieben; UEFI-Rechner benötigen eine vorhandene FAT32-Startpartition, sonst im BIOS-/Legacy-Modus starten."
+  "Wim.WindowsToGoHint": "Das Ziel muss ein USB-Datenträger-Stammverzeichnis sein (z. B. E:\\); das Tool partitioniert nicht neu. BIOS-/UEFI-Startdateien werden geschrieben; UEFI-Rechner benötigen eine vorhandene FAT32-Startpartition, sonst im BIOS-/Legacy-Modus starten."
 }

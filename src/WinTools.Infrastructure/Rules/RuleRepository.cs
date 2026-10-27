@@ -25,7 +25,13 @@ public sealed class RuleRepository : IModuleCatalog
         var extraTweaks = Load<List<TweakDefinition>>("tweaks-extra.json") ?? [];
         // 由 tools/Sync-ReferenceTweaks.ps1 从预置的 winutil 快照生成
         var referenceTweaks = Load<List<TweakDefinition>>("tweaks-reference.json") ?? [];
-        Tweaks = baseTweaks.Concat(extraTweaks).Concat(referenceTweaks).Where(t => t.Enabled).ToList();
+        // 由 tools/Sync-ZyperTweaks.ps1 / Sync-OptimizerTweaks.ps1 从上游配置提取
+        var zyperTweaks = Load<List<TweakDefinition>>("tweaks-zyperwin.json") ?? [];
+        var optimizerTweaks = Load<List<TweakDefinition>>("tweaks-optimizer.json") ?? [];
+
+        Tweaks = baseTweaks.Concat(extraTweaks).Concat(referenceTweaks)
+            .Concat(zyperTweaks).Concat(optimizerTweaks)
+            .Where(t => t.Enabled).ToList();
         TweakGroups = (Load<List<TweakGroup>>("tweak-groups.json") ?? [])
             .OrderBy(g => g.Order).ToList();
 

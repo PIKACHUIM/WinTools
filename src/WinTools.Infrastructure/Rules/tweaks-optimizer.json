@@ -1,0 +1,566 @@
+[
+    {
+        "id":  "op-network-throttling",
+        "group":  "Network",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭网络限速",
+                     "en-US":  "Disable network throttling"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭系统对多媒体网络的限速，改善串流与游戏延迟。",
+                            "en-US":  "Removes Windows network throttling used for multimedia streaming."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Psched",
+                           "name":  "NonBestEffortLimit",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Psched",
+                          "name":  "NonBestEffortLimit",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Psched",
+                           "name":  "NonBestEffortLimit",
+                           "kind":  "DWord",
+                           "value":  "80"
+                       }
+                   ]
+    },
+    {
+        "id":  "op-error-reporting",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭错误报告",
+                     "en-US":  "Disable error reporting"
+                 },
+        "description":  {
+                            "zh-Hans":  "程序崩溃时不再生成并上传错误报告。",
+                            "en-US":  "Stops Windows Error Reporting from collecting and uploading crash reports."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Error Reporting",
+                           "name":  "Disabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\PCHealth\\ErrorReporting",
+                           "name":  "DoReport",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\WerSvc",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\wercplsupport",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Error Reporting",
+                          "name":  "Disabled",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\PCHealth\\ErrorReporting",
+                          "name":  "DoReport",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\WerSvc",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\wercplsupport",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\wercplsupport",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "3"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\WerSvc",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       }
+                   ]
+    },
+    {
+        "id":  "op-game-bar",
+        "group":  "Gaming",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭游戏栏",
+                     "en-US":  "Disable Game Bar"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Win+G 游戏栏与相关后台录制入口。",
+                            "en-US":  "Disables the Game Bar overlay and its background capture entry points."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                           "name":  "AudioCaptureEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                           "name":  "CursorCaptureEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                          "name":  "AudioCaptureEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                          "name":  "CursorCaptureEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                           "name":  "AudioCaptureEnabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+                           "name":  "CursorCaptureEnabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ]
+    },
+    {
+        "id":  "op-home-group",
+        "group":  "Network",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭家庭组",
+                     "en-US":  "Disable HomeGroup"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭已废弃的家庭组共享组件。",
+                            "en-US":  "Disables the deprecated HomeGroup sharing components."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\HomeGroup",
+                           "name":  "DisableHomeGroup",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\HomeGroupListener",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\HomeGroupProvider",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\HomeGroup",
+                          "name":  "DisableHomeGroup",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\HomeGroupListener",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\HomeGroupProvider",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\HomeGroupListener",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\HomeGroupProvider",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       }
+                   ]
+    },
+    {
+        "id":  "op-my-people",
+        "group":  "Explorer",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "隐藏任务栏人脉",
+                     "en-US":  "Hide My People"
+                 },
+        "description":  {
+                            "zh-Hans":  "隐藏任务栏的人脉按钮。",
+                            "en-US":  "Hides the People button on the taskbar."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\People",
+                           "name":  "PeopleBand",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\People",
+                          "name":  "PeopleBand",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\People",
+                           "name":  "PeopleBand",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ]
+    },
+    {
+        "id":  "op-sensor-services",
+        "group":  "Privacy",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭传感器服务",
+                     "en-US":  "Disable sensor services"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭传感器与位置相关服务，平板与自动旋转会受影响。",
+                            "en-US":  "Disables sensor and location services; tablets and auto-rotate are affected."
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\SensrSvc",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\SensorService",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\SensrSvc",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\SensorService",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\SensrSvc",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\SensorService",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       }
+                   ]
+    },
+    {
+        "id":  "op-insider-service",
+        "group":  "Privacy",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭预览体验服务",
+                     "en-US":  "Disable Insider service"
+                 },
+        "description":  {
+                            "zh-Hans":  "停止 Windows 预览体验计划相关服务与上报。",
+                            "en-US":  "Stops the Windows Insider service and its reporting."
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\wisvc",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\wisvc",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\wisvc",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "3"
+                       }
+                   ]
+    },
+    {
+        "id":  "op-media-sharing",
+        "group":  "Network",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭媒体播放共享",
+                     "en-US":  "Disable media player sharing"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭媒体库的局域网共享。",
+                            "en-US":  "Disables media library sharing over the local network."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\WMPNetworkSvc",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "4"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\WMPNetworkSvc",
+                          "name":  "Start",
+                          "kind":  "DWord",
+                          "value":  "4"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\WMPNetworkSvc",
+                           "name":  "Start",
+                           "kind":  "DWord",
+                           "value":  "2"
+                       }
+                   ]
+    },
+    {
+        "id":  "op-snap-assist",
+        "group":  "Explorer",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭贴靠建议",
+                     "en-US":  "Disable Snap Assist"
+                 },
+        "description":  {
+                            "zh-Hans":  "贴靠窗口时不再提示其他窗口。",
+                            "en-US":  "Stops Snap Assist from suggesting other windows when snapping."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "EnableSnapAssistFlyout",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Desktop",
+                           "name":  "DockMoving",
+                           "kind":  "String",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                          "name":  "EnableSnapAssistFlyout",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Desktop",
+                          "name":  "DockMoving",
+                          "kind":  "String",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+                           "name":  "EnableSnapAssistFlyout",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Desktop",
+                           "name":  "DockMoving",
+                           "kind":  "String",
+                           "value":  "1"
+                       }
+                   ]
+    }
+]
