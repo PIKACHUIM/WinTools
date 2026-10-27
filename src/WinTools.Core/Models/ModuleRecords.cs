@@ -185,7 +185,11 @@ public sealed record WimApplyRequest(
     int ImageIndex,
     string TargetPath,
     bool Verify,
-    bool RepairBoot = false);
+    bool RepairBoot = false,
+    bool CompactOs = false,
+    bool FormatTarget = false,
+    bool WimBoot = false,
+    bool WindowsToGo = false);
 
 /// <summary>WIM 操作进度。</summary>
 public sealed record WimProgress(long CurrentBytes, long TotalBytes, int Percent, string Stage)

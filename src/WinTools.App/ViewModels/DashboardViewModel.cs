@@ -581,6 +581,13 @@ public sealed partial class DashboardViewModel : ObservableObject, ILocalizable
 
     public void RefreshLocalization()
     {
+        // 卡片里的标签（计算机名 / 核心线程 / 内存条…）是建列表时取文的，切语言要重建一次
+        if (Profile is { } profile)
+        {
+            FillLists(profile);
+            DiskSummary = BuildDiskSummary(profile);
+        }
+
         OnPropertyChanged(string.Empty);
     }
 }

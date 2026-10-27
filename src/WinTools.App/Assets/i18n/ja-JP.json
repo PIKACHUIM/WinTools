@@ -45,7 +45,7 @@
 
   "Cleanup.Title": "ジャンクのクリーンアップ",
   "Cleanup.Subtitle": "種類ごとにスキャンして不要ファイルを削除します。範囲は変更できます。",
-  "Cleanup.Paths": "スキャンパス",
+  "Cleanup.Paths": "クリーンアップ対象",
   "Cleanup.PathsHint": "既定ではすべてのドライブをスキャンします。フォルダーを追加して範囲を絞れます。",
   "Cleanup.AddPath": "フォルダーを追加",
   "Cleanup.Rules": "クリーンアップ規則",
@@ -427,5 +427,34 @@
   "Dashboard.Upload": "上り",
   "Dashboard.CustomBuild": "自作PC",
   "Dashboard.Reading": "ハードウェア情報を取得しています…",
-  "Dashboard.LiveUsage": "リアルタイム使用率"
+  "Dashboard.LiveUsage": "リアルタイム使用率",
+
+  "Cleanup.Recommended": "おすすめ",
+  "Cleanup.HighRisk": "高リスク",
+  "Cleanup.AboutCategory": "これらのファイルについて",
+  "Cleanup.SampleFiles": "サイズの大きい {0} 件",
+  "Cleanup.SampleHint": "あくまで例です。クリーンアップ時はルールに一致する全ファイルを削除します",
+  "Cleanup.DetailHint": "ファイルの詳細を表示",
+  "Cleanup.RiskTitle": "高リスク項目をクリーンアップしますか？",
+  "Cleanup.RiskMessage": "高リスク項目を {0} 件（約 {1}）選択しました。使用中のデータが含まれる可能性があり、削除すると元に戻せません。",
+  "Cleanup.RiskConfirm": "選択する",
+
+  "Feat.AutoEnabled": "前提となる {0} 件の機能を自動で選択しました",
+  "Feat.DependencyTitle": "依存する機能も無効になります",
+  "Feat.DependencyOff": "「{0}」をオフにすると、依存する {1} 件の機能もオフになります。",
+  "Feat.DisableAll": "まとめてオフ",
+
+  "Wim.CompactOs": "適用後に Compact OS を有効化",
+  "Wim.FormatTarget": "対象パーティションをフォーマット",
+  "Wim.FormatConfirmTitle": "対象パーティションのフォーマット確認",
+  "Wim.FormatConfirm": "適用前に {0} をフォーマットします。このパーティションのデータはすべて削除され、復元できません。",
+  "Wim.FormatOnlyRoot": "ドライブ直下（例: D:\\）のみ対応し、サブフォルダーは指定できません",
+  "Wim.ExistingImages": "既存のイメージ インデックス",
+  "Wim.LoadImages": "インデックスを読み取る",
+  "Wim.ImageCount": "{0} 件のインデックス",
+  "Wim.ImageMissing": "読み取れるイメージ ファイルがありません",
+  "Wim.WimBoot": "WIMBoot を使う",
+  "Wim.WimBootHint": "WIMBoot は .wim イメージ専用です。Windows とイメージの両方が対応している必要があります（Windows 10 1903 以降は既定で非対応、DISM がエラーを返します）。",
+  "Wim.WindowsToGo": "Windows To Go として展開",
+  "Wim.WindowsToGoHint": "対象は USB ディスクのルート（例: E:\\）である必要があります。BIOS/UEFI の起動ファイルを書き込みます。UEFI 機では FAT32 の起動パーティションが必要です。ない場合は BIOS/レガシーで起動してください。"
 }

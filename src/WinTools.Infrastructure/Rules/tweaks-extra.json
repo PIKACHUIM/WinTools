@@ -795,7 +795,7 @@
                   ]
     },
     {
-        "id":  "tailored-experiences-off",
+        "id":  "tailored-experiences-privacy-off",
         "group":  "Privacy",
         "recommended":  true,
         "name":  {
@@ -2257,7 +2257,7 @@
                   ]
     },
     {
-        "id":  "game-dvr-off",
+        "id":  "game-dvr-policy-off",
         "group":  "Gaming",
         "recommended":  true,
         "name":  {
@@ -2291,7 +2291,7 @@
                   ]
     },
     {
-        "id":  "game-mode-on",
+        "id":  "game-mode-toggle-on",
         "group":  "Gaming",
         "recommended":  true,
         "name":  {

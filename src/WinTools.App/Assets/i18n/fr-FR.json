@@ -45,7 +45,7 @@
 
   "Cleanup.Title": "Nettoyage des fichiers inutiles",
   "Cleanup.Subtitle": "Analysez et nettoyez par catégorie, avec une étendue personnalisable.",
-  "Cleanup.Paths": "Chemins d'analyse",
+  "Cleanup.Paths": "Chemins nettoyés",
   "Cleanup.PathsHint": "Tous les lecteurs sont analysés par défaut ; ajoutez des dossiers pour réduire l'étendue.",
   "Cleanup.AddPath": "Ajouter un dossier",
   "Cleanup.Rules": "Règles de nettoyage",
@@ -427,5 +427,34 @@
   "Dashboard.Upload": "Envoi",
   "Dashboard.CustomBuild": "Assemblage",
   "Dashboard.Reading": "Lecture du matériel…",
-  "Dashboard.LiveUsage": "Utilisation en direct"
+  "Dashboard.LiveUsage": "Utilisation en direct",
+
+  "Cleanup.Recommended": "Recommandé",
+  "Cleanup.HighRisk": "Risque élevé",
+  "Cleanup.AboutCategory": "Ce que sont ces fichiers",
+  "Cleanup.SampleFiles": "Les {0} plus gros fichiers",
+  "Cleanup.SampleHint": "Exemples uniquement — le nettoyage supprime tous les fichiers correspondant à la règle",
+  "Cleanup.DetailHint": "Afficher les détails",
+  "Cleanup.RiskTitle": "Nettoyer des éléments à haut risque ?",
+  "Cleanup.RiskMessage": "{0} catégories à haut risque sélectionnées ({1}). Elles peuvent contenir des données encore utilisées et le nettoyage est généralement irréversible.",
+  "Cleanup.RiskConfirm": "Sélectionner quand même",
+
+  "Feat.AutoEnabled": "{0} fonctionnalités requises ont été activées automatiquement",
+  "Feat.DependencyTitle": "Les fonctionnalités dépendantes seront aussi désactivées",
+  "Feat.DependencyOff": "Désactiver « {0} » désactive aussi {1} fonctionnalité(s) dépendante(s).",
+  "Feat.DisableAll": "Désactiver ensemble",
+
+  "Wim.CompactOs": "Activer Compact OS après l'application",
+  "Wim.FormatTarget": "Formater la partition cible",
+  "Wim.FormatConfirmTitle": "Confirmer le formatage de la partition cible",
+  "Wim.FormatConfirm": "{0} sera formaté avant l'application ; toutes les données de cette partition seront effacées sans possibilité de récupération.",
+  "Wim.FormatOnlyRoot": "Seules les racines de lecteur (par ex. D:\\) sont prises en charge, pas les sous-dossiers",
+  "Wim.ExistingImages": "Index d'images existants",
+  "Wim.LoadImages": "Lire les index",
+  "Wim.ImageCount": "{0} index",
+  "Wim.ImageMissing": "Aucun fichier image lisible",
+  "Wim.WimBoot": "Utiliser WIMBoot",
+  "Wim.WimBootHint": "WIMBoot ne fonctionne qu'avec les images .wim, et Windows comme l'image doivent le prendre en charge (non pris en charge depuis Windows 10 1903 ; DISM signalera l'erreur).",
+  "Wim.WindowsToGo": "Déployer en Windows To Go",
+  "Wim.WindowsToGoHint": "La cible doit être la racine d'un disque USB (par ex. E:\\). Les fichiers de démarrage BIOS/UEFI sont écrits ; les machines UEFI ont besoin d'une partition de démarrage FAT32 existante, sinon démarrez en BIOS/legacy."
 }

@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WinTools.App.Localization;
+using WinTools.App.Services;
 using WinTools.Core.Abstractions;
 using WinTools.Core.Models;
 using WinTools.Core.Utils;
@@ -76,6 +77,9 @@ public sealed partial class WimInfoSectionViewModel : ListSectionViewModel
         => ReloadAsync(cancellationToken);
 }
 
+/// <summary>追加模式下的现有映像索引行。</summary>
+public sealed record WimImageRow(string Index, string Title, string? Description, string SizeText, string? Compression);
+
 /// <summary>备份/释放表单：三种模式共用同一视图。</summary>
 public sealed partial class BackupTaskViewModel : ObservableObject, ILocalizable
 {
@@ -129,7 +133,76 @@ public sealed partial class BackupTaskViewModel : ObservableObject, ILocalizable
     [ObservableProperty]
     private bool _repairBoot;
 
+    /// <summary>释放完成后启用 Compact OS（compact /compactos:always）。</summary>
+    [ObservableProperty]
+    private bool _compactOs;
+
+    /// <summary>释放前格式化目标分区（仅盘符根目录）。</summary>
+    [ObservableProperty]
+    private bool _formatTarget;
+
+    /// <summary>用 DISM 的 WIMBoot 方式释放（仅 .wim）。</summary>
+    [ObservableProperty]
+    private bool _wimBoot;
+
+    /// <summary>部署为 Windows To Go（USB 磁盘根目录 + 写入引导）。</summary>
+    [ObservableProperty]
+    private bool _windowsToGo;
+
     public string RepairBootLabel => Loc.T("Wim.RepairBoot");
+
+    public string CompactOsLabel => Loc.T("Wim.CompactOs");
+
+    public string FormatTargetLabel => Loc.T("Wim.FormatTarget");
+
+    public string WimBootLabel => Loc.T("Wim.WimBoot");
+
+    public string WindowsToGoLabel => Loc.T("Wim.WindowsToGo");
+
+    public string WimBootHint => Loc.T("Wim.WimBootHint");
+
+    public string WindowsToGoHint => Loc.T("Wim.WindowsToGoHint");
+
+    // ---------------- 追加模式：现有映像索引 ----------------
+
+    public ObservableCollection<WimImageRow> ExistingImages { get; } = [];
+
+    [ObservableProperty]
+    private string _imageListStatus = string.Empty;
+
+    public string ExistingImagesLabel => Loc.T("Wim.ExistingImages");
+
+    public string LoadImagesLabel => Loc.T("Wim.LoadImages");
+
+    [RelayCommand]
+    private async Task LoadImagesAsync()
+    {
+        var path = ImagePath.Trim();
+        ExistingImages.Clear();
+        ImageListStatus = string.Empty;
+
+        if (path.Length == 0 || !System.IO.File.Exists(path))
+        {
+            ImageListStatus = Loc.T("Wim.ImageMissing");
+            return;
+        }
+
+        var images = await _wim.GetInfoAsync(path, CancellationToken.None).ConfigureAwait(true);
+
+        foreach (var image in images)
+        {
+            ExistingImages.Add(new WimImageRow(
+                image.Index.ToString(),
+                $"#{image.Index}  {image.Name}",
+                image.Description,
+                image.TotalBytes is null ? "—" : SizeFormatter.Format(image.TotalBytes.Value),
+                image.Compression));
+        }
+
+        ImageListStatus = ExistingImages.Count == 0
+            ? Loc.T("Wim.ImageMissing")
+            : Loc.F("Wim.ImageCount", ExistingImages.Count);
+    }
 
     /// <summary>分卷大小（MB）；非 SWM 格式返回 0 表示不分卷。</summary>
     private int SplitSizeMb => IsSplitEnabled
@@ -269,6 +342,22 @@ public sealed partial class BackupTaskViewModel : ObservableObject, ILocalizable
             return;
         }
 
+        if (IsApply && FormatTarget)
+        {
+            var confirmed = await UI.Confirm.AskAsync(new ConfirmRequest(
+                Loc.T("Wim.FormatConfirmTitle"),
+                Loc.F("Wim.FormatConfirm", TargetPath.Trim()),
+                [Loc.T("Wim.FormatOnlyRoot")],
+                Loc.T("Wim.FormatTarget"),
+                Danger: true,
+                RequireAcknowledge: true)).ConfigureAwait(true);
+
+            if (!confirmed)
+            {
+                return;
+            }
+        }
+
         IsBusy = true;
         ShowProgress = true;
         ProgressPercent = 0;
@@ -292,7 +381,11 @@ public sealed partial class BackupTaskViewModel : ObservableObject, ILocalizable
                         (int)Math.Max(1, Math.Round(ImageIndex)),
                         TargetPath.Trim(),
                         Verify,
-                        RepairBoot),
+                        RepairBoot,
+                        CompactOs,
+                        FormatTarget,
+                        WimBoot,
+                        WindowsToGo),
                     progress,
                     CancellationToken.None).ConfigureAwait(true);
             }
@@ -326,6 +419,12 @@ public sealed partial class BackupTaskViewModel : ObservableObject, ILocalizable
                 Status += " · " + Loc.T("Common.RestartNeeded");
             }
 
+            // 追加成功后刷新索引列表，让用户看到新映像落在第几号
+            if (IsAppend && result.Success)
+            {
+                await LoadImagesAsync().ConfigureAwait(true);
+            }
+
             _logger.Audit("Wim.Task", Mode.ToString(), result.Message);
         }
         catch (Exception ex)
@@ -356,6 +455,15 @@ public sealed partial class BackupTaskViewModel : ObservableObject, ILocalizable
         OnPropertyChanged(nameof(IndexLabel));
         OnPropertyChanged(nameof(VerifyLabel));
         OnPropertyChanged(nameof(LogLabel));
+        OnPropertyChanged(nameof(RepairBootLabel));
+        OnPropertyChanged(nameof(CompactOsLabel));
+        OnPropertyChanged(nameof(FormatTargetLabel));
+        OnPropertyChanged(nameof(WimBootLabel));
+        OnPropertyChanged(nameof(WindowsToGoLabel));
+        OnPropertyChanged(nameof(WimBootHint));
+        OnPropertyChanged(nameof(WindowsToGoHint));
+        OnPropertyChanged(nameof(ExistingImagesLabel));
+        OnPropertyChanged(nameof(LoadImagesLabel));
     }
 
     partial void OnStatusChanged(string value) => HasStatus = !string.IsNullOrWhiteSpace(value);

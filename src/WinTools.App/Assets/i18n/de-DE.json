@@ -45,7 +45,7 @@
 
   "Cleanup.Title": "Datenmüll bereinigen",
   "Cleanup.Subtitle": "Nach Kategorien scannen und bereinigen, mit anpassbarem Suchbereich.",
-  "Cleanup.Paths": "Suchpfade",
+  "Cleanup.Paths": "Bereinigungspfade",
   "Cleanup.PathsHint": "Standardmäßig werden alle Laufwerke durchsucht. Ordner hinzufügen, um den Bereich einzugrenzen.",
   "Cleanup.AddPath": "Ordner hinzufügen",
   "Cleanup.Rules": "Bereinigungsregeln",
@@ -427,5 +427,34 @@
   "Dashboard.Upload": "Upstream",
   "Dashboard.CustomBuild": "Eigenbau",
   "Dashboard.Reading": "Hardware wird gelesen…",
-  "Dashboard.LiveUsage": "Live-Auslastung"
+  "Dashboard.LiveUsage": "Live-Auslastung",
+
+  "Cleanup.Recommended": "Empfohlen",
+  "Cleanup.HighRisk": "Hohes Risiko",
+  "Cleanup.AboutCategory": "Was diese Dateien sind",
+  "Cleanup.SampleFiles": "Die {0} größten Dateien",
+  "Cleanup.SampleHint": "Nur Beispiele – die Bereinigung entfernt alle zur Regel passenden Dateien",
+  "Cleanup.DetailHint": "Dateidetails anzeigen",
+  "Cleanup.RiskTitle": "Elemente mit hohem Risiko bereinigen?",
+  "Cleanup.RiskMessage": "{0} Kategorien mit hohem Risiko ausgewählt ({1}). Diese Orte können noch benötigte Daten enthalten; die Bereinigung ist meist nicht umkehrbar.",
+  "Cleanup.RiskConfirm": "Trotzdem auswählen",
+
+  "Feat.AutoEnabled": "{0} erforderliche Features wurden automatisch aktiviert",
+  "Feat.DependencyTitle": "Abhängige Features werden ebenfalls deaktiviert",
+  "Feat.DependencyOff": "Wenn \"{0}\" deaktiviert wird, werden {1} abhängige Features ebenfalls deaktiviert.",
+  "Feat.DisableAll": "Zusammen deaktivieren",
+
+  "Wim.CompactOs": "Compact OS nach dem Anwenden aktivieren",
+  "Wim.FormatTarget": "Zielpartition formatieren",
+  "Wim.FormatConfirmTitle": "Formatieren der Zielpartition bestätigen",
+  "Wim.FormatConfirm": "{0} wird vor dem Anwenden formatiert. Alle Daten auf dieser Partition werden unwiderruflich gelöscht.",
+  "Wim.FormatOnlyRoot": "Nur Laufwerkswurzeln (z. B. D:\\) werden unterstützt, keine Unterordner",
+  "Wim.ExistingImages": "Vorhandene Image-Indizes",
+  "Wim.LoadImages": "Indizes lesen",
+  "Wim.ImageCount": "{0} Indizes",
+  "Wim.ImageMissing": "Keine lesbare Image-Datei",
+  "Wim.WimBoot": "WIMBoot verwenden",
+  "Wim.WimBootHint": "WIMBoot funktioniert nur mit .wim-Images; Windows und Image müssen es unterstützen (seit Windows 10 1903 standardmäßig nicht mehr, DISM meldet den Fehler).",
+  "Wim.WindowsToGo": "Als Windows To Go bereitstellen",
+  "Wim.WindowsToGoHint": "Das Ziel muss ein USB-Datenträger-Stammverzeichnis sein (z. B. E:\\). BIOS-/UEFI-Startdateien werden geschrieben; UEFI-Rechner benötigen eine vorhandene FAT32-Startpartition, sonst im BIOS-/Legacy-Modus starten."
 }

@@ -23,7 +23,9 @@ public sealed class RuleRepository : IModuleCatalog
             .OrderBy(c => c.Order).ToList();
         var baseTweaks = Load<List<TweakDefinition>>("tweaks.json") ?? [];
         var extraTweaks = Load<List<TweakDefinition>>("tweaks-extra.json") ?? [];
-        Tweaks = baseTweaks.Concat(extraTweaks).Where(t => t.Enabled).ToList();
+        // 由 tools/Sync-ReferenceTweaks.ps1 从预置的 winutil 快照生成
+        var referenceTweaks = Load<List<TweakDefinition>>("tweaks-reference.json") ?? [];
+        Tweaks = baseTweaks.Concat(extraTweaks).Concat(referenceTweaks).Where(t => t.Enabled).ToList();
         TweakGroups = (Load<List<TweakGroup>>("tweak-groups.json") ?? [])
             .OrderBy(g => g.Order).ToList();
 

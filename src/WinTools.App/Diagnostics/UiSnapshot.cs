@@ -96,11 +96,19 @@ internal static class UiSnapshot
             Capture(window, shell, key, Path.Combine(directory, Sanitize(key) + ".png"));
         }
 
-        // 深色主题再抓两张
+        // 深色主题再抓：固定两张 + 本次指定的页面
         theme.Apply(AppTheme.Dark);
         ShellViewModel_Refresh(shell);
 
-        foreach (var key in new[] { "Dashboard", "Features.SystemFeatures" })
+        var darkPages = new List<string> { "Dashboard" };
+        if (!string.IsNullOrWhiteSpace(only))
+        {
+            darkPages.Add(only);
+        }
+
+        darkPages.Add("Features.SystemFeatures");
+
+        foreach (var key in darkPages.Distinct(StringComparer.OrdinalIgnoreCase))
         {
             Capture(window, shell, key, Path.Combine(directory, Sanitize(key) + "-dark.png"));
         }
@@ -143,6 +151,34 @@ internal static class UiSnapshot
         Pump(window);
         WaitForData(window, shell);
 
+        // 功能依赖联动：WINTOOLS_SHOT_DEPS=on 勾选 WSL 看自动带出；=off 关闭 Hyper-V 看连带提示
+        if (Environment.GetEnvironmentVariable("WINTOOLS_SHOT_DEPS") is { Length: > 0 } depsMode &&
+            shell.CurrentPage is ModuleViewModelBase module &&
+            module.SelectedSection?.Content is SystemFeaturesSectionViewModel features)
+        {
+            var rows = features.Groups.SelectMany(g => g.Items).ToList();
+            var wsl = rows.FirstOrDefault(r => r.Name.Contains("Subsystem-Linux", StringComparison.OrdinalIgnoreCase));
+
+            if (wsl is not null)
+            {
+                wsl.IsOn = true;
+                Thread.Sleep(400);
+            }
+
+            if (depsMode.Equals("off", StringComparison.OrdinalIgnoreCase))
+            {
+                var hyperV = rows.FirstOrDefault(r =>
+                    r.IsOn && r.Name.StartsWith("Microsoft-Hyper-V", StringComparison.OrdinalIgnoreCase));
+
+                if (hyperV is not null)
+                {
+                    hyperV.IsOn = false;
+                }
+            }
+
+            Thread.Sleep(700);
+        }
+
         // 需要看「扫描完成」样式的页面：WINTOOLS_SHOT_SCAN=1 时自动触发一次扫描
         if (_scanShot && shell.CurrentPage is CleanupViewModel cleanup && cleanup.IsIdlePhase)
         {
@@ -152,6 +188,27 @@ internal static class UiSnapshot
             {
                 window.Dispatcher.Invoke(() => { }, DispatcherPriority.Background);
                 Thread.Sleep(120);
+            }
+
+            // 展开第一条带文件明细的规则，方便肉眼检查「top N 路径 + 大小」
+            var detail = cleanup.Groups
+                .SelectMany(g => g.Items)
+                .FirstOrDefault(i => i.SampleFiles.Count > 0);
+            if (detail is not null)
+            {
+                detail.IsExpanded = true;
+            }
+
+            // WINTOOLS_SHOT_RISK=1：勾选一条高风险规则，截下二次确认弹窗
+            if (Environment.GetEnvironmentVariable("WINTOOLS_SHOT_RISK") == "1")
+            {
+                var risky = cleanup.Groups
+                    .SelectMany(g => g.Items)
+                    .FirstOrDefault(i => i.RequiresRiskConfirm);
+                if (risky is not null)
+                {
+                    risky.IsChecked = true;
+                }
             }
 
             Thread.Sleep(900);

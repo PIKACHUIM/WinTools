@@ -1,0 +1,1593 @@
+[
+    {
+        "id":  "wu-verbose-logon",
+        "group":  "System",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "显示详细登录信息",
+                     "en-US":  "Verbose logon messages"
+                 },
+        "description":  {
+                            "zh-Hans":  "登录时显示详细的状态消息，便于排查启动问题。",
+                            "en-US":  "Shows detailed status messages during sign-in for troubleshooting."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+                           "name":  "VerboseStatus",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+                          "name":  "VerboseStatus",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+                           "name":  "VerboseStatus",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-new-outlook",
+        "group":  "Explorer",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "隐藏新版 Outlook 开关",
+                     "en-US":  "Hide new Outlook toggle"
+                 },
+        "description":  {
+                            "zh-Hans":  "隐藏 Outlook 里「试用新版 Outlook」的切换按钮。",
+                            "en-US":  "Hides the Try the new Outlook toggle in classic Outlook."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Preferences",
+                           "name":  "UseNewOutlook",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Microsoft\\Office\\16.0\\Outlook\\Options\\General",
+                           "name":  "HideNewOutlookToggle",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Policies\\Microsoft\\Office\\16.0\\Outlook\\Options\\General",
+                           "name":  "DoNewOutlookAutoMigration",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Policies\\Microsoft\\Office\\16.0\\Outlook\\Preferences",
+                           "name":  "NewOutlookMigrationUserSetting",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Preferences",
+                          "name":  "UseNewOutlook",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Software\\Microsoft\\Office\\16.0\\Outlook\\Options\\General",
+                          "name":  "HideNewOutlookToggle",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Software\\Policies\\Microsoft\\Office\\16.0\\Outlook\\Options\\General",
+                          "name":  "DoNewOutlookAutoMigration",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Software\\Policies\\Microsoft\\Office\\16.0\\Outlook\\Preferences",
+                          "name":  "NewOutlookMigrationUserSetting",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Preferences",
+                           "name":  "UseNewOutlook",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Microsoft\\Office\\16.0\\Outlook\\Options\\General",
+                           "name":  "HideNewOutlookToggle",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Policies\\Microsoft\\Office\\16.0\\Outlook\\Options\\General",
+                           "name":  "DoNewOutlookAutoMigration",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Policies\\Microsoft\\Office\\16.0\\Outlook\\Preferences",
+                           "name":  "NewOutlookMigrationUserSetting"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-scrollbars",
+        "group":  "Explorer",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "始终显示滚动条",
+                     "en-US":  "Always show scrollbars"
+                 },
+        "description":  {
+                            "zh-Hans":  "滚动条不再自动隐藏，鼠标操作更直观。",
+                            "en-US":  "Keeps scrollbars visible instead of hiding them when idle."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Accessibility",
+                           "name":  "DynamicScrollbars",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Accessibility",
+                          "name":  "DynamicScrollbars",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Accessibility",
+                           "name":  "DynamicScrollbars",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-multiplane-overlay",
+        "group":  "Performance",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "禁用多重平面叠加（MPO）",
+                     "en-US":  "Disable Multiplane Overlay (MPO)"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 MPO，可缓解部分显卡的闪烁与黑屏，但会增加一点功耗。",
+                            "en-US":  "Disables MPO, which can fix flicker or black screens on some GPUs at a small power cost."
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\Dwm",
+                           "name":  "OverlayTestMode",
+                           "kind":  "DWord",
+                           "value":  ""
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                           "name":  "DisableOverlays",
+                           "kind":  "DWord",
+                           "value":  ""
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\Dwm",
+                          "name":  "OverlayTestMode",
+                          "kind":  "DWord",
+                          "value":  ""
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                          "name":  "DisableOverlays",
+                          "kind":  "DWord",
+                          "value":  ""
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\Dwm",
+                           "name":  "OverlayTestMode"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+                           "name":  "DisableOverlays"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-prevent-device-metadata-from-network",
+        "group":  "Privacy",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "阻止在线获取设备配套应用",
+                     "en-US":  "Block device companion apps"
+                 },
+        "description":  {
+                            "zh-Hans":  "插上设备时不再自动从 Windows 更新下载厂商配套应用。",
+                            "en-US":  "Prevents Windows Update from fetching vendor companion apps when a device is connected."
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Device Metadata",
+                           "name":  "PreventDeviceMetadataFromNetwork",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Device Metadata",
+                          "name":  "PreventDeviceMetadataFromNetwork",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\Device Metadata",
+                           "name":  "PreventDeviceMetadataFromNetwork"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-location",
+        "group":  "Privacy",
+        "recommended":  true,
+        "name":  {
+                     "zh-Hans":  "关闭定位跟踪",
+                     "en-US":  "Disable location tracking"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭定位服务并禁用地图数据自动更新。",
+                            "en-US":  "Turns off location services and automatic map data updates."
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
+                           "name":  "Value",
+                           "kind":  "String",
+                           "value":  "Deny"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Sensor\\Overrides\\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}",
+                           "name":  "SensorPermissionState",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\Maps",
+                           "name":  "AutoUpdateEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "ServiceStart",
+                           "service":  "lfsvc",
+                           "startMode":  "disabled"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
+                          "name":  "Value",
+                          "kind":  "String",
+                          "value":  "Deny"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Sensor\\Overrides\\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}",
+                          "name":  "SensorPermissionState",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\Maps",
+                          "name":  "AutoUpdateEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "ServiceStart",
+                          "service":  "lfsvc",
+                          "startMode":  "disabled"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
+                           "name":  "Value",
+                           "kind":  "String",
+                           "value":  "Allow"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Sensor\\Overrides\\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}",
+                           "name":  "SensorPermissionState",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\Maps",
+                           "name":  "AutoUpdateEnabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "ServiceStart",
+                           "service":  "lfsvc",
+                           "startMode":  "manual"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-brave-debloat",
+        "group":  "Privacy",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "Brave 浏览器去广告与遥测",
+                     "en-US":  "Brave debloat"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Brave 奖励、钱包、VPN、统计上报等策略项。",
+                            "en-US":  "Disables Brave Rewards, Wallet, VPN, telemetry and related policy features."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveRewardsDisabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveWalletDisabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveVPNDisabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveAIChatEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveStatsPingEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveNewsDisabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveTalkDisabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "TorDisabled",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveP3AEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "UrlKeyedAnonymizedDataCollectionEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "SafeBrowsingExtendedReportingEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "MetricsReportingEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "BraveRewardsDisabled",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "BraveWalletDisabled",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "BraveVPNDisabled",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "BraveAIChatEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "BraveStatsPingEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "BraveNewsDisabled",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "BraveTalkDisabled",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "TorDisabled",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "BraveP3AEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "UrlKeyedAnonymizedDataCollectionEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "SafeBrowsingExtendedReportingEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                          "name":  "MetricsReportingEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveRewardsDisabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveWalletDisabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveVPNDisabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveAIChatEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveStatsPingEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveNewsDisabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveTalkDisabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "TorDisabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "BraveP3AEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "UrlKeyedAnonymizedDataCollectionEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "SafeBrowsingExtendedReportingEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+                           "name":  "MetricsReportingEnabled"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-edge-debloat",
+        "group":  "Privacy",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "Edge 去广告与遥测",
+                     "en-US":  "Edge debloat"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭 Edge 的购物、推荐、遥测等策略项。",
+                            "en-US":  "Disables Edge shopping, recommendations, telemetry and related policies."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\EdgeUpdate",
+                           "name":  "CreateDesktopShortcutDefault",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "PersonalizationReportingEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge\\ExtensionInstallBlocklist",
+                           "name":  "1",
+                           "kind":  "String",
+                           "value":  "ofefcgjbeghpigppfmkologfjadafddi"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "ShowRecommendationsEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "UserFeedbackAllowed",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "ConfigureDoNotTrack",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "AlternateErrorPagesEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "EdgeCollectionsEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "EdgeShoppingAssistantEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "MicrosoftEdgeInsiderPromotionEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "ShowMicrosoftRewards",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "WebWidgetAllowed",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "DiagnosticData",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "EdgeAssetDeliveryServiceEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "WalletDonationEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "DefaultBrowserSettingsCampaignEnabled",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\EdgeUpdate",
+                          "name":  "CreateDesktopShortcutDefault",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "PersonalizationReportingEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge\\ExtensionInstallBlocklist",
+                          "name":  "1",
+                          "kind":  "String",
+                          "value":  "ofefcgjbeghpigppfmkologfjadafddi"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "ShowRecommendationsEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "UserFeedbackAllowed",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "ConfigureDoNotTrack",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "AlternateErrorPagesEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "EdgeCollectionsEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "EdgeShoppingAssistantEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "MicrosoftEdgeInsiderPromotionEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "ShowMicrosoftRewards",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "WebWidgetAllowed",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "DiagnosticData",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "EdgeAssetDeliveryServiceEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "WalletDonationEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                          "name":  "DefaultBrowserSettingsCampaignEnabled",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\EdgeUpdate",
+                           "name":  "CreateDesktopShortcutDefault"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "PersonalizationReportingEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge\\ExtensionInstallBlocklist",
+                           "name":  "1"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "ShowRecommendationsEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "UserFeedbackAllowed"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "ConfigureDoNotTrack"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "AlternateErrorPagesEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "EdgeCollectionsEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "EdgeShoppingAssistantEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "MicrosoftEdgeInsiderPromotionEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "ShowMicrosoftRewards"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "WebWidgetAllowed"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "DiagnosticData"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "EdgeAssetDeliveryServiceEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "WalletDonationEnabled"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Edge",
+                           "name":  "DefaultBrowserSettingsCampaignEnabled"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-remove-home-and-gallery",
+        "group":  "Explorer",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "隐藏主页与图库",
+                     "en-US":  "Hide Home and Gallery"
+                 },
+        "description":  {
+                            "zh-Hans":  "在资源管理器导航栏中隐藏「主页」与「图库」。",
+                            "en-US":  "Hides Home and Gallery from File Explorer navigation."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+                           "name":  "System.IsPinnedToNameSpaceTree",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}",
+                           "name":  "System.IsPinnedToNameSpaceTree",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+                          "name":  "System.IsPinnedToNameSpaceTree",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}",
+                          "name":  "System.IsPinnedToNameSpaceTree",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+                           "name":  "System.IsPinnedToNameSpaceTree"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}",
+                           "name":  "System.IsPinnedToNameSpaceTree"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-ipv46",
+        "group":  "Network",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "优先使用 IPv4",
+                     "en-US":  "Prefer IPv4"
+                 },
+        "description":  {
+                            "zh-Hans":  "调低 IPv6 前缀优先级，双栈时优先走 IPv4。",
+                            "en-US":  "Lowers IPv6 prefix priority so dual-stack connections prefer IPv4."
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
+                           "name":  "DisabledComponents",
+                           "kind":  "DWord",
+                           "value":  "32"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
+                          "name":  "DisabledComponents",
+                          "kind":  "DWord",
+                          "value":  "32"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
+                           "name":  "DisabledComponents",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-disable-notifications",
+        "group":  "System",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭通知与日历面板",
+                     "en-US":  "Disable notification center"
+                 },
+        "description":  {
+                            "zh-Hans":  "关闭系统托盘的通知中心与日历弹出。",
+                            "en-US":  "Disables the notification center and calendar flyout."
+                        },
+        "risk":  "High",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Policies\\Microsoft\\Windows\\Explorer",
+                           "name":  "DisableNotificationCenter",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Software\\Policies\\Microsoft\\Windows\\Explorer",
+                          "name":  "DisableNotificationCenter",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Policies\\Microsoft\\Windows\\Explorer",
+                           "name":  "DisableNotificationCenter"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-utc",
+        "group":  "System",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "使用 UTC 时间",
+                     "en-US":  "Use UTC time"
+                 },
+        "description":  {
+                            "zh-Hans":  "把硬件时钟当作 UTC（双系统用户常用）。",
+                            "en-US":  "Treats the hardware clock as UTC, common on dual-boot systems."
+                        },
+        "risk":  "High",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation",
+                           "name":  "RealTimeIsUniversal",
+                           "kind":  "QWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation",
+                          "name":  "RealTimeIsUniversal",
+                          "kind":  "QWord",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation",
+                           "name":  "RealTimeIsUniversal",
+                           "kind":  "QWord",
+                           "value":  "0"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-storage",
+        "group":  "System",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭存储感知",
+                     "en-US":  "Disable Storage Sense"
+                 },
+        "description":  {
+                            "zh-Hans":  "停止自动清理与云内容按需下载策略。",
+                            "en-US":  "Disables automatic cleanup and cloud content dehydration policies."
+                        },
+        "risk":  "High",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy",
+                           "name":  "01",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy",
+                          "name":  "01",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy",
+                           "name":  "01",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-disable-warning-for-unsigned-rdp",
+        "group":  "System",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭 RDP 未签名文件警告",
+                     "en-US":  "Disable unsigned RDP warnings"
+                 },
+        "description":  {
+                            "zh-Hans":  "不再提示远程桌面中的未签名文件，安全性会降低。",
+                            "en-US":  "Stops warning about unsigned files in Remote Desktop; lowers security."
+                        },
+        "risk":  "High",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows NT\\Terminal Services\\Client",
+                           "name":  "RedirectionWarningDialogVersion",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       },
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Terminal Server Client",
+                           "name":  "RdpLaunchConsentAccepted",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows NT\\Terminal Services\\Client",
+                          "name":  "RedirectionWarningDialogVersion",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      },
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Microsoft\\Terminal Server Client",
+                          "name":  "RdpLaunchConsentAccepted",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows NT\\Terminal Services\\Client",
+                           "name":  "RedirectionWarningDialogVersion"
+                       },
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Microsoft\\Terminal Server Client",
+                           "name":  "RdpLaunchConsentAccepted"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-login-blur",
+        "group":  "System",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "关闭登录界面模糊",
+                     "en-US":  "Disable logon blur"
+                 },
+        "description":  {
+                            "zh-Hans":  "登录界面使用纯色背景，减少 GPU 开销。",
+                            "en-US":  "Uses a solid background on the sign-in screen to reduce GPU work."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+                           "name":  "DisableAcrylicBackgroundOnLogon",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+                          "name":  "DisableAcrylicBackgroundOnLogon",
+                          "kind":  "DWord",
+                          "value":  "0"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+                           "name":  "DisableAcrylicBackgroundOnLogon",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-hide-settings-home",
+        "group":  "Explorer",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "隐藏设置主页",
+                     "en-US":  "Hide Settings home"
+                 },
+        "description":  {
+                            "zh-Hans":  "打开设置时直接进入上次的页面。",
+                            "en-US":  "Opens Settings directly to the last page instead of Home."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                           "name":  "SettingsPageVisibility",
+                           "kind":  "String",
+                           "value":  "show:home"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                          "name":  "SettingsPageVisibility",
+                          "kind":  "String",
+                          "value":  "show:home"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                           "name":  "SettingsPageVisibility",
+                           "kind":  "String",
+                           "value":  "hide:home"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-standby-fix",
+        "group":  "Network",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "待机时保持网络连接",
+                     "en-US":  "Keep network during standby"
+                 },
+        "description":  {
+                            "zh-Hans":  "现代待机（S0）期间保持网络连接。",
+                            "en-US":  "Keeps the network connected during modern standby (S0)."
+                        },
+        "risk":  "Medium",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+                           "name":  "ACSettingIndex",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+                          "name":  "ACSettingIndex",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+                           "name":  "ACSettingIndex",
+                           "kind":  "DWord",
+                           "value":  "0"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-window-snapping",
+        "group":  "Explorer",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "窗口贴靠",
+                     "en-US":  "Window snapping"
+                 },
+        "description":  {
+                            "zh-Hans":  "拖动窗口到屏幕边缘时自动贴靠。",
+                            "en-US":  "Snaps windows when dragged to screen edges."
+                        },
+        "risk":  "Low",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Desktop",
+                           "name":  "WindowArrangementActive",
+                           "kind":  "String",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKCU",
+                          "path":  "Control Panel\\Desktop",
+                          "name":  "WindowArrangementActive",
+                          "kind":  "String",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKCU",
+                           "path":  "Control Panel\\Desktop",
+                           "name":  "WindowArrangementActive",
+                           "kind":  "String",
+                           "value":  "0"
+                       }
+                   ]
+    },
+    {
+        "id":  "wu-wpbt",
+        "group":  "System",
+        "recommended":  false,
+        "name":  {
+                     "zh-Hans":  "禁用 WPBT",
+                     "en-US":  "Disable WPBT"
+                 },
+        "description":  {
+                            "zh-Hans":  "阻止固件通过 Windows Platform Binary Table 在系统中植入程序。",
+                            "en-US":  "Blocks firmware from injecting binaries through the Windows Platform Binary Table."
+                        },
+        "risk":  "High",
+        "detect":  [
+                       {
+                           "type":  "RegSet",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\Session Manager",
+                           "name":  "DisableWpbtExecution",
+                           "kind":  "DWord",
+                           "value":  "1"
+                       }
+                   ],
+        "apply":  [
+                      {
+                          "type":  "RegSet",
+                          "hive":  "HKLM",
+                          "path":  "SYSTEM\\CurrentControlSet\\Control\\Session Manager",
+                          "name":  "DisableWpbtExecution",
+                          "kind":  "DWord",
+                          "value":  "1"
+                      }
+                  ],
+        "revert":  [
+                       {
+                           "type":  "RegDeleteValue",
+                           "hive":  "HKLM",
+                           "path":  "SYSTEM\\CurrentControlSet\\Control\\Session Manager",
+                           "name":  "DisableWpbtExecution"
+                       }
+                   ]
+    }
+]

@@ -43,6 +43,8 @@ public sealed class CleanupRule
     public string Category { get; set; } = string.Empty;
     public LocalizedText Name { get; set; } = new();
     public LocalizedText? Note { get; set; }
+    /// <summary>「这类文件是什么」的说明；缺省时沿用分类说明。</summary>
+    public LocalizedText? Description { get; set; }
     /// <summary>路径模板，支持 %ENV%、{Drive}、{AllUsers}、* 通配。</summary>
     public List<string> Paths { get; set; } = new();
     public CleanupMatchKind Match { get; set; } = CleanupMatchKind.DirectoryRecursive;
@@ -63,14 +65,22 @@ public sealed class CleanupRule
     /// <summary>S4 与 Disabled 策略一律不可清理。</summary>
     public bool IsCleanable => Enabled && Safety != SafetyLevel.S4 && Strategy != CleanupStrategy.Disabled;
 
-    /// <summary>默认是否勾选（S1 且可清理）。</summary>
-    public bool IsDefaultSelected => IsCleanable && Safety == SafetyLevel.S1;
+    /// <summary>推荐项：S1 且不需要二次确认，扫描完成后默认勾选。</summary>
+    public bool IsRecommended => IsCleanable && !RequiresConfirm && Safety == SafetyLevel.S1;
+
+    /// <summary>默认是否勾选（只勾推荐项，S2 及以上留给用户自己判断）。</summary>
+    public bool IsDefaultSelected => IsRecommended;
+
+    /// <summary>高风险：S3/S4 或规则声明需要二次确认。</summary>
+    public bool IsHighRisk => IsCleanable && (Safety >= SafetyLevel.S3 || RequiresConfirm);
 }
 
 public sealed class CleanupCategory
 {
     public string Id { get; set; } = string.Empty;
     public LocalizedText Name { get; set; } = new();
+    /// <summary>分类说明：展开清理项时告诉用户「这类文件是什么」。</summary>
+    public LocalizedText? Description { get; set; }
     public string Glyph { get; set; } = "\uE8B7";
     public int Order { get; set; }
 }

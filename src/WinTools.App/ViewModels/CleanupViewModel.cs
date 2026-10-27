@@ -22,10 +22,13 @@ public enum CleanupPhase
     Done
 }
 
+/// <summary>展开明细里的一行文件。</summary>
+public sealed record CleanupFileRow(string Path, string SizeText);
+
 /// <summary>清理条目：一行代表一条规则。</summary>
 public sealed partial class CleanupItemViewModel : ObservableObject
 {
-    public CleanupItemViewModel(CleanupRuleResult result)
+    public CleanupItemViewModel(CleanupRuleResult result, CleanupCategory? category)
     {
         Result = result;
         Name = result.Rule.Name.Resolve(Loc.CurrentCulture);
@@ -40,6 +43,26 @@ public sealed partial class CleanupItemViewModel : ObservableObject
         };
         IsAdmin = result.Rule.RequiresAdmin;
         IsCleanable = result.Rule.IsCleanable;
+        IsRecommended = result.Rule.IsRecommended;
+        IsHighRisk = result.Rule.IsHighRisk;
+        RequiresRiskConfirm = result.Rule.IsHighRisk;
+
+        // 说明优先级：规则自带 > 分类说明；规则备注单独一行显示
+        var ruleDescription = result.Rule.Description?.Resolve(Loc.CurrentCulture);
+        var categoryDescription = category?.Description?.Resolve(Loc.CurrentCulture);
+        Description = !string.IsNullOrWhiteSpace(ruleDescription)
+            ? ruleDescription!
+            : categoryDescription ?? string.Empty;
+        Note = result.Rule.Note?.Resolve(Loc.CurrentCulture) ?? string.Empty;
+        PathsText = string.Join(Environment.NewLine, result.Rule.Paths);
+
+        foreach (var file in result.SampleFiles)
+        {
+            SampleFiles.Add(new CleanupFileRow(file.Path, SizeFormatter.Format(file.SizeBytes)));
+        }
+
+        SampleTitle = Loc.F("Cleanup.SampleFiles", SampleFiles.Count);
+
         IsChecked = result.Rule.IsDefaultSelected;
     }
 
@@ -59,12 +82,41 @@ public sealed partial class CleanupItemViewModel : ObservableObject
 
     public bool IsCleanable { get; }
 
+    /// <summary>推荐项：扫描后默认勾选。</summary>
+    public bool IsRecommended { get; }
+
+    /// <summary>高风险（S3 及以上或规则声明需确认）。</summary>
+    public bool IsHighRisk { get; }
+
+    /// <summary>推荐与高风险已经各有标签，普通项才显示 S 级徽标，避免一行三个小牌子。</summary>
+    public bool ShowSafetyBadge => !IsRecommended && !IsHighRisk;
+
+    public bool RequiresRiskConfirm { get; }
+
+    /// <summary>这类文件是什么。</summary>
+    public string Description { get; }
+
+    public string Note { get; }
+
+    /// <summary>规则的路径模板，展开明细时展示。</summary>
+    public string PathsText { get; }
+
+    public string SampleTitle { get; }
+
+    public ObservableCollection<CleanupFileRow> SampleFiles { get; } = [];
+
     public long SizeBytes => Result.TotalSize;
 
     [ObservableProperty]
     private bool _isChecked;
 
+    [ObservableProperty]
+    private bool _isExpanded;
+
     partial void OnIsCheckedChanged(bool value) => CheckedChanged?.Invoke(this, EventArgs.Empty);
+
+    [RelayCommand]
+    private void ToggleDetail() => IsExpanded = !IsExpanded;
 
     public event EventHandler? CheckedChanged;
 }
@@ -138,6 +190,9 @@ public sealed partial class CleanupViewModel : ObservableObject, ILocalizable
     private long _scannedTotal;
     private long _selectedTotal;
     private double _lastChartPercent = -1;
+
+    /// <summary>批量勾选/取消勾选期间不再逐条弹风险确认。</summary>
+    private bool _suppressRiskConfirm;
 
     public CleanupViewModel(ICleanupService cleanup, HardwareInfoService hardware, ISettingsService settings)
     {
@@ -310,6 +365,18 @@ public sealed partial class CleanupViewModel : ObservableObject, ILocalizable
 
     public string SelectedOfTotal => Loc.T("Cleanup.SelectedOfTotal");
 
+    public string RecommendedLabel => Loc.T("Cleanup.Recommended");
+
+    public string HighRiskLabel => Loc.T("Cleanup.HighRisk");
+
+    public string AboutCategoryLabel => Loc.T("Cleanup.AboutCategory");
+
+    public string PathsLabel => Loc.T("Cleanup.Paths");
+
+    public string SampleHintLabel => Loc.T("Cleanup.SampleHint");
+
+    public string DetailHint => Loc.T("Cleanup.DetailHint");
+
     // ------------------------------------------------------------------
     // 磁盘占用
     // ------------------------------------------------------------------
@@ -454,7 +521,7 @@ public sealed partial class CleanupViewModel : ObservableObject, ILocalizable
 
             foreach (var result in group.OrderByDescending(r => r.TotalSize))
             {
-                var item = new CleanupItemViewModel(result);
+                var item = new CleanupItemViewModel(result, category);
                 item.CheckedChanged += OnItemCheckedChanged;
                 vm.Items.Add(item);
             }
@@ -464,15 +531,60 @@ public sealed partial class CleanupViewModel : ObservableObject, ILocalizable
         }
     }
 
-    private void OnItemCheckedChanged(object? sender, EventArgs e)
+    private async void OnItemCheckedChanged(object? sender, EventArgs e)
     {
-        RecalculateSelected();
-
-        if (sender is CleanupItemViewModel item)
+        if (sender is not CleanupItemViewModel item)
         {
-            var owner = Groups.FirstOrDefault(g => g.Items.Contains(item));
-            owner?.RefreshSummary();
+            RecalculateSelected();
+            return;
         }
+
+        // 高风险项：先勾上再询问，用户取消则自动取消勾选
+        if (item.IsChecked && item.RequiresRiskConfirm && !_suppressRiskConfirm)
+        {
+            await ConfirmRiskAsync([item], item).ConfigureAwait(true);
+        }
+
+        RecalculateSelected();
+        Groups.FirstOrDefault(g => g.Items.Contains(item))?.RefreshSummary();
+    }
+
+    /// <summary>高风险勾选确认；返回 false 表示用户放弃。</summary>
+    private async Task<bool> ConfirmRiskAsync(
+        IReadOnlyList<CleanupItemViewModel> items,
+        CleanupItemViewModel? revertOnCancel)
+    {
+        if (items.Count == 0)
+        {
+            return true;
+        }
+
+        var confirmed = await UI.Confirm.AskAsync(new ConfirmRequest(
+            Loc.T("Cleanup.RiskTitle"),
+            Loc.F(
+                "Cleanup.RiskMessage",
+                items.Count,
+                SizeFormatter.Format(items.Sum(i => i.SizeBytes))),
+            items.Take(10).Select(i => $"{i.Name}  {i.SizeText}").ToList(),
+            Loc.T("Cleanup.RiskConfirm"),
+            Danger: true)).ConfigureAwait(true);
+
+        if (!confirmed && revertOnCancel is not null)
+        {
+            _suppressRiskConfirm = true;
+            try
+            {
+                revertOnCancel.IsChecked = false;
+            }
+            finally
+            {
+                _suppressRiskConfirm = false;
+            }
+
+            RecalculateSelected();
+        }
+
+        return confirmed;
     }
 
     private void RecalculateSelected()
@@ -501,30 +613,76 @@ public sealed partial class CleanupViewModel : ObservableObject, ILocalizable
     }
 
     [RelayCommand]
-    private void ToggleGroup(CleanupGroupViewModel? group)
+    private async Task ToggleGroupAsync(CleanupGroupViewModel? group)
     {
         if (group is null)
         {
             return;
         }
 
-        group.ToggleAll();
+        var target = group.Items.Any(i => !i.IsChecked);
+        if (target)
+        {
+            var risky = group.Items
+                .Where(i => i.IsCleanable && !i.IsChecked && i.RequiresRiskConfirm)
+                .ToList();
+
+            if (!await ConfirmRiskAsync(risky, null).ConfigureAwait(true))
+            {
+                return;
+            }
+        }
+
+        _suppressRiskConfirm = true;
+        try
+        {
+            group.ToggleAll();
+        }
+        finally
+        {
+            _suppressRiskConfirm = false;
+        }
+
         group.RefreshSummary();
         RecalculateSelected();
     }
 
     [RelayCommand]
-    private void SelectAll()
+    private async Task SelectAllAsync()
     {
-        var target = Groups.SelectMany(g => g.Items).Any(i => !i.IsChecked);
+        var items = Groups.SelectMany(g => g.Items).ToList();
+        var target = items.Any(i => !i.IsChecked);
+
+        if (target)
+        {
+            var risky = items
+                .Where(i => i.IsCleanable && !i.IsChecked && i.RequiresRiskConfirm)
+                .ToList();
+
+            if (!await ConfirmRiskAsync(risky, null).ConfigureAwait(true))
+            {
+                return;
+            }
+        }
+
+        _suppressRiskConfirm = true;
+        try
+        {
+            foreach (var group in Groups)
+            {
+                foreach (var item in group.Items.Where(i => i.IsCleanable))
+                {
+                    item.IsChecked = target;
+                }
+            }
+        }
+        finally
+        {
+            _suppressRiskConfirm = false;
+        }
 
         foreach (var group in Groups)
         {
-            foreach (var item in group.Items.Where(i => i.IsCleanable))
-            {
-                item.IsChecked = target;
-            }
-
             group.RefreshSummary();
         }
 

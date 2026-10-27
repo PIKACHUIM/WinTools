@@ -5,7 +5,7 @@ telemetry-off|Privacy|关闭诊断遥测|Disable telemetry|Low|HKLM|SOFTWARE\Pol
 advertising-id-off|Privacy|关闭广告 ID|Disable advertising ID|Low|HKCU|SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo|Enabled|DWord|0
 activity-feed-off|Privacy|关闭活动历史|Disable activity history|Low|HKCU|SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy|PublishUserActivities|DWord|0
 activity-upload-off|Privacy|停止上传活动记录|Stop uploading activities|Low|HKCU|SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy|UploadUserActivities|DWord|0
-tailored-experiences-off|Privacy|关闭定制体验|Disable tailored experiences|Low|HKCU|SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy|TailoredExperiencesWithDiagnosticDataEnabled|DWord|0
+tailored-experiences-privacy-off|Privacy|关闭定制体验|Disable tailored experiences|Low|HKCU|SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy|TailoredExperiencesWithDiagnosticDataEnabled|DWord|0
 feedback-notifications-off|Privacy|关闭反馈提示|Disable feedback prompts|Low|HKCU|SOFTWARE\Microsoft\Siuf\Rules|NumberOfSIUFInPeriod|DWord|0
 online-speech-off|Privacy|关闭在线语音识别|Disable online speech recognition|Low|HKCU|SOFTWARE\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy|HasAccepted|DWord|0
 inking-personalization-off|Privacy|关闭手写数据收集|Disable inking data collection|Low|HKCU|SOFTWARE\Microsoft\InputPersonalization|RestrictImplicitTextCollection|DWord|1
@@ -70,8 +70,8 @@ no-auto-restart|Update|更新后不自动重启|Do not auto-restart after update
 update-notifications-off|Update|关闭更新提示|Disable update notifications|Low|HKLM|SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU|NoAutoUpdate|DWord|0
 gamebar-off|Gaming|关闭游戏栏|Disable Game Bar|Low|HKCU|SOFTWARE\Microsoft\GameBar|ShowStartupPanel|DWord|0
 game-capture-off|Gaming|关闭后台录制|Disable background recording|Low|HKCU|SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR|AppCaptureEnabled|DWord|0
-game-dvr-off|Gaming|关闭游戏 DVR|Disable Game DVR|Low|HKLM|SOFTWARE\Policies\Microsoft\Windows\GameDVR|AllowGameDVR|DWord|0
-game-mode-on|Gaming|启用游戏模式|Enable Game Mode|Low|HKCU|SOFTWARE\Microsoft\GameBar|AutoGameModeEnabled|DWord|1
+game-dvr-policy-off|Gaming|关闭游戏 DVR|Disable Game DVR|Low|HKLM|SOFTWARE\Policies\Microsoft\Windows\GameDVR|AllowGameDVR|DWord|0
+game-mode-toggle-on|Gaming|启用游戏模式|Enable Game Mode|Low|HKCU|SOFTWARE\Microsoft\GameBar|AutoGameModeEnabled|DWord|1
 fullscreen-opt-off|Gaming|关闭全屏优化|Disable fullscreen optimizations|Low|HKCU|System\GameConfigStore|GameDVR_FSEBehaviorMode|DWord|2
 mouse-trails-off|Gaming|关闭鼠标轨迹|Disable mouse trails|Low|HKCU|Control Panel\Mouse|MouseTrails|String|0
 sticky-keys-off|System|关闭粘滞键提示|Disable Sticky Keys prompts|Low|HKCU|Control Panel\Accessibility\StickyKeys|Flags|String|506

@@ -239,20 +239,135 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
         UpdatePending();
     }
 
-    private void OnRowChanged(object? sender, EventArgs e)
-    {
-        UpdatePending();
+    /// <summary>级联带出/关闭期间忽略逐行事件，避免递归。</summary>
+    private bool _cascade;
 
+    private IEnumerable<FeatureRowViewModel> AllRows => Groups.SelectMany(g => g.Items);
+
+    private async void OnRowChanged(object? sender, EventArgs e)
+    {
+        if (_cascade || sender is not FeatureRowViewModel row)
+        {
+            return;
+        }
+
+        if (row.IsOn)
+        {
+            var auto = new List<FeatureRowViewModel>();
+            _cascade = true;
+            try
+            {
+                auto = EnableDependencies([row]);
+            }
+            finally
+            {
+                _cascade = false;
+            }
+
+            if (auto.Count > 0)
+            {
+                UI.Toast.Info(Loc.F("Feat.AutoEnabled", auto.Count));
+            }
+        }
+        else
+        {
+            var dependents = FindDependents([row]);
+            if (dependents.Count > 0)
+            {
+                var confirmed = await UI.Confirm.AskAsync(new ConfirmRequest(
+                    Loc.T("Feat.DependencyTitle"),
+                    Loc.F("Feat.DependencyOff", row.Display, dependents.Count),
+                    dependents.Select(d => d.Display).ToList(),
+                    Loc.T("Feat.DisableAll"))).ConfigureAwait(true);
+
+                _cascade = true;
+                try
+                {
+                    if (confirmed)
+                    {
+                        foreach (var dependent in dependents)
+                        {
+                            dependent.IsOn = false;
+                        }
+                    }
+                    else
+                    {
+                        row.IsOn = true;
+                    }
+                }
+                finally
+                {
+                    _cascade = false;
+                }
+            }
+        }
+
+        RefreshAggregates();
+    }
+
+    private void RefreshAggregates()
+    {
         foreach (var group in Groups)
         {
-            group.RefreshSummary();
-
             foreach (var family in group.Families)
             {
                 family.RefreshSummary();
             }
+
+            group.RefreshSummary();
         }
+
+        UpdatePending();
     }
+
+    /// <summary>递归开启前置功能，返回被自动打开的行。</summary>
+    private List<FeatureRowViewModel> EnableDependencies(IEnumerable<FeatureRowViewModel> seeds)
+    {
+        var enabled = new List<FeatureRowViewModel>();
+        var queue = new Queue<FeatureRowViewModel>(seeds);
+
+        while (queue.Count > 0)
+        {
+            var current = queue.Dequeue();
+
+            foreach (var requirement in FeatureDependencies.RequirementsOf(current.Name))
+            {
+                foreach (var candidate in AllRows)
+                {
+                    if (candidate.IsOn || candidate.IsBusy ||
+                        !FeatureDependencies.Provides(candidate.Name, requirement))
+                    {
+                        continue;
+                    }
+
+                    candidate.IsOn = true;
+                    enabled.Add(candidate);
+                    queue.Enqueue(candidate);
+                }
+            }
+        }
+
+        return enabled;
+    }
+
+    /// <summary>找出依赖这些行、且当前已开启的功能（关闭时需要一起处理）。</summary>
+    private List<FeatureRowViewModel> FindDependents(IReadOnlyCollection<FeatureRowViewModel> offRows)
+    {
+        var names = offRows.Select(r => r.Name).ToList();
+
+        return AllRows
+            .Where(r => r.IsOn && !offRows.Contains(r))
+            .Where(r => FeatureDependencies.RequirementsOf(r.Name)
+                .Any(requirement => names.Any(name => FeatureDependencies.Provides(name, requirement))))
+            .ToList();
+    }
+
+    private Task<bool> ConfirmDisableAsync(string subject, IReadOnlyList<FeatureRowViewModel> dependents)
+        => UI.Confirm.AskAsync(new ConfirmRequest(
+            Loc.T("Feat.DependencyTitle"),
+            Loc.F("Feat.DependencyOff", subject, dependents.Count),
+            dependents.Select(d => d.Display).ToList(),
+            Loc.T("Feat.DisableAll")));
 
     private void UpdatePending()
     {
@@ -319,18 +434,64 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
         group.IsExpanded = !group.IsExpanded;
     }
 
-    /// <summary>父开关：整族开 / 关。</summary>
+    /// <summary>父开关：整族开 / 关；开启时带出前置功能，关闭时提示会连带关闭谁。</summary>
     [RelayCommand]
-    private void ToggleFamily(FeatureFamilyViewModel? family)
+    private async Task ToggleFamilyAsync(FeatureFamilyViewModel? family)
     {
         if (family is null)
         {
             return;
         }
 
-        family.SetAll(!family.AllOn);
+        var turnOn = !family.AllOn;
+
+        if (!turnOn)
+        {
+            var dependents = FindDependents(family.Items.Where(i => i.IsOn).ToList());
+            if (dependents.Count > 0)
+            {
+                if (!await ConfirmDisableAsync(family.Title, dependents).ConfigureAwait(true))
+                {
+                    return;
+                }
+
+                _cascade = true;
+                try
+                {
+                    foreach (var dependent in dependents)
+                    {
+                        dependent.IsOn = false;
+                    }
+                }
+                finally
+                {
+                    _cascade = false;
+                }
+            }
+        }
+
+        var auto = new List<FeatureRowViewModel>();
+        _cascade = true;
+        try
+        {
+            family.SetAll(turnOn);
+            if (turnOn)
+            {
+                auto = EnableDependencies(family.Items);
+            }
+        }
+        finally
+        {
+            _cascade = false;
+        }
+
         family.RefreshSummary();
-        UpdatePending();
+        RefreshAggregates();
+
+        if (auto.Count > 0)
+        {
+            UI.Toast.Info(Loc.F("Feat.AutoEnabled", auto.Count));
+        }
     }
 
     [RelayCommand]
@@ -343,7 +504,7 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
     }
 
     [RelayCommand]
-    private void ToggleGroupAll(FeatureGroupViewModel? group)
+    private async Task ToggleGroupAllAsync(FeatureGroupViewModel? group)
     {
         if (group is null)
         {
@@ -351,14 +512,53 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
         }
 
         var target = group.Items.Any(i => !i.IsOn);
-        group.SetAll(target);
 
-        foreach (var family in group.Families)
+        if (!target)
         {
-            family.RefreshSummary();
+            var dependents = FindDependents(group.Items.Where(i => i.IsOn).ToList());
+            if (dependents.Count > 0)
+            {
+                if (!await ConfirmDisableAsync(group.Title, dependents).ConfigureAwait(true))
+                {
+                    return;
+                }
+
+                _cascade = true;
+                try
+                {
+                    foreach (var dependent in dependents)
+                    {
+                        dependent.IsOn = false;
+                    }
+                }
+                finally
+                {
+                    _cascade = false;
+                }
+            }
         }
 
-        UpdatePending();
+        var auto = new List<FeatureRowViewModel>();
+        _cascade = true;
+        try
+        {
+            group.SetAll(target);
+            if (target)
+            {
+                auto = EnableDependencies(group.Items);
+            }
+        }
+        finally
+        {
+            _cascade = false;
+        }
+
+        RefreshAggregates();
+
+        if (auto.Count > 0)
+        {
+            UI.Toast.Info(Loc.F("Feat.AutoEnabled", auto.Count));
+        }
     }
 
     protected override void ToggleAllCore()
@@ -366,12 +566,25 @@ public sealed partial class SystemFeaturesSectionViewModel : SectionViewModelBas
         var all = Groups.SelectMany(g => g.Items).ToList();
         var target = all.Any(i => !i.IsOn);
 
-        foreach (var item in all)
+        _cascade = true;
+        try
         {
-            item.IsOn = target;
+            foreach (var item in all)
+            {
+                item.IsOn = target;
+            }
+
+            if (target)
+            {
+                EnableDependencies(all);
+            }
+        }
+        finally
+        {
+            _cascade = false;
         }
 
-        UpdatePending();
+        RefreshAggregates();
     }
 
     protected override async Task PrimaryCoreAsync(CancellationToken cancellationToken)
@@ -700,4 +913,42 @@ internal static class FeatureFamilies
 
         return null;
     }
+}
+
+/// <summary>
+/// 功能依赖表：开启左侧功能时自动勾选右侧前置项（前缀匹配，兼容不同版本的 DISM 名称）。
+/// WSL 与沙盒都建立在虚拟机平台 / Hyper-V 监控程序之上，单独勾选它们通常会在应用时报错。
+/// </summary>
+internal static class FeatureDependencies
+{
+    private static readonly (string Feature, string[] Requires)[] Rules =
+    [
+        ("Microsoft-Windows-Subsystem-Linux", ["VirtualMachinePlatform", "Microsoft-Hyper-V-Hypervisor"]),
+        ("VirtualMachinePlatform", ["Microsoft-Hyper-V-Hypervisor"]),
+        ("Containers-DisposableClientVM", ["VirtualMachinePlatform", "Containers"]),
+        ("Microsoft-Defender-ApplicationGuard", ["VirtualMachinePlatform", "Containers"]),
+        ("Containers", ["Microsoft-Hyper-V-Hypervisor"]),
+        ("Microsoft-Hyper-V-All", ["Microsoft-Hyper-V-Hypervisor"])
+    ];
+
+    /// <summary>该功能需要哪些前置功能（返回前缀）。</summary>
+    public static IReadOnlyList<string> RequirementsOf(string name)
+    {
+        var requirements = new List<string>();
+
+        foreach (var (feature, requires) in Rules)
+        {
+            if (name.StartsWith(feature, StringComparison.OrdinalIgnoreCase))
+            {
+                requirements.AddRange(requires);
+            }
+        }
+
+        return requirements.Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+    }
+
+    /// <summary>功能名是否满足某个前置要求（双向前缀匹配）。</summary>
+    public static bool Provides(string featureName, string requirement)
+        => featureName.StartsWith(requirement, StringComparison.OrdinalIgnoreCase) ||
+           requirement.StartsWith(featureName, StringComparison.OrdinalIgnoreCase);
 }

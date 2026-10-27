@@ -45,7 +45,7 @@
 
   "Cleanup.Title": "垃圾清理",
   "Cleanup.Subtitle": "按类型扫描并清理磁盘垃圾，可自定义扫描范围。",
-  "Cleanup.Paths": "扫描路径",
+  "Cleanup.Paths": "清理路径",
   "Cleanup.PathsHint": "默认扫描全部磁盘；可添加自定义目录以缩小范围。",
   "Cleanup.AddPath": "添加目录",
   "Cleanup.Rules": "清理规则",
@@ -427,5 +427,34 @@
   "Dashboard.Upload": "上行",
   "Dashboard.CustomBuild": "组装机",
   "Dashboard.Reading": "正在读取硬件信息…",
-  "Dashboard.LiveUsage": "实时占用"
+  "Dashboard.LiveUsage": "实时占用",
+
+  "Cleanup.Recommended": "推荐",
+  "Cleanup.HighRisk": "高风险",
+  "Cleanup.AboutCategory": "这类文件是什么",
+  "Cleanup.SampleFiles": "最大的 {0} 个文件",
+  "Cleanup.SampleHint": "仅为示例，清理时会删除该规则匹配的全部文件",
+  "Cleanup.DetailHint": "展开查看文件明细",
+  "Cleanup.RiskTitle": "要清理高风险项吗？",
+  "Cleanup.RiskMessage": "已勾选 {0} 项高风险类别（约 {1}）。这些位置可能包含仍在使用或需要保留的数据，清理后通常无法恢复。",
+  "Cleanup.RiskConfirm": "仍然勾选",
+
+  "Feat.AutoEnabled": "已自动勾选 {0} 项前置功能",
+  "Feat.DependencyTitle": "会连带关闭依赖功能",
+  "Feat.DependencyOff": "关闭「{0}」会同时关闭 {1} 项依赖它的功能。",
+  "Feat.DisableAll": "一并关闭",
+
+  "Wim.CompactOs": "应用后启用 Compact OS",
+  "Wim.FormatTarget": "格式化目标分区",
+  "Wim.FormatConfirmTitle": "确认格式化目标分区",
+  "Wim.FormatConfirm": "释放前会格式化 {0}，该分区上的全部数据都会被清除且无法恢复。",
+  "Wim.FormatOnlyRoot": "仅支持盘符根目录（如 D:\\），不支持子目录",
+  "Wim.ExistingImages": "现有映像索引",
+  "Wim.LoadImages": "读取索引",
+  "Wim.ImageCount": "共 {0} 个索引",
+  "Wim.ImageMissing": "没有可读取的映像文件",
+  "Wim.WimBoot": "启用 WIMBoot",
+  "Wim.WimBootHint": "WIMBoot 只支持 .wim 映像；需要系统与映像都支持 WIMBoot（Windows 10 1903 之后默认不再支持，DISM 会返回对应错误）。",
+  "Wim.WindowsToGo": "部署为 Windows To Go",
+  "Wim.WindowsToGoHint": "目标必须是 USB 磁盘的盘符根目录（如 E:\\）。会写入 BIOS/UEFI 引导文件；UEFI 机器需要目标盘已有 FAT32 引导分区，否则请用 BIOS/legacy 启动。"
 }

@@ -45,7 +45,7 @@
 
   "Cleanup.Title": "정크 파일 정리",
   "Cleanup.Subtitle": "종류별로 검사하고 불필요한 파일을 정리합니다. 검사 범위를 지정할 수 있습니다.",
-  "Cleanup.Paths": "검사 경로",
+  "Cleanup.Paths": "정리 경로",
   "Cleanup.PathsHint": "기본적으로 모든 드라이브를 검사합니다. 폴더를 추가해 범위를 좁힐 수 있습니다.",
   "Cleanup.AddPath": "폴더 추가",
   "Cleanup.Rules": "정리 규칙",
@@ -427,5 +427,34 @@
   "Dashboard.Upload": "업로드",
   "Dashboard.CustomBuild": "조립 PC",
   "Dashboard.Reading": "하드웨어 정보를 읽는 중…",
-  "Dashboard.LiveUsage": "실시간 사용률"
+  "Dashboard.LiveUsage": "실시간 사용률",
+
+  "Cleanup.Recommended": "추천",
+  "Cleanup.HighRisk": "높은 위험",
+  "Cleanup.AboutCategory": "이 파일들은 무엇인가요",
+  "Cleanup.SampleFiles": "가장 큰 파일 {0}개",
+  "Cleanup.SampleHint": "예시일 뿐이며, 정리 시 규칙에 맞는 모든 파일이 삭제됩니다",
+  "Cleanup.DetailHint": "파일 세부 정보 보기",
+  "Cleanup.RiskTitle": "높은 위험 항목을 정리할까요?",
+  "Cleanup.RiskMessage": "높은 위험 항목 {0}개(약 {1})를 선택했습니다. 사용 중인 데이터가 포함될 수 있으며 보통 복구할 수 없습니다.",
+  "Cleanup.RiskConfirm": "그래도 선택",
+
+  "Feat.AutoEnabled": "필수 기능 {0}개를 자동으로 선택했습니다",
+  "Feat.DependencyTitle": "종속 기능도 함께 해제됩니다",
+  "Feat.DependencyOff": "\"{0}\"을(를) 끄면 이에 종속된 기능 {1}개도 함께 꺼집니다.",
+  "Feat.DisableAll": "함께 끄기",
+
+  "Wim.CompactOs": "적용 후 Compact OS 사용",
+  "Wim.FormatTarget": "대상 파티션 포맷",
+  "Wim.FormatConfirmTitle": "대상 파티션 포맷 확인",
+  "Wim.FormatConfirm": "적용 전에 {0}을(를) 포맷합니다. 이 파티션의 모든 데이터가 삭제되며 복구할 수 없습니다.",
+  "Wim.FormatOnlyRoot": "드라이브 루트(예: D:\\)만 지원하며 하위 폴더는 안 됩니다",
+  "Wim.ExistingImages": "기존 이미지 인덱스",
+  "Wim.LoadImages": "인덱스 읽기",
+  "Wim.ImageCount": "인덱스 {0}개",
+  "Wim.ImageMissing": "읽을 수 있는 이미지 파일이 없습니다",
+  "Wim.WimBoot": "WIMBoot 사용",
+  "Wim.WimBootHint": "WIMBoot는 .wim 이미지 전용이며 Windows와 이미지 모두 지원해야 합니다(Windows 10 1903 이후 기본 미지원, DISM이 오류를 반환).",
+  "Wim.WindowsToGo": "Windows To Go로 배포",
+  "Wim.WindowsToGoHint": "대상은 USB 디스크 루트(예: E:\\)여야 합니다. BIOS/UEFI 부팅 파일을 기록하며, UEFI 컴퓨터는 대상에 FAT32 부팅 파티션이 필요합니다. 없으면 BIOS/레거시로 부팅하세요."
 }

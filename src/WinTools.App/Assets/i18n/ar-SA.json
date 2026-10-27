@@ -45,7 +45,7 @@
 
   "Cleanup.Title": "تنظيف الملفات غير الضرورية",
   "Cleanup.Subtitle": "افحص ونظّف حسب الفئة مع نطاق فحص قابل للتخصيص.",
-  "Cleanup.Paths": "مسارات الفحص",
+  "Cleanup.Paths": "مسارات التنظيف",
   "Cleanup.PathsHint": "يتم فحص كل الأقراص افتراضيًا؛ أضف مجلدات لتضييق النطاق.",
   "Cleanup.AddPath": "إضافة مجلد",
   "Cleanup.Rules": "قواعد التنظيف",
@@ -427,5 +427,34 @@
   "Dashboard.Upload": "رفع",
   "Dashboard.CustomBuild": "تجميع مخصص",
   "Dashboard.Reading": "جارٍ قراءة معلومات الأجهزة…",
-  "Dashboard.LiveUsage": "الاستخدام الفوري"
+  "Dashboard.LiveUsage": "الاستخدام الفوري",
+
+  "Cleanup.Recommended": "موصى به",
+  "Cleanup.HighRisk": "خطورة عالية",
+  "Cleanup.AboutCategory": "ما هي هذه الملفات",
+  "Cleanup.SampleFiles": "أكبر {0} ملفات",
+  "Cleanup.SampleHint": "أمثلة فقط — يُحذف كل ملف مطابق للقاعدة عند التنظيف",
+  "Cleanup.DetailHint": "عرض تفاصيل الملفات",
+  "Cleanup.RiskTitle": "هل تريد تنظيف العناصر عالية الخطورة؟",
+  "Cleanup.RiskMessage": "تم تحديد {0} فئات عالية الخطورة (حوالي {1}). قد تحتوي على بيانات قيد الاستخدام، والتنظيف عادةً غير قابل للتراجع.",
+  "Cleanup.RiskConfirm": "تحديد على أي حال",
+
+  "Feat.AutoEnabled": "تم تحديد {0} من الميزات المطلوبة تلقائيًا",
+  "Feat.DependencyTitle": "سيتم أيضًا إيقاف الميزات التابعة",
+  "Feat.DependencyOff": "إيقاف \"{0}\" سيوقف أيضًا {1} من الميزات التابعة له.",
+  "Feat.DisableAll": "إيقاف معًا",
+
+  "Wim.CompactOs": "تفعيل Compact OS بعد التطبيق",
+  "Wim.FormatTarget": "تهيئة القسم الهدف",
+  "Wim.FormatConfirmTitle": "تأكيد تهيئة القسم الهدف",
+  "Wim.FormatConfirm": "ستتم تهيئة {0} قبل التطبيق، وستُحذف كل البيانات على هذا القسم دون إمكانية الاستعادة.",
+  "Wim.FormatOnlyRoot": "تُدعم جذور الأقراص فقط (مثل D:\\) وليس المجلدات الفرعية",
+  "Wim.ExistingImages": "فهارس الصور الحالية",
+  "Wim.LoadImages": "قراءة الفهارس",
+  "Wim.ImageCount": "{0} فهارس",
+  "Wim.ImageMissing": "لا يوجد ملف صورة قابل للقراءة",
+  "Wim.WimBoot": "استخدام WIMBoot",
+  "Wim.WimBootHint": "يعمل WIMBoot مع صور .wim فقط، ويجب دعمه في Windows والصورة معًا (غير مدعوم افتراضيًا منذ Windows 10 1903، وسيعرض DISM الخطأ).",
+  "Wim.WindowsToGo": "النشر كـ Windows To Go",
+  "Wim.WindowsToGoHint": "يجب أن يكون الهدف جذر قرص USB (مثل E:\\). ستُكتب ملفات إقلاع BIOS/UEFI؛ وتحتاج أجهزة UEFI إلى قسم إقلاع FAT32 موجود مسبقًا، وإلا فابدأ بوضع BIOS/legacy."
 }

@@ -160,8 +160,32 @@ public sealed class WimService : IWimService
 
         var extension = Path.GetExtension(request.ImagePath).ToLowerInvariant();
 
-        // 分卷 / ESD 交给 DISM 释放更稳妥
-        if (extension is ".esd" or ".swm")
+        if (request.WimBoot && extension != ".wim")
+        {
+            return OperationResult.Fail("WIMBoot 只支持 .wim 映像；ESD / SWM 请改用普通释放");
+        }
+
+        if (request.WindowsToGo)
+        {
+            var wtg = ValidateWindowsToGo(request.TargetPath);
+            if (wtg is not null)
+            {
+                return wtg;
+            }
+        }
+
+        // 释放前格式化：只允许盘符根目录，且拒绝当前运行中的系统盘
+        if (request.FormatTarget)
+        {
+            var formatted = FormatTargetVolume(request.TargetPath);
+            if (!formatted.Success)
+            {
+                return formatted;
+            }
+        }
+
+        // 分卷 / ESD / WIMBoot 交给 DISM 释放更稳妥
+        if (request.WimBoot || extension is ".esd" or ".swm")
         {
             return ApplyWithDism(request, cancellationToken).GetAwaiter().GetResult();
         }
@@ -198,7 +222,16 @@ public sealed class WimService : IWimService
                 }
 
                 _logger.Audit("Wim.Apply", request.ImagePath, $"索引 {request.ImageIndex} -> {request.TargetPath}");
-                return OperationResult.Ok("映像已释放完成", 1);
+
+                var boot = request.WindowsToGo
+                    ? WriteWindowsToGoBoot(request.TargetPath)
+                    : string.Empty;
+
+                var compact = request.WindowsToGo
+                    ? (request.CompactOs ? "，Windows To Go 模式已跳过 Compact OS" : string.Empty)
+                    : CompactSuffix(request.CompactOs, cancellationToken);
+
+                return OperationResult.Ok("映像已释放完成" + compact + boot, 1);
             }
             finally
             {
@@ -373,6 +406,154 @@ public sealed class WimService : IWimService
         return OperationResult.Fail("格式转换失败: " + result.Combined.Trim());
     }
 
+    /// <summary>释放完成后启用 Compact OS（compact.exe /compactos:always），返回可直接拼到结果里的后缀。</summary>
+    private string CompactSuffix(bool enabled, CancellationToken cancellationToken)
+    {
+        if (!enabled)
+        {
+            return string.Empty;
+        }
+
+        var result = ProcessRunner.RunAsync(
+            "compact.exe",
+            ["/compactos:always"],
+            3_600_000,
+            cancellationToken).GetAwaiter().GetResult();
+
+        _logger.Audit("Wim.CompactOs", "compact /compactos:always", $"exit={result.ExitCode}");
+
+        return result.ExitCode == 0
+            ? "，已启用 Compact OS"
+            : "，但 Compact OS 设置失败：" + result.Combined.Trim();
+    }
+
+    /// <summary>Windows To Go 前置校验：必须是 USB 磁盘的盘符根目录，且不能是当前系统盘。</summary>
+    private OperationResult? ValidateWindowsToGo(string targetPath)
+    {
+        var normalized = targetPath.Trim().TrimEnd('\\', '/');
+        var root = Path.GetPathRoot(normalized);
+
+        if (string.IsNullOrEmpty(root) ||
+            root.Length < 2 || root[1] != ':' ||
+            !string.Equals(root.TrimEnd('\\', '/'), normalized, StringComparison.OrdinalIgnoreCase))
+        {
+            return OperationResult.Fail("Windows To Go 需要选择可移动磁盘的根目录，例如 E:\\");
+        }
+
+        var systemRoot = Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.Windows));
+        if (!string.IsNullOrEmpty(systemRoot) &&
+            string.Equals(systemRoot.TrimEnd('\\', '/'), normalized, StringComparison.OrdinalIgnoreCase))
+        {
+            return OperationResult.Fail("不能把正在运行的系统分区部署为 Windows To Go");
+        }
+
+        var letter = char.ToUpperInvariant(root[0]);
+        var bus = ProcessRunner.RunPowerShellAsync(
+            $"(Get-Partition -DriveLetter '{letter}' | Get-Disk).BusType",
+            60_000).GetAwaiter().GetResult();
+
+        if (!bus.Success || !bus.StdOut.Contains("USB", StringComparison.OrdinalIgnoreCase))
+        {
+            return OperationResult.Fail("目标不是 USB 磁盘；Windows To Go 需要 U 盘或移动硬盘");
+        }
+
+        return null;
+    }
+
+    /// <summary>写入 Windows To Go 引导文件，并把 MBR 分区标记为活动（BIOS 启动需要）。</summary>
+    private string WriteWindowsToGoBoot(string targetPath)
+    {
+        var target = targetPath.Trim();
+        var windowsDir = Path.Combine(target, "Windows");
+
+        if (!Directory.Exists(windowsDir))
+        {
+            return "，但目标分区没有 Windows 目录，已跳过 Windows To Go 引导写入";
+        }
+
+        var root = Path.GetPathRoot(target)?.TrimEnd('\\') ?? target;
+        var boot = ProcessRunner.RunAsync(
+            "bcdboot.exe",
+            [windowsDir, "/s", root, "/f", "ALL"],
+            300_000).GetAwaiter().GetResult();
+
+        _logger.Audit("Wim.WindowsToGo", target, $"bcdboot exit={boot.ExitCode}");
+
+        MarkVolumeActive(root, windowsDir);
+
+        return boot.ExitCode == 0
+            ? "，已写入 Windows To Go 引导（BIOS/UEFI）"
+            : "，但 Windows To Go 引导写入失败：" + boot.Combined.Trim();
+    }
+
+    /// <summary>diskpart 标记活动分区；GPT 磁盘会报错，属正常情况。</summary>
+    private void MarkVolumeActive(string root, string windowsDir)
+    {
+        var script = Path.Combine(Path.GetTempPath(), "wintools-wtg-" + Guid.NewGuid().ToString("N") + ".txt");
+
+        try
+        {
+            var letter = char.ToUpperInvariant(root[0]);
+            File.WriteAllText(script, $"select volume {letter}\r\nactive\r\n", global::System.Text.Encoding.ASCII);
+            ProcessRunner.RunAsync("diskpart.exe", ["/s", script], 120_000).GetAwaiter().GetResult();
+            _logger.Audit("Wim.WindowsToGo", windowsDir, $"diskpart active {letter}:");
+        }
+        catch (Exception ex)
+        {
+            _logger.Warn("Wim.WindowsToGo", "标记活动分区失败: " + ex.Message);
+        }
+        finally
+        {
+            TryDelete(script);
+        }
+    }
+
+    /// <summary>格式化目标分区：只接受盘符根目录，且拒绝正在运行的系统分区。</summary>
+    private OperationResult FormatTargetVolume(string targetPath)
+    {
+        var normalized = targetPath.Trim().TrimEnd('\\', '/');
+        var root = Path.GetPathRoot(normalized);
+
+        if (string.IsNullOrEmpty(root) ||
+            root.Length < 2 || root[1] != ':' ||
+            !string.Equals(root.TrimEnd('\\', '/'), normalized, StringComparison.OrdinalIgnoreCase))
+        {
+            return OperationResult.Fail("格式化只支持盘符根目录，例如 D:\\");
+        }
+
+        var systemRoot = Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.Windows));
+        if (!string.IsNullOrEmpty(systemRoot) &&
+            string.Equals(systemRoot.TrimEnd('\\', '/'), normalized, StringComparison.OrdinalIgnoreCase))
+        {
+            return OperationResult.Fail("不能格式化正在运行的系统分区");
+        }
+
+        var letter = char.ToUpperInvariant(root[0]);
+
+        try
+        {
+            var drive = new DriveInfo(letter + ":");
+            if (!drive.IsReady)
+            {
+                return OperationResult.Fail($"分区 {letter}: 未就绪，无法格式化");
+            }
+        }
+        catch (Exception ex)
+        {
+            return OperationResult.Fail($"找不到分区 {letter}: {ex.Message}");
+        }
+
+        var result = ProcessRunner.RunPowerShellAsync(
+            $"Format-Volume -DriveLetter '{letter}' -FileSystem NTFS -Confirm:$false -Force",
+            900_000).GetAwaiter().GetResult();
+
+        _logger.Audit("Wim.Format", letter + ":\\", $"exit={result.ExitCode}");
+
+        return result.ExitCode == 0
+            ? OperationResult.Ok($"已格式化 {letter}:", 1)
+            : OperationResult.Fail("格式化失败: " + result.Combined.Trim());
+    }
+
     private async Task<OperationResult> ApplyWithDism(WimApplyRequest request, CancellationToken cancellationToken)
     {
         var arguments = new List<string>
@@ -389,6 +570,11 @@ public sealed class WimService : IWimService
             arguments.Add("/Verify");
         }
 
+        if (request.WimBoot)
+        {
+            arguments.Add("/WIMBoot");
+        }
+
         var result = await ProcessRunner.RunAsync(
             "dism.exe",
             arguments,
@@ -402,13 +588,19 @@ public sealed class WimService : IWimService
             return OperationResult.Fail("释放失败: " + result.Combined.Trim());
         }
 
+        var compact = request.WindowsToGo
+            ? (request.CompactOs ? "，Windows To Go 模式已跳过 Compact OS" : string.Empty)
+            : CompactSuffix(request.CompactOs, cancellationToken);
+
+        var wtg = request.WindowsToGo ? WriteWindowsToGoBoot(request.TargetPath) : string.Empty;
+
         // 释放完成后可选修复引导：bcdboot 是系统里唯一的引导写入入口
-        if (request.RepairBoot)
+        if (request.RepairBoot && !request.WindowsToGo)
         {
             var windowsDir = Path.Combine(request.TargetPath, "Windows");
             if (!Directory.Exists(windowsDir))
             {
-                return OperationResult.Ok("映像已释放，但目标分区没有 Windows 目录，已跳过引导修复", 1);
+                return OperationResult.Ok("映像已释放，但目标分区没有 Windows 目录，已跳过引导修复" + compact, 1);
             }
 
             var boot = await ProcessRunner.RunAsync(
@@ -420,11 +612,11 @@ public sealed class WimService : IWimService
             _logger.Audit("Wim.BootRepair", request.TargetPath, $"exit={boot.ExitCode}");
 
             return boot.ExitCode == 0
-                ? OperationResult.Ok("映像已释放，引导已修复", 1)
-                : OperationResult.Ok("映像已释放，但引导修复失败：" + boot.Combined.Trim(), 1);
+                ? OperationResult.Ok("映像已释放，引导已修复" + compact, 1)
+                : OperationResult.Ok("映像已释放，但引导修复失败：" + boot.Combined.Trim() + compact, 1);
         }
 
-        return OperationResult.Ok("映像已释放完成", 1);
+        return OperationResult.Ok("映像已释放完成" + compact + wtg, 1);
     }
 
     private static void TryDelete(string path)

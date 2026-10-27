@@ -1,22 +1,192 @@
 [
-  { "id": "SystemTemp",      "glyph": "\uE74D", "order": 10 },
-  { "id": "SystemUpdate",    "glyph": "\uE896", "order": 20 },
-  { "id": "SystemLog",       "glyph": "\uE7C3", "order": 30 },
-  { "id": "SystemComponent", "glyph": "\uE8F1", "order": 40 },
-  { "id": "SystemCache",     "glyph": "\uE81C", "order": 50 },
-  { "id": "CrashDump",       "glyph": "\uE7BA", "order": 60 },
-  { "id": "PageFile",        "glyph": "\uE8A5", "order": 70 },
-  { "id": "RecycleBin",      "glyph": "\uE74D", "order": 80 },
-  { "id": "Browser",         "glyph": "\uE774", "order": 90 },
-  { "id": "DevCache",        "glyph": "\uE943", "order": 100 },
-  { "id": "DevLog",          "glyph": "\uE7C3", "order": 110 },
-  { "id": "DevBuild",        "glyph": "\uE943", "order": 120 },
-  { "id": "AppCache",        "glyph": "\uE8B7", "order": 130 },
-  { "id": "AppLog",          "glyph": "\uE7C3", "order": 140 },
-  { "id": "RootMisc",        "glyph": "\uE8B7", "order": 150 },
-
-  { "id": "VideoCache",     "glyph": "\uE8B2", "order": 160 },
-  { "id": "MusicCache",     "glyph": "\uE8D6", "order": 170 },
-  { "id": "SecuritySuite",  "glyph": "\uE72E", "order": 180 },
-  { "id": "DriverLeftover", "glyph": "\uE90F", "order": 190 }
+  {
+    "id": "SystemTemp",
+    "glyph": "\uE74D",
+    "order": 10,
+    "description": {
+      "zh-Hans": "系统与用户临时目录。安装程序、解压、打印等操作产生的中间文件，正常情况下退出后即失效，可以安全清理。",
+      "zh-Hant": "系統與使用者暫存目錄。安裝程式、解壓縮、列印等操作產生的中間檔案，正常情況下結束後即失效，可以安全清理。",
+      "en-US": "System and user temp folders. Intermediate files from installers, extraction and printing become obsolete once the operation finishes, so they are safe to remove."
+    }
+  },
+  {
+    "id": "SystemUpdate",
+    "glyph": "\uE896",
+    "order": 20,
+    "description": {
+      "zh-Hans": "Windows 更新的下载缓存与旧版本安装包。清理后系统需要更新时会重新下载。",
+      "zh-Hant": "Windows 更新的下載快取與舊版安裝套件。清理後系統需要更新時會重新下載。",
+      "en-US": "Windows Update download cache and previous update packages. Windows downloads them again when the next update needs them."
+    }
+  },
+  {
+    "id": "SystemLog",
+    "glyph": "\uE7C3",
+    "order": 30,
+    "description": {
+      "zh-Hans": "系统日志、错误报告与诊断跟踪文件。清理后不影响功能，但会丢失排查问题的历史记录。",
+      "zh-Hant": "系統記錄、錯誤報告與診斷追蹤檔案。清理後不影響功能，但會遺失排查問題的歷史記錄。",
+      "en-US": "System logs, error reports and diagnostic traces. Removing them does not affect functionality, but troubleshooting history is lost."
+    }
+  },
+  {
+    "id": "SystemComponent",
+    "glyph": "\uE8F1",
+    "order": 40,
+    "description": {
+      "zh-Hans": "组件存储（WinSxS）的临时文件与旧组件备份。清理后无法卸载已安装的更新，也无法回滚到旧组件版本。",
+      "zh-Hant": "元件存放區（WinSxS）的暫存檔案與舊元件備份。清理後無法解除安裝已安裝的更新，也無法回復到舊元件版本。",
+      "en-US": "Temporary and superseded files in the component store (WinSxS). After cleanup, installed updates can no longer be uninstalled."
+    }
+  },
+  {
+    "id": "SystemCache",
+    "glyph": "\uE81C",
+    "order": 50,
+    "description": {
+      "zh-Hans": "缩略图、图标、字体与 DirectX 着色器等系统缓存。系统会自动重建，首次打开资源管理器可能稍慢。",
+      "zh-Hant": "縮圖、圖示、字型與 DirectX 著色器等系統快取。系統會自動重建，首次開啟檔案總管可能稍慢。",
+      "en-US": "Thumbnail, icon, font and DirectX shader caches. Windows rebuilds them automatically; the first Explorer launch may be slower."
+    }
+  },
+  {
+    "id": "CrashDump",
+    "glyph": "\uE7BA",
+    "order": 60,
+    "description": {
+      "zh-Hans": "程序或系统崩溃时生成的内存转储。用于事后分析，普通用户不需要保留，单个文件可能达到数百 MB。",
+      "zh-Hant": "程式或系統崩潰時產生的記憶體傾印。用於事後分析，一般使用者不需要保留，單一檔案可能達到數百 MB。",
+      "en-US": "Memory dumps written when an app or Windows crashes. Only useful for post-mortem debugging; a single dump can be hundreds of MB."
+    }
+  },
+  {
+    "id": "PageFile",
+    "glyph": "\uE8A5",
+    "order": 70,
+    "description": {
+      "zh-Hans": "虚拟内存页面文件与休眠文件。系统正在使用，仅展示占用，不提供清理。",
+      "zh-Hant": "虛擬記憶體分頁檔與休眠檔。系統正在使用，僅顯示佔用，不提供清理。",
+      "en-US": "Page file and hibernation file. These are in use by Windows, so they are listed for information only."
+    }
+  },
+  {
+    "id": "RecycleBin",
+    "glyph": "\uE74D",
+    "order": 80,
+    "description": {
+      "zh-Hans": "回收站。其中的文件仍占用磁盘空间，清空后无法再恢复。",
+      "zh-Hant": "資源回收筒。其中的檔案仍佔用磁碟空間，清空後無法再還原。",
+      "en-US": "The Recycle Bin. Deleted files still occupy disk space until the bin is emptied, after which they cannot be restored."
+    }
+  },
+  {
+    "id": "Browser",
+    "glyph": "\uE774",
+    "order": 90,
+    "description": {
+      "zh-Hans": "浏览器缓存、崩溃报告与旧版本残留。清理后部分网站首次加载会变慢，登录状态一般不受影响。",
+      "zh-Hant": "瀏覽器快取、當機報告與舊版本殘留。清理後部分網站首次載入會變慢，登入狀態一般不受影響。",
+      "en-US": "Browser caches, crash reports and leftovers from previous versions. Some sites will load slower once, but sign-in state is normally preserved."
+    }
+  },
+  {
+    "id": "DevCache",
+    "glyph": "\uE943",
+    "order": 100,
+    "description": {
+      "zh-Hans": "开发工具缓存（NuGet、npm、pip、Gradle、编译器中间产物等）。下次构建会自动重新下载或生成。",
+      "zh-Hant": "開發工具快取（NuGet、npm、pip、Gradle、編譯器中間產物等）。下次建置會自動重新下載或產生。",
+      "en-US": "Developer tool caches such as NuGet, npm, pip, Gradle and compiler intermediates. They are re-downloaded or regenerated on the next build."
+    }
+  },
+  {
+    "id": "DevLog",
+    "glyph": "\uE7C3",
+    "order": 110,
+    "description": {
+      "zh-Hans": "开发工具与 SDK 的日志、诊断输出。可安全删除。",
+      "zh-Hant": "開發工具與 SDK 的記錄、診斷輸出。可安全刪除。",
+      "en-US": "Logs and diagnostic output from developer tools and SDKs. Safe to delete."
+    }
+  },
+  {
+    "id": "DevBuild",
+    "glyph": "\uE943",
+    "order": 120,
+    "description": {
+      "zh-Hans": "项目构建输出（bin、obj、target、dist 等）。删除后需要重新编译，源码与依赖清单不受影响。",
+      "zh-Hant": "專案建置輸出（bin、obj、target、dist 等）。刪除後需要重新編譯，原始碼與相依性清單不受影響。",
+      "en-US": "Project build output such as bin, obj, target and dist. A rebuild is required afterwards; source code and manifests are untouched."
+    }
+  },
+  {
+    "id": "AppCache",
+    "glyph": "\uE8B7",
+    "order": 130,
+    "description": {
+      "zh-Hans": "第三方应用的缓存目录。应用会在需要时重建，首次启动或首次加载内容可能稍慢。",
+      "zh-Hant": "第三方應用程式的快取目錄。應用程式會在需要時重建，首次啟動或首次載入內容可能稍慢。",
+      "en-US": "Cache folders of third-party apps. Apps rebuild them on demand; the first launch or first content load may be slower."
+    }
+  },
+  {
+    "id": "AppLog",
+    "glyph": "\uE7C3",
+    "order": 140,
+    "description": {
+      "zh-Hans": "第三方应用的日志文件。可安全删除，不影响应用设置与数据。",
+      "zh-Hant": "第三方應用程式的記錄檔。可安全刪除，不影響應用程式設定與資料。",
+      "en-US": "Log files of third-party apps. Safe to delete; app settings and data are not affected."
+    }
+  },
+  {
+    "id": "RootMisc",
+    "glyph": "\uE8B7",
+    "order": 150,
+    "description": {
+      "zh-Hans": "磁盘根目录下的杂项残留（安装包、旧系统备份、临时导出等）。清理前请确认不是自己要保留的数据。",
+      "zh-Hant": "磁碟根目錄下的雜項殘留（安裝套件、舊系統備份、暫存匯出等）。清理前請確認不是自己要保留的資料。",
+      "en-US": "Miscellaneous leftovers in drive roots such as installers, old system backups and temporary exports. Confirm they are not data you want to keep."
+    }
+  },
+  {
+    "id": "VideoCache",
+    "glyph": "\uE8B2",
+    "order": 160,
+    "description": {
+      "zh-Hans": "视频播放器与剪辑软件的缓存、代理文件。清理后首次播放或预览需要重新生成。",
+      "zh-Hant": "影片播放器與剪輯軟體的快取、代理檔案。清理後首次播放或預覽需要重新產生。",
+      "en-US": "Caches and proxy files from video players and editors. They are regenerated on the next playback or preview."
+    }
+  },
+  {
+    "id": "MusicCache",
+    "glyph": "\uE8D6",
+    "order": 170,
+    "description": {
+      "zh-Hans": "音乐软件缓存与临时音频文件。清理后需要重新缓存，已购买或已下载的曲目一般不受影响。",
+      "zh-Hant": "音樂軟體快取與暫存音訊檔案。清理後需要重新快取，已購買或已下載的曲目一般不受影響。",
+      "en-US": "Music app caches and temporary audio files. They are cached again when needed; purchased or downloaded tracks are normally unaffected."
+    }
+  },
+  {
+    "id": "SecuritySuite",
+    "glyph": "\uE72E",
+    "order": 180,
+    "description": {
+      "zh-Hans": "安全软件的隔离区、扫描缓存与旧病毒库。清理隔离区会丢失被隔离的样本，通常无法恢复。",
+      "zh-Hant": "安全軟體的隔離區、掃描快取與舊病毒庫。清理隔離區會遺失被隔離的樣本，通常無法還原。",
+      "en-US": "Quarantine, scan caches and outdated virus definitions from security software. Quarantined samples are lost and usually unrecoverable."
+    }
+  },
+  {
+    "id": "DriverLeftover",
+    "glyph": "\uE90F",
+    "order": 190,
+    "description": {
+      "zh-Hans": "驱动安装包解压残留与旧驱动备份。清理后回滚驱动需要重新下载。",
+      "zh-Hant": "驅動程式安裝套件解壓縮殘留與舊驅動程式備份。清理後回復驅動程式需要重新下載。",
+      "en-US": "Leftovers from driver installers and backups of previous drivers. Rolling a driver back requires downloading it again."
+    }
+  }
 ]

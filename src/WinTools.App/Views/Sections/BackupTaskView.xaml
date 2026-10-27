@@ -79,6 +79,53 @@
                              Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 
+                <!-- 追加模式：先看清现有索引，再决定是否追加 -->
+                <StackPanel Style="{StaticResource FieldRow}"
+                            Visibility="{Binding IsAppend, Converter={StaticResource BoolToVisibility}}">
+                    <Grid>
+                        <TextBlock Text="{Binding ExistingImagesLabel}" Style="{StaticResource FieldLabel}"
+                                   VerticalAlignment="Center" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Text="{Binding ImageListStatus}" Style="{StaticResource CaptionText}"
+                                       VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <Button Content="{Binding LoadImagesLabel}" Style="{StaticResource GhostButton}"
+                                    Padding="10,4" Command="{Binding LoadImagesCommand}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Border Background="{DynamicResource App.SurfaceAlt}"
+                            BorderBrush="{DynamicResource App.Border}" BorderThickness="1"
+                            CornerRadius="8" Padding="12,8" Margin="0,6,0,0"
+                            Visibility="{Binding ExistingImages.Count, Converter={StaticResource CountToVisibility}}">
+                        <ItemsControl ItemsSource="{Binding ExistingImages}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,3">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="{Binding Title}" FontSize="12" TextTrimming="CharacterEllipsis"
+                                                       Foreground="{DynamicResource App.Text.Primary}" />
+                                            <TextBlock Text="{Binding Description}" Style="{StaticResource CaptionText}"
+                                                       FontSize="11" TextTrimming="CharacterEllipsis"
+                                                       Visibility="{Binding Description, Converter={StaticResource StringToVisibility}}" />
+                                        </StackPanel>
+
+                                        <TextBlock Grid.Column="1" Text="{Binding SizeText}" Style="{StaticResource CaptionText}"
+                                                   Margin="12,0,0,0" VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="2" Text="{Binding Compression}" Style="{StaticResource CaptionText}"
+                                                   Margin="12,0,0,0" VerticalAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                </StackPanel>
+
                 <!-- 释放目标 / 索引 -->
                 <Grid Visibility="{Binding ShowApplySettings, Converter={StaticResource BoolToVisibility}}">
                     <Grid.ColumnDefinitions>
@@ -161,7 +208,29 @@
                     <CheckBox Style="{StaticResource AppCheckBox}" Content="{Binding RepairBootLabel}"
                               IsChecked="{Binding RepairBoot}" Margin="20,0,0,0"
                               Visibility="{Binding ShowApplySettings, Converter={StaticResource BoolToVisibility}}" />
+                    <CheckBox Style="{StaticResource AppCheckBox}" Content="{Binding CompactOsLabel}"
+                              IsChecked="{Binding CompactOs}" Margin="20,0,0,0"
+                              Visibility="{Binding ShowApplySettings, Converter={StaticResource BoolToVisibility}}" />
+                    <CheckBox Style="{StaticResource AppCheckBox}" Content="{Binding FormatTargetLabel}"
+                              IsChecked="{Binding FormatTarget}" Margin="20,0,0,0"
+                              Foreground="{DynamicResource App.Danger}"
+                              Visibility="{Binding ShowApplySettings, Converter={StaticResource BoolToVisibility}}" />
+                    <CheckBox Style="{StaticResource AppCheckBox}" Content="{Binding WimBootLabel}"
+                              IsChecked="{Binding WimBoot}" Margin="20,0,0,0"
+                              Visibility="{Binding ShowApplySettings, Converter={StaticResource BoolToVisibility}}" />
+                    <CheckBox Style="{StaticResource AppCheckBox}" Content="{Binding WindowsToGoLabel}"
+                              IsChecked="{Binding WindowsToGo}" Margin="20,0,0,0"
+                              Visibility="{Binding ShowApplySettings, Converter={StaticResource BoolToVisibility}}" />
                 </WrapPanel>
+
+                <!-- WIMBoot / Windows To Go 的适用条件 -->
+                <TextBlock Text="{Binding WindowsToGoHint}" Style="{StaticResource CaptionText}"
+                           TextWrapping="Wrap" Margin="0,0,0,12"
+                           Visibility="{Binding WindowsToGo, Converter={StaticResource BoolToVisibility}}" />
+
+                <TextBlock Text="{Binding WimBootHint}" Style="{StaticResource CaptionText}"
+                           TextWrapping="Wrap" Margin="0,0,0,12"
+                           Visibility="{Binding WimBoot, Converter={StaticResource BoolToVisibility}}" />
 
                 <!-- 操作与进度 -->
                 <Grid>

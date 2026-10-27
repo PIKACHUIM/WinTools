@@ -45,7 +45,7 @@
 
   "Cleanup.Title": "Pulizia file inutili",
   "Cleanup.Subtitle": "Analizza e pulisci per categoria, con ambito personalizzabile.",
-  "Cleanup.Paths": "Percorsi di analisi",
+  "Cleanup.Paths": "Percorsi di pulizia",
   "Cleanup.PathsHint": "Per impostazione predefinita vengono analizzate tutte le unità; aggiungi cartelle per restringere.",
   "Cleanup.AddPath": "Aggiungi cartella",
   "Cleanup.Rules": "Regole di pulizia",
@@ -427,5 +427,34 @@
   "Dashboard.Upload": "Upload",
   "Dashboard.CustomBuild": "Assemblaggio",
   "Dashboard.Reading": "Lettura dell'hardware…",
-  "Dashboard.LiveUsage": "Utilizzo live"
+  "Dashboard.LiveUsage": "Utilizzo live",
+
+  "Cleanup.Recommended": "Consigliato",
+  "Cleanup.HighRisk": "Rischio elevato",
+  "Cleanup.AboutCategory": "Cosa sono questi file",
+  "Cleanup.SampleFiles": "I {0} file più grandi",
+  "Cleanup.SampleHint": "Solo esempi: la pulizia rimuove tutti i file corrispondenti alla regola",
+  "Cleanup.DetailHint": "Mostra dettagli",
+  "Cleanup.RiskTitle": "Pulire gli elementi ad alto rischio?",
+  "Cleanup.RiskMessage": "{0} categorie ad alto rischio selezionate ({1}). Possono contenere dati ancora in uso e la pulizia è di solito irreversibile.",
+  "Cleanup.RiskConfirm": "Seleziona comunque",
+
+  "Feat.AutoEnabled": "Sono state attivate automaticamente {0} funzionalità necessarie",
+  "Feat.DependencyTitle": "Verranno disattivate anche le funzionalità dipendenti",
+  "Feat.DependencyOff": "Disattivare \"{0}\" disattiva anche {1} funzionalità dipendenti.",
+  "Feat.DisableAll": "Disattiva insieme",
+
+  "Wim.CompactOs": "Attiva Compact OS dopo l'applicazione",
+  "Wim.FormatTarget": "Formatta la partizione di destinazione",
+  "Wim.FormatConfirmTitle": "Conferma formattazione della partizione di destinazione",
+  "Wim.FormatConfirm": "{0} verrà formattato prima dell'applicazione; tutti i dati della partizione saranno cancellati e non recuperabili.",
+  "Wim.FormatOnlyRoot": "Sono supportate solo le radici di unità (es. D:\\), non le sottocartelle",
+  "Wim.ExistingImages": "Indici immagine esistenti",
+  "Wim.LoadImages": "Leggi indici",
+  "Wim.ImageCount": "{0} indici",
+  "Wim.ImageMissing": "Nessun file immagine leggibile",
+  "Wim.WimBoot": "Usa WIMBoot",
+  "Wim.WimBootHint": "WIMBoot funziona solo con immagini .wim e richiede il supporto sia di Windows sia dell'immagine (non supportato da Windows 10 1903; DISM segnalerà l'errore).",
+  "Wim.WindowsToGo": "Distribuisci come Windows To Go",
+  "Wim.WindowsToGoHint": "La destinazione deve essere la radice di un disco USB (es. E:\\). Vengono scritti i file di avvio BIOS/UEFI; i computer UEFI richiedono una partizione di avvio FAT32 esistente, altrimenti avvia in modalità BIOS/legacy."
 }

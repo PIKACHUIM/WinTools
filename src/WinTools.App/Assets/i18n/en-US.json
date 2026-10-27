@@ -45,7 +45,7 @@
 
   "Cleanup.Title": "Junk cleanup",
   "Cleanup.Subtitle": "Scan and clean junk by category, with a custom scan scope.",
-  "Cleanup.Paths": "Scan paths",
+  "Cleanup.Paths": "Cleanup paths",
   "Cleanup.PathsHint": "All drives are scanned by default; add folders to narrow the scope.",
   "Cleanup.AddPath": "Add folder",
   "Cleanup.Rules": "Cleanup rules",
@@ -427,5 +427,34 @@
   "Dashboard.Upload": "Upload",
   "Dashboard.CustomBuild": "Custom build",
   "Dashboard.Reading": "Reading hardware…",
-  "Dashboard.LiveUsage": "Live usage"
+  "Dashboard.LiveUsage": "Live usage",
+
+  "Cleanup.Recommended": "Recommended",
+  "Cleanup.HighRisk": "High risk",
+  "Cleanup.AboutCategory": "What these files are",
+  "Cleanup.SampleFiles": "Largest {0} files",
+  "Cleanup.SampleHint": "Samples only — cleanup removes every file matching the rule",
+  "Cleanup.DetailHint": "Show file details",
+  "Cleanup.RiskTitle": "Clean high-risk items?",
+  "Cleanup.RiskMessage": "{0} high-risk categories selected ({1}). These locations may contain data still in use, and cleanup is usually irreversible.",
+  "Cleanup.RiskConfirm": "Select anyway",
+
+  "Feat.AutoEnabled": "{0} required features were enabled automatically",
+  "Feat.DependencyTitle": "Dependent features will also be turned off",
+  "Feat.DependencyOff": "Turning off \"{0}\" also turns off {1} feature(s) that depend on it.",
+  "Feat.DisableAll": "Turn off together",
+
+  "Wim.CompactOs": "Enable Compact OS after applying",
+  "Wim.FormatTarget": "Format the target partition",
+  "Wim.FormatConfirmTitle": "Confirm formatting the target partition",
+  "Wim.FormatConfirm": "{0} will be formatted before applying; all data on that partition is erased and cannot be recovered.",
+  "Wim.FormatOnlyRoot": "Only drive roots are supported (for example D:\\), not subfolders",
+  "Wim.ExistingImages": "Existing image indexes",
+  "Wim.LoadImages": "Read indexes",
+  "Wim.ImageCount": "{0} indexes",
+  "Wim.ImageMissing": "No readable image file",
+  "Wim.WimBoot": "Use WIMBoot",
+  "Wim.WimBootHint": "WIMBoot works with .wim images only, and both Windows and the image must support it (unsupported by default since Windows 10 1903; DISM will report the error).",
+  "Wim.WindowsToGo": "Deploy as Windows To Go",
+  "Wim.WindowsToGoHint": "The target must be a USB disk root (for example E:\\). BIOS/UEFI boot files are written; UEFI machines need an existing FAT32 boot partition on the target, otherwise boot in BIOS/legacy mode."
 }

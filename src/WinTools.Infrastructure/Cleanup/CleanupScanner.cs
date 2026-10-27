@@ -14,6 +14,9 @@ namespace WinTools.Infrastructure.Cleanup;
 /// </summary>
 public sealed class CleanupScanner
 {
+    /// <summary>每条规则保留几个代表文件（展开明细用）。</summary>
+    private const int SampleLimit = 8;
+
     private readonly IAppLogger _logger;
 
     public CleanupScanner(IAppLogger logger) => _logger = logger;
@@ -116,6 +119,15 @@ public sealed class CleanupScanner
                 result.Targets.Add(target);
             }
 
+            // 多条路径的代表文件合并成一条规则的 top N
+            foreach (var target in targets)
+            {
+                foreach (var sample in target.SampleFiles)
+                {
+                    AddSample(result.SampleFiles, sample);
+                }
+            }
+
             results[index] = result;
 
             var done = Interlocked.Increment(ref completed);
@@ -180,6 +192,7 @@ public sealed class CleanupScanner
                 target.Exists = true;
                 target.SizeBytes = file.Length;
                 target.FileCount = 1;
+                target.SampleFiles.Add(new CleanupSampleFile(file.FullName, file.Length));
             }
 
             return;
@@ -209,47 +222,88 @@ public sealed class CleanupScanner
         long directories = 0;
         var counter = 0;
 
-        var enumerable = new FileSystemEnumerable<long>(
+        // 只记体积最大的 N 个：路径字符串按需生成，普通文件不产生额外分配
+        var samples = new List<CleanupSampleFile>(SampleLimit);
+        var threshold = 0L;
+
+        var enumerable = new FileSystemEnumerable<(long Size, string? SamplePath)>(
             target.Path,
             (ref FileSystemEntry entry) =>
             {
                 if (entry.IsDirectory)
                 {
-                    return -1;
+                    return (-1, null);
                 }
 
                 if (cutoff.HasValue && entry.LastWriteTimeUtc >= cutoff.Value)
                 {
-                    return -2;
+                    return (-2, null);
                 }
 
-                return entry.Length;
+                var length = entry.Length;
+                return samples.Count < SampleLimit || length > threshold
+                    ? (length, entry.ToFullPath())
+                    : (length, null);
             },
             options);
 
-        foreach (var value in enumerable)
+        foreach (var (value, samplePath) in enumerable)
         {
             if ((++counter & 0x7FF) == 0)
             {
                 token.ThrowIfCancellationRequested();
             }
 
-            switch (value)
+            if (value < 0)
             {
-                case -1:
+                if (value == -1)
+                {
                     directories++;
-                    break;
-                case -2:
-                    break;
-                default:
-                    size += value;
-                    files++;
-                    break;
+                }
+
+                continue;
+            }
+
+            size += value;
+            files++;
+
+            if (samplePath is not null)
+            {
+                AddSample(samples, new CleanupSampleFile(samplePath, value));
+                if (samples.Count >= SampleLimit)
+                {
+                    threshold = samples[^1].SizeBytes;
+                }
             }
         }
 
         target.SizeBytes = size;
         target.FileCount = files;
         target.DirectoryCount = directories;
+        target.SampleFiles.AddRange(samples);
+    }
+
+    /// <summary>把候选文件按体积插入 top N（N 很小，线性插入足够）。</summary>
+    private static void AddSample(List<CleanupSampleFile> samples, CleanupSampleFile sample)
+    {
+        if (samples.Count >= SampleLimit && sample.SizeBytes <= samples[^1].SizeBytes)
+        {
+            return;
+        }
+
+        var index = samples.FindIndex(s => s.SizeBytes < sample.SizeBytes);
+        if (index < 0)
+        {
+            samples.Add(sample);
+        }
+        else
+        {
+            samples.Insert(index, sample);
+        }
+
+        if (samples.Count > SampleLimit)
+        {
+            samples.RemoveAt(samples.Count - 1);
+        }
     }
 }

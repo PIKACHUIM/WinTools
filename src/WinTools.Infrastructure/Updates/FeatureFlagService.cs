@@ -32,26 +32,63 @@ public sealed class FeatureFlagService : IFeatureFlagService
                 return (IReadOnlyList<FeatureFlagEntry>)list;
             }
 
-            foreach (var featureId in root.GetSubKeyNames())
+            // 两种布局都要认：
+            //   旧版 Overrides\<特性ID>
+            //   新版 Overrides\<优先级>\<特性ID>（24H2 起常见）
+            var byId = new Dictionary<string, FeatureFlagEntry>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var containerName in root.GetSubKeyNames())
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                using var key = root.OpenSubKey(featureId);
-                if (key is null)
+                using var container = root.OpenSubKey(containerName);
+                if (container is null)
                 {
                     continue;
                 }
 
-                list.Add(new FeatureFlagEntry(
+                if (container.GetValue("EnabledState") is not null)
+                {
+                    Add(container, containerName, ReadInt(container, "Priority", 0));
+                    continue;
+                }
+
+                var containerPriority = int.TryParse(containerName, out var priority) ? priority : 0;
+
+                foreach (var featureId in container.GetSubKeyNames())
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    using var key = container.OpenSubKey(featureId);
+                    if (key?.GetValue("EnabledState") is null)
+                    {
+                        continue;
+                    }
+
+                    Add(key, featureId, ReadInt(key, "Priority", containerPriority));
+                }
+            }
+
+            void Add(RegistryKey key, string featureId, int priority)
+            {
+                var entry = new FeatureFlagEntry(
                     featureId,
                     ReadInt(key, "EnabledState", 2),
                     ReadInt(key, "EnabledStateOptions", 0),
                     ReadInt(key, "Variant", 0),
                     ReadInt(key, "VariantPayloadKind", 0),
-                    ReadInt(key, "Priority", 0),
+                    priority,
                     FeatureNames.GetName(featureId),
-                    FeatureNames.GetDescription(featureId)));
+                    FeatureNames.GetDescription(featureId));
+
+                // 同一特性可能挂在多个优先级下，保留优先级最高的那条
+                if (!byId.TryGetValue(featureId, out var existing) || priority >= existing.Priority)
+                {
+                    byId[featureId] = entry;
+                }
             }
+
+            list.AddRange(byId.Values);
         }
         catch (Exception ex)
         {
@@ -68,9 +105,10 @@ public sealed class FeatureFlagService : IFeatureFlagService
     {
         try
         {
-            using var key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                .OpenSubKey(OverridesPath, writable: true)
-                ?.OpenSubKey(entry.FeatureId, writable: true);
+            using var root = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
+                .OpenSubKey(OverridesPath, writable: true);
+
+            using var key = root is null ? null : OpenFeatureKey(root, entry.FeatureId, writable: true);
 
             if (key is null)
             {
@@ -99,9 +137,10 @@ public sealed class FeatureFlagService : IFeatureFlagService
     {
         try
         {
-            using var key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
-                .OpenSubKey(OverridesPath, writable: true)
-                ?.OpenSubKey(entry.FeatureId, writable: true);
+            using var root = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
+                .OpenSubKey(OverridesPath, writable: true);
+
+            using var key = root is null ? null : OpenFeatureKey(root, entry.FeatureId, writable: true);
 
             if (key is null)
             {
@@ -166,7 +205,26 @@ public sealed class FeatureFlagService : IFeatureFlagService
                 return OperationResult.Fail("找不到覆盖项根键");
             }
 
-            parent.DeleteSubKeyTree(entry.FeatureId, throwOnMissingSubKey: false);
+            // 旧版直接挂在 Overrides 下；新版挂在优先级子键下
+            if (parent.OpenSubKey(entry.FeatureId) is not null)
+            {
+                parent.DeleteSubKeyTree(entry.FeatureId, throwOnMissingSubKey: false);
+            }
+            else
+            {
+                foreach (var containerName in parent.GetSubKeyNames())
+                {
+                    using var container = parent.OpenSubKey(containerName, writable: true);
+                    if (container?.OpenSubKey(entry.FeatureId) is null)
+                    {
+                        continue;
+                    }
+
+                    container.DeleteSubKeyTree(entry.FeatureId, throwOnMissingSubKey: false);
+                    break;
+                }
+            }
+
             _logger.Audit("FeatureFlag.Remove", entry.FeatureId);
             return OperationResult.Ok("已删除，重启后恢复系统默认", 1, restartRequired: true);
         }
@@ -176,6 +234,40 @@ public sealed class FeatureFlagService : IFeatureFlagService
             return OperationResult.Fail(ex.Message);
         }
     }, cancellationToken);
+
+    /// <summary>按 ID 找到特性覆盖项：先找旧版直挂位置，再找新版的优先级子键。</summary>
+    private static RegistryKey? OpenFeatureKey(RegistryKey root, string featureId, bool writable)
+    {
+        var direct = root.OpenSubKey(featureId, writable);
+        if (direct is not null)
+        {
+            if (direct.GetValue("EnabledState") is not null)
+            {
+                return direct;
+            }
+
+            direct.Dispose();
+        }
+
+        foreach (var containerName in root.GetSubKeyNames())
+        {
+            if (string.Equals(containerName, featureId, StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            using var container = root.OpenSubKey(containerName);
+            var candidate = container?.OpenSubKey(featureId, writable);
+            if (candidate is not null && candidate.GetValue("EnabledState") is not null)
+            {
+                return candidate;
+            }
+
+            candidate?.Dispose();
+        }
+
+        return null;
+    }
 
     private static int ReadInt(RegistryKey key, string name, int fallback)
     {

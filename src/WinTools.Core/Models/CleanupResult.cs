@@ -1,5 +1,8 @@
 namespace WinTools.Core.Models;
 
+/// <summary>扫描时顺手采样的代表文件（只保留体积最大的若干个，用于界面展开明细）。</summary>
+public sealed record CleanupSampleFile(string Path, long SizeBytes);
+
 /// <summary>一个具体路径的扫描结果。</summary>
 public sealed class CleanupTarget
 {
@@ -9,6 +12,8 @@ public sealed class CleanupTarget
     public long DirectoryCount { get; set; }
     public bool AccessDenied { get; set; }
     public bool Exists { get; set; }
+    /// <summary>该路径下体积最大的几个文件（扫描时顺带采集，不额外遍历）。</summary>
+    public List<CleanupSampleFile> SampleFiles { get; } = new();
 }
 
 /// <summary>单条规则的扫描结果。</summary>
@@ -17,6 +22,8 @@ public sealed class CleanupRuleResult
     public required CleanupRule Rule { get; init; }
     public List<CleanupTarget> Targets { get; } = new();
     public List<string> Errors { get; } = new();
+    /// <summary>跨路径汇总后的代表文件，按体积倒序。</summary>
+    public List<CleanupSampleFile> SampleFiles { get; } = new();
 
     public long TotalSize => Targets.Sum(t => t.SizeBytes);
     public long TotalFiles => Targets.Sum(t => t.FileCount);

@@ -37,6 +37,7 @@
     <SolidColorBrush x:Key="App.Amber" Color="#FFE9B44C" />
     <SolidColorBrush x:Key="App.Amber.Soft" Color="#22E9B44C" />
     <SolidColorBrush x:Key="App.Success.Soft" Color="#2252D69B" />
+    <SolidColorBrush x:Key="App.Danger.Soft" Color="#26FF7B7B" />
 
     <SolidColorBrush x:Key="App.Safety1" Color="#FF52D69B" />
     <SolidColorBrush x:Key="App.Safety2" Color="#FFE9B44C" />
