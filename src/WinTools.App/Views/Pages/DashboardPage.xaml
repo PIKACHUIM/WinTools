@@ -52,7 +52,8 @@
         <Style x:Key="CardShell" TargetType="Border" BasedOn="{StaticResource Card}">
             <Setter Property="Padding" Value="18,16" />
             <Setter Property="Margin" Value="0,0,6,12" />
-            <Setter Property="VerticalAlignment" Value="Top" />
+            <!-- 同一行的卡片拉平到等高，避免右侧留出页面底色空档 -->
+            <Setter Property="VerticalAlignment" Value="Stretch" />
         </Style>
 
         <Style x:Key="CardShellRight" TargetType="Border" BasedOn="{StaticResource CardShell}">
@@ -448,45 +449,56 @@
                     </StackPanel>
                 </Border>
 
-                <!-- 处理器 -->
+                <!-- 处理器：头部 / 指标紧随分隔线 / 小卡片贴底，多余高度只留在指标与底部之间 -->
                 <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource CardShellRight}">
-                    <StackPanel>
-                        <Grid>
-                            <StackPanel Orientation="Horizontal">
-                                <Border Style="{StaticResource IconTile}" Background="{DynamicResource App.Violet.Soft}">
-                                    <TextBlock Text="CPU" Style="{StaticResource IconText}"
-                                               Foreground="{DynamicResource App.Violet}" />
-                                </Border>
-                                <StackPanel Margin="11,0,0,0" VerticalAlignment="Center" MaxWidth="320">
-                                    <TextBlock Text="{Binding CpuLabel}" Style="{StaticResource CardTitle}" />
-                                    <TextBlock Text="{Binding CpuSummary}" Style="{StaticResource CardSubtitle}" />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Style="{StaticResource IconTile}" Background="{DynamicResource App.Violet.Soft}">
+                                        <TextBlock Text="CPU" Style="{StaticResource IconText}"
+                                                   Foreground="{DynamicResource App.Violet}" />
+                                    </Border>
+                                    <StackPanel Margin="11,0,0,0" VerticalAlignment="Center" MaxWidth="320">
+                                        <TextBlock Text="{Binding CpuLabel}" Style="{StaticResource CardTitle}" />
+                                        <TextBlock Text="{Binding CpuSummary}" Style="{StaticResource CardSubtitle}" />
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
 
-                            <Button Style="{StaticResource CopyButton}" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                    Command="{Binding CopyCardCommand}" CommandParameter="cpu" />
-                        </Grid>
+                                <Button Style="{StaticResource CopyButton}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                        Command="{Binding CopyCardCommand}" CommandParameter="cpu" />
+                            </Grid>
 
-                        <Border Style="{StaticResource CardDivider}" />
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding CpuPercent, Converter={StaticResource PercentText}}"
-                                       Style="{StaticResource BigMetric}" />
-                            <TextBlock Text="{Binding LiveUsageLabel}" Style="{StaticResource LabelText}" />
+                            <Border Style="{StaticResource CardDivider}" />
                         </StackPanel>
 
-                        <ProgressBar Style="{StaticResource AppProgress}" Maximum="100"
-                                     Value="{Binding CpuPercent}" Margin="0,8,0,0"
-                                     Foreground="{DynamicResource App.Violet}" />
+                        <StackPanel Grid.Row="1" Margin="0,14,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding CpuPercent, Converter={StaticResource PercentText}}"
+                                           Style="{StaticResource BigMetric}" />
+                                <TextBlock Text="{Binding LiveUsageLabel}" Style="{StaticResource LabelText}" />
+                            </StackPanel>
 
-                        <ItemsControl ItemsSource="{Binding CpuChips}" Margin="0,13,0,0">
+                            <ProgressBar Style="{StaticResource AppProgress}" Maximum="100"
+                                         Value="{Binding CpuPercent}" Margin="0,8,0,0"
+                                         Foreground="{DynamicResource App.Violet}" />
+                        </StackPanel>
+
+                        <ItemsControl Grid.Row="2" ItemsSource="{Binding CpuChips}" Margin="0,13,0,0"
+                                      VerticalAlignment="Bottom">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel Orientation="Horizontal" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
-                    </StackPanel>
+                    </Grid>
                 </Border>
 
                 <!-- 内存 -->
@@ -532,38 +544,49 @@
                     </StackPanel>
                 </Border>
 
-                <!-- 显卡 -->
+                <!-- 显卡：与处理器同构，指标紧随分隔线、显卡列表贴底 -->
                 <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource CardShellRight}">
-                    <StackPanel>
-                        <Grid>
-                            <StackPanel Orientation="Horizontal">
-                                <Border Style="{StaticResource IconTile}" Background="{DynamicResource App.Accent.Soft}">
-                                    <TextBlock Text="GPU" Style="{StaticResource IconText}"
-                                               Foreground="{DynamicResource App.Accent}" />
-                                </Border>
-                                <StackPanel Margin="11,0,0,0" VerticalAlignment="Center" MaxWidth="320">
-                                    <TextBlock Text="{Binding GraphicsLabel}" Style="{StaticResource CardTitle}" />
-                                    <TextBlock Text="{Binding GpuSummary}" Style="{StaticResource CardSubtitle}" />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0">
+                            <Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Style="{StaticResource IconTile}" Background="{DynamicResource App.Accent.Soft}">
+                                        <TextBlock Text="GPU" Style="{StaticResource IconText}"
+                                                   Foreground="{DynamicResource App.Accent}" />
+                                    </Border>
+                                    <StackPanel Margin="11,0,0,0" VerticalAlignment="Center" MaxWidth="320">
+                                        <TextBlock Text="{Binding GraphicsLabel}" Style="{StaticResource CardTitle}" />
+                                        <TextBlock Text="{Binding GpuSummary}" Style="{StaticResource CardSubtitle}" />
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
 
-                            <Button Style="{StaticResource CopyButton}" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                    Command="{Binding CopyCardCommand}" CommandParameter="graphics" />
-                        </Grid>
+                                <Button Style="{StaticResource CopyButton}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                        Command="{Binding CopyCardCommand}" CommandParameter="graphics" />
+                            </Grid>
 
-                        <Border Style="{StaticResource CardDivider}" />
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding GpuPercent, Converter={StaticResource PercentText}}"
-                                       Style="{StaticResource BigMetric}" />
-                            <TextBlock Text="{Binding GpuLabel}" Style="{StaticResource LabelText}" />
+                            <Border Style="{StaticResource CardDivider}" />
                         </StackPanel>
 
-                        <ProgressBar Style="{StaticResource AppProgress}" Maximum="100"
-                                     Value="{Binding GpuPercent}" Margin="0,8,0,0" />
+                        <StackPanel Grid.Row="1" Margin="0,14,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding GpuPercent, Converter={StaticResource PercentText}}"
+                                           Style="{StaticResource BigMetric}" />
+                                <TextBlock Text="{Binding GpuLabel}" Style="{StaticResource LabelText}" />
+                            </StackPanel>
 
-                        <ItemsControl ItemsSource="{Binding Graphics}" Margin="0,13,0,0" />
-                    </StackPanel>
+                            <ProgressBar Style="{StaticResource AppProgress}" Maximum="100"
+                                         Value="{Binding GpuPercent}" Margin="0,8,0,0" />
+                        </StackPanel>
+
+                        <ItemsControl Grid.Row="2" ItemsSource="{Binding Graphics}" Margin="0,13,0,0"
+                                      VerticalAlignment="Bottom" />
+                    </Grid>
                 </Border>
 
                 <!-- 存储 -->
