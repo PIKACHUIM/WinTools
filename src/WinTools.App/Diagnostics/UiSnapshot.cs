@@ -24,6 +24,7 @@ internal static class UiSnapshot
     [
         "Dashboard",
         "Cleanup",
+        "Migrate",
         "Optimize",
         "Features.SystemFeatures",
         "Features.EditionSwitch",
@@ -221,6 +222,18 @@ internal static class UiSnapshot
 
         var pixelWidth = (int)Math.Ceiling(content.ActualWidth);
         var pixelHeight = (int)Math.Ceiling(content.ActualHeight);
+
+        // 页面模板刚切换时 ActualWidth 可能还是 0，补几次布局再放弃
+        for (var attempt = 0; attempt < 3 && (pixelWidth <= 0 || pixelHeight <= 0); attempt++)
+        {
+            Pump(window);
+            Thread.Sleep(200);
+            content.Measure(new Size(width, height));
+            content.Arrange(new Rect(0, 0, width, height));
+            pixelWidth = (int)Math.Ceiling(content.ActualWidth);
+            pixelHeight = (int)Math.Ceiling(content.ActualHeight);
+        }
+
         if (pixelWidth <= 0 || pixelHeight <= 0)
         {
             BootTrace.Log($"skipped empty snapshot: {key}");

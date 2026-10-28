@@ -680,6 +680,15 @@
                      ]
     },
     {
+        "id":  "Migrate",
+        "glyph":  "\uE8B7",
+        "order":  11,
+        "page":  "FileMigration",
+        "sections":  [
+
+                     ]
+    },
+    {
         "id":  "Settings",
         "glyph":  "",
         "order":  99,

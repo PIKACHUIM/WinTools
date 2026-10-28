@@ -181,6 +181,7 @@ public sealed partial class ShellViewModel : ObservableObject
         {
             "Dashboard" => _provider.GetRequiredService<DashboardViewModel>(),
             "Cleanup" => _provider.GetRequiredService<CleanupViewModel>(),
+            "FileMigration" => _provider.GetRequiredService<FileMigrationViewModel>(),
             "Optimize" => _provider.GetRequiredService<OptimizeViewModel>(),
             "Settings" => _provider.GetRequiredService<SettingsViewModel>(),
             "FeatureManagement" => _provider.GetRequiredService<FeatureManagementViewModel>(),

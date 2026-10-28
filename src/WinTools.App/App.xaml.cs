@@ -60,6 +60,7 @@ public partial class App : Application
         collection.AddSingleton<AppManagementViewModel>();
         collection.AddSingleton<DriverManagementViewModel>();
         collection.AddSingleton<BackupRestoreViewModel>();
+        collection.AddSingleton<FileMigrationViewModel>();
 
         collection.AddSingleton<ShellWindow>();
 

@@ -236,6 +236,9 @@
                         <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
                             <pages:DashboardPage />
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:FileMigrationViewModel}">
+                            <pages:FileMigrationPage />
+                        </DataTemplate>
                         <DataTemplate DataType="{x:Type vm:CleanupViewModel}">
                             <pages:CleanupPage />
                         </DataTemplate>

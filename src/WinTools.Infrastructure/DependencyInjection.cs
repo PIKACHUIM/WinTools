@@ -7,6 +7,7 @@ using WinTools.Infrastructure.Components;
 using WinTools.Infrastructure.Drivers;
 using WinTools.Infrastructure.Features;
 using WinTools.Infrastructure.Logging;
+using WinTools.Infrastructure.Migration;
 using WinTools.Infrastructure.Rules;
 using WinTools.Infrastructure.Run;
 using WinTools.Infrastructure.Runtimes;
@@ -60,6 +61,7 @@ public static class DependencyInjection
 
         // 备份还原
         services.AddSingleton<IWimService, WimService>();
+    services.AddSingleton<IMigrationService, MigrationService>();
 
         return services;
     }
