@@ -29,7 +29,7 @@ Dieci moduli: **Pulizia, Ottimizzazione, Funzionalità, Aggiornamenti, Avvio, Co
 ## Requisiti
 
 - Windows 10 1809 (17763) o successivo, oppure Windows 11, x64
-- La versione dipendente dal framework richiede [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
+- La versione cartella (frame) include il runtime .NET 10, non serve installarlo a parte
 - Permessi di amministratore (dichiarati nel manifest); DISM, driver, servizi e immagini ne dipendono
 - Alcune funzioni usano componenti di Windows: DISM, Windows Update Agent, `pnputil`, WIMGAPI. Possono mancare nelle immagini ridotte
 
@@ -38,7 +38,7 @@ Dieci moduli: **Pulizia, Ottimizzazione, Funzionalità, Aggiornamenti, Avvio, Co
 | Versione | Note | Link |
 | --- | --- | --- |
 | Portatile | Runtime incluso, scompatta ed esegui | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Dipendente dal framework | Richiede .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Versione cartella | Runtime .NET 10 incluso (nessuna installazione) | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | Ricompilata a ogni push su `main` | [Pre-release Beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 Le versioni ufficiali hanno firma cloud Certum con marca temporale, verificabile con `Get-AuthenticodeSignature`. Ogni versione include `SHA256SUMS.txt`.

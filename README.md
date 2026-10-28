@@ -31,7 +31,7 @@ WPF 桌面程序，不在后台常驻，也不自行联网。只有搜索更新�
 ## 系统要求
 
 - Windows 10 1809（17763）及以上，或 Windows 11，x64
-- 框架依赖版需要 [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
+- 目录版（frame）自带 .NET 10 运行时，解压即可运行，无需另行安装
 - 需要管理员权限（清单里已声明），DISM、驱动、服务、镜像操作都依赖它
 - 部分功能调用系统自带组件：DISM、Windows Update Agent、`pnputil`、WIMGAPI。精简版系统上可能已被移除
 
@@ -40,7 +40,7 @@ WPF 桌面程序，不在后台常驻，也不自行联网。只有搜索更新�
 | 版本 | 说明 | 下载 |
 | --- | --- | --- |
 | 便携版 | 自带运行时，解压即用 | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| 框架依赖版 | 需要 .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 目录版 | 自带 .NET 10 运行时（无需安装） | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | 每次推送到 `main` 自动重建 | [Beta 预发布](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 各版本体积以 Releases 页面里的实际附件为准。

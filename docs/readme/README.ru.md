@@ -29,7 +29,7 @@
 ## Требования
 
 - Windows 10 1809 (17763) или новее, либо Windows 11, x64
-- Версии, зависящей от платформы, нужен [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
+- Папка (frame) содержит среду выполнения .NET 10, отдельная установка не нужна
 - Права администратора (объявлены в манифесте): от них зависят DISM, драйверы, службы и работа с образами
 - Часть функций обращается к компонентам Windows: DISM, Windows Update Agent, `pnputil`, WIMGAPI. В урезанных образах их может не быть
 
@@ -38,7 +38,7 @@
 | Вариант | Примечание | Ссылка |
 | --- | --- | --- |
 | Портативный | Среда выполнения включена, распаковать и запустить | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Зависит от платформы | Нужен .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Папка | Включает .NET 10 Runtime (установка не нужна) | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | Пересобирается при каждом push в `main` | [Предварительная версия Beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 Официальные сборки подписаны облачным сертификатом Certum с отметкой времени; проверка через `Get-AuthenticodeSignature`. К каждой версии прилагается `SHA256SUMS.txt`.

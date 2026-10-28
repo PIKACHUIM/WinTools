@@ -65,7 +65,7 @@ Name: "launch_task"; Description: "免 UAC 启动（创建计划任务，推荐�
 Name: "launch_direct"; Description: "直接启动（每次询问管理员权限）"; GroupDescription: "启动方式："; Flags: exclusive unchecked
 
 [Files]
-; 框架依赖包：目标机需已安装 .NET 10 Desktop Runtime，安装程序会检查
+; 目录版自带 .NET 10 运行时，目标机无需预装
 Source: "{#SourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 ; 免 UAC 启动脚本（仅当选了计划任务方式）
@@ -89,43 +89,3 @@ Filename: "{sys}\wscript.exe"; Parameters: """{app}\launch.vbs"""; Description: 
 
 [UninstallRun]
 Filename: "{sys}\schtasks.exe"; Parameters: "/delete /tn ""WinTools"" /f"; Flags: runhidden; RunOnceId: "DelLaunchTask"
-
-[Code]
-const
-  DotNetDownloadUrl = 'https://dotnet.microsoft.com/download/dotnet/10.0';
-
-function IsDotNet10Installed(): Boolean;
-var
-  Names: TArrayOfString;
-  I: Integer;
-  Version: String;
-begin
-  Result := False;
-  if not RegGetSubkeyNames(HKLM64, 'SOFTWARE\dotnet\Setup\InstalledVersions\x64\sharedfx\Microsoft.WindowsDesktop.App', Names) then
-    Exit;
-
-  for I := 0 to GetArrayLength(Names) - 1 do
-  begin
-    Version := Names[I];
-    if Pos('10.', Version) = 1 then
-    begin
-      Result := True;
-      Exit;
-    end;
-  end;
-end;
-
-function InitializeSetup(): Boolean;
-var
-  ErrorCode: Integer;
-begin
-  Result := True;
-  if not IsDotNet10Installed() then
-  begin
-    if MsgBox('未检测到 .NET 10 Desktop Runtime，程序无法启动。' + #13#10 +
-              '是否现在打开下载页面？', mbConfirmation, MB_YESNO) = IDYES then
-      ShellExec('open', DotNetDownloadUrl, '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode);
-
-    // 不强制中断：允许用户先装运行时再启动程序
-  end;
-end;

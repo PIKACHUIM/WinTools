@@ -6,7 +6,7 @@ name: Build
 #
 # 产物（Windows x64）：
 #   · 便携单文件 WinTools.exe（自包含，解压即用）
-#   · 框架依赖包 zip（需目标机已装 .NET 10 Desktop Runtime）
+#   · 目录版 zip（自带 .NET 10 运行时，无需预装）
 #   · SHA256SUMS.txt
 #
 # 代码签名（Certum 云签名 / SimplySign），需要三个 Repository Secrets：
@@ -344,7 +344,7 @@ jobs:
           New-Item -ItemType Directory -Force -Path dist | Out-Null
 
           # 命名：WinTools-<beta|版本>-<green|frame|setup>-win-x64.<ext>
-          #   green = 单文件便携版，frame = 框架依赖压缩包，setup = 安装包
+          #   green = 单文件便携版，frame = 自带运行时的目录版压缩包，setup = 安装包
           $token = if ($channel -eq 'beta') { 'beta' } else { $version.TrimStart('v', 'V') }
           $greenName = "WinTools-$token-green-win-x64.exe"
           $frameName = "WinTools-$token-frame-win-x64.zip"
@@ -467,7 +467,7 @@ jobs:
           | 文件 | 说明 |
           | --- | --- |
           | \`$PORTABLE\` | 便携单文件，解压即用，无需安装 .NET |
-          | \`$FRAMEWORK\` | 框架依赖包，需已安装 .NET 10 Desktop Runtime |
+          | \`$FRAMEWORK\` | 目录版，自带 .NET 10 运行时，解压即用 |
           | \`SHA256SUMS.txt\` | 校验和 |
 
           - 数字签名：$( [[ "$SIGNED" == "true" ]] && echo '已签名（Certum 云签名）' || echo '未签名（本次缺少签名凭据）' )
@@ -515,7 +515,7 @@ jobs:
           | 文件 | 说明 |
           | --- | --- |
           | \`$PORTABLE\` | 便携单文件，解压即用，无需安装 .NET |
-          | \`$FRAMEWORK\` | 框架依赖包，需已安装 .NET 10 Desktop Runtime |
+          | \`$FRAMEWORK\` | 目录版，自带 .NET 10 运行时，解压即用 |
           | \`SHA256SUMS.txt\` | 校验和 |
 
           - 数字签名：已签名（Certum 云签名，带时间戳），可用 \`Get-AuthenticodeSignature\` 校验

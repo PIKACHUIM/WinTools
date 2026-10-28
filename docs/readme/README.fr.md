@@ -29,7 +29,7 @@ Dix modules : **Nettoyage, Optimisation, Fonctionnalités, Mises à jour, Démar
 ## Configuration requise
 
 - Windows 10 1809 (17763) ou ultérieur, ou Windows 11, x64
-- La version dépendante du framework nécessite [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
+- La version dossier (frame) inclut le runtime .NET 10, aucune installation séparée n'est nécessaire
 - Droits administrateur (déclarés dans le manifeste) ; DISM, pilotes, services et images en dépendent
 - Certaines fonctions appellent des composants Windows : DISM, Windows Update Agent, `pnputil`, WIMGAPI. Ils peuvent manquer sur une image allégée
 
@@ -38,7 +38,7 @@ Dix modules : **Nettoyage, Optimisation, Fonctionnalités, Mises à jour, Démar
 | Version | Remarque | Lien |
 | --- | --- | --- |
 | Portable | Runtime inclus, décompresser et lancer | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Dépendante du framework | Nécessite .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Version dossier | Runtime .NET 10 inclus (aucune installation requise) | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | Reconstruite à chaque push sur `main` | [Préversion Beta](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 Les versions officielles portent une signature cloud Certum avec horodatage, vérifiable via `Get-AuthenticodeSignature`. Un `SHA256SUMS.txt` accompagne chaque version.

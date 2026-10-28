@@ -29,7 +29,7 @@ WinTools تطبيق WPF لا يعمل باستمرار في الخلفية ول�
 ## المتطلبات
 
 - Windows 10 إصدار 1809 (17763) أو أحدث، أو Windows 11، بمعمارية x64
-- النسخة المعتمدة على إطار العمل تحتاج [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
+- نسخة المجلد (frame) تتضمن .NET 10 Runtime، ولا تحتاج إلى تثبيت منفصل
 - صلاحيات المسؤول (معلنة في البيان)؛ تعتمد عليها عمليات DISM وبرامج التشغيل والخدمات والصور
 - بعض الميزات تستدعي مكونات من Windows: DISM وWindows Update Agent و`pnputil` وWIMGAPI. قد تكون محذوفة في النسخ المقلّمة
 
@@ -38,7 +38,7 @@ WinTools تطبيق WPF لا يعمل باستمرار في الخلفية ول�
 | النسخة | ملاحظة | الرابط |
 | --- | --- | --- |
 | محمولة | تتضمن بيئة التشغيل، فك الضغط والتشغيل | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| معتمدة على إطار العمل | تحتاج .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| نسخة المجلد | تتضمن .NET 10 Runtime (دون تثبيت) | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | تُعاد بناؤها مع كل دفع إلى `main` | [إصدار Beta تجريبي](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 النسخ الرسمية موقّعة سحابيًا من Certum مع ختم زمني، ويمكن التحقق منها عبر `Get-AuthenticodeSignature`. يُرفق ملف `SHA256SUMS.txt` مع كل إصدار.

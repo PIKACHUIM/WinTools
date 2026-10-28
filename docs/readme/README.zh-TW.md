@@ -29,7 +29,7 @@
 ## 系統需求
 
 - Windows 10 1809（17763）以上，或 Windows 11，x64
-- 框架相依版需要 [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
+- 資料夾版（frame）自帶 .NET 10 執行階段，解壓即可執行，無需另行安裝
 - 需要系統管理員權限（資訊清單已宣告），DISM、驅動、服務、映像操作都依賴它
 - 部分功能會呼叫系統內建元件：DISM、Windows Update Agent、`pnputil`、WIMGAPI。精簡版系統可能已移除
 
@@ -38,7 +38,7 @@
 | 版本 | 說明 | 下載 |
 | --- | --- | --- |
 | 免安裝版 | 自帶執行環境，解壓即用 | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| 框架相依版 | 需要 .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| 資料夾版 | 自帶 .NET 10 執行階段（無需安裝） | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | 每次推送到 `main` 自動重建 | [Beta 預覽版](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 正式版具備 Certum 雲端簽章與時間戳，可用 `Get-AuthenticodeSignature` 驗證。每個版本附帶 `SHA256SUMS.txt`。

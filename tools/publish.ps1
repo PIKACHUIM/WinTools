@@ -1,9 +1,9 @@
 ﻿<#
 .SYNOPSIS
-    生成两种发行形态：绿色便携单文件（自包含）与框架依赖包。
+    生成两种发行形态：绿色便携单文件与目录版，两者都自带 .NET 运行时。
 .DESCRIPTION
     portable  —— 自包含单文件 exe，解压即用，体积较大（含 .NET 运行时）。
-    framework —— 框架依赖，体积小，需目标机安装 .NET 10 Desktop Runtime。
+    framework —— 自包含目录版，含 .NET 10 运行时，无需目标机安装运行时；启动比单文件快。
 .EXAMPLE
     pwsh tools/publish.ps1 -Profile both
 .EXAMPLE
@@ -76,8 +76,11 @@ if ($Profile -in @('portable', 'both')) {
 }
 
 if ($Profile -in @('framework', 'both')) {
+    # 目录版同样是自包含：安装包和 frame 压缩包都不再要求目标机预装 .NET
     Invoke-Publish -Name 'framework' -PublishArgs @(
-        '--self-contained', 'false',
+        '--self-contained', 'true',
+        '-p:PublishSingleFile=false',
+        '-p:PublishTrimmed=false',
         '-p:DebugType=none',
         '-p:DebugSymbols=false'
     ) | Out-Null

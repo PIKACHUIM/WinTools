@@ -29,7 +29,7 @@ Ten modules: **Cleanup, Optimize, Features, Updates, Startup, Components, Runtim
 ## Requirements
 
 - Windows 10 1809 (17763) or later, or Windows 11, x64
-- The framework-dependent build needs [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
+- The folder build (frame) bundles the .NET 10 runtime, so no separate installation is required
 - Administrator rights (declared in the manifest); DISM, drivers, services and imaging all need it
 - Some features call system components shipped with Windows: DISM, Windows Update Agent, `pnputil`, WIMGAPI. They may be missing on trimmed images
 
@@ -38,7 +38,7 @@ Ten modules: **Cleanup, Optimize, Features, Updates, Startup, Components, Runtim
 | Build | Notes | Link |
 | --- | --- | --- |
 | Portable | Self-contained, unzip and run | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| Framework-dependent | Needs .NET 10 Desktop Runtime | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| Folder build | Bundles .NET 10 runtime (no installation needed) | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | Rebuilt on every push to `main` | [Beta prerelease](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 Release builds carry a Certum cloud signature and timestamp; verify with `Get-AuthenticodeSignature`. Each release ships a `SHA256SUMS.txt`.

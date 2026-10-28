@@ -29,7 +29,7 @@ WPF アプリで、バックグラウンドには常駐せず、スタートア�
 ## 動作環境
 
 - Windows 10 1809 (17763) 以降、または Windows 11、x64
-- フレームワーク依存版は [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0) が必要
+- フォルダー版（frame）は .NET 10 ランタイムを同梱しており、別途インストールは不要です
 - 管理者権限が必要（マニフェストで宣言済み）。DISM、ドライバー、サービス、イメージ操作が依存
 - 一部機能は Windows 標準コンポーネント（DISM、Windows Update Agent、`pnputil`、WIMGAPI）を呼びます。縮小版では削除されている場合があります
 
@@ -38,7 +38,7 @@ WPF アプリで、バックグラウンドには常駐せず、スタートア�
 | 版 | 説明 | リンク |
 | --- | --- | --- |
 | ポータブル | ランタイム同梱、解凍して実行 | [WinTools-*-green-win-x64.exe](https://github.com/PIKACHUIM/WinTools/releases/latest) |
-| フレームワーク依存 | .NET 10 Desktop Runtime が必要 | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
+| フォルダー版 | .NET 10 ランタイム同梱（インストール不要） | [WinTools-*-frame-win-x64.zip](https://github.com/PIKACHUIM/WinTools/releases/latest) |
 | Beta | `main` への push ごとに再ビルド | [Beta プレリリース](https://github.com/PIKACHUIM/WinTools/releases/tag/beta) |
 
 正式版は Certum のクラウド署名とタイムスタンプ付き。`Get-AuthenticodeSignature` で検証できます。各リリースに `SHA256SUMS.txt` を添付しています。
